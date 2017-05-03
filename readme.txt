@@ -2,8 +2,8 @@
 Contributors: ghera74
 Tags: jw player, jwplayer, jwp, jwp 7, video, embed video, youtube, related video, video preroll 
 Requires at least: 4.0
-Tested up to: 4.7.2
-Stable tag: 1.4.0
+Tested up to: 4.7.4
+Stable tag: 1.4.1
 License: GPLv2
 
 JW Player 7 for Wordpress gives you all what you need to publish videos on your posts and pages, with the new JW7.
@@ -24,15 +24,9 @@ That's all, you're ready to go!
 
 **NEW ON THIS VERSION!**
 
-* Add custom measures to every single player with the new shortcode options.
-* Social sharing now includes Facebook, Twitter, GooglePlus, LinkedIn, Pinterest, Tumblr, Reddit and email of course.
-* (Premium) Load different subtitles files (vtt, srt, dfxp) that can be chosen from the CC selection menu.
-* (Premium) Add different sources with label and let the user toggles the desired video quality
-* (Premium) Now you can let the user download your video only by adding a flag.
-* (Premium) Now you can mute your videos during playback.
-* (Premium) Configures if the player should loop the content.
-* (Premium) Autostart, Mute and Repeat options are now available for playlists too by using the new shortcode options.
-* (Premium) Next up tooltip and more elements are now localized.
+* Better tabs navigation.
+* (Premium) New option tab for subtitles style customization.
+* (Premium) Possibility to activate subtitles by default.
 
 
 == Installation ==
@@ -57,6 +51,13 @@ That's all, you're ready to go!
 3. Sharing options
 
 == Changelog ==
+
+
+= 1.4.1 =
+Release Date: 3 May 2017
+* Enhancement: Better tabs navigation.
+* Enhancement: (Premium) New option tab for subtitles style customization.
+* Enhancement: (Premium) Possibility to activate subtitles by default.
 
 = 1.4.0 =
 Release Date: 7 February 2017
