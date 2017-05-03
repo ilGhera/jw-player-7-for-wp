@@ -55,12 +55,14 @@ That's all, you're ready to go!
 
 = 1.4.1 =
 Release Date: 3 May 2017
+
 * Enhancement: Better tabs navigation.
 * Enhancement: (Premium) New option tab for subtitles style customization.
 * Enhancement: (Premium) Possibility to activate subtitles by default.
 
 = 1.4.0 =
 Release Date: 7 February 2017
+
 * Enhancement: Add custom measures to every single player with the new shortcode options.
 * Enhancement: Social sharing now includes Facebook, Twitter, GooglePlus, LinkedIn, Pinterest, Tumblr, Reddit and email of course.
 * Enhancement (Premium): Load different subtitles files (vtt, srt, dfxp) that can be chosen from the CC selection menu.
