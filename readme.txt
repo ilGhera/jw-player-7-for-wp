@@ -3,7 +3,7 @@ Contributors: ghera74
 Tags: jw player, jwplayer, jwp, jwp 7, video, embed video, youtube, related video, video preroll 
 Requires at least: 4.0
 Tested up to: 4.7.4
-Stable tag: 1.4.1
+Stable tag: 1.4.111111
 License: GPLv2
 
 JW Player 7 for Wordpress gives you all what you need to publish videos on your posts and pages, with the new JW7.
