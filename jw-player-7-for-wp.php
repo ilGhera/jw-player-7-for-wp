@@ -5,10 +5,10 @@
  * Description:  JW Player 7 for Wordpress gives you all what you need to publish videos on your Wordpress posts and pages, with the new JW7. Change skin, position and dimensions of your player. Allow users share and embed your contents.
  * Do you want more? Please check out the premium version.
  * Author: ilGhera
- * Version: 1.4.1
+ * Version: 1.3.3
  * Author URI: http://ilghera.com 
  * Requires at least: 4.0
- * Tested up to: 4.7.4
+ * Tested up to: 4.6.1
  */
 
 
@@ -44,28 +44,9 @@ function jwppp_load() {
 			meta_key = REPLACE(meta_key, '_jwppp-chapter-', '_jwppp-1-chapter-')
 			"
 		);
-	}
 
-	if(get_option('jwppp-database-version') < '1.4.0') {
-
-		global $wpdb;
-		$query = "
-			SELECT * FROM $wpdb->postmeta WHERE meta_key LIKE '%_jwppp-video-mobile-url-%' AND meta_value <> ''
-		";
-
-		$results = $wpdb->get_results($query, ARRAY_A);
-
-		if($results) {
-			foreach($results as $result) {
-				$get_n = explode('_jwppp-video-mobile-url-', $result['meta_key']);
-				add_post_meta($result['post_id'], '_jwppp-sources-number-' . $get_n[1], true);
-				add_post_meta($result['post_id'], '_jwppp-' . $get_n[1] . '-source-1-url', $result['meta_value'] );
-			}			
-		}
-		
 		//UPDATE DATABASE VERSION
-		update_option('jwppp-database-version', '1.4.0');
-	
+		update_option('jwppp-database-version', '1.1.1');
 	}
 	
 	//INTERNATIONALIZATION

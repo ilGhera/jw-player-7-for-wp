@@ -24,28 +24,13 @@ function jwppp_js_menu() {
 
 //MENU ITEMS
 function jwppp_add_menu() {
-	$jwppp_page = add_menu_page( 'JW Player 7 for Wordpress', 'JW Player 7', 'manage_options', 'jw-player-7-for-wp', 'jwppp_options');
+	$jwppp_page = add_menu_page( 'JW Player 7 for Wordpress', 'JW Player', 'manage_options', 'jw-player-7-for-wp', 'jwppp_options');
 	
 	//SCRIPT
 	add_action( 'admin_print_scripts-' . $jwppp_page, 'jwppp_js_menu');
 	
 	return $jwppp_page;
 }
-
-
-//ADD COLOR PICKER
-function jwppp_add_color_picker( $hook ) {
-    if( is_admin() ) { 
-     
-        // Add the color picker css file       
-        wp_enqueue_style( 'wp-color-picker' ); 
-         
-        // Include our custom jQuery file with WordPress Color Picker dependency
-        wp_enqueue_script( 'custom-script-handle', plugins_url( 'custom-script.js', __FILE__ ), array( 'wp-color-picker' ), false, true ); 
-    }
-}
-add_action( 'admin_enqueue_scripts', 'jwppp_add_color_picker' );
-
 
 //OPTION PAGE
 function jwppp_options() {
@@ -61,24 +46,23 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
 
 	echo '<div id="jwppp-description">';
 	    //HEADER
-		echo "<h1 class=\"jwppp main\">" . __( 'JW Player 7 for Wordrpess', 'jwppp' ) . "<span style=\"font-size:60%;\"> 1.4.1</span></h1>";
+		echo "<h1 class=\"jwppp main\">" . __( 'JW Player 7 for Wordrpess', 'jwppp' ) . "<span style=\"font-size:60%;\"> 1.3.3</span></h1>";
 	echo '</div>';
 
 ?>
 	    
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
-	<h2 id="jwppp-admin-menu" class="nav-tab-wrapper">
-		<a href="#" data-link="jwppp-settings" class="nav-tab nav-tab-active" onclick="return false;"><?php echo __('Settings', 'jwppp'); ?></a>
-		<a href="#" data-link="jwppp-related" class="nav-tab" onclick="return false;"><?php echo __('Related videos', 'jwppp'); ?></a>
-		<a href="#" data-link="jwppp-subtitles" class="nav-tab" onclick="return false;"><?php echo __('Subtitles', 'jwppp'); ?></a>
-		<a href="#" data-link="jwppp-social" class="nav-tab" onclick="return false;"><?php echo __('Sharing', 'jwppp'); ?></a>    
-		<a href="#" data-link="jwppp-ads" class="nav-tab" onclick="return false;"><?php echo __('Ads', 'jwppp'); ?></a>                                        
+	<h2 id="jwppp-admin-menu " class="nav-tab-wrapper">
+		<a href="#" data-link="jwppp-settings" class="nav-tab"><?php echo __('Settings', 'jwppp'); ?></a>
+		<a href="#" data-link="jwppp-related" class="nav-tab"><?php echo __('Related videos', 'jwppp'); ?></a>
+		<a href="#" data-link="jwppp-social" class="nav-tab"><?php echo __('Sharing', 'jwppp'); ?></a>    
+		<a href="#" data-link="jwppp-ads" class="nav-tab"><?php echo __('Ads', 'jwppp'); ?></a>                                        
 	</h2>
 
 
 	<!-- START - SETTINGS -->
- 	<div name="jwppp-settings" id="jwppp-settings" class="jwppp-admin" style="display: block;">
+ 	<div id="jwppp-settings" class="jwppp-admin">
 
  		<?php
 
@@ -324,27 +308,6 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
 			echo '</td>';
 			echo '</tr>';
 
-			echo '<tr>';
-			echo '<th scope="row">' . __('Next Up', 'jwppp') . '</th>';
-			echo '<td>';
-			echo '<input type="text" class="regular-text" id="jwppp-next-up" name="jwppp-next-up" disabled="disabled" ';
-			echo 'placeholder="' . __('Next Up', 'jwppp') . '" value="Next Up" />';
-			echo '<p class="description">' . __('Add a different text for the "Next Up" prompt', 'jwppp') . '</p>';
- 			echo '<a href="http://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';	
-			echo '</td>';
-			echo '</tr>';
-
-			echo '<tr>';
-			echo '<th scope="row">' . __('Playlist tooltip', 'jwppp') . '</th>';
-			echo '<td>';
-			echo '<input type="text" class="regular-text" id="jwppp-playlist-tooltip" name="jwppp-playlist-tooltip" disabled="disabled"';
-			echo 'placeholder="' . __('Playlist', 'jwppp') . '" value="Playlist" />';
-			echo '<p class="description">' . __('Add a different text for the tooltip in Playlist mode', 'jwppp') . '</p>';
- 			echo '<a href="http://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';	
-			echo '</td>';
-			echo '</tr>';
-
-
  			echo '</table>';
 
  			echo '<input type="hidden" name="done" value="1" />';
@@ -356,7 +319,7 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
 
 
 	<!-- START - RELATED VIDEOS -->
-	<div name="jwppp-related" id="jwppp-related" class="jwppp-admin" style="display: none;">
+	<div id="jwppp-related" class="jwppp-admin">
 
 		<?php //GET INFO FROM DATABASE
 
@@ -385,11 +348,11 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
 
 		//HEADING
 		echo '<tr class="related-options">';
-		echo '<th scope="row">' . __('Next Up tooltip', 'jwppp') . '</th>';
+		echo '<th scope="row">' . __('Heading', 'jwppp') . '</th>';
 		echo '<td>';
 		echo '<input type="text" class="regular-text" id="jwppp-related-heading" name="jwppp-related-heading" disabled="disabled"';
 		echo 'placeholder="' . __('Related Videos', 'jwppp') . '" value="More videos" />';
-		echo '<p class="description">' . __('Title of the Next Up tooltip in Related mode, default is <strong>Related</strong>.', 'jwppp') . '</p>';
+		echo '<p class="description">' . __('Add a custom heading, default is <strong>Related Videos</strong>.', 'jwppp') . '<br>'; 
 		echo '<a href="http://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';
 		echo '</td>';
 		echo '</tr>';
@@ -406,6 +369,22 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
 
 		echo '</select>';
 		echo '<p class="description">' . __('Select how get images for related contents.', 'jwppp') . '<br>';
+		echo '<a href="http://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';
+		echo '</td>';
+		echo '</tr>';
+
+		//DIMENSIONS
+		echo '<tr class="related-options">';
+		echo '<th scope="row">' . __('Thumbnail size', 'jwppp') . '</th>';
+		echo '<td>';
+		echo '<input type="number" min="1" step="1" class="small-text" id="jwppp-related-width" name="jwppp-related-width" disabled="disabled" value="';
+		echo '140';
+		echo '" />';
+		echo ' x ';
+		echo '<input type="number" min="1" step="1" class="small-text" id="jwppp-related-height" name="jwppp-related-height" disabled="disabled" value="';
+		echo '80';
+		echo '" />';
+		echo '<p class="description">' . __('Set the dimensions of each thumbnail in pixels. Default is <strong>140x80</strong>.', 'jwppp') . '<br>';
 		echo '<a href="http://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';
 		echo '</td>';
 		echo '</tr>';
@@ -435,76 +414,8 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
 	<!-- END - RELATED VIDEOS -->
 
 
-	<!-- START SUBTITLES -->
-	<div name="jwppp-subtitles" id="jwppp-subtitles" class="jwppp-admin" style="display: none;">
-		<?php
-			echo '<form id="jwppp-subtitles" name="jwppp-subtitles" method="post" action="">';
-			echo '<table class="form-table">';
-			echo '<tr>';
-			echo '<th scope="row">' . __('Text color', 'jwppp') . '</th>';
-			echo '<td>';
-			echo '<input type="text" class="jwppp-color-field" name="jwppp-subtitles-color" value="' . $sub_color . '">';
-			echo '<p class="description">' . __('Choose the text-color for your subtitles.', 'jwppp') . '</p>';
-			echo '<a href="http://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';
-			echo '</td>';
-			echo '</tr>';
-
-			echo '<tr>';
-			echo '<th scope="row">' . __('Font size', 'jwppp') . '</th>';
-			echo '<td>';
-			echo '<input type="number" class="jwppp-subtitles-font-size" min="8" max="30" step="1" name="jwppp-subtitles-font-size" disabled="disabled" value="' . $sub_font_size . '">';
-			echo '<p class="description">' . __('Choose the font-size for your subtitles.', 'jwppp') . '</p>';
-			echo '<a href="http://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';
-			echo '</td>';
-			echo '</tr>';
-
-			echo '<tr>';
-			echo '<th scope="row">' . __('Font family', 'jwppp') . '</th>';
-			echo '<td>';
-			echo '<input type="text" class="jwppp-subtitles-font-family" name="jwppp-subtitles-font-family" disabled="disabled" value="' . $sub_font_family . '">';
-			echo '<p class="description">' . __('Choose the font-family for your subtitles.', 'jwppp') . '</p>';
-			echo '<a href="http://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';
-			echo '</td>';
-			echo '</tr>';
-
-			echo '<tr>';
-			echo '<th scope="row">' . __('Font opacity', 'jwppp') . '</th>';
-			echo '<td>';
-			echo '<input type="number" class="jwppp-subtitles-opacity" min="0" max="100" step="10" name="jwppp-subtitles-opacity" disabled="disabled" value="' . $sub_opacity . '">';
-			echo '<p class="description">' . __('Add opacity to your subtitles.', 'jwppp') . '</p>';
-			echo '<a href="http://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';
-			echo '</td>';
-			echo '</tr>';
-
-			echo '<tr>';
-			echo '<th scope="row">' . __('Background color', 'jwppp') . '</th>';
-			echo '<td>';
-			echo '<input type="text" class="jwppp-color-field" name="jwppp-subtitles-back-color" disabled="disabled" value="' . $sub_back_color . '">';
-			echo '<p class="description">' . __('Choose the background-color for your subtitles.', 'jwppp') . '</p>';
-			echo '<a href="http://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';
-			echo '</td>';
-			echo '</tr>';
-
-			echo '<tr>';
-			echo '<th scope="row">' . __('Background opacity', 'jwppp') . '</th>';
-			echo '<td>';
-			echo '<input type="number" class="jwppp-subtitles-back-opacity" min="0" max="100" step="10" name="jwppp-subtitles-back-opacity" disabled="disabled" value="' . $sub_back_opacity . '">';
-			echo '<p class="description">' . __('Add opacity to your subtitles background.', 'jwppp') . '</p>';
-			echo '<a href="http://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';
-			echo '</td>';
-			echo '</tr>';
-
-			echo '</table>';
-			echo '<input type="hidden" name="set" value="1" />';
-			echo '<input class="button button-primary" type="submit" id="submit" value="' . __('Save chages', 'jwppp') . '">';
-			echo '</form>';
-		?>
-	</div>
-	<!-- END - SUBTITLES -->
-
-
 	<!-- START -  SHARING -->
-	<div name="jwppp-social" id="jwppp-social" class="jwppp-admin" style="display: none;">
+	<div id="jwppp-social" class="jwppp-admin">
 
 		<?php 
 			//ACTIVE SHARE?
@@ -572,7 +483,7 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
 	<!-- END - SOCIAL SHARING -->
 
 	<!-- START ADS -->
-	<div name="jwppp-ads" id="jwppp-ads" class="jwppp-admin" style="display: none;">
+	<div id="jwppp-ads" class="jwppp-admin">
 		<?php
 
 			//ACTIVE ADS?

@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JW Player 7 for WP\n"
-"POT-Creation-Date: 2017-05-03 14:25+0200\n"
+"POT-Creation-Date: 2016-11-17 23:02+0100\n"
 "PO-Revision-Date: 2015-12-31 00:07+0100\n"
 "Last-Translator: ilGhera <info@ilghera.com>\n"
 "Language-Team: ilGhera <info@ilghera.com>\n"
@@ -10,392 +10,323 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-KeywordsList: __;_;gettext;gettext_noop\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: /home/ilghera/Scrivania/jw-player-7-for-wp\n"
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:55
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:40
 msgid "It looks like you do not have sufficient permissions to view this page."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:64
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:49
 msgid "JW Player 7 for Wordrpess"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:72
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:57
 msgid "Settings"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:73
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:58
 msgid "Related videos"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:74
-msgid "Subtitles"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:75
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:59
 msgid "Sharing"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:76
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:60
 msgid "Ads"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:101
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:85
 msgid "Player library URL"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:116
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:100
 msgid "JWP Licence Key"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:120
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:104
 msgid "Add your JW Player self-hosted license key."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:129
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:113
 msgid "Post types"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:142
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:126
 msgid "Select the type of content where display videos."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:143
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:127
 msgid "for custom post types."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:155
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:139
 msgid "Video Player position"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:160
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:144
 msgid "Before the content"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:163
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:147
 msgid "After the content"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:166
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:150
 msgid "Custom"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:168
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:152
 msgid "Select the location where you want the video player is displayed."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:169
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:153
 msgid "For custom position use the shortcode <b>[jw7-video]</b>."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:175
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:159
 msgid "Video text"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:177
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:240
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:161
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:371
 msgid "Loading the player..."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:178
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:162
 msgid "Add custom text that appears while the player is loading."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:191
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:175
 msgid "Default poster image"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:194
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:178
 msgid "Add the url of a default poster image."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:206
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:190
 msgid "Post thumbnail"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:210
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:194
 msgid "Use the post thumbnail"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:211
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:195
 msgid "When present, use the post thumbnail as poster image."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:236
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:220
 msgid "Fixed"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:238
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:222
 msgid "Select how define the measures of the player."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:245
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:229
 msgid "Fixed measures"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:267
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:251
 msgid "Skin"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:283
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:267
 msgid "Choose a skin to customize your player."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:284
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:268
 msgid "for more skins."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:291
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:275
 msgid "Logo"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:294
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:278
 msgid "Image url"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:295
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:279
 msgid "Add your logo to the player."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:302
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:286
 msgid "Logo Position"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:312
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:296
 msgid "Choose the logo position."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:318
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:302
 msgid "Logo Link"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:321
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:305
 msgid "Link url"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:322
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:306
 msgid "Add a link to the logo."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:328
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:331
-msgid "Next Up"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:332
-msgid "Add a different text for the \"Next Up\" prompt"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:338
-msgid "Playlist tooltip"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:341
-msgid "Playlist"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:342
-msgid "Add a different text for the tooltip in Playlist mode"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:351
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:314
 msgid "Save changes "
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:377
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:340
 msgid "Active Related Videos option"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:382
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:345
 msgid "Show Related Videos overlay as default option."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:388
-msgid "Next Up tooltip"
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:351
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:456
+msgid "Heading"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:391
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:354
 msgid "Related Videos"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:392
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:355
+msgid "Add a custom heading, default is <strong>Related Videos</strong>."
+msgstr ""
+
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:362
+msgid "Related image"
+msgstr ""
+
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:368
+msgid "Featured image"
+msgstr ""
+
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:371
+msgid "Select how get images for related contents."
+msgstr ""
+
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:378
+msgid "Thumbnail size"
+msgstr ""
+
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:387
 msgid ""
-"Title of the Next Up tooltip in Related mode, default is <strong>Related</"
+"Set the dimensions of each thumbnail in pixels. Default is <strong>140x80</"
 "strong>."
 msgstr ""
 
 #: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:399
-msgid "Related image"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:405
-msgid "Featured image"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:408
-msgid "Select how get images for related contents."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:420
 msgid "Categories"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:423
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:402
 msgid ""
 "Use a taxonomy to get more specific related videos. It will be add to all "
 "post types you choosed."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:424
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:403
 msgid ""
 "You can even use <strong>Video categories</strong> provided by this plugin."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:430
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:499
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:409
 msgid "Save chages"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:444
-msgid "Text color"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:447
-msgid "Choose the text-color for your subtitles."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:453
-msgid "Font size"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:456
-msgid "Choose the font-size for your subtitles."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:462
-msgid "Font family"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:465
-msgid "Choose the font-family for your subtitles."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:471
-msgid "Font opacity"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:474
-msgid "Add opacity to your subtitles."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:480
-msgid "Background color"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:483
-msgid "Choose the background-color for your subtitles."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:489
-msgid "Background opacity"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:492
-msgid "Add opacity to your subtitles background."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:534
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:445
 msgid "Active Share option"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:539
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:450
 msgid ""
 "Active <strong>share video</strong> as default option. You'll be able to "
 "change it on single video."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:545
-msgid "Heading"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:547
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:310
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:458
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:428
 msgid "Share Video"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:548
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:459
 msgid "Add a custom heading, default is <strong>Share Video</strong>"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:554
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:465
 msgid "Active embed option"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:559
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:470
 msgid ""
 "Active <strong>embed video</strong> as default option. You'll be able to "
 "change it on single video."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:566
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:637
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:477
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:548
 msgid "Save options"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:591
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:502
 msgid "Active Video Ads"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:596
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:507
 msgid "Add a <strong>Basic Preroll Video Ads</strong>"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:597
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:508
 msgid ""
 "A valid license for the Advertising edition of JW Player is required. The "
 "Free, Premium, and Enterprise editions do not support this function."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:603
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:514
 msgid "Ads Client"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:610
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:521
 msgid ""
 "Select your ADS Client. More info <a href=\"http://support.jwplayer.com/"
 "customer/portal/articles/1431638-ad-formats-reference\" target=\"_blank"
 "\">here</a>"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:616
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:527
 msgid "Ads Tag"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:618
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:529
 msgid "Add the url of your XML file."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:619
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:530
 msgid ""
 "Please, set this to the URL of the ad tag that contains the pre-roll ad."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:626
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:537
 msgid "Ad Skipping"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:629
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:540
 msgid ""
 "Please, set an amount of time (seconds) that you want your viewers to watch "
 "an ad before being allowed to skip it"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:658
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:569
 msgid ""
 "If you like <strong>JW Player 7 for Wordpress</strong>, please give it a <a "
 "href=\"https://wordpress.org/support/view/plugin-reviews/jw-player-7-for-wp?"
@@ -403,17 +334,17 @@ msgid ""
 msgstr ""
 
 #: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-ajax-add-video-callback.php:22
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:26
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:55
 msgid "Media URL"
 msgstr ""
 
 #: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-ajax-add-video-callback.php:25
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:29
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:58
 msgid "Video (YouTube or self-hosted), Audio or Playlist (Premium)"
 msgstr ""
 
 #: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-ajax-add-video-callback.php:27
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:31
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:60
 msgid "More options"
 msgstr ""
 
@@ -427,70 +358,54 @@ msgstr ""
 msgid "JW Player 7"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:67
-msgid "More sources"
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:96
+msgid "Media URL - Mobile"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:68
-msgid "Used for quality toggling and alternate sources."
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:98
+msgid "Add a different media source for mobile devices"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:76
-msgid "Source url"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:81
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:101
 msgid "Video poster image"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:83
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:103
 msgid "Add a different poster image for this video"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:86
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:106
 msgid "Video title"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:88
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:108
 msgid "Add a title to your video"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:91
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:111
 msgid "Video description"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:93
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:113
 msgid "Add a description to your video"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:100
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:120
 msgid "Force a media type"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:101
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:121
 msgid "Only required when a file extension is missing or not recognized"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:123
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:143
 msgid "Autostarting on page load."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:133
-msgid "Mute the video during playback."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:143
-msgid "Repeat the video during playback."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:153
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:153
 msgid "Allow to embed this video"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:163
-msgid "Allow to download this video"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:173
+#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:163
 msgid "Add Chapters, Subtitles or Preview Thumbnails"
 msgstr ""
