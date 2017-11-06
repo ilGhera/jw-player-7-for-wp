@@ -15,18 +15,18 @@ function jwppp_ajax_add_video_callback($post) {
 	
 	//JUST A LITTLE OF STYLE
 	echo '<style>';
-	echo '.question-mark {position:relative; top:0.2rem; left:1rem;}';
+	echo '.question-mark-2 {position:relative; top:0.2rem; left:1rem;}';
 	echo '</style>';
 
 	echo '<label for="_jwppp-video-url">';
 	echo '<strong>' . __( 'Media URL', 'jwppp' ) . '</strong>';
-	echo '<a href="http://www.ilghera.com/support/topic/media-formats-supported/" title="More informations" target="_blank"><img class="question-mark" src="' . plugins_url('jw-player-7-for-wp') . '/images/question-mark.png" /></a></th>';
+	echo '<a href="http://www.ilghera.com/support/topic/media-formats-supported/" title="More informations" target="_blank"><img class="question-mark-2" src="' . plugins_url('jw-player-7-for-wp') . '/images/question-mark.png" /></a></th>';
 	echo '</label> ';
 	echo '<p><input type="text" id="_jwppp-video-url" name="_jwppp-video-url" placeholder="' . __('Video (YouTube or self-hosted), Audio or Playlist (Premium)', 'jwppp') . '" disabled="disabled" size="60"  /></p>';
 
 	echo '<a class="button options">' . __('More options', 'jwppp') . '</a>';
 	if(get_option('jwppp-position') == 'custom') {
-		echo '<code style="display:inline-block;margin:0.1rem 0.5rem 0;color:#888;">[jw7-video n="2"]</code>';
+		echo '<code style="display:inline-block;margin:0.1rem 0.5rem 0;color:#888;">[jwp-video n="2"]</code>';
 	}
 
 	echo '</td>';

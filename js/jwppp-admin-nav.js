@@ -1,6 +1,6 @@
 //JW PLAYER PREMIUM PLUGIN
 
-$(document).ready(function () {
+jQuery(document).ready(function ($) {
 
 	//TABS
     var jwppp_pagination = function() {

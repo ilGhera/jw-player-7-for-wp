@@ -1,32 +1,22 @@
-=== JW Player 7 for Wordpress ===
+=== JW Player for Wordpress ===
 Contributors: ghera74
-Tags: jw player, jwplayer, jwp, jwp 7, video, embed video, youtube, related video, video preroll 
+Tags: jw player, jw player 7, jw player 8, jwplayer, jwplayer 7, jwplayer 8, video, embed video, youtube, related video, video preroll, video chapters, video subtitles
 Requires at least: 4.0
-Tested up to: 4.7.4
-Stable tag: 1.4.1
+Tested up to: 4.8
+Stable tag: 1.5.0
 License: GPLv2
 
-JW Player 7 for Wordpress gives you all what you need to publish videos on your posts and pages, with the new JW7.
-Skins, position, share.
+JW Player for Wordpress gives you all what you need to publish videos on your posts and pages, using the most famous web player in the world.
 
 == Description ==
-**JW Player 7 for Wordpress** works with the self-hosted version of JW Player 7, that means that you have to:<br>
-
-* Register a JW Player account at http://www.jwplayer.com/sign-up/
-* Once you're logged in, download the player and copy your Licence key from https://dashboard.jwplayer.com/#/players/downloads
-* Upload the folder to your site
-* Add the full url of **jwplayer.js** that you just uploaded, in the admin page of the plugin; it will be something like http://example.com/FOLDER-UPLOADED/jwplayer.js
-* Paste your Licence Key to the admin page of the plugin.
-
-After that, set your general preferences, choose the post types where you want to add videos and start to add content using the JW Player box that you'll find there.<br>
-Just add the url of your self-hosted video, YouTube video or MP3.<br>
-That's all, you're ready to go!
+JW Player for Wordpress gives you all what you need to publish videos on your Wordpress posts and pages, using the most famous web player in the world.
+Change skin, position and dimensions of your player. Allow users share and embed your contents.
 
 **NEW ON THIS VERSION!**
 
-* Better tabs navigation.
-* (Premium) New option tab for subtitles style customization.
-* (Premium) Possibility to activate subtitles by default.
+Since it's now possible to use the Cloud Hosted Player Libraries that you can get in your JW Player Dashboard, it's not necessary upload the player on your site anymore.
+The plugin still can be used with a self hosted player.
+More details <a href="https://www.ilghera.com/documentation/setup-the-player/">here</a>.
 
 
 == Installation ==
@@ -52,6 +42,16 @@ That's all, you're ready to go!
 
 == Changelog ==
 
+= 1.5.0 =
+Release Date: 6 Nov 2017
+
+* Enhancement: Plugin name changed to JW Player for Wordpress, version 7 removed.
+* Enhancement: Now it's possible to use the cloud player library, without the need to upload the player.
+* Enhancement: JW Player 8 ready.
+* Enhancement: New shortcode jwp-video.
+* Bug Fix: 	   jQuery library conflict.
+* Bug Fix: 	   PHP Notices.
+* Bug Fix: 	   Wrong position question mark in plugin box
 
 = 1.4.1 =
 Release Date: 3 May 2017

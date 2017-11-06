@@ -1,6 +1,6 @@
 <?php
 /**
-* JW PLAYER 7 FOR WORDPRESS
+* JW PLAYER FOR WORDPRESS
 */
 
 require('jwppp-ajax-add-video-callback.php');
@@ -20,7 +20,7 @@ function jwppp_add_meta_box() {
 	}
 
 	foreach($screens as $screen) {
-		add_meta_box('jwppp-box', __( 'JW Player 7', 'jwppp' ), 'jwppp_meta_box_callback', $screen);
+		add_meta_box('jwppp-box', __( 'JW Player for Wordpress', 'jwppp' ), 'jwppp_meta_box_callback', $screen);
 	}
 }
 add_action( 'add_meta_boxes', 'jwppp_add_meta_box' );
@@ -115,30 +115,33 @@ add_action( 'save_post', 'jwppp_save_meta_box_data' );
 
 
 //AJAX - ADD VIDEO
-function jwppp_ajax_add_video() { ?>
-	<script type="text/javascript" >
-	jQuery(document).ready(function($) {
-		$('.jwppp-add').one('click', function() {
-			var data = {
-				'action': 'jwppp_ajax_add',
-				'number': 2, 
-				'post_id': <?php echo get_the_ID(); ?>
-			};
+function jwppp_ajax_add_video() {
+	if(get_the_ID()) { 
+	?>
+		<script type="text/javascript" >
+		jQuery(document).ready(function($) {
+			$('.jwppp-add').one('click', function() {
+				var data = {
+					'action': 'jwppp_ajax_add',
+					'number': 2, 
+					'post_id': <?php echo get_the_ID(); ?>
+				};
 
-			$.post(ajaxurl, data, function(response) {
-				$('#jwppp-box .inside').append(response);
+				$.post(ajaxurl, data, function(response) {
+					$('#jwppp-box .inside').append(response);
 
-				$('.jwppp-remove').on('click', function() {
-					$('.jwppp-2').hide();
+					$('.jwppp-remove').on('click', function() {
+						$('.jwppp-2').hide();
+					});
+
 				});
 
+				$('.jwppp-add').css('opacity', '0.3');
 			});
-
-			$('.jwppp-add').css('opacity', '0.3');
 		});
-	});
-	</script> 
-	<?php
+		</script> 
+		<?php
+	}
 }
 add_action( 'admin_footer', 'jwppp_ajax_add_video' );
 add_action( 'wp_ajax_jwppp_ajax_add', 'jwppp_ajax_add_video_callback' );
@@ -214,6 +217,7 @@ function jwppp_video_code($p, $width, $height) {
 		$youtube_embed = 'https://www.youtube.com/embed/';
 
 		//ALL YOUTUBE LINKS
+		$yt_video_id = null;
 		if(strpos($jwppp_video_url, $youtube1) !== false) {
 			$jwppp_embed_url = str_replace($youtube1, $youtube_embed, $jwppp_video_url);
 			$yt_parts = explode($youtube1, $jwppp_video_url);
@@ -222,13 +226,15 @@ function jwppp_video_code($p, $width, $height) {
 			$jwppp_embed_url = str_replace($youtube2, $youtube_embed, $jwppp_video_url);	
 			$yt_parts = explode($youtube2, $jwppp_video_url);
 			$yt_video_id = $yt_parts[1];
-		} else {
+		} elseif(strpos($jwppp_video_url, $youtube_embed) !== false) {
 			$jwppp_embed_url = $jwppp_video_url;
 			$yt_parts = explode($youtube_embed, $jwppp_video_url);
 			$yt_video_id = $yt_parts[1];
 		}
 
-		$yt_video_image = 'https://img.youtube.com/vi/' . $yt_video_id . '/maxresdefault.jpg';
+		if($yt_video_id) {
+			$yt_video_image = 'https://img.youtube.com/vi/' . $yt_video_id . '/maxresdefault.jpg';
+		}
 		
 		$jwppp_show_related = sanitize_text_field(get_option('jwppp-show-related'));
 		$jwppp_show_ads = sanitize_text_field(get_option('jwppp-active-ads'));
@@ -329,7 +335,7 @@ function jwppp_video_s_code($var) {
 		'p' 	 => get_the_ID(),
 		'width'  => '',
 		'height' => ''
-		), $var, 'jw7-video');
+		), $var);
 	echo jwppp_video_code(
 		$video['p'],
 		$video['width'], 
@@ -339,6 +345,8 @@ function jwppp_video_s_code($var) {
 	return $output;
 }
 add_shortcode('jw7-video', 'jwppp_video_s_code');
+add_shortcode('jwp-video', 'jwppp_video_s_code');
+
 //EXECUTE SHORTCODES IN WIDGETS
 if(!has_filter('widget_text', 'do_shortcode')) {
 	add_filter('widget_text', 'do_shortcode');
