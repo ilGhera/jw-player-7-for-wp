@@ -55,7 +55,7 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
 
 	echo '<div id="jwppp-description">';
 	    //HEADER
-		echo "<h1 class=\"jwppp main\">" . __( 'JW Player for Wordrpess', 'jwppp' ) . "<span style=\"font-size:60%;\"> 1.5.0 Dev Version</span></h1>";
+		echo "<h1 class=\"jwppp main\">" . __( 'JW Player for Wordrpess', 'jwppp' ) . "<span style=\"font-size:60%;\"> 1.5.0</span></h1>";
 	echo '</div>';
 
 ?>

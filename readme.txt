@@ -6,17 +6,18 @@ Tested up to: 4.8
 Stable tag: 1.5.0
 License: GPLv2
 
-JW Player for Wordpress gives you all what you need to publish videos on your posts and pages, using the most famous web player in the world.
+**JW Player for Wordpress** gives you all what you need to publish videos on your posts and pages, using the most famous web player in the world.
 
 == Description ==
-JW Player for Wordpress gives you all what you need to publish videos on your Wordpress posts and pages, using the most famous web player in the world.
+**JW Player for Wordpress** gives you all what you need to publish videos on your Wordpress posts and pages, using the most famous web player in the world.
 Change skin, position and dimensions of your player. Allow users share and embed your contents.
 
 **NEW ON THIS VERSION!**
 
-Since it's now possible to use the Cloud Hosted Player Libraries that you can get in your JW Player Dashboard, it's not necessary upload the player on your site anymore.
+* **JW Player 8 ready!**
+* Since it's now possible to use the **Cloud Hosted Player Libraries** that you can get in your JW Player Dashboard, it's not necessary upload the player on your site anymore.
 The plugin still can be used with a self hosted player.
-More details <a href="https://www.ilghera.com/documentation/setup-the-player/">here</a>.
+More details <a href="https://www.ilghera.com/documentation/setup-the-player/" target="_blank">here</a>.
 
 
 == Installation ==
