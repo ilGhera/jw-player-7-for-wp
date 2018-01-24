@@ -11,6 +11,7 @@ Change skin, position and dimensions of your player. Allow users share and embed
  * Requires at least: 4.0
  * Tested up to: 4.9
  * Text Domain: jwppp
+ * Domain Path: /languages
  */
 
 
