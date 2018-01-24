@@ -1,15 +1,15 @@
 <?php
 /**
  * Plugin Name: JW Player for Wordpress
- * Plugin URI: http://www.ilghera.com/product/jw-player-7-for-wordpress/
+ * Plugin URI: https://www.ilghera.com/product/jw-player-7-for-wordpress/
  * Description:  JW Player for Wordpress gives you all what you need to publish videos on your Wordpress posts and pages, using the most famous web player in the world.
 Change skin, position and dimensions of your player. Allow users share and embed your contents.
  * Do you want more? Please check out the premium version.
  * Author: ilGhera
- * Version: 1.5.0
- * Author URI: http://ilghera.com 
+ * Version: 1.5.1
+ * Author URI: https://ilghera.com 
  * Requires at least: 4.0
- * Tested up to: 4.8
+ * Tested up to: 4.9
  * Text Domain: jwppp
  */
 
@@ -74,6 +74,6 @@ function jwppp_load() {
 	load_plugin_textdomain('jwppp', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 	//FILES REQUIRED
-	include( plugin_dir_path( __FILE__ ) . 'includes/jwppp-admin.php');
+	include( plugin_dir_path( __FILE__ ) . 'admin/jwppp-admin.php');
 	include( plugin_dir_path( __FILE__ ) . 'includes/jwppp-functions.php');
 }

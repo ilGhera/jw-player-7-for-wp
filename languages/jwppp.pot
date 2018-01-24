@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JW Player 7 for WP\n"
-"POT-Creation-Date: 2017-05-03 14:25+0200\n"
+"POT-Creation-Date: 2018-01-24 17:10+0100\n"
 "PO-Revision-Date: 2015-12-31 00:07+0100\n"
 "Last-Translator: ilGhera <info@ilghera.com>\n"
 "Language-Team: ilGhera <info@ilghera.com>\n"
@@ -10,487 +10,616 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Poedit-KeywordsList: __;_;gettext;gettext_noop\n"
-"X-Poedit-Basepath: .\n"
+"X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-SearchPath-0: /home/ilghera/Scrivania/jw-player-7-for-wp\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:55
-msgid "It looks like you do not have sufficient permissions to view this page."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:64
-msgid "JW Player 7 for Wordrpess"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:72
-msgid "Settings"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:73
-msgid "Related videos"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:74
-msgid "Subtitles"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:75
-msgid "Sharing"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:76
-msgid "Ads"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:101
-msgid "Player library URL"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:116
-msgid "JWP Licence Key"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:120
-msgid "Add your JW Player self-hosted license key."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:129
-msgid "Post types"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:142
-msgid "Select the type of content where display videos."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:143
-msgid "for custom post types."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:155
-msgid "Video Player position"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:160
-msgid "Before the content"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:163
-msgid "After the content"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:166
-msgid "Custom"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:168
-msgid "Select the location where you want the video player is displayed."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:169
-msgid "For custom position use the shortcode <b>[jw7-video]</b>."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:175
-msgid "Video text"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:177
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:240
-msgid "Loading the player..."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:178
-msgid "Add custom text that appears while the player is loading."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:191
-msgid "Default poster image"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:194
-msgid "Add the url of a default poster image."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:206
-msgid "Post thumbnail"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:210
-msgid "Use the post thumbnail"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:211
-msgid "When present, use the post thumbnail as poster image."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:236
-msgid "Fixed"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:238
-msgid "Select how define the measures of the player."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:245
-msgid "Fixed measures"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:267
-msgid "Skin"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:283
-msgid "Choose a skin to customize your player."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:284
-msgid "for more skins."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:291
-msgid "Logo"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:294
-msgid "Image url"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:295
-msgid "Add your logo to the player."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:302
-msgid "Logo Position"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:312
-msgid "Choose the logo position."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:318
-msgid "Logo Link"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:321
-msgid "Link url"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:322
-msgid "Add a link to the logo."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:328
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:331
-msgid "Next Up"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:332
-msgid "Add a different text for the \"Next Up\" prompt"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:338
-msgid "Playlist tooltip"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:341
-msgid "Playlist"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:342
-msgid "Add a different text for the tooltip in Playlist mode"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:351
-msgid "Save changes "
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:377
-msgid "Active Related Videos option"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:382
-msgid "Show Related Videos overlay as default option."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:388
-msgid "Next Up tooltip"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:391
-msgid "Related Videos"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:392
-msgid ""
-"Title of the Next Up tooltip in Related mode, default is <strong>Related</"
-"strong>."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:399
-msgid "Related image"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:405
-msgid "Featured image"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:408
-msgid "Select how get images for related contents."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:420
-msgid "Categories"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:423
-msgid ""
-"Use a taxonomy to get more specific related videos. It will be add to all "
-"post types you choosed."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:424
-msgid ""
-"You can even use <strong>Video categories</strong> provided by this plugin."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:430
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:499
-msgid "Save chages"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:444
-msgid "Text color"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:447
-msgid "Choose the text-color for your subtitles."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:453
-msgid "Font size"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:456
-msgid "Choose the font-size for your subtitles."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:462
-msgid "Font family"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:465
-msgid "Choose the font-family for your subtitles."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:471
-msgid "Font opacity"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:474
-msgid "Add opacity to your subtitles."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:480
-msgid "Background color"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:483
-msgid "Choose the background-color for your subtitles."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:489
-msgid "Background opacity"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:492
-msgid "Add opacity to your subtitles background."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:534
-msgid "Active Share option"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:539
-msgid ""
-"Active <strong>share video</strong> as default option. You'll be able to "
-"change it on single video."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:545
-msgid "Heading"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:547
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:310
-msgid "Share Video"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:548
-msgid "Add a custom heading, default is <strong>Share Video</strong>"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:554
-msgid "Active embed option"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:559
-msgid ""
-"Active <strong>embed video</strong> as default option. You'll be able to "
-"change it on single video."
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:566
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:637
-msgid "Save options"
-msgstr ""
-
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:591
+#: admin/jwppp-admin-ads.php:17
 msgid "Active Video Ads"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:596
+#: admin/jwppp-admin-ads.php:22
 msgid "Add a <strong>Basic Preroll Video Ads</strong>"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:597
+#: admin/jwppp-admin-ads.php:23
 msgid ""
 "A valid license for the Advertising edition of JW Player is required. The "
 "Free, Premium, and Enterprise editions do not support this function."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:603
+#: admin/jwppp-admin-ads.php:29
 msgid "Ads Client"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:610
+#: admin/jwppp-admin-ads.php:36
 msgid ""
-"Select your ADS Client. More info <a href=\"http://support.jwplayer.com/"
+"Select your ADS Client. More info <a href=\"https://support.jwplayer.com/"
 "customer/portal/articles/1431638-ad-formats-reference\" target=\"_blank"
 "\">here</a>"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:616
+#: admin/jwppp-admin-ads.php:42
 msgid "Ads Tag"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:618
+#: admin/jwppp-admin-ads.php:44
 msgid "Add the url of your XML file."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:619
+#: admin/jwppp-admin-ads.php:45
 msgid ""
 "Please, set this to the URL of the ad tag that contains the pre-roll ad."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:626
+#: admin/jwppp-admin-ads.php:52
 msgid "Ad Skipping"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:629
+#: admin/jwppp-admin-ads.php:55
 msgid ""
 "Please, set an amount of time (seconds) that you want your viewers to watch "
 "an ad before being allowed to skip it"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:658
+#: admin/jwppp-admin-ads.php:61 admin/jwppp-admin-sharing.php:60
+msgid "Save options"
+msgstr ""
+
+#: admin/jwppp-admin-related-videos.php:20
+msgid "Active Related Videos option"
+msgstr ""
+
+#: admin/jwppp-admin-related-videos.php:25
+msgid "Show Related Videos overlay as default option."
+msgstr ""
+
+#: admin/jwppp-admin-related-videos.php:31
+msgid "Next Up tooltip"
+msgstr ""
+
+#: admin/jwppp-admin-related-videos.php:34
+msgid "Related Videos"
+msgstr ""
+
+#: admin/jwppp-admin-related-videos.php:35
 msgid ""
-"If you like <strong>JW Player 7 for Wordpress</strong>, please give it a <a "
+"Title of the Next Up tooltip in Related mode, default is <strong>Related</"
+"strong>."
+msgstr ""
+
+#: admin/jwppp-admin-related-videos.php:42
+msgid "Related image"
+msgstr ""
+
+#: admin/jwppp-admin-related-videos.php:48
+msgid "Featured image"
+msgstr ""
+
+#: admin/jwppp-admin-related-videos.php:51
+msgid "Select how get images for related contents."
+msgstr ""
+
+#: admin/jwppp-admin-related-videos.php:63
+msgid "Categories"
+msgstr ""
+
+#: admin/jwppp-admin-related-videos.php:66
+msgid ""
+"Use a taxonomy to get more specific related videos. It will be add to all "
+"post types you choosed."
+msgstr ""
+
+#: admin/jwppp-admin-related-videos.php:67
+msgid ""
+"You can even use <strong>Video categories</strong> provided by this plugin."
+msgstr ""
+
+#: admin/jwppp-admin-related-videos.php:72 admin/jwppp-admin-subtitles.php:61
+#: admin/skin/jwppp-admin-skin-7.php:114 admin/skin/jwppp-admin-skin-8.php:131
+msgid "Save chages"
+msgstr ""
+
+#: admin/jwppp-admin-sharing.php:28
+msgid "Active Share option"
+msgstr ""
+
+#: admin/jwppp-admin-sharing.php:33
+msgid ""
+"Active <strong>share video</strong> as default option. You'll be able to "
+"change it on single video."
+msgstr ""
+
+#: admin/jwppp-admin-sharing.php:39
+msgid "Heading"
+msgstr ""
+
+#: admin/jwppp-admin-sharing.php:41 includes/jwppp-functions.php:317
+msgid "Share Video"
+msgstr ""
+
+#: admin/jwppp-admin-sharing.php:42
+msgid "Add a custom heading, default is <strong>Share Video</strong>"
+msgstr ""
+
+#: admin/jwppp-admin-sharing.php:48
+msgid "Active embed option"
+msgstr ""
+
+#: admin/jwppp-admin-sharing.php:53
+msgid ""
+"Active <strong>embed video</strong> as default option. You'll be able to "
+"change it on single video."
+msgstr ""
+
+#: admin/jwppp-admin-subtitles.php:7
+msgid "Text color"
+msgstr ""
+
+#: admin/jwppp-admin-subtitles.php:10
+msgid "Choose the text-color for your subtitles."
+msgstr ""
+
+#: admin/jwppp-admin-subtitles.php:16
+msgid "Font size"
+msgstr ""
+
+#: admin/jwppp-admin-subtitles.php:19
+msgid "Choose the font-size for your subtitles."
+msgstr ""
+
+#: admin/jwppp-admin-subtitles.php:25
+msgid "Font family"
+msgstr ""
+
+#: admin/jwppp-admin-subtitles.php:28
+msgid "Choose the font-family for your subtitles."
+msgstr ""
+
+#: admin/jwppp-admin-subtitles.php:34
+msgid "Font opacity"
+msgstr ""
+
+#: admin/jwppp-admin-subtitles.php:37
+msgid "Add opacity to your subtitles."
+msgstr ""
+
+#: admin/jwppp-admin-subtitles.php:43
+msgid "Background color"
+msgstr ""
+
+#: admin/jwppp-admin-subtitles.php:46
+msgid "Choose the background-color for your subtitles."
+msgstr ""
+
+#: admin/jwppp-admin-subtitles.php:52
+msgid "Background opacity"
+msgstr ""
+
+#: admin/jwppp-admin-subtitles.php:55
+msgid "Add opacity to your subtitles background."
+msgstr ""
+
+#: admin/jwppp-admin.php:111
+msgid "It looks like you do not have sufficient permissions to view this page."
+msgstr ""
+
+#: admin/jwppp-admin.php:120
+msgid "JW Player for Wordrpess"
+msgstr ""
+
+#: admin/jwppp-admin.php:126
+msgid "Settings"
+msgstr ""
+
+#: admin/jwppp-admin.php:127 admin/skin/jwppp-admin-skin-7.php:13
+msgid "Skin"
+msgstr ""
+
+#: admin/jwppp-admin.php:128
+msgid "Subtitles"
+msgstr ""
+
+#: admin/jwppp-admin.php:129
+msgid "Related videos"
+msgstr ""
+
+#: admin/jwppp-admin.php:130
+msgid "Sharing"
+msgstr ""
+
+#: admin/jwppp-admin.php:131
+msgid "Ads"
+msgstr ""
+
+#: admin/jwppp-admin.php:156
+msgid "Player library URL"
+msgstr ""
+
+#: admin/jwppp-admin.php:171
+msgid "JWP Licence Key"
+msgstr ""
+
+#: admin/jwppp-admin.php:175
+msgid "Self hosted player? Please, add your JW Player license key."
+msgstr ""
+
+#: admin/jwppp-admin.php:183
+msgid "Post types"
+msgstr ""
+
+#: admin/jwppp-admin.php:196
+msgid "Select the type of content where display videos."
+msgstr ""
+
+#: admin/jwppp-admin.php:197
+msgid "for custom post types."
+msgstr ""
+
+#: admin/jwppp-admin.php:209
+msgid "Video Player position"
+msgstr ""
+
+#: admin/jwppp-admin.php:214
+msgid "Before the content"
+msgstr ""
+
+#: admin/jwppp-admin.php:217
+msgid "After the content"
+msgstr ""
+
+#: admin/jwppp-admin.php:220
+msgid "Custom"
+msgstr ""
+
+#: admin/jwppp-admin.php:222
+msgid "Select the location where you want the video player is displayed."
+msgstr ""
+
+#: admin/jwppp-admin.php:223
+msgid "For custom position use the shortcode <b>[jwp-video]</b>."
+msgstr ""
+
+#: admin/jwppp-admin.php:229
+msgid "Video text"
+msgstr ""
+
+#: admin/jwppp-admin.php:231 includes/jwppp-functions.php:247
+msgid "Loading the player..."
+msgstr ""
+
+#: admin/jwppp-admin.php:232
+msgid "Add custom text that appears while the player is loading."
+msgstr ""
+
+#: admin/jwppp-admin.php:245
+msgid "Default poster image"
+msgstr ""
+
+#: admin/jwppp-admin.php:248
+msgid "Add the url of a default poster image."
+msgstr ""
+
+#: admin/jwppp-admin.php:260
+msgid "Post thumbnail"
+msgstr ""
+
+#: admin/jwppp-admin.php:264
+msgid "Use the post thumbnail"
+msgstr ""
+
+#: admin/jwppp-admin.php:265
+msgid "When present, use the post thumbnail as poster image."
+msgstr ""
+
+#: admin/jwppp-admin.php:290
+msgid "Fixed"
+msgstr ""
+
+#: admin/jwppp-admin.php:292
+msgid "Select how define the measures of the player."
+msgstr ""
+
+#: admin/jwppp-admin.php:299
+msgid "Fixed measures"
+msgstr ""
+
+#: admin/jwppp-admin.php:314
+msgid "Logo"
+msgstr ""
+
+#: admin/jwppp-admin.php:317
+msgid "Image url"
+msgstr ""
+
+#: admin/jwppp-admin.php:318
+msgid "Add your logo to the player."
+msgstr ""
+
+#: admin/jwppp-admin.php:325
+msgid "Logo Position"
+msgstr ""
+
+#: admin/jwppp-admin.php:335
+msgid "Choose the logo position."
+msgstr ""
+
+#: admin/jwppp-admin.php:342
+msgid "Logo Link"
+msgstr ""
+
+#: admin/jwppp-admin.php:345
+msgid "Link url"
+msgstr ""
+
+#: admin/jwppp-admin.php:346
+msgid "Add a link to the logo."
+msgstr ""
+
+#: admin/jwppp-admin.php:352 admin/jwppp-admin.php:355
+msgid "Next Up"
+msgstr ""
+
+#: admin/jwppp-admin.php:356
+msgid "Add a different text for the \"Next Up\" prompt"
+msgstr ""
+
+#: admin/jwppp-admin.php:362
+msgid "Playlist tooltip"
+msgstr ""
+
+#: admin/jwppp-admin.php:365
+msgid "Playlist"
+msgstr ""
+
+#: admin/jwppp-admin.php:366
+msgid "Add a different text for the tooltip in Playlist mode"
+msgstr ""
+
+#: admin/jwppp-admin.php:375
+msgid "Save changes "
+msgstr ""
+
+#: admin/jwppp-admin.php:390
+msgid ""
+"Skin customization options depends from the JW Player version in use."
+"<br>Please add first the <b><i>Player library URL</i></b>"
+msgstr ""
+
+#: admin/jwppp-admin.php:420
+msgid ""
+"If you like <strong>JW Player for Wordpress</strong>, please give it a <a "
 "href=\"https://wordpress.org/support/view/plugin-reviews/jw-player-7-for-wp?"
 "filter=5#postform\" target=\"_blank\">★★★★★</a> rating. Thanks in advance! "
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-ajax-add-video-callback.php:22
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:26
+#: admin/skin/jwppp-admin-skin-7.php:57
+msgid "Skin URL"
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-7.php:61
+msgid "The url of the style.css file of your custom skin."
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-7.php:68
+msgid "Skin name"
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-7.php:72
+msgid "The name of your custom skin."
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-7.php:81
+msgid "Active"
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-7.php:85
+msgid ""
+"    Active skin elements. This includes active and highlighted labels, as "
+"well scrubber time that has elapsed."
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-7.php:92
+msgid "Inactive"
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-7.php:96
+msgid ""
+"    Skin elements that are not active. This includes scrubber time that has "
+"not yet elapsed."
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-7.php:103
+msgid "Background"
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-7.php:107 admin/skin/jwppp-admin-skin-8.php:36
+msgid "The color of hovered or selected icons in the control bar."
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:10
+msgid "Constrolbar text"
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:14
+msgid "The color of any plain text in the control bar, such as the time."
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:21
+msgid "Constrolbar icons"
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:25
+msgid "The default, inactive color of all icons in the control bar."
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:32
+msgid "Constrolbar active icons"
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:43
+msgid "Constrolbar background"
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:47
+msgid ""
+"The background color of the control bar and the volume slider. The default "
+"background is transparent."
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:54
+msgid "Timeslider progress"
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:58
+msgid ""
+"The color of the bar in the time slider filled in from the beginning of the "
+"video through the current position."
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:65
+msgid "Timeslider rail"
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:69
+msgid "The color of the base of the timeslider, known as the rail."
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:76
+msgid "Menus text"
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:80
+msgid "The color of inactive, default text in menus and the Next Up overlay."
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:87
+msgid "Menus active text"
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:91
+msgid "The color of hovered or selected text in menus. "
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:98
+msgid "Menus background"
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:102
+msgid "The background color of menus and the Next Up overlay."
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:109
+msgid "Tooltips text"
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:113
+msgid "The text color of tooltips."
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:120
+msgid "Tooltips background"
+msgstr ""
+
+#: admin/skin/jwppp-admin-skin-8.php:124
+msgid "The background color of tooltips."
+msgstr ""
+
+#: includes/jwppp-ajax-add-video-callback.php:18
+#: includes/jwppp-single-video-box.php:26
 msgid "Media URL"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-ajax-add-video-callback.php:25
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:29
+#: includes/jwppp-ajax-add-video-callback.php:21
 msgid "Video (YouTube or self-hosted), Audio or Playlist (Premium)"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-ajax-add-video-callback.php:27
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:31
+#: includes/jwppp-ajax-add-video-callback.php:23
+#: includes/jwppp-single-video-box.php:31
 msgid "More options"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-ajax-add-video-callback.php:42
+#: includes/jwppp-ajax-add-video-callback.php:38
 msgid ""
 "With the <strong>Premium</strong> version you'll be able to embed "
 "<strong>more videos</strong>, each with <strong>full options</strong>. "
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-functions.php:23
-msgid "JW Player 7"
+#: includes/jwppp-functions.php:23
+msgid "JW Player for Wordpress"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:67
+#: includes/jwppp-single-video-box.php:29
+msgid "Add here your media url"
+msgstr ""
+
+#: includes/jwppp-single-video-box.php:67
 msgid "More sources"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:68
+#: includes/jwppp-single-video-box.php:68
 msgid "Used for quality toggling and alternate sources."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:76
+#: includes/jwppp-single-video-box.php:76
 msgid "Source url"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:81
+#: includes/jwppp-single-video-box.php:81
 msgid "Video poster image"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:83
+#: includes/jwppp-single-video-box.php:83
 msgid "Add a different poster image for this video"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:86
+#: includes/jwppp-single-video-box.php:86
 msgid "Video title"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:88
+#: includes/jwppp-single-video-box.php:88
 msgid "Add a title to your video"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:91
+#: includes/jwppp-single-video-box.php:91
 msgid "Video description"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:93
+#: includes/jwppp-single-video-box.php:93
 msgid "Add a description to your video"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:100
+#: includes/jwppp-single-video-box.php:100
 msgid "Force a media type"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:101
+#: includes/jwppp-single-video-box.php:101
 msgid "Only required when a file extension is missing or not recognized"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:123
+#: includes/jwppp-single-video-box.php:122
 msgid "Autostarting on page load."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:133
+#: includes/jwppp-single-video-box.php:131
 msgid "Mute the video during playback."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:143
+#: includes/jwppp-single-video-box.php:140
 msgid "Repeat the video during playback."
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:153
+#: includes/jwppp-single-video-box.php:150
 msgid "Allow to embed this video"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:163
+#: includes/jwppp-single-video-box.php:159
 msgid "Allow to download this video"
 msgstr ""
 
-#: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-single-video-box.php:173
+#: includes/jwppp-single-video-box.php:168
 msgid "Add Chapters, Subtitles or Preview Thumbnails"
 msgstr ""

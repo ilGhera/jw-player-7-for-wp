@@ -8,10 +8,6 @@ function jwppp_ajax_add_video_callback($post) {
 	echo '<td class="jwppp-input-wrap" style="width: 100%;">';
 	wp_nonce_field( 'jwppp_save_meta_box_data', 'jwppp_meta_box_nonce' );
 
-	$video_url = get_post_meta( $post->ID, '_jwppp-video-url', true );
-	$video_title = get_post_meta($post->ID, '_jwppp-video-title', true);
-	$video_description = get_post_meta($post->ID, '_jwppp-video-description', true);
-	$jwppp_embed_video = sanitize_text_field(get_option('jwppp-embed-video'));
 	
 	//JUST A LITTLE OF STYLE
 	echo '<style>';

@@ -26,7 +26,7 @@ echo '<label for="_jwppp-video-url-1">';
 echo '<strong>' . __( 'Media URL', 'jwppp' ) . '</strong>';
 echo '<a class="question-mark" href="https://www.ilghera.com/support/topic/media-formats-supported/" title="More informations" target="_blank"><img class="question-mark" src="' . plugins_url('jw-player-7-for-wp') . '/images/question-mark.png" /></a></th>';
 echo '</label> ';
-echo '<p><input type="text" id="_jwppp-video-url-1" name="_jwppp-video-url-1" placeholder="' . __('Video (YouTube or self-hosted), Audio or Playlist (Premium)', 'jwppp') . '" value="' . esc_attr( $video_url ) . '" size="60" /></p>';
+echo '<p><input type="text" id="_jwppp-video-url-1" name="_jwppp-video-url-1" placeholder="' . __('Add here your media url', 'jwppp') . '" value="' . esc_attr( $video_url ) . '" size="60" /></p>';
 
 echo '<a class="button more-options-1">' . __('More options', 'jwppp') . '</a>';
 if(get_option('jwppp-position') == 'custom') {

@@ -211,6 +211,7 @@ function jwppp_video_code($p, $width, $height) {
 		$jwppp_video_url = get_post_meta($p_id, '_jwppp-video-url-1', true);
 		$source_url = get_post_meta($p_id, '_jwppp-1-source-1-url', true);
 		$jwppp_media_type = get_post_meta($p_id, '_jwppp-media-type-1', true);
+		$player_version = sanitize_text_field(get_option('jwppp-player-version'));
 
 		$youtube1 = 'https://www.youtube.com/watch?v=';
 		$youtube2 = 'https://youtu.be/';
@@ -287,7 +288,7 @@ function jwppp_video_code($p, $width, $height) {
 
 			    }			   
 
-			    if($jwppp_skin != 'none') {
+			    if($player_version == 7 && $jwppp_skin != 'none') {
 			    	$output .= "skin: {\n";
 			    	$output .= "name: '" . $jwppp_skin . "'\n";
 			    	$output .= "},\n";
