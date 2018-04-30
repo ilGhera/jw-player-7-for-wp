@@ -169,7 +169,7 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
  			}
  			echo '<tr>';
  			echo '<th scope="row">' . __('JWP Licence Key', 'jwppp');
- 			echo '<a href="https://www.ilghera.com/support/topic/jw-player-self-hosted-setup/" title="More informations" target="_blank"><img class="question-mark" src="' . plugins_url('jw-player-7-for-wp-premium') . '/images/question-mark.png" /></a></th>';
+ 			echo '<a href="https://www.ilghera.com/support/topic/jw-player-self-hosted-setup/" title="More informations" target="_blank"><img class="question-mark" src="' . plugins_url('jw-player-7-for-wp') . '/images/question-mark.png" /></a></th>';
  			echo '<td>';
  			echo '<input type="text" class="regular-text" id="jwppp-licence" name="jwppp-licence" placeholder="Only for self-hosted players" value="' . $licence . '" />';
  			echo '<p class="description">' . __('Self hosted player? Please, add your JW Player license key.', 'jwppp') . '</p>';
