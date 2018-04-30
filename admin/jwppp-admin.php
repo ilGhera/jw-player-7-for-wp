@@ -1,14 +1,14 @@
 <?php
 
 /**
- * JW Player for Wordpress
+ * JW Player for Wordpress - Premium
  * Administration functions
  */
 
 //GET THE SCRIPT REQUIRED FROM THE MENU
 function jwppp_register_js_menu() {
-	wp_register_script('jwppp-admin-nav', plugins_url('js/jwppp-admin-nav.js', 'jw-player-7-for-wp/js'), array('jquery'), '1.0', true );
-	wp_enqueue_style('jwppp-style', plugins_url('includes/jwppp-style.css', 'jw-player-7-for-wp/includes'));
+	wp_register_script('jwppp-admin-nav', plugin_dir_url(__DIR__) . 'js/jwppp-admin-nav.js', array('jquery'), '1.0', true );
+	wp_enqueue_style('jwppp-style', plugin_dir_url(__DIR__) . 'includes/jwppp-style.css');
 }
 add_action( 'admin_init', 'jwppp_register_js_menu' );
 
@@ -21,7 +21,7 @@ add_action( 'admin_menu', 'jwppp_js_menu' );
 
 //MENU ITEMS
 function jwppp_add_menu() {
-	$jwppp_page = add_menu_page( 'JW Player for Wordpress', 'JW Player', 'manage_options', 'jw-player-for-wp', 'jwppp_options', 'dashicons-format-video');
+	$jwppp_page = add_menu_page( 'JW Player for Wordpress - Premium', 'JW Player', 'manage_options', 'jw-player-for-wp', 'jwppp_options', 'dashicons-format-video');
 	
 	//SCRIPT
 	add_action( 'admin_print_scripts-' . $jwppp_page, 'jwppp_js_menu');
@@ -39,6 +39,15 @@ function jwppp_add_color_picker() {
     }
 }
 add_action( 'admin_enqueue_scripts', 'jwppp_add_color_picker' );
+
+
+//VALIDATE COLOR
+function jwppp_check_color( $value ) { 
+    if ( preg_match( '/^#[a-f0-9]{6}$/i', $value ) || $value == '' ) {     
+        return true;
+    }
+    return false;
+}
 
 
 //AJAX - CHECK THE PLAYER VERSION FOR SKIN CUSTOMIZATION
@@ -103,6 +112,26 @@ function skin_customization_per_version_callback() {
 add_action('wp_ajax_skin-customization', 'skin_customization_per_version_callback');
 
 
+//CHECK FOR CAPTION STYLE
+function jwppp_caption_style() {
+	$options = array(
+		'jwppp-subtitles-color',
+		'jwppp-subtitles-font-size',
+		'jwppp-subtitles-font-family',
+		'jwppp-subtitles-opacity',
+		'jwppp-subtitles-back-color',
+		'jwppp-subtitles-back-opacity'
+	);
+	foreach ($options as $option) {
+		if(get_option($option)) {
+			return true;
+			continue;
+		}
+	}
+	return false;
+}
+
+
 //OPTION PAGE
 function jwppp_options() {
 	
@@ -111,13 +140,13 @@ function jwppp_options() {
 		wp_die( __( 'It looks like you do not have sufficient permissions to view this page.', 'jwppp' ) );
 	}
 
-//INIZIO TEMPLATE DI PAGINA
+//START PAGE TEMPLATE
 echo '<div class="wrap">'; 
-echo '<div class="wrap-left" style="float:left; width:70%;">';
+	echo '<div class="wrap-left" style="float:left; width:70%;">';
 
 	echo '<div id="jwppp-description">';
 	    //HEADER
-		echo "<h1 class=\"jwppp main\">" . __( 'JW Player for Wordrpess', 'jwppp' ) . "<span style=\"font-size:60%;\"> 1.5.1</span></h1>";
+		echo "<h1 class=\"jwppp main\">" . __( 'JW Player for Wordpress - Premium', 'jwppp' ) . "<span style=\"font-size:60%;\"> 1.5.2</span></h1>";
 	echo '</div>';
 
 ?>
@@ -140,6 +169,20 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
  			echo '<form id="jwppp-options" method="post" action="">';
  			echo '<table class="form-table">';
 
+ 			//PLUGIN PREMIUM KEY
+			$key = sanitize_text_field(get_option('jwppp-premium-key'));
+			if(isset($_POST['jwppp-premium-key'])) {
+				$key = sanitize_text_field($_POST['jwppp-premium-key']);
+				update_option('jwppp-premium-key', $key);
+			}
+			echo '<tr>';
+			echo '<th scope="row">' . __('Premium Key', 'jwppp') . '</th>';
+			echo '<td>';
+			echo '<input type="text" class="regular-text" name="jwppp-premium-key" id="jwppp-premium-key" placeholder="' . __('Add your Premium Key', 'jwppp' ) . '" value="' . $key . '" />';
+			echo '<p class="description">' . __('Please, paste here the <strong>Premium Key</strong> that you received buying this plugin.<br>You\'ll be able to keep upgraded with the new versions of JW Player for Wordpress - Premium.', 'jwppp') . '</p>';
+			echo '</td>';
+			echo '</tr>';
+
 			//JW PLAYER LIBRARY URL
 			$library = sanitize_text_field(get_option('jwppp-library'));
  			if(isset($_POST['jwppp-library'])) {
@@ -154,7 +197,7 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
 
  			echo '<tr>';
  			echo '<th scope="row">' . __('Player library URL', 'jwppp');
- 			echo '<a href="https://www.ilghera.com/documentation/setup-the-player/" title="More informations" target="_blank"><img class="question-mark" src="' . plugins_url('jw-player-7-for-wp') . '/images/question-mark.png" /></a></th>';
+ 			echo '<a href="https://www.ilghera.com/documentation/setup-the-player/" title="More informations" target="_blank"><img class="question-mark" src="' . plugin_dir_url(__DIR__) . '/images/question-mark.png" /></a></th>';
  			echo '<td>';
  			echo '<input type="text" class="regular-text" id="jwppp-library" name="jwppp-library" placeholder="https://content.jwplatform.com/libraries/jREFGDT.js" value="' . $library . '" />';
  			echo '<p class="description">You can use a cloud or a self hosted library.</p>';
@@ -169,7 +212,7 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
  			}
  			echo '<tr>';
  			echo '<th scope="row">' . __('JWP Licence Key', 'jwppp');
- 			echo '<a href="https://www.ilghera.com/support/topic/jw-player-self-hosted-setup/" title="More informations" target="_blank"><img class="question-mark" src="' . plugins_url('jw-player-7-for-wp-premium') . '/images/question-mark.png" /></a></th>';
+ 			echo '<a href="https://www.ilghera.com/support/topic/jw-player-self-hosted-setup/" title="More informations" target="_blank"><img class="question-mark" src="' . plugin_dir_url(__DIR__) . '/images/question-mark.png" /></a></th>';
  			echo '<td>';
  			echo '<input type="text" class="regular-text" id="jwppp-licence" name="jwppp-licence" placeholder="Only for self-hosted players" value="' . $licence . '" />';
  			echo '<p class="description">' . __('Self hosted player? Please, add your JW Player license key.', 'jwppp') . '</p>';
@@ -177,13 +220,16 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
  			echo '</tr>';
 
  			//POST TYPES WITH WHICH USE THE PLUGIN
- 			$jwppp_get_types = array('post', 'page');
+ 			$jwppp_get_types = get_post_types(array('public' => true));
+ 			$exclude = array('attachment', 'nav_menu_item');
 
  			echo '<tr>';
  			echo '<th scope="row">' . __('Post types', 'jwppp') . '</th>';
  			echo '<td>';
 
  			foreach($jwppp_get_types as $type) {
+ 				if(!in_array($type, $exclude)) {
+
  					$var_type = get_option('jwppp-type-' . $type);
  					if(isset($_POST['done'])) {
  						$var_type = isset($_POST[$type]) ? $_POST[$type] : 0;
@@ -192,9 +238,9 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
 	 				echo '<input type="checkbox" name="' . $type . '" id="' . $type . '" value="1"';
 	 				echo ($var_type == 1) ? 'checked="checked"' : '';
 	 				echo ' /><span class="jwppp-type">' . ucfirst($type) . '</span><br>';
+ 				}
  			}
- 			echo '<p class="description">' . __('Select the type of content where display videos.', 'jwppp') . '<br>';
- 			echo '<a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a> ' . __('for custom post types.', 'jwppp') . '</p>';
+ 			echo '<p class="description">' . __('Select the type of content to display videos.', 'jwppp') . '</p>';
  			echo '</td>';
  			echo '</tr>';
 
@@ -205,7 +251,6 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
  				$position = $_POST['position'];
  				update_option('jwppp-position', $_POST['position']);
  			}
-
  			echo '<th scope="row">' . __('Video Player position', 'jwppp') . '</th>';
  			echo '<td>';
  			echo '<select id="position" name="position" />';
@@ -225,12 +270,17 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
  			echo '</tr>';
 
  			//TEXT
+			$jwppp_text = sanitize_text_field(get_option('jwppp-text'));
+			if(isset($_POST['jwppp-text'])) {
+				$jwppp_text = sanitize_text_field($_POST['jwppp-text']);
+				update_option('jwppp-text', $jwppp_text);
+			}
+
  			echo '<tr>';
  			echo '<th scope="row">' . __('Video text', 'jwppp') . '</th>';
  			echo '<td>';
- 			echo '<textarea cols="40" rows="2" id="jwppp-text" name="jwppp-text" disabled="disabled" placeholder="' . __('Loading the player...', 'jwppp') . '"></textarea>';
- 			echo '<p class="description">' . __('Add custom text that appears while the player is loading.', 'jwppp') . '<br>';
- 			echo '<a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';
+ 			echo '<textarea cols="40" rows="2" id="jwppp-text" name="jwppp-text" placeholder="' . __('Loading the player...', 'jwppp') . '">' . $jwppp_text . '</textarea>';
+ 			echo '<p class="description">' . __('Add custom text that appears while the player is loading.', 'jwppp') . '</p>';
  			echo '</td>';
  			echo '</tr>';
 
@@ -265,7 +315,14 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
 			echo '<p class="description">' . __('When present, use the post thumbnail as poster image.', 'jwppp') . '</p>';
 			echo '<td>';
  			echo '</tr>';
- 		
+
+ 			//FIXED DIMENSIONS OR RESPONSIVE?
+ 			$jwppp_method_dimensions = sanitize_text_field(get_option('jwppp-method-dimensions'));
+ 			if(isset($_POST['jwppp-method-dimensions'])) {
+ 				$jwppp_method_dimensions = sanitize_text_field($_POST['jwppp-method-dimensions']);
+ 				update_option('jwppp-method-dimensions', $jwppp_method_dimensions);
+ 			}
+
  			//PLAYER FIXED WIDTH
  			$jwppp_player_width = sanitize_text_field(get_option('jwppp-player-width'));
  			if(isset($_POST['jwppp-player-width'])) {
@@ -280,17 +337,33 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
  				update_option('jwppp-player-height', $jwppp_player_height);
  			}
 
+ 			//PLAYER %
+ 			$jwppp_responsive_width = sanitize_text_field(get_option('jwppp-responsive-width'));
+ 			if(isset($_POST['jwppp-responsive-width'])) {
+ 				$jwppp_responsive_width = sanitize_text_field($_POST['jwppp-responsive-width']);
+ 				update_option('jwppp-responsive-width', $jwppp_responsive_width);
+ 			}
+
+ 			//PLAYER ASPECT RATIO
+ 			$jwppp_aspectratio = sanitize_text_field(get_option('jwppp-aspectratio'));
+ 			if(isset($_POST['jwppp-aspectratio'])) {
+ 				$jwppp_aspectratio = sanitize_text_field($_POST['jwppp-aspectratio']);
+ 				update_option('jwppp-aspectratio', $jwppp_aspectratio);
+ 			}
+
  			//FIXED DIMENSIONS OR RESPONSIVE? 
  			echo '<tr>';
  			echo '<th scope="row">Player dimensions</th>';
  			echo '<td>';
- 			echo '<select id="jwppp-method-dimensions" name="jwppp-method-dimensions" disabled="disabled" />';
+ 			echo '<select id="jwppp-method-dimensions" name="jwppp-method-dimensions" />';
  			echo '<option name="fixed" id="fixed" value="fixed" ';
- 			echo 'selected="selected"';
+ 			echo ($jwppp_method_dimensions == 'fixed') ? 'selected="selected"' : '';
  			echo '>' . __('Fixed', 'jwppp') . '</option>';
+ 			echo '<option name="responsive" id="responsive" value="responsive"';
+ 			echo ($jwppp_method_dimensions == 'responsive') ? 'selected="selected"' : '';
+ 			echo '>' . __('Responsive', 'jwppp') . '</option>';
  			echo '</select>';
- 			echo '<p class="description">' . __('Select how define the measures of the player.', 'jwppp') . '<br>';
- 			echo '<a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a> for a responsive player</p>';
+ 			echo '<p class="description">' . __('Select how define the measures of the player.', 'jwppp') . '</p>';
  			echo '</td>';
  			echo '</tr>';
 
@@ -309,65 +382,137 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
  			echo '</td>';
  			echo '</tr>';
 
-			//LOGO
-			echo '<tr>';
-			echo '<th scope="row">' . __('Logo', 'jwppp') . '</th>';
+ 			//PLAYER %
+			echo '<tr class="more-responsive">';
+			echo '<th scope="row">' . __('Player width', 'jwppp') . '</th>';
 			echo '<td>';
-			echo '<input type="text" class="regular-text" id="jwppp-logo" name="jwppp-logo" disabled="disabled" ';
-			echo 'placeholder="' . __('Image url', 'jwppp') . '" value="" />';
-			echo '<p class="description">' . __('Add your logo to the player.', 'jwppp') . '<br>';
- 			echo '<a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';
+			echo '<input type="number" min="10" step="5" class="small-text" id="jwppp-responsive-width" name="jwppp-responsive-width" value="';
+			echo ($jwppp_responsive_width != null) ? $jwppp_responsive_width : '100';
+			echo '" /> %';
+			echo '<p class="description">' . __('Add the player\'s width (eg. 80%)', 'jwppp') . '</p>';
 			echo '</td>';
 			echo '</tr>';
 
+			//PLAYER ASPECT RATIO
+			echo '<tr class="more-responsive">';
+			echo '<th scope="row">' . __('Aspect ratio', 'jwppp') . '</th>';
+			echo '<td>';
+			echo '<select id="jwppp-aspectratio" name="jwppp-aspectratio" class="small-text" />';
+			echo '<option name="16:10" value="16:10"';
+			echo ($jwppp_aspectratio == '16:10') ? ' selected="selected"' : '';
+			echo '>16:10</option>';
+			echo '<option name="16:9" value="16:9"';
+			echo ($jwppp_aspectratio == '16:9') ? ' selected="selected"' : '';
+			echo '>16:9</option>';
+			echo '<option name="4:3" value="4:3"';
+			echo ($jwppp_aspectratio == '4:3') ? ' selected="selected"' : '';
+			echo '>4:3</option>';
+			echo '</select>';
+			echo '<p class="description">' . __('Select the aspect ratio of the player', 'jwppp') . '</p>';
+			echo '</td>';
+			echo '</tr>';
+
+
+			//LOGO
+			$jwppp_logo = sanitize_text_field(get_option('jwppp-logo'));
+			if(isset($_POST['jwppp-logo'])) {
+				$jwppp_logo = sanitize_text_field($_POST['jwppp-logo']);
+				update_option('jwppp-logo', $jwppp_logo);
+			}
+
 			//LOGO POSITION
+			$jwppp_logo_vertical = sanitize_text_field(get_option('jwppp-logo-vertical'));
+ 			if(isset($_POST['jwppp-logo-vertical'])) {
+ 				$jwppp_logo_vertical = sanitize_text_field($_POST['jwppp-logo-vertical']);
+ 				update_option('jwppp-logo-vertical', $jwppp_logo_vertical);
+ 			}
+			$jwppp_logo_horizontal = sanitize_text_field(get_option('jwppp-logo-horizontal'));
+ 			if(isset($_POST['jwppp-logo-horizontal'])) {
+ 				$jwppp_logo_horizontal = sanitize_text_field($_POST['jwppp-logo-horizontal']);
+ 				update_option('jwppp-logo-horizontal', $jwppp_logo_horizontal);
+ 			}
+
+			//LOGO LINK
+			$jwppp_logo_link = sanitize_text_field(get_option('jwppp-logo-link'));
+			if(isset($_POST['jwppp-logo-link'])) {
+				$jwppp_logo_link = sanitize_text_field($_POST['jwppp-logo-link']);
+				update_option('jwppp-logo-link', $jwppp_logo_link);
+			}
+
+			//NEXT UP
+			$jwppp_next_up = sanitize_text_field(get_option('jwppp-next-up'));
+			if(isset($_POST['jwppp-next-up'])) {
+				$jwppp_next_up = sanitize_text_field($_POST['jwppp-next-up']);
+				update_option('jwppp-next-up', $jwppp_next_up);
+			}
+
+
+			//PLAYLIST TOOLTIP
+			$jwppp_playlist_tooltip = sanitize_text_field(get_option('jwppp-playlist-tooltip'));
+			if(isset($_POST['jwppp-playlist-tooltip'])) {
+				$jwppp_playlist_tooltip = sanitize_text_field($_POST['jwppp-playlist-tooltip']);
+				update_option('jwppp-playlist-tooltip', $jwppp_playlist_tooltip);
+			}
+
+
+			echo '<tr>';
+			echo '<th scope="row">' . __('Logo', 'jwppp') . '</th>';
+			echo '<td>';
+			echo '<input type="text" class="regular-text" id="jwppp-logo" name="jwppp-logo" ';
+			echo 'placeholder="' . __('Image url', 'jwppp') . '" value="' . $jwppp_logo . '" />';
+			echo '<p class="description">' . __('Add your logo to the player.', 'jwppp') . '</p>';
+			echo '</td>';
+			echo '</tr>';
+
 			echo '<tr>';
 			echo '<th scope="row">' . __('Logo Position', 'jwppp') . '</th>';
 			echo '<td>';
-			echo '<select id="jwppp-logo-vertical" name="jwppp-logo-vertical" disabled="disabled"/>';
-			echo '<option id="top" name="top" value="top" selected="selected">Top</option>';
-			echo '<option id="bottom" name="bottom" value="bottom">Bottom</option>';
+			echo '<select id="jwppp-logo-vertical" name="jwppp-logo-vertical" />';
+			echo '<option id="top" name="top" value="top"';
+			echo ($jwppp_logo_vertical == 'top') ? ' selected="selected"' : '';
+			echo '>Top</option>';
+			echo '<option id="bottom" name="bottom" value="bottom"';
+			echo ($jwppp_logo_vertical == 'bottom') ? ' selected="selected"' : '';
+			echo '>Bottom</option>';
 			echo '</select>';
-			echo '<select style="margin-left: 0.5rem;" id="jwppp-logo-horizontal" name="jwppp-logo-horizontal" disabled="disabled" />';
-			echo '<option id="right" name="right" value="right" selected="selected">Right</option>';
-			echo '<option id="left" name="left" value="left">Left</option>';
+			echo '<select style="margin-left: 0.5rem;" id="jwppp-logo-horizontal" name="jwppp-logo-horizontal" />';
+			echo '<option id="right" name="right" value="right"';
+			echo ($jwppp_logo_horizontal == 'right') ? ' selected="selected"' : '';
+			echo '>Right</option>';
+			echo '<option id="left" name="left" value="left"';
+			echo ($jwppp_logo_horizontal == 'left') ? ' selected="selected"' : '';
+			echo '>Left</option>';
 			echo '</select>';
 			echo '<p class="description">' . __('Choose the logo position.', 'jwppp') . '</p>';
- 			echo '<a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';
 			echo '</td>';
 			echo '</tr>';
-			
-			//LOGO LINK
+
 			echo '<tr>';
 			echo '<th scope="row">' . __('Logo Link', 'jwppp') . '</th>';
 			echo '<td>';
-			echo '<input type="text" class="regular-text" id="jwppp-logo-link" name="jwppp-logo-link" disabled="disabled" ';
-			echo 'placeholder="' . __('Link url', 'jwppp') . '" value="" />';
-			echo '<p class="description">' . __('Add a link to the logo.', 'jwppp') . '<br>';
- 			echo '<a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';
+			echo '<input type="text" class="regular-text" id="jwppp-logo-link" name="jwppp-logo-link" ';
+			echo 'placeholder="' . __('Link url', 'jwppp') . '" value="' . $jwppp_logo_link . '" />';
+			echo '<p class="description">' . __('Add a link to the logo.', 'jwppp') . '</p>';
 			echo '</td>';
 			echo '</tr>';
 
 			echo '<tr>';
 			echo '<th scope="row">' . __('Next Up', 'jwppp') . '</th>';
 			echo '<td>';
-			echo '<input type="text" class="regular-text" id="jwppp-next-up" name="jwppp-next-up" disabled="disabled" ';
-			echo 'placeholder="' . __('Next Up', 'jwppp') . '" value="Next Up" />';
+			echo '<input type="text" class="regular-text" id="jwppp-next-up" name="jwppp-next-up" ';
+			echo 'placeholder="' . __('Next Up', 'jwppp') . '" value="' . $jwppp_next_up . '" />';
 			echo '<p class="description">' . __('Add a different text for the "Next Up" prompt', 'jwppp') . '</p>';
- 			echo '<a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';	
 			echo '</td>';
 			echo '</tr>';
 
 			echo '<tr>';
 			echo '<th scope="row">' . __('Playlist tooltip', 'jwppp') . '</th>';
 			echo '<td>';
-			echo '<input type="text" class="regular-text" id="jwppp-playlist-tooltip" name="jwppp-playlist-tooltip" disabled="disabled"';
-			echo 'placeholder="' . __('Playlist', 'jwppp') . '" value="Playlist" />';
+			echo '<input type="text" class="regular-text" id="jwppp-playlist-tooltip" name="jwppp-playlist-tooltip" ';
+			echo 'placeholder="' . __('Playlist', 'jwppp') . '" value="' . $jwppp_playlist_tooltip . '" />';
 			echo '<p class="description">' . __('Add a different text for the tooltip in Playlist mode', 'jwppp') . '</p>';
- 			echo '<a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';	
 			echo '</td>';
 			echo '</tr>';
-
 
  			echo '</table>';
 
@@ -378,11 +523,17 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
  	</div>
 	<!-- END - SETTINGS -->
 
-
+	
 	<!-- START - SKIN -->
 	<?php
 	if(get_option('jwppp-player-version') == 7) {
+		
 		require('skin/jwppp-admin-skin-7-options.php');
+
+	} elseif(get_option('jwppp-player-version') == 8) {
+	
+		require('skin/jwppp-admin-skin-8-options.php');
+
 	}
 	?>
 
@@ -403,7 +554,7 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
 
 	</div><!-- WRAP LEFT -->
 	<div class="wrap-right" style="float:left; width:30%; text-align:center; padding-top:3rem;">
-		<iframe width="300" height="800" scrolling="no" src="https://www.ilghera.com/images/jwppp-iframe.html"></iframe>
+		<iframe width="300" height="800" scrolling="no" src="http://www.ilghera.com/images/jwppp-premium-iframe.html"></iframe>
 	</div>
 	<div class="clear"></div>
 
@@ -417,10 +568,39 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
 function jwppp_footer_text($text) {
 	$screen = get_current_screen();
 	if($screen->id == 'toplevel_page_jw-player-for-wp') {
-		$text = __('If you like <strong>JW Player for Wordpress</strong>, please give it a <a href="https://wordpress.org/support/view/plugin-reviews/jw-player-7-for-wp?filter=5#postform" target="_blank">★★★★★</a> rating. Thanks in advance! ', 'jwppp');
+		$text = __('If you like <strong>JW Player for Wordpress - Premium</strong>, please give it a <a href="http://www.ilghera.com/product/jw-player-7-for-wordpress-premium" target="_blank">★★★★★</a> rating. Thanks in advance! ', 'jwppp');
 		echo $text;
 	} else {
 		echo $text;
 	}
 }
 add_filter('admin_footer_text', 'jwppp_footer_text');
+
+
+//UPDATE MESSAGE
+function jwppp_update_message( $plugin_data, $response) {
+	$key = get_option('jwppp-premium-key');
+	$message = null;
+
+	if(!$key) {
+
+		$message = 'A <b>Premium Key</b> is required for keeping this plugin up to date. Please, add yours in the <a href="' . admin_url() . 'admin.php/?page=jw-player-for-wp">options page</a> or click <a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">here</a> for prices and details.';
+	
+	} else {
+	
+		$decoded_key = explode('|', base64_decode($key));
+	    $bought_date = date( 'd-m-Y', strtotime($decoded_key[1]));
+	    $limit = strtotime($bought_date . ' + 365 day');
+	    $now = strtotime('today');
+
+	    if($limit < $now) { 
+	        $message = 'It seems like your <strong>Premium Key</strong> is expired. Please, click <a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">here</a> for prices and details.';
+	    } elseif($decoded_key[2] != 241) {
+	    	$message = 'It seems like your <strong>Premium Key</strong> is not valid. Please, click <a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">here</a> for prices and details.';
+	    }
+
+	}
+	echo ($message) ? '<br><span class="jwppp-alert">' . $message . '</span>' : '';
+
+}
+add_action('in_plugin_update_message-' . basename(dirname(__DIR__)) . '/jw-player-7-for-wp-premium.php', 'jwppp_update_message', 10, 2);

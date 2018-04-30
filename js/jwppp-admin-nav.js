@@ -1,9 +1,9 @@
 //JW PLAYER PREMIUM PLUGIN
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(function($) {
 
 	//TABS
-    var jwppp_pagination = function() {
+	var jwppp_pagination = function() {
 
         var $contents = $('.jwppp-admin')
         var url = window.location.href.split("#")[0];
