@@ -197,7 +197,7 @@ echo '<div class="wrap">';
 
  			echo '<tr>';
  			echo '<th scope="row">' . __('Player library URL', 'jwppp');
- 			echo '<a href="https://www.ilghera.com/documentation/setup-the-player/" title="More informations" target="_blank"><img class="question-mark" src="' . plugin_dir_url(__DIR__) . '/images/question-mark.png" /></a></th>';
+ 			echo '<a href="https://www.ilghera.com/documentation/setup-the-player/" title="More informations" target="_blank"><img class="question-mark" src="' . plugin_dir_url(__DIR__) . 'images/question-mark.png" /></a></th>';
  			echo '<td>';
  			echo '<input type="text" class="regular-text" id="jwppp-library" name="jwppp-library" placeholder="https://content.jwplatform.com/libraries/jREFGDT.js" value="' . $library . '" />';
  			echo '<p class="description">You can use a cloud or a self hosted library.</p>';
@@ -212,7 +212,7 @@ echo '<div class="wrap">';
  			}
  			echo '<tr>';
  			echo '<th scope="row">' . __('JWP Licence Key', 'jwppp');
- 			echo '<a href="https://www.ilghera.com/support/topic/jw-player-self-hosted-setup/" title="More informations" target="_blank"><img class="question-mark" src="' . plugin_dir_url(__DIR__) . '/images/question-mark.png" /></a></th>';
+ 			echo '<a href="https://www.ilghera.com/support/topic/jw-player-self-hosted-setup/" title="More informations" target="_blank"><img class="question-mark" src="' . plugin_dir_url(__DIR__) . 'images/question-mark.png" /></a></th>';
  			echo '<td>';
  			echo '<input type="text" class="regular-text" id="jwppp-licence" name="jwppp-licence" placeholder="Only for self-hosted players" value="' . $licence . '" />';
  			echo '<p class="description">' . __('Self hosted player? Please, add your JW Player license key.', 'jwppp') . '</p>';

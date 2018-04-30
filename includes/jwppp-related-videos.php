@@ -25,35 +25,37 @@ echo "<rss version=\"2.0\" xmlns:media=\"http://search.yahoo.com/mrss/\">\n";
 
 echo "<channel>\n";	
 
-while( have_posts()) : the_post();
+if(have_posts()) :
+	while( have_posts()) : the_post();
 
-	if(get_option('jwppp-image') == 'featured-image') {
+		if(get_option('jwppp-image') == 'featured-image') {
 
-		//Get the featured image url
-		$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'full' );
-		$url_image = $thumb[0];
+			//Get the featured image url
+			$thumb = wp_get_attachment_image_src( get_post_thumbnail_id(get_the_ID()), 'full' );
+			$url_image = $thumb[0];
 
-	} else {
+		} else {
 
-		//Get the custom field value
-		$key = get_option('jwppp-field');
-		$url_image = get_post_meta(get_the_ID(), $key, true);
+			//Get the custom field value
+			$key = get_option('jwppp-field');
+			$url_image = get_post_meta(get_the_ID(), $key, true);
 
-	}
+		}
 
-	$output = "<item>\n";
+		$output = "<item>\n";
 
-		$output .= "<title>" . get_the_title_rss() . "</title>\n";
+			$output .= "<title>" . get_the_title_rss() . "</title>\n";
 
-		$output .= "<link>" . get_the_permalink() . "</link>\n";
+			$output .= "<link>" . get_the_permalink() . "</link>\n";
 
-		$output .= "<media:thumbnail url=\"" . $url_image ."\"/>\n";
+			$output .= "<media:thumbnail url=\"" . $url_image ."\"/>\n";
 
-	$output .= "</item>\n";
+		$output .= "</item>\n";
 
-	echo $output;
+		echo $output;
 
-endwhile; 
+	endwhile; 
+endif;
   
 echo "</channel>\n";
 
