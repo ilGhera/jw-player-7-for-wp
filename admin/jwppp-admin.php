@@ -8,7 +8,7 @@
 //GET THE SCRIPT REQUIRED FROM THE MENU
 function jwppp_register_js_menu() {
 	wp_register_script('jwppp-admin-nav', plugin_dir_url(__DIR__) . 'js/jwppp-admin-nav.js', array('jquery'), '1.0', true );
-	wp_enqueue_style('jwppp-style', plugin_dir_url(__DIR__) . 'includes/jwppp-style.css');
+	wp_enqueue_style('jwppp-admin-style', plugin_dir_url(__DIR__) . 'css/jwppp-admin-style.css');
 }
 add_action( 'admin_init', 'jwppp_register_js_menu' );
 
