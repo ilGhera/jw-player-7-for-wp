@@ -3,18 +3,18 @@
 * JW PLAYER FOR WORDPRESS
 */
 
-require('jwppp-ajax-add-video-callback.php');
+require(plugin_dir_path(__FILE__) . 'jwppp-ajax-add-video-callback.php');
 
 //ADD META BOX
 function jwppp_add_meta_box() {
 
 	$jwppp_get_types = get_post_types();
-	$exclude = array('attachment', 'nav_menu_item');
+	// $exclude = array('attachment', 'nav_menu_item');
 	$screens = array();
 
 
 	foreach($jwppp_get_types as $type) {
-		if(sanitize_text_field(get_option('jwppp-type-' . $type) == 1)) {
+		if(sanitize_text_field(get_option('jwppp-type-' . $type) === '1')) {
 			array_push($screens, $type);
 		}
 	}
@@ -35,7 +35,7 @@ function jwppp_meta_box_callback( $post ) {
 	echo 'img.question-mark {position:relative; top:0.2rem;}';
 	echo '</style>';
 
-	require('jwppp-single-video-box.php');
+	require(plugin_dir_path(__FILE__) . 'jwppp-single-video-box.php');
 	
 }
 
@@ -47,7 +47,7 @@ function jwppp_save_meta_box_data( $post_id ) {
 		return;
 	}
 
-	if ( ! wp_verify_nonce( $_POST['jwppp_meta_box_nonce'], 'jwppp_save_meta_box_data' ) ) {
+	if ( ! wp_verify_nonce( sanitize_key($_POST['jwppp_meta_box_nonce']), 'jwppp_save_meta_box_data' ) ) {
 		return;
 	}
 
@@ -55,7 +55,7 @@ function jwppp_save_meta_box_data( $post_id ) {
 		return;
 	}
 
-	if ( isset( $_POST['post_type'] ) && 'page' == $_POST['post_type'] ) {
+	if ( isset( $_POST['post_type'] ) && 'page' === sanitize_text_field($_POST['post_type']) ) {
 		if ( ! current_user_can( 'edit_page', $post_id ) ) {
 			return;
 		}
@@ -84,7 +84,6 @@ function jwppp_save_meta_box_data( $post_id ) {
 	} else {
 		$title = sanitize_text_field($_POST['_jwppp-video-title-1']);
 		update_post_meta( $post_id, '_jwppp-video-title-1', $title );
-
 	}
 
 	if ( ! isset( $_POST['_jwppp-video-description-1'] ) ) {
@@ -96,13 +95,14 @@ function jwppp_save_meta_box_data( $post_id ) {
 	}
 
 
+
 	//MEDIA TYPE
-	if($_POST['activate-media-type-hidden-1'] == 1) {
-		$jwppp_activate_media_type = isset($_POST['_jwppp-activate-media-type-1']) ? $_POST['_jwppp-activate-media-type-1'] : 0;
+	if(sanitize_text_field($_POST['activate-media-type-hidden-1']) === '1') {
+		$jwppp_activate_media_type = isset($_POST['_jwppp-activate-media-type-1']) ? sanitize_text_field($_POST['_jwppp-activate-media-type-1']) : 0;
 		update_post_meta( $post_id, '_jwppp-activate-media-type-1', $jwppp_activate_media_type );
 	}
 
-	if($jwppp_activate_media_type == 1) {
+	if(sanitize_text_field($jwppp_activate_media_type) === '1') {
 		$media_type = sanitize_text_field($_POST['_jwppp-media-type-1']);
 		update_post_meta( $post_id, '_jwppp-media-type-1', $media_type );
 	} else {
@@ -165,30 +165,27 @@ add_action( 'admin_footer', 'jwppp_remove_video' );
 function jwppp_add_header_code() {
 	$library = sanitize_text_field(get_option('jwppp-library'));
 	$licence = sanitize_text_field(get_option('jwppp-licence'));
-	if($library != null) {
-		echo "<script src=\"$library\"></script>\n";
+
+	if($library !== null) {
+		wp_enqueue_script('jwppp-library', $library);
 	}
-	if($licence != null) {
-		echo "<script>jwplayer.key=\"$licence\";</script>\n";
+	if($licence !== null) {
+		wp_register_script('jwppp-licence', plugin_dir_url(__DIR__) . 'js/jwppp-licence.js');
+		
+		/*Useful for passing data*/
+		$data = array(
+			'licence' => sanitize_text_field(get_option('jwppp-licence'))
+		);
+		wp_localize_script('jwppp-licence', 'data', $data);
+		
+		wp_enqueue_script('jwppp-licence');
 	}
 
 	//ADD STYLE FOR BETTER PREVIEW IMAGE
-	echo "<style>.jw-preview { background-size: 100% auto !important;}</style>";
+	wp_enqueue_style('jwppp-style', plugin_dir_url(__DIR__) . 'css/jwppp-style.css');
 }
-add_filter('wp_head', 'jwppp_add_header_code');
+add_action('wp_enqueue_scripts', 'jwppp_add_header_code');
 
-
-//GET ALL VIDEO POSTS
-function jwppp_get_video_posts() {
-	global $wpdb;
-	$query = "SELECT * FROM $wpdb->postmeta WHERE meta_key = '_jwppp-video-url-1' AND meta_value <> ''";
-	$posts = $wpdb->get_results($query);
-	$video_posts = array();
-	foreach($posts as $post) {
-		array_push($video_posts, $post->post_id);
-	}
-	return $video_posts;
-}
 
 //JW PLAYER CODE
 function jwppp_video_code($p, $width, $height) {
@@ -231,15 +228,14 @@ function jwppp_video_code($p, $width, $height) {
 			$jwppp_embed_url = $jwppp_video_url;
 			$yt_parts = explode($youtube_embed, $jwppp_video_url);
 			$yt_video_id = $yt_parts[1];
+		} else {
+			$jwppp_embed_url = $jwppp_video_url;
 		}
 
 		if($yt_video_id) {
 			$yt_video_image = 'https://img.youtube.com/vi/' . $yt_video_id . '/maxresdefault.jpg';
 		}
 		
-		$jwppp_show_related = sanitize_text_field(get_option('jwppp-show-related'));
-		$jwppp_show_ads = sanitize_text_field(get_option('jwppp-active-ads'));
-
 		$this_video = $p_id . 1;
 
 		$output = "<div id='jwppp-video-box-" . $this_video . "' style=\"margin: 1rem 0;\">\n";
@@ -263,9 +259,9 @@ function jwppp_video_code($p, $width, $height) {
 					$output .= "],\n";
 				}
 			    
-			    if(has_post_thumbnail($p_id) && get_option('jwppp-post-thumbnail') == 1) {
+			    if(has_post_thumbnail($p_id) && get_option('jwppp-post-thumbnail') === '1') {
 			    	$output .= "image: '" . get_the_post_thumbnail_url() . "',\n";
-			    } else if($yt_video_id != null) {
+			    } else if($yt_video_id !== null) {
 			    	$output .= "image: '" . $yt_video_image . "',\n";
 				} else if(get_option('jwppp-poster-image')) {
 				    $output .= "image: '" . get_option('jwppp-poster-image') . "',\n";
@@ -280,15 +276,15 @@ function jwppp_video_code($p, $width, $height) {
 				} else {
 
 				    $output .= "width: '";
-				    $output .= ($jwppp_player_width != null) ? $jwppp_player_width : '640';
+				    $output .= ($jwppp_player_width !== null) ? $jwppp_player_width : '640';
 				    $output .= "',\n";
 				    $output .= "height: '";
-				    $output .= ($jwppp_player_height != null) ? $jwppp_player_height : '360';
+				    $output .= ($jwppp_player_height !== null) ? $jwppp_player_height : '360';
 				    $output .= "',\n";	
 
 			    }			   
 
-			    if($player_version == 7 && $jwppp_skin != 'none') {
+			    if($player_version == 7 && $jwppp_skin !== 'none') {
 			    	$output .= "skin: {\n";
 			    	$output .= "name: '" . $jwppp_skin . "'\n";
 			    	$output .= "},\n";
@@ -308,16 +304,16 @@ function jwppp_video_code($p, $width, $height) {
 			     //GOOGLE ANALYTICS
 			    $output .= "ga: {},\n";
 
-				if($active_share == 1) {
+				if($active_share === '1') {
 					$output .= "sharing: {\n";
 						$jwppp_share_heading = sanitize_text_field(get_option('jwppp-share-heading'));
-						if($jwppp_share_heading != null) {
+						if($jwppp_share_heading !== null) {
 							$output .= "heading: '" . $jwppp_share_heading . "',\n";
 						} else {
 							$output .= "heading: '" . __('Share Video', 'jwppp') . "',\n"; 
 						}
 						$output .= "sites: ['email','facebook','twitter','pinterest','tumblr','googleplus','reddit','linkedin'],\n";
-						if($jwppp_embed_video == 1) {
+						if($jwppp_embed_video === '1') {
 							$output .= "code: '<iframe src=\"" . $jwppp_embed_url . "\"  width=\"640\"  height=\"360\"  frameborder=\"0\"  scrolling=\"auto\"></iframe>'\n";
 						}
 					$output .= "},\n";
@@ -357,7 +353,7 @@ if(!has_filter('widget_text', 'do_shortcode')) {
 function jwppp_add_player($content) {
 	global $post;
 	$type = get_post_type($post->ID);
-	if(is_singular() && (sanitize_text_field(get_option('jwppp-type-' . $type)) == 1) && (get_post_meta($post->ID, '_jwppp-video-url-1', true))) {
+	if(is_singular() && (sanitize_text_field(get_option('jwppp-type-' . $type)) === '1') && (get_post_meta($post->ID, '_jwppp-video-url-1', true))) {
 		$p = get_the_ID();
 		$video = jwppp_video_code(
 			$p,
