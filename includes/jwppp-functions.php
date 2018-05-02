@@ -93,14 +93,6 @@ function jwppp_single_video_box($post_id, $number) {
 
 //OUTPUT THE JWPPP META BOX WITH ALL VIDEOS
 function jwppp_meta_box_callback($post) {
-	
-	//JUST A LITTLE OF STYLE
-	echo '<style>';
-	echo 'a.question-mark {position:relative; left:1rem;}';
-	echo 'a.attention-mark {position:absolute; right:1rem;}';
-	echo 'img.question-mark, img.attention-mark {position:relative; top:0.2rem;}';
-	echo '</style>';
-
 	$jwppp_videos = jwppp_get_post_videos($post->ID);
 	if($jwppp_videos != null) {
 		foreach($jwppp_videos as $jwppp_video) {
