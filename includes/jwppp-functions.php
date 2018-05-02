@@ -29,12 +29,6 @@ add_action( 'add_meta_boxes', 'jwppp_add_meta_box' );
 //SINGLE VIDEO BOX WITH ALL HIS OPTION
 function jwppp_meta_box_callback( $post ) {
 
-	//JUST A LITTLE OF STYLE
-	echo '<style>';
-	echo 'a.question-mark {position:relative; left:1rem;}';
-	echo 'img.question-mark {position:relative; top:0.2rem;}';
-	echo '</style>';
-
 	require(plugin_dir_path(__FILE__) . 'jwppp-single-video-box.php');
 	
 }

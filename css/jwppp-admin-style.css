@@ -24,3 +24,11 @@
 .jw-preview { 
 	background-size: 100% auto !important;
 }
+
+a.question-mark {
+	position:relative; left:1rem;
+}
+
+img.question-mark {
+	position:relative; top:0.2rem;
+}
