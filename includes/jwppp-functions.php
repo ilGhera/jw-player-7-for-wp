@@ -188,7 +188,7 @@ add_action('wp_enqueue_scripts', 'jwppp_add_header_code');
 
 
 //JW PLAYER CODE
-function jwppp_video_code($p, $width, $height) {
+function jwppp_video_code($p, $width = null, $height = null) {
 
 		//GETTING THE POST/ PAGE ID
 		if($p) {
@@ -349,21 +349,18 @@ if(!has_filter('widget_text', 'do_shortcode')) {
 	add_filter('widget_text', 'do_shortcode');
 } 
 
+
 //ADD PLAYER TO THE CONTENT
 function jwppp_add_player($content) {
 	global $post;
 	$type = get_post_type($post->ID);
 	if(is_singular() && (sanitize_text_field(get_option('jwppp-type-' . $type)) === '1') && (get_post_meta($post->ID, '_jwppp-video-url-1', true))) {
 		$p = get_the_ID();
-		$video = jwppp_video_code(
-			$p,
-			$width='', 
-			$height=''
-		);
+		$video = jwppp_video_code($p);
 		$position = get_option('jwppp-position');
-		if($position == 'after-content') {
+		if($position === 'after-content') {
 			$content = $content . $video;
-		} elseif($position == 'before-content') {
+		} elseif($position === 'before-content') {
 			$content = $video . $content;
 		} 	
 	} 
