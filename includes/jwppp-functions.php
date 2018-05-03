@@ -94,7 +94,7 @@ function jwppp_single_video_box($post_id, $number) {
 //OUTPUT THE JWPPP META BOX WITH ALL VIDEOS
 function jwppp_meta_box_callback($post) {
 	$jwppp_videos = jwppp_get_post_videos($post->ID);
-	if($jwppp_videos != null) {
+	if($jwppp_videos !== null) {
 		foreach($jwppp_videos as $jwppp_video) {
 			$jwppp_number = explode('_jwppp-video-url-', $jwppp_video['meta_key']);
 			jwppp_single_video_box($post->ID, $jwppp_number[1]);
@@ -322,7 +322,8 @@ function jwppp_save_single_video_data( $post_id ) {
 			}
 		}
 
-		if($_POST['activate-media-type-hidden-' . $number] === '1') {
+		$jwppp_activate_media_type = null;
+		if(isset($_POST['activate-media-type-hidden-' . $number])) {
 			$jwppp_activate_media_type = isset($_POST['_jwppp-activate-media-type-' . $number]) ? sanitize_text_field($_POST['_jwppp-activate-media-type-' . $number]) : 0;
 			update_post_meta( $post_id, '_jwppp-activate-media-type-' . $number, $jwppp_activate_media_type );
 		}
@@ -334,50 +335,49 @@ function jwppp_save_single_video_data( $post_id ) {
 			delete_post_meta($post_id, '_jwppp-media-type-' . $number);
 		}
 
-		if($_POST['autoplay-hidden-' . $number]) {
+		if(isset($_POST['autoplay-hidden-' . $number])) {
 			$jwppp_autoplay = isset($_POST['_jwppp-autoplay-' . $number]) ? sanitize_text_field($_POST['_jwppp-autoplay-' . $number]) : 0;
 			update_post_meta( $post_id, '_jwppp-autoplay-' . $number, $jwppp_autoplay );
 		}
 
-		if($_POST['mute-hidden-' . $number]) {
+		if(isset($_POST['mute-hidden-' . $number])) {
 			$jwppp_mute = isset($_POST['_jwppp-mute-' . $number]) ? sanitize_text_field($_POST['_jwppp-mute-' . $number]) : 0;
 			update_post_meta( $post_id, '_jwppp-mute-' . $number, $jwppp_mute );
 		}
 
-		if($_POST['repeat-hidden-' . $number]) {
+		if(isset($_POST['repeat-hidden-' . $number])) {
 			$jwppp_repeat = isset($_POST['_jwppp-repeat-' . $number]) ? sanitize_text_field($_POST['_jwppp-repeat-' . $number]) : 0;
 			update_post_meta( $post_id, '_jwppp-repeat-' . $number, $jwppp_repeat );
 		}
 
-		if($_POST['single-embed-hidden-' . $number] === '1') {
+		if(isset($_POST['single-embed-hidden-' . $number])) {
 			$jwppp_single_embed = isset($_POST['_jwppp-single-embed-' . $number]) ? sanitize_text_field($_POST['_jwppp-single-embed-' . $number]) : 0;
 			update_post_meta( $post_id, '_jwppp-single-embed-' . $number, $jwppp_single_embed );
 		}
 
-		if($_POST['download-video-hidden-' . $number] === '1') {
+		if(isset($_POST['download-video-hidden-' . $number])) {
 			$jwppp_download_video = isset($_POST['_jwppp-download-video-' . $number]) ? sanitize_text_field($_POST['_jwppp-download-video-' . $number]) : 0;
 			update_post_meta( $post_id, '_jwppp-download-video-' . $number, $jwppp_download_video );
 		}
 		
-		if($_POST['add-chapters-hidden-' . $number] === '1') {
+		$jwppp_add_chapters = null;
+		if(isset($_POST['add-chapters-hidden-' . $number])) {
 			$jwppp_add_chapters = isset($_POST['_jwppp-add-chapters-' . $number]) ? sanitize_text_field($_POST['_jwppp-add-chapters-' . $number]) : 0;
-			$jwppp_chapters_subtitles = $_POST['_jwppp-chapters-subtitles-' . $number];
+			$jwppp_chapters_subtitles = sanitize_text_field($_POST['_jwppp-chapters-subtitles-' . $number]);
 
-			if($jwppp_chapters_subtitles === 'subtitles') {
-				$jwppp_subtitles_method = $_POST['_jwppp-subtitles-method-' . $number];
-			}
+			$jwppp_subtitles_method = ($jwppp_chapters_subtitles === 'subtitles') ? sanitize_text_field($_POST['_jwppp-subtitles-method-' . $number]) : '';
 
 			update_post_meta( $post_id, '_jwppp-add-chapters-' . $number, $jwppp_add_chapters );
 			update_post_meta( $post_id, '_jwppp-chapters-subtitles-' . $number, $jwppp_chapters_subtitles);
 			update_post_meta( $post_id, '_jwppp-subtitles-method-' . $number, $jwppp_subtitles_method);
 		}
 
-		if($_POST['subtitles-load-default-hidden-' . $number]) {
+		if(isset($_POST['subtitles-load-default-hidden-' . $number])) {
 			$jwppp_subtitles_load_default = isset($_POST['_jwppp-subtitles-load-default-' . $number]) ? sanitize_text_field($_POST['_jwppp-subtitles-load-default-' . $number]) : 0;
 			update_post_meta( $post_id, '_jwppp-subtitles-load-default-' . $number, $jwppp_subtitles_load_default );
 		}
 
-		if($_POST['subtitles-write-default-hidden-' . $number]) {
+		if(isset($_POST['subtitles-write-default-hidden-' . $number])) {
 			$jwppp_subtitles_write_default = isset($_POST['_jwppp-subtitles-write-default-' . $number]) ? sanitize_text_field($_POST['_jwppp-subtitles-write-default-' . $number]) : 0;
 			update_post_meta( $post_id, '_jwppp-subtitles-write-default-' . $number, $jwppp_subtitles_write_default );
 		}
@@ -469,12 +469,12 @@ add_action( 'save_post', 'jwppp_save_single_video_data');
 function jwppp_add_header_code() {
 	$library = sanitize_text_field(get_option('jwppp-library'));
 	$licence = sanitize_text_field(get_option('jwppp-licence'));
-	$skin = sanitize_text_field(get_option('jwppp-skin'));
+	$skin 	 = sanitize_text_field(get_option('jwppp-skin'));
 	
 	if($skin === 'custom-skin') {
 		$skin_url = sanitize_text_field(get_option('jwppp-custom-skin-url'));
 		if($skin_url) {
-			echo '<link rel="stylesheet" type="text/css" href="' . $skin_url . '"> </link>';
+			echo '<link rel="stylesheet" type="text/css" href="' . esc_url($skin_url) . '"> </link>';
 		}
 	}
 
@@ -737,12 +737,12 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 
 	$this_video = $p_id . $number;
 
-	$output = "<div id='jwppp-video-box-" . $this_video . "' class='jwppp-video-box' data-video='" . $n . "' style=\"margin: 1rem 0;\">\n";
-	$output .= "<div id='jwppp-video-" . $this_video . "'>";
+	$output = "<div id='jwppp-video-box-" . esc_attr($this_video) . "' class='jwppp-video-box' data-video='" . esc_attr($n) . "' style=\"margin: 1rem 0;\">\n";
+	$output .= "<div id='jwppp-video-" . esc_attr($this_video) . "'>";
 	if(sanitize_text_field(get_option('jwppp-text')) != null) {
 		$output .= sanitize_text_field(get_option('jwppp-text'));
 	} else {
-		$output .= __('Loading the player...', 'jwppp');
+		$output .= esc_html(__('Loading the player...', 'jwppp'));
 	}
 	$output .= "</div>\n"; 
 	$output .= "</div>\n"; 
@@ -795,10 +795,10 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 						$output .= "sources: [\n";
 						$output .= "{\n";
 					}
-				    $output .= "file: '" . $jwppp_video_url . "',\n"; 
+				    $output .= "file: '" . esc_url($jwppp_video_url) . "',\n"; 
 				    if($jwppp_sources_number[0] > 1) {
 				    	$main_source_label = get_post_meta($p_id, '_jwppp-' . $number . '-main-source-label', true);
-			      		$output .= ($main_source_label) ? "label: '" . $main_source_label . "'\n" : '';
+			      		$output .= ($main_source_label) ? "label: '" . esc_html($main_source_label) . "'\n" : '';
 					}
 					
 					if($jwppp_source_1) {
@@ -811,8 +811,8 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 							$source_label = get_post_meta($p_id, '_jwppp-' . $number . '-source-' . $i . '-label', true);
 							if($source_url) {
 					      		$output .= "{\n";
-					      		$output .= "file: '" . $source_url . "',\n";
-					      		$output .= ($source_label) ? "label: '" . $source_label . "'\n" : '';
+					      		$output .= "file: '" . esc_url($source_url) . "',\n";
+					      		$output .= ($source_label) ? "label: '" . esc_html($source_label) . "'\n" : '';
 					      		$output .= "},\n";
 							} 
 						}
@@ -834,31 +834,31 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 
 					//POSTER IMAGE
 					if($video_image) {
-				    	$output .= "image: '" . $video_image . "',\n";
+				    	$output .= "image: '" . esc_url($video_image) . "',\n";
 				    } else if(has_post_thumbnail($p_id) && get_option('jwppp-post-thumbnail') === '1') {
 				    	$output .=  "image: '" . get_the_post_thumbnail_url() . "',\n";
 				    } else if($youtube['yes']) {
-				    	$output .= "image: '" . $yt_video_image . "',\n";
+				    	$output .= "image: '" . esc_url($yt_video_image) . "',\n";
 					} else if(get_option('jwppp-poster-image')) {
 					    $output .= "image: '" . get_option('jwppp-poster-image') . "',\n";
 					}
 
 					if($jwppp_new_playlist) {
-						$output .= "mediaid: '" . $this_video . $n++ . "',\n";
+						$output .= "mediaid: '" . esc_attr($this_video) . $n++ . "',\n";
 					}
 
 					//MEIA-TYPE
 					if($jwppp_media_type) {
-				    	$output .= "type: '" . $jwppp_media_type . "',\n";
+				    	$output .= "type: '" . esc_html($jwppp_media_type) . "',\n";
 				    }
 
 				    //AUTOPLAY
-					if(!$jwppp_new_playlist && $jwppp_autoplay == 1) {
+					if(!$jwppp_new_playlist && $jwppp_autoplay === '1') {
 				    	$output .= "autostart: 'true',\n";
 				    }
 
 				    //MUTE
-				    if(!$jwppp_new_playlist && $jwppp_mute === 1) {
+				    if(!$jwppp_new_playlist && $jwppp_mute === '1') {
 				    	$output .= "mute: 'true',\n";
 				    	// if($youtube['yes']) {
 				    	// 	$output .= "var down_volume = 'true',\n";
@@ -866,7 +866,7 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 				    }
 
 				    //REPEAT
-				    if(!$jwppp_new_playlist && $jwppp_repeat === 1) {
+				    if(!$jwppp_new_playlist && $jwppp_repeat === '1') {
 				    	$output .= "repeat: 'true',\n";
 				    }
 
@@ -876,17 +876,17 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 
 
 					//SHARING FOR SINGLE VIDEO
-					if(!$jwppp_new_playlist && $active_share === 1) {
+					if(!$jwppp_new_playlist && $active_share === '1') {
 						$output .= "sharing: {\n";
 							$jwppp_share_heading = sanitize_text_field(get_option('jwppp-share-heading'));
 							if($jwppp_share_heading !== null) {
-								$output .= "heading: '" . $jwppp_share_heading . "',\n";
+								$output .= "heading: '" . esc_html($jwppp_share_heading) . "',\n";
 							} else {
-								$output .= "heading: '" . __('Share Video', 'jwppp') . "',\n"; 
+								$output .= "heading: '" . esc_html(__('Share Video', 'jwppp')) . "',\n"; 
 							}
 							$output .= "sites: ['email','facebook','twitter','pinterest','tumblr','googleplus','reddit','linkedin'],\n";
 							if(($jwppp_embed_video || $jwppp_single_embed === '1') && !$jwppp_playlist) {
-								$output .= "code: '<iframe src=\"" . $jwppp_embed_url . "\"  width=\"640\"  height=\"360\"  frameborder=\"0\"  scrolling=\"auto\"></iframe>'\n";
+								$output .= "code: '<iframe src=\"" . esc_url($jwppp_embed_url) . "\"  width=\"640\"  height=\"360\"  frameborder=\"0\"  scrolling=\"auto\"></iframe>'\n";
 							}
 						$output .= "},\n";
 					}
@@ -909,7 +909,7 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 
 						} else {
 							$output .= "{\n";
-						    $output .= "file:'" . plugin_dir_url(__DIR__)  . "includes/jwppp-chapters.php?id=" . $p_id . "&number=$number',\n";
+						    $output .= "file:'" . esc_url(plugin_dir_url(__DIR__))  . "includes/jwppp-chapters.php?id=" . $p_id . "&number=$number',\n";
 						    if($jwppp_chapters_subtitles === 'chapters') {
 							    $output .= "kind:'chapters'\n";						    	
 						    } else if($jwppp_chapters_subtitles === 'subtitles') {
@@ -942,9 +942,9 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 				$output .= "sharing: {\n";
 					$jwppp_share_heading = sanitize_text_field(get_option('jwppp-share-heading'));
 					if($jwppp_share_heading !== null) {
-						$output .= "heading: '" . $jwppp_share_heading . "',\n";
+						$output .= "heading: '" . esc_html($jwppp_share_heading) . "',\n";
 					} else {
-						$output .= "heading: '" . __('Share Video', 'jwppp') . "',\n"; 
+						$output .= "heading: '" . esc_html(__('Share Video', 'jwppp')) . "',\n"; 
 					}
 					$output .= "sites: ['email','facebook','twitter','pinterest','tumblr','googleplus','reddit','linkedin'],\n";
 				$output .= "},\n";
@@ -953,28 +953,28 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 			//PLAYER DIMENSIONS
 			if($width && $height) {
 
-				    $output .= "width: '" . $width . "',\n";
-				    $output .= "height: '" . $height . "',\n";
+				    $output .= "width: '" . esc_html($width) . "',\n";
+				    $output .= "height: '" . esc_html($height) . "',\n";
 
 			} else {
 			    
 			    if($jwppp_method_dimensions === 'fixed') {
 				    $output .= "width: '";
-				    $output .= ($jwppp_player_width !== null) ? $jwppp_player_width : '640';
+				    $output .= ($jwppp_player_width !== null) ? esc_html($jwppp_player_width) : '640';
 				    $output .= "',\n";
 				    $output .= "height: '";
-				    $output .= ($jwppp_player_height != null) ? $jwppp_player_height : '360';
+				    $output .= ($jwppp_player_height != null) ? esc_html($jwppp_player_height) : '360';
 				    $output .= "',\n";
 				    
 				} else {
 					$output .= "width: '";
-					$output .= ($jwppp_responsive_width != null) ? $jwppp_responsive_width . '%' : '100%';
+					$output .= ($jwppp_responsive_width != null) ? esc_html($jwppp_responsive_width) . '%' : '100%';
 					$output .= "',\n";
 					$output .= "aspectratio: '";
 					if($ar) {
 						$output .= $ar;
 					} elseif($jwppp_aspectratio) {
-						$output .= $jwppp_aspectratio;
+						$output .= esc_html($jwppp_aspectratio);
 					} else {
 						$output .= '16:9';
 					}
@@ -987,34 +987,34 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 	    	$output .= "skin: {\n";
 		    	if($player_version === '7') {
 
-			    	$output .= $jwppp_skin_name != 'none' ? "name: '" . $jwppp_skin_name . "',\n" : '';
-					$output .= $jwppp_skin_color_active ? "active: '" . $jwppp_skin_color_active . "',\n" : '';
-					$output .= $jwppp_skin_color_inactive ? "inactive: '" . $jwppp_skin_color_inactive . "',\n" : '';
-					$output .= $jwppp_skin_color_background ? "background: '" . $jwppp_skin_color_background . "',\n" : '';
+			    	$output .= $jwppp_skin_name != 'none' ? "name: '" . esc_html($jwppp_skin_name) . "',\n" : '';
+					$output .= $jwppp_skin_color_active ? "active: '" . esc_html($jwppp_skin_color_active) . "',\n" : '';
+					$output .= $jwppp_skin_color_inactive ? "inactive: '" . esc_html($jwppp_skin_color_inactive) . "',\n" : '';
+					$output .= $jwppp_skin_color_background ? "background: '" . esc_html($jwppp_skin_color_background) . "',\n" : '';
 
 		    	} elseif($player_version === '8') {
 
 			    	$output .= "controlbar: {\n";
-				    	$output .= $jwppp_skin_color_controlbar_text ? "text: '" . $jwppp_skin_color_controlbar_text . "',\n" : '';
-				    	$output .= $jwppp_skin_color_controlbar_icons ? "icons: '" . $jwppp_skin_color_controlbar_icons . "',\n" : '';
-				    	$output .= $jwppp_skin_color_controlbar_active_icons ? "iconsActive: '" . $jwppp_skin_color_controlbar_active_icons . "',\n" : '';
-				    	$output .= $jwppp_skin_color_controlbar_background ? "background: '" . $jwppp_skin_color_controlbar_background . "',\n" : '';
+				    	$output .= $jwppp_skin_color_controlbar_text ? "text: '" . esc_html($jwppp_skin_color_controlbar_text) . "',\n" : '';
+				    	$output .= $jwppp_skin_color_controlbar_icons ? "icons: '" . esc_html($jwppp_skin_color_controlbar_icons) . "',\n" : '';
+				    	$output .= $jwppp_skin_color_controlbar_active_icons ? "iconsActive: '" . esc_html($jwppp_skin_color_controlbar_active_icons) . "',\n" : '';
+				    	$output .= $jwppp_skin_color_controlbar_background ? "background: '" . esc_html($jwppp_skin_color_controlbar_background) . "',\n" : '';
 			    	$output .= "},\n";
 
 			    	$output .= "timeslider: {\n";
-				    	$output .= $jwppp_skin_color_timeslider_progress ? "progress: '" . $jwppp_skin_color_timeslider_progress . "',\n" : '';
-				    	$output .= $jwppp_skin_color_timeslider_rail ? "rail: '" . $jwppp_skin_color_timeslider_rail . "',\n" : '';
+				    	$output .= $jwppp_skin_color_timeslider_progress ? "progress: '" . esc_html($jwppp_skin_color_timeslider_progress) . "',\n" : '';
+				    	$output .= $jwppp_skin_color_timeslider_rail ? "rail: '" . esc_html($jwppp_skin_color_timeslider_rail) . "',\n" : '';
 			    	$output .= "},\n";
 
 			    	$output .= "menus: {\n";
-				    	$output .= $jwppp_skin_color_menus_text ? "text: '" . $jwppp_skin_color_menus_text . "',\n" : '';
-				    	$output .= $jwppp_skin_color_menus_active_text ? "textActive: '" . $jwppp_skin_color_menus_active_text . "',\n" : '';
-				    	$output .= $jwppp_skin_color_menus_background ? "background: '" . $jwppp_skin_color_menus_background . "',\n" : '';
+				    	$output .= $jwppp_skin_color_menus_text ? "text: '" . esc_html($jwppp_skin_color_menus_text) . "',\n" : '';
+				    	$output .= $jwppp_skin_color_menus_active_text ? "textActive: '" . esc_html($jwppp_skin_color_menus_active_text) . "',\n" : '';
+				    	$output .= $jwppp_skin_color_menus_background ? "background: '" . esc_html($jwppp_skin_color_menus_background) . "',\n" : '';
 			    	$output .= "},\n";
 
 			    	$output .= "tooltips: {\n";
-				    	$output .= $jwppp_skin_color_tooltips_text ? "text: '" . $jwppp_skin_color_tooltips_text . "',\n" : '';
-				    	$output .= $jwppp_skin_color_tooltips_background ? "background: '" . $jwppp_skin_color_tooltips_background . "',\n" : '';
+				    	$output .= $jwppp_skin_color_tooltips_text ? "text: '" . esc_html($jwppp_skin_color_tooltips_text) . "',\n" : '';
+				    	$output .= $jwppp_skin_color_tooltips_background ? "background: '" . esc_html($jwppp_skin_color_tooltips_background) . "',\n" : '';
 			    	$output .= "}\n";
 
 		    	}
@@ -1023,10 +1023,10 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 			//LOGO
 		    if($jwppp_logo !== null) {
 		    	$output .= "logo: {\n";
-		    	$output .= "file: '" . $jwppp_logo . "',\n";
-		    	$output .= "position: '" . $jwppp_logo_vertical . '-' . $jwppp_logo_horizontal . "',\n";
+		    	$output .= "file: '" . esc_url($jwppp_logo) . "',\n";
+		    	$output .= "position: '" . esc_html($jwppp_logo_vertical) . '-' . esc_html($jwppp_logo_horizontal) . "',\n";
 		    	if($jwppp_logo_link !== null) {
-		    		$output .= "link: '" . $jwppp_logo_link . "'\n";
+		    		$output .= "link: '" . esc_html($jwppp_logo_link) . "'\n";
 		    	}
 		    	$output .= "},\n";
 		    }
@@ -1052,10 +1052,10 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 			//ADS
 			if($jwppp_show_ads === '1') {
 				$output .= "advertising: {\n";
-				$output .= "client: '" . $jwppp_ads_client . "',\n";
-				$output .= "tag: '" . $jwppp_ads_tag . "',\n";
+				$output .= "client: '" . esc_html($jwppp_ads_client) . "',\n";
+				$output .= "tag: '" . esc_html($jwppp_ads_tag) . "',\n";
 				if($jwppp_ads_skip !== '0') {
-					$output .= "skipoffset: " . $jwppp_ads_skip . "\n";
+					$output .= "skipoffset: " . esc_html($jwppp_ads_skip) . "\n";
 				}
 				$output .= "},\n";
 			}
@@ -1065,9 +1065,9 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 				$output .= "related: {\n";
 				$output .= "file: '" . jwppp_get_feed_url() . "',\n";
 				if($jwppp_related_heading !== null) {
-					$output .= "heading: '" . $jwppp_related_heading . "',\n";
+					$output .= "heading: '" . esc_html($jwppp_related_heading) . "',\n";
 				} else {
-					$output .= "heading: '" . __('Related Videos', 'jwppp') . "',\n";
+					$output .= "heading: '" . esc_html(__('Related Videos', 'jwppp')) . "',\n";
 				}
 				$output .= "onclick: 'link'\n";				
 				$output .= "},\n";
@@ -1077,25 +1077,25 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
       		// if($jwppp_chapters_subtitles == 'subtitles' && jwppp_caption_style()) {
       		if( jwppp_caption_style() ) {
       			$output .= "captions: {\n";
-      			$output .= $jwppp_sub_color ? "color: '" . $jwppp_sub_color . "',\n" : "";
-      			$output .= $jwppp_sub_font_size ? "fontSize: '" . $jwppp_sub_font_size . "',\n" : "";
-      			$output .= $jwppp_sub_font_family ? "fontFamily: '" . $jwppp_sub_font_family . "',\n" : "";
-      			$output .= $jwppp_sub_opacity ? "fontOpacity: '" . $jwppp_sub_opacity . "',\n" : "";
-      			$output .= $jwppp_sub_back_color ? "backgroundColor: '" . $jwppp_sub_back_color . "',\n" : "";
-      			$output .= $jwppp_sub_back_opacity ? "backgroundOpacity: '" . $jwppp_sub_back_opacity . "',\n" : "";
+      			$output .= $jwppp_sub_color ? "color: '" . esc_html(($jwppp_sub_color)) . "',\n" : "";
+      			$output .= $jwppp_sub_font_size ? "fontSize: '" . esc_html(($jwppp_sub_font_size)) . "',\n" : "";
+      			$output .= $jwppp_sub_font_family ? "fontFamily: '" . esc_html(($jwppp_sub_font_family)) . "',\n" : "";
+      			$output .= $jwppp_sub_opacity ? "fontOpacity: '" . esc_html(($jwppp_sub_opacity)) . "',\n" : "";
+      			$output .= $jwppp_sub_back_color ? "backgroundColor: '" . esc_html(($jwppp_sub_back_color)) . "',\n" : "";
+      			$output .= $jwppp_sub_back_opacity ? "backgroundOpacity: '" . esc_html(($jwppp_sub_back_opacity)) . "',\n" : "";
       			$output .= "},\n";
       		}
 
 			//LOCALIZATION
 		    $output .= "localization: {\n";
 		    	if($jwppp_next_up) {
-				    $output .= "nextUp: '" . $jwppp_next_up . "',\n";		    		
+				    $output .= "nextUp: '" . esc_html($jwppp_next_up) . "',\n";		    		
 		    	}
 		    	if($jwppp_playlist_tooltip) {
-				    $output .= "playlist: '" . $jwppp_playlist_tooltip . "',\n";		    		
+				    $output .= "playlist: '" . esc_html($jwppp_playlist_tooltip) . "',\n";		    		
 		    	}
 			    if($jwppp_related_heading) {
-				    $output .= "related: '" . $jwppp_related_heading . "',\n";			    	
+				    $output .= "related: '" . esc_html($jwppp_related_heading) . "',\n";			    	
 			    }
 		    $output .= "},\n";
 
@@ -1107,11 +1107,11 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 	//DOWNLOAD BUTTON
 	if($jwppp_download_video && !$jwppp_new_playlist && !$is_yt['yes']) {
 		$output .= "playerInstance_$this_video.addButton(\n";
-			$output .= "'" . plugin_dir_url(__DIR__)  . "images/download-icon.svg',\n";
+			$output .= "'" . esc_url(plugin_dir_url(__DIR__))  . "images/download-icon.svg',\n";
 			$output .= "'Download Video',\n";
 			$output .= "function() {\n";
 				$output .= "var file = playerInstance_$this_video.getPlaylistItem()['file'];\n";
-				$output .= "var file_download = '" . plugin_dir_url(__DIR__)  . "includes/jwppp-video-download.php?file=' + file;\n";
+				$output .= "var file_download = '" . esc_url(plugin_dir_url(__DIR__))  . "includes/jwppp-video-download.php?file=' + file;\n";
 				$output .= "window.location.href = file_download;\n";
 			$output .= "},\n";
 			$output .= "'download',\n";
