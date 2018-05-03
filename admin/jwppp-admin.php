@@ -92,10 +92,10 @@ add_action('admin_footer', 'skin_customization_per_version');
 function skin_customization_per_version_callback() {
 	$version = $_POST['version'];
 	if($version < 8) {
-		include('skin/jwppp-admin-skin-7.php');	
+		include(plugin_dir_path(__FILE__) . 'skin/jwppp-admin-skin-7.php');	
 		update_option('jwppp-player-version', 7);	
 	} else {
-		include('skin/jwppp-admin-skin-8.php');		
+		include(plugin_dir_path(__FILE__) . 'skin/jwppp-admin-skin-8.php');		
 		update_option('jwppp-player-version', 8);	
 	}
 	exit;
@@ -117,7 +117,7 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
 
 	echo '<div id="jwppp-description">';
 	    //HEADER
-		echo "<h1 class=\"jwppp main\">" . __( 'JW Player for Wordrpess', 'jwppp' ) . "<span style=\"font-size:60%;\"> 1.5.1</span></h1>";
+		echo "<h1 class=\"jwppp main\">" . esc_html(__( 'JW Player for Wordrpess', 'jwppp' )) . "<span style=\"font-size:60%;\"> 1.5.1</span></h1>";
 	echo '</div>';
 
 ?>
@@ -168,7 +168,7 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
  				update_option('jwppp-licence', $licence);
  			}
  			echo '<tr>';
- 			echo '<th scope="row">' . __('JWP Licence Key', 'jwppp');
+ 			echo '<th scope="row">' . esc_html(__('JWP Licence Key', 'jwppp'));
  			echo '<a href="https://www.ilghera.com/support/topic/jw-player-self-hosted-setup/" title="More informations" target="_blank"><img class="question-mark" src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/question-mark.png" /></a></th>';
  			echo '<td>';
  			echo '<input type="text" class="regular-text" id="jwppp-licence" name="jwppp-licence" placeholder="Only for self-hosted players" value="' . sanitize_text_field($licence) . '" />';
@@ -287,7 +287,7 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
  			echo '<select id="jwppp-method-dimensions" name="jwppp-method-dimensions" disabled="disabled" />';
  			echo '<option name="fixed" id="fixed" value="fixed" ';
  			echo 'selected="selected"';
- 			echo '>' . __('Fixed', 'jwppp') . '</option>';
+ 			echo '>' . esc_html(__('Fixed', 'jwppp')) . '</option>';
  			echo '</select>';
  			echo '<p class="description">' . esc_html(__('Select how define the measures of the player.', 'jwppp')) . '<br>';
  			echo '<a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a> for a responsive player</p>';
@@ -315,7 +315,7 @@ echo '<div class="wrap-left" style="float:left; width:70%;">';
 			echo '<td>';
 			echo '<input type="text" class="regular-text" id="jwppp-logo" name="jwppp-logo" disabled="disabled" ';
 			echo 'placeholder="' . esc_html(__('Image url', 'jwppp')) . '" value="" />';
-			echo '<p class="description">' . __('Add your logo to the player.', 'jwppp') . '<br>';
+			echo '<p class="description">' . esc_html(__('Add your logo to the player.', 'jwppp')) . '<br>';
  			echo '<a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a></p>';
 			echo '</td>';
 			echo '</tr>';

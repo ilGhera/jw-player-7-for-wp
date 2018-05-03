@@ -26,9 +26,11 @@
 }
 
 a.question-mark {
-	position:relative; left:1rem;
+	position:relative; 
+	left:1rem;
 }
 
 img.question-mark {
-	position:relative; top:0.2rem;
+	position:relative; 
+	top:0.2rem;
 }
