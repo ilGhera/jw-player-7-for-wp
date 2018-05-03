@@ -41,7 +41,7 @@ function jwppp_save_meta_box_data( $post_id ) {
 		return;
 	}
 
-	if ( ! wp_verify_nonce( sanitize_key($_POST['jwppp_meta_box_nonce']), 'jwppp_save_meta_box_data' ) ) {
+	if ( ! wp_verify_nonce( sanitize_text_field($_POST['jwppp_meta_box_nonce']), 'jwppp_save_meta_box_data' ) ) {
 		return;
 	}
 
