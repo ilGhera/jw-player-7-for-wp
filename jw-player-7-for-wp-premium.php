@@ -41,9 +41,12 @@ function jwppp_premium_load() {
  	}
 
 	//DATABASE UPDATE
+
+	global $wpdb;
+
 	if(get_option('jwppp-database-version') < '1.1.1') {
-		global $wpdb;
-		$wpdb->query(
+
+		$wpdb->query( //db call ok; no-cache ok
 			"
 			UPDATE $wpdb->postmeta
 			SET meta_key = CASE meta_key
@@ -59,7 +62,7 @@ function jwppp_premium_load() {
 			"
 		);
 
-		$wpdb->query(
+		$wpdb->query( //db call ok; no-cache ok
 			"
 			UPDATE $wpdb->postmeta SET
 			meta_key = REPLACE(meta_key, '_jwppp-chapter-', '_jwppp-1-chapter-')
@@ -69,12 +72,12 @@ function jwppp_premium_load() {
 
 	if(get_option('jwppp-database-version') < '1.4.0') {
 
-		global $wpdb;
-		$query = "
+		$results = $wpdb->get_results( //db call ok; no-cache ok
+			"
 			SELECT * FROM $wpdb->postmeta WHERE meta_key LIKE '%_jwppp-video-mobile-url-%' AND meta_value <> ''
-		";
-
-		$results = $wpdb->get_results($query, ARRAY_A);
+			", 
+			ARRAY_A
+		);
 
 		if($results) {
 			foreach($results as $result) {
