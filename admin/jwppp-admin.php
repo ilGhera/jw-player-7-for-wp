@@ -134,6 +134,30 @@ function jwppp_caption_style() {
 }
 
 
+//CHECK IF THE PLAYE COMES FROM THE JWP DASHBOARD
+function is_dashboard_player() {
+	$jwplayer = get_option('jwppp-library');
+	$output = false;
+	if($jwplayer) {
+		?>
+		<script>
+		jQuery(document).ready(function($){
+			var player = '<?php echo $jwplayer; ?>';
+			$.getScript(player, function(){		
+				if(jwDefaults) {
+					<?php $output = true; ?>
+				}
+			})
+			console.log('<?php echo $output; ?>');
+		})
+		</script>
+		<?php
+	}
+
+	return $output;
+}
+
+
 //OPTION PAGE
 function jwppp_options() {
 	
@@ -142,8 +166,11 @@ function jwppp_options() {
 		wp_die(esc_html( __( 'It looks like you do not have sufficient permissions to view this page.', 'jwppp' )) );
 	}
 
-//START PAGE TEMPLATE
-echo '<div class="wrap">'; 
+	//IS IT A DASHBOARD PLAYER?
+	$dashboard_player = is_dashboard_player();
+
+	//START PAGE TEMPLATE
+	echo '<div class="wrap">'; 
 	echo '<div class="wrap-left" style="float:left; width:70%;">';
 
 	echo '<div id="jwppp-description">';
@@ -151,15 +178,17 @@ echo '<div class="wrap">';
 		echo "<h1 class=\"jwppp main\">" . esc_html(__( 'JW Player for Wordpress - Premium', 'jwppp' )) . "<span style=\"font-size:60%;\"> 1.5.2</span></h1>";
 	echo '</div>';
 
-?>
+	?>
 	    
 	<h2 id="jwppp-admin-menu" class="nav-tab-wrapper">
 		<a href="#" data-link="jwppp-settings" class="nav-tab nav-tab-active" onclick="return false;"><?php esc_html_e( __('Settings', 'jwppp')); ?></a>
-		<a href="#" data-link="jwppp-skin" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Skin', 'jwppp')); ?></a>
-		<a href="#" data-link="jwppp-subtitles" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Subtitles', 'jwppp')); ?></a>
-		<a href="#" data-link="jwppp-related" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Related videos', 'jwppp')); ?></a>
-		<a href="#" data-link="jwppp-social" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Sharing', 'jwppp')); ?></a>    
-		<a href="#" data-link="jwppp-ads" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Ads', 'jwppp')); ?></a>                                        
+		<?php if(!$dashboard_player) { ?>
+			<a href="#" data-link="jwppp-skin" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Skin', 'jwppp')); ?></a>
+			<a href="#" data-link="jwppp-subtitles" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Subtitles', 'jwppp')); ?></a>
+			<a href="#" data-link="jwppp-related" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Related videos', 'jwppp')); ?></a>
+			<a href="#" data-link="jwppp-social" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Sharing', 'jwppp')); ?></a>    
+			<a href="#" data-link="jwppp-ads" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Ads', 'jwppp')); ?></a>
+		<?php } ?>         
 	</h2>
 
 
@@ -206,20 +235,22 @@ echo '<div class="wrap">';
  			echo '</td>';
  			echo '</tr>';
 
- 			//JW PLAYER LICENCE KEY
- 			$licence = sanitize_text_field(get_option('jwppp-licence'));
- 			if( isset($_POST['jwppp-licence']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options') ) {
- 				$licence = sanitize_text_field($_POST['jwppp-licence']);
- 				update_option('jwppp-licence', $licence);
+ 			if(!$dashboard_player) {
+	 			//JW PLAYER LICENCE KEY
+	 			$licence = sanitize_text_field(get_option('jwppp-licence'));
+	 			if( isset($_POST['jwppp-licence']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options') ) {
+	 				$licence = sanitize_text_field($_POST['jwppp-licence']);
+	 				update_option('jwppp-licence', $licence);
+	 			}
+	 			echo '<tr>';
+	 			echo '<th scope="row">' . esc_html(__('JWP Licence Key', 'jwppp'));
+	 			echo '<a href="https://www.ilghera.com/support/topic/jw-player-self-hosted-setup/" title="More informations" target="_blank"><img class="question-mark" src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/question-mark.png" /></a></th>';
+	 			echo '<td>';
+	 			echo '<input type="text" class="regular-text" id="jwppp-licence" name="jwppp-licence" placeholder="Only for self-hosted players" value="' . sanitize_text_field($licence) . '" />';
+	 			echo '<p class="description">' . sanitize_text_field(__('Self hosted player? Please, add your JW Player license key.', 'jwppp')) . '</p>';
+	 			echo '</td>';
+	 			echo '</tr>'; 				
  			}
- 			echo '<tr>';
- 			echo '<th scope="row">' . esc_html(__('JWP Licence Key', 'jwppp'));
- 			echo '<a href="https://www.ilghera.com/support/topic/jw-player-self-hosted-setup/" title="More informations" target="_blank"><img class="question-mark" src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/question-mark.png" /></a></th>';
- 			echo '<td>';
- 			echo '<input type="text" class="regular-text" id="jwppp-licence" name="jwppp-licence" placeholder="Only for self-hosted players" value="' . sanitize_text_field($licence) . '" />';
- 			echo '<p class="description">' . sanitize_text_field(__('Self hosted player? Please, add your JW Player license key.', 'jwppp')) . '</p>';
- 			echo '</td>';
- 			echo '</tr>';
 
  			//POST TYPES WITH WHICH USE THE PLUGIN
  			$jwppp_get_types = get_post_types(array('public' => true));
@@ -271,250 +302,250 @@ echo '<div class="wrap">';
  			echo '</td>';
  			echo '</tr>';
 
- 			//TEXT
-			$jwppp_text = sanitize_text_field(get_option('jwppp-text'));
-			if(isset($_POST['jwppp-text']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
-				$jwppp_text = sanitize_text_field($_POST['jwppp-text']);
-				update_option('jwppp-text', $jwppp_text);
+ 			if(!$dashboard_player) {
+
+	 			//TEXT
+				$jwppp_text = sanitize_text_field(get_option('jwppp-text'));
+				if(isset($_POST['jwppp-text']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
+					$jwppp_text = sanitize_text_field($_POST['jwppp-text']);
+					update_option('jwppp-text', $jwppp_text);
+				}
+
+	 			echo '<tr>';
+	 			echo '<th scope="row">' . esc_html(__('Video text', 'jwppp')) . '</th>';
+	 			echo '<td>';
+	 			echo '<textarea cols="40" rows="2" id="jwppp-text" name="jwppp-text" disabled="disabled" placeholder="' . esc_html(__('Loading the player...', 'jwppp')) . '"></textarea>';
+	 			echo '<p class="description">' . esc_html(__('Add custom text that appears while the player is loading.', 'jwppp')) . '<br>';
+	 			echo '</td>';
+	 			echo '</tr>';
+
+	 			//POSTER IMAGE
+	 			$poster_image = sanitize_text_field(get_option('jwppp-poster-image'));
+	 			if( isset($_POST['poster-image']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options') ) {
+	 				$poster_image = sanitize_text_field($_POST['poster-image']);
+	 				update_option('jwppp-poster-image', $poster_image);
+	 			}
+
+	 			echo '<tr>';
+	 			echo '<th scope="row">' . esc_html(__('Default poster image', 'jwppp')) . '</th>';
+				echo '<td>';
+				echo '<input type="text" class="regular-text" id="poster-image" name="poster-image" value="' . esc_url($poster_image) . '" />';
+				echo '<p class="description">' . esc_html(__('Add the url of a default poster image.', 'jwppp')) . '</p>';
+				echo '<td>';
+	 			echo '</tr>';
+
+	 			//POST THUMBNAIL AS POSTER IMAGE
+	 			$thumbnail = sanitize_text_field(get_option('jwppp-post-thumbnail'));
+	 			if( isset($_POST['done']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options') ) {
+	 				$thumbnail = isset($_POST['post-thumbnail']) ? sanitize_text_field($_POST['post-thumbnail']) : 0;
+	 				update_option('jwppp-post-thumbnail', $thumbnail);
+	 			}
+
+	 			echo '<tr>';
+	 			echo '<th scope="row">' . esc_html(__('Post thumbnail', 'jwppp')) . '</th>';
+				echo '<td>';
+				echo '<input type="checkbox" id="post-thumbnail" name="post-thumbnail" ';
+				echo ($thumbnail === '1') ? ' checked="checked"' : '';
+				echo 'value="1" />' . esc_html(__('Use the post thumbnail', 'jwppp'));
+				echo '<p class="description">' . esc_html(__('When present, use the post thumbnail as poster image.', 'jwppp')) . '</p>';
+				echo '<td>';
+	 			echo '</tr>';
+
+	 			//FIXED DIMENSIONS OR RESPONSIVE?
+	 			$jwppp_method_dimensions = sanitize_text_field(get_option('jwppp-method-dimensions'));
+	 			if(isset($_POST['jwppp-method-dimensions']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
+	 				$jwppp_method_dimensions = sanitize_text_field($_POST['jwppp-method-dimensions']);
+	 				update_option('jwppp-method-dimensions', $jwppp_method_dimensions);
+	 			}
+
+	 			//PLAYER FIXED WIDTH
+	 			$jwppp_player_width = sanitize_text_field(get_option('jwppp-player-width'));
+	 			if( isset($_POST['jwppp-player-width']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options') ) {
+	 				$jwppp_player_width = sanitize_text_field($_POST['jwppp-player-width']);
+	 				update_option('jwppp-player-width', $jwppp_player_width);
+	 			}
+
+
+	 			}
+
+	 			//PLAYER %
+	 			$jwppp_responsive_width = sanitize_text_field(get_option('jwppp-responsive-width'));
+	 			if(isset($_POST['jwppp-responsive-width']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
+	 				$jwppp_responsive_width = sanitize_text_field($_POST['jwppp-responsive-width']);
+	 				update_option('jwppp-responsive-width', $jwppp_responsive_width);
+	 			}
+
+	 			//PLAYER ASPECT RATIO
+	 			$jwppp_aspectratio = sanitize_text_field(get_option('jwppp-aspectratio'));
+	 			if(isset($_POST['jwppp-aspectratio']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
+	 				$jwppp_aspectratio = sanitize_text_field($_POST['jwppp-aspectratio']);
+	 				update_option('jwppp-aspectratio', $jwppp_aspectratio);
+	 			}
+
+	 			//FIXED DIMENSIONS OR RESPONSIVE? 
+	 			echo '<tr>';
+	 			echo '<th scope="row">Player dimensions</th>';
+	 			echo '<td>';
+	 			echo '<select id="jwppp-method-dimensions" name="jwppp-method-dimensions" />';
+	 			echo '<option name="fixed" id="fixed" value="fixed" ';
+	 			echo ($jwppp_method_dimensions === 'fixed') ? 'selected="selected"' : '';
+	 			echo '>' . esc_html(__('Fixed', 'jwppp')) . '</option>';
+	 			echo '<option name="responsive" id="responsive" value="responsive"';
+	 			echo ($jwppp_method_dimensions === 'responsive') ? 'selected="selected"' : '';
+	 			echo '>' . esc_html(__('Responsive', 'jwppp')) . '</option>';
+	 			echo '</select>';
+	 			echo '<p class="description">' . esc_html(__('Select how define the measures of the player.', 'jwppp')) . '<br>';
+	 			echo '</td>';
+	 			echo '</tr>';
+
+	 			//PLAYER FIXED WIDTH & HEIGHT
+	 			echo '<tr class="more-fixed">';
+	 			echo '<th scope="row">' . esc_html(__('Fixed measures', 'jwppp')) . '</th>';
+	 			echo '<td>';
+	 			echo '<input type="number" min="1" step="1" class="small-text" id="jwppp-player-width" name="jwppp-player-width" value="';
+				echo ($jwppp_player_width !== null) ? esc_html($jwppp_player_width) : '640';
+				echo '" />';
+				echo ' x ';
+				echo '<input type="number" min="1" step="1" class="small-text" id="jwppp-player-height" name="jwppp-player-height" value="';
+				echo ($jwppp_player_height !== null) ? esc_html($jwppp_player_height) : '360';
+				echo '" />';
+	 			echo '<p class="description"></p>';
+	 			echo '</td>';
+	 			echo '</tr>';
+
+	 			//PLAYER %
+				echo '<tr class="more-responsive">';
+				echo '<th scope="row">' . esc_html(__('Player width', 'jwppp')) . '</th>';
+				echo '<td>';
+				echo '<input type="number" min="10" step="5" class="small-text" id="jwppp-responsive-width" name="jwppp-responsive-width" value="';
+				echo ($jwppp_responsive_width !== null) ? sanitize_text_field($jwppp_responsive_width) : '100';
+				echo '" /> %';
+				echo '<p class="description">' . esc_html(__('Add the player\'s width (eg. 80%)', 'jwppp')) . '</p>';
+				echo '</td>';
+				echo '</tr>';
+
+				//PLAYER ASPECT RATIO
+				echo '<tr class="more-responsive">';
+				echo '<th scope="row">' . esc_html(__('Aspect ratio', 'jwppp')) . '</th>';
+				echo '<td>';
+				echo '<select id="jwppp-aspectratio" name="jwppp-aspectratio" class="small-text" />';
+				echo '<option name="16:10" value="16:10"';
+				echo ($jwppp_aspectratio === '16:10') ? ' selected="selected"' : '';
+				echo '>16:10</option>';
+				echo '<option name="16:9" value="16:9"';
+				echo ($jwppp_aspectratio === '16:9') ? ' selected="selected"' : '';
+				echo '>16:9</option>';
+				echo '<option name="4:3" value="4:3"';
+				echo ($jwppp_aspectratio === '4:3') ? ' selected="selected"' : '';
+				echo '>4:3</option>';
+				echo '</select>';
+				echo '<p class="description">' . esc_html(__('Select the aspect ratio of the player', 'jwppp')) . '</p>';
+				echo '</td>';
+				echo '</tr>';
+
+
+				//LOGO
+				$jwppp_logo = sanitize_text_field(get_option('jwppp-logo'));
+				if(isset($_POST['jwppp-logo']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
+					$jwppp_logo = sanitize_text_field($_POST['jwppp-logo']);
+					update_option('jwppp-logo', $jwppp_logo);
+				}
+
+				//LOGO POSITION
+				$jwppp_logo_vertical = sanitize_text_field(get_option('jwppp-logo-vertical'));
+	 			if(isset($_POST['jwppp-logo-vertical']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
+	 				$jwppp_logo_vertical = sanitize_text_field($_POST['jwppp-logo-vertical']);
+	 				update_option('jwppp-logo-vertical', $jwppp_logo_vertical);
+	 			}
+				$jwppp_logo_horizontal = sanitize_text_field(get_option('jwppp-logo-horizontal'));
+	 			if(isset($_POST['jwppp-logo-horizontal']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
+	 				$jwppp_logo_horizontal = sanitize_text_field($_POST['jwppp-logo-horizontal']);
+	 				update_option('jwppp-logo-horizontal', $jwppp_logo_horizontal);
+	 			}
+
+				//LOGO LINK
+				$jwppp_logo_link = sanitize_text_field(get_option('jwppp-logo-link'));
+				if(isset($_POST['jwppp-logo-link']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
+					$jwppp_logo_link = sanitize_text_field($_POST['jwppp-logo-link']);
+					update_option('jwppp-logo-link', $jwppp_logo_link);
+				}
+
+				//NEXT UP
+				$jwppp_next_up = sanitize_text_field(get_option('jwppp-next-up'));
+				if(isset($_POST['jwppp-next-up']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
+					$jwppp_next_up = sanitize_text_field($_POST['jwppp-next-up']);
+					update_option('jwppp-next-up', $jwppp_next_up);
+				}
+
+
+				//PLAYLIST TOOLTIP
+				$jwppp_playlist_tooltip = sanitize_text_field(get_option('jwppp-playlist-tooltip'));
+				if(isset($_POST['jwppp-playlist-tooltip']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
+					$jwppp_playlist_tooltip = sanitize_text_field($_POST['jwppp-playlist-tooltip']);
+					update_option('jwppp-playlist-tooltip', $jwppp_playlist_tooltip);
+				}
+
+
+				echo '<tr>';
+				echo '<th scope="row">' . esc_html(__('Logo', 'jwppp')) . '</th>';
+				echo '<td>';
+				echo '<input type="text" class="regular-text" id="jwppp-logo" name="jwppp-logo" disabled="disabled" ';
+				echo 'placeholder="' . esc_html(__('Image url', 'jwppp')) . '" value="" />';
+				echo '<p class="description">' . esc_html(__('Add your logo to the player.', 'jwppp')) . '<br>';
+				echo '</td>';
+				echo '</tr>';
+
+				echo '<tr>';
+				echo '<th scope="row">' . esc_html(__('Logo Position', 'jwppp')) . '</th>';
+				echo '<td>';
+				echo '<select id="jwppp-logo-vertical" name="jwppp-logo-vertical" />';
+				echo '<option id="top" name="top" value="top"';
+				echo ($jwppp_logo_vertical === 'top') ? ' selected="selected"' : '';
+				echo '>Top</option>';
+				echo '<option id="bottom" name="bottom" value="bottom"';
+				echo ($jwppp_logo_vertical === 'bottom') ? ' selected="selected"' : '';
+				echo '>Bottom</option>';
+				echo '</select>';
+				echo '<select style="margin-left: 0.5rem;" id="jwppp-logo-horizontal" name="jwppp-logo-horizontal" />';
+				echo '<option id="right" name="right" value="right"';
+				echo ($jwppp_logo_horizontal === 'right') ? ' selected="selected"' : '';
+				echo '>Right</option>';
+				echo '<option id="left" name="left" value="left"';
+				echo ($jwppp_logo_horizontal === 'left') ? ' selected="selected"' : '';
+				echo '>Left</option>';
+				echo '</select>';
+				echo '<p class="description">' . esc_html(__('Choose the logo position.', 'jwppp')) . '</p>';
+				echo '</td>';
+				echo '</tr>';
+
+				echo '<tr>';
+				echo '<th scope="row">' . esc_html(__('Logo Link', 'jwppp')) . '</th>';
+				echo '<td>';
+				echo '<input type="text" class="regular-text" id="jwppp-logo-link" name="jwppp-logo-link" disabled="disabled" ';
+				echo 'placeholder="' . esc_html(__('Link url', 'jwppp')) . '" value="" />';
+				echo '<p class="description">' . esc_html(__('Add a link to the logo.', 'jwppp')) . '<br>';
+				echo '</td>';
+				echo '</tr>';
+
+				echo '<tr>';
+				echo '<th scope="row">' . esc_html(__('Next Up', 'jwppp')) . '</th>';
+				echo '<td>';
+				echo '<input type="text" class="regular-text" id="jwppp-next-up" name="jwppp-next-up" disabled="disabled" ';
+				echo 'placeholder="' . esc_html(__('Next Up', 'jwppp')) . '" value="Next Up" />';
+				echo '<p class="description">' . esc_html(__('Add a different text for the "Next Up" prompt', 'jwppp')) . '</p>';
+				echo '</td>';
+				echo '</tr>';
+
+				echo '<tr>';
+				echo '<th scope="row">' . esc_html(__('Playlist tooltip', 'jwppp')) . '</th>';
+				echo '<td>';
+				echo '<input type="text" class="regular-text" id="jwppp-playlist-tooltip" name="jwppp-playlist-tooltip" disabled="disabled"';
+				echo 'placeholder="' . esc_html(__('Playlist', 'jwppp')) . '" value="Playlist" />';
+				echo '<p class="description">' . esc_html(__('Add a different text for the tooltip in Playlist mode', 'jwppp')) . '</p>';
+				echo '</td>';
+				echo '</tr>';
+
 			}
-
- 			echo '<tr>';
- 			echo '<th scope="row">' . esc_html(__('Video text', 'jwppp')) . '</th>';
- 			echo '<td>';
- 			echo '<textarea cols="40" rows="2" id="jwppp-text" name="jwppp-text" disabled="disabled" placeholder="' . esc_html(__('Loading the player...', 'jwppp')) . '"></textarea>';
- 			echo '<p class="description">' . esc_html(__('Add custom text that appears while the player is loading.', 'jwppp')) . '<br>';
- 			echo '</td>';
- 			echo '</tr>';
-
- 			//POSTER IMAGE
- 			$poster_image = sanitize_text_field(get_option('jwppp-poster-image'));
- 			if( isset($_POST['poster-image']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options') ) {
- 				$poster_image = sanitize_text_field($_POST['poster-image']);
- 				update_option('jwppp-poster-image', $poster_image);
- 			}
-
- 			echo '<tr>';
- 			echo '<th scope="row">' . esc_html(__('Default poster image', 'jwppp')) . '</th>';
-			echo '<td>';
-			echo '<input type="text" class="regular-text" id="poster-image" name="poster-image" value="' . esc_url($poster_image) . '" />';
-			echo '<p class="description">' . esc_html(__('Add the url of a default poster image.', 'jwppp')) . '</p>';
-			echo '<td>';
- 			echo '</tr>';
-
- 			//POST THUMBNAIL AS POSTER IMAGE
- 			$thumbnail = sanitize_text_field(get_option('jwppp-post-thumbnail'));
- 			if( isset($_POST['done']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options') ) {
- 				$thumbnail = isset($_POST['post-thumbnail']) ? sanitize_text_field($_POST['post-thumbnail']) : 0;
- 				update_option('jwppp-post-thumbnail', $thumbnail);
- 			}
-
- 			echo '<tr>';
- 			echo '<th scope="row">' . esc_html(__('Post thumbnail', 'jwppp')) . '</th>';
-			echo '<td>';
-			echo '<input type="checkbox" id="post-thumbnail" name="post-thumbnail" ';
-			echo ($thumbnail === '1') ? ' checked="checked"' : '';
-			echo 'value="1" />' . esc_html(__('Use the post thumbnail', 'jwppp'));
-			echo '<p class="description">' . esc_html(__('When present, use the post thumbnail as poster image.', 'jwppp')) . '</p>';
-			echo '<td>';
- 			echo '</tr>';
-
- 			//FIXED DIMENSIONS OR RESPONSIVE?
- 			$jwppp_method_dimensions = sanitize_text_field(get_option('jwppp-method-dimensions'));
- 			if(isset($_POST['jwppp-method-dimensions']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
- 				$jwppp_method_dimensions = sanitize_text_field($_POST['jwppp-method-dimensions']);
- 				update_option('jwppp-method-dimensions', $jwppp_method_dimensions);
- 			}
-
- 			//PLAYER FIXED WIDTH
- 			$jwppp_player_width = sanitize_text_field(get_option('jwppp-player-width'));
- 			if( isset($_POST['jwppp-player-width']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options') ) {
- 				$jwppp_player_width = sanitize_text_field($_POST['jwppp-player-width']);
- 				update_option('jwppp-player-width', $jwppp_player_width);
- 			}
-
- 			//PLAYER FIXED HEIGHT
- 			$jwppp_player_height = sanitize_text_field(get_option('jwppp-player-height'));
- 			if( isset($_POST['jwppp-player-height']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options') ) {
- 				$jwppp_player_height = sanitize_text_field($_POST['jwppp-player-height']);
- 				update_option('jwppp-player-height', $jwppp_player_height);
- 			}
-
- 			//PLAYER %
- 			$jwppp_responsive_width = sanitize_text_field(get_option('jwppp-responsive-width'));
- 			if(isset($_POST['jwppp-responsive-width']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
- 				$jwppp_responsive_width = sanitize_text_field($_POST['jwppp-responsive-width']);
- 				update_option('jwppp-responsive-width', $jwppp_responsive_width);
- 			}
-
- 			//PLAYER ASPECT RATIO
- 			$jwppp_aspectratio = sanitize_text_field(get_option('jwppp-aspectratio'));
- 			if(isset($_POST['jwppp-aspectratio']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
- 				$jwppp_aspectratio = sanitize_text_field($_POST['jwppp-aspectratio']);
- 				update_option('jwppp-aspectratio', $jwppp_aspectratio);
- 			}
-
- 			//FIXED DIMENSIONS OR RESPONSIVE? 
- 			echo '<tr>';
- 			echo '<th scope="row">Player dimensions</th>';
- 			echo '<td>';
- 			echo '<select id="jwppp-method-dimensions" name="jwppp-method-dimensions" />';
- 			echo '<option name="fixed" id="fixed" value="fixed" ';
- 			echo ($jwppp_method_dimensions === 'fixed') ? 'selected="selected"' : '';
- 			echo '>' . esc_html(__('Fixed', 'jwppp')) . '</option>';
- 			echo '<option name="responsive" id="responsive" value="responsive"';
- 			echo ($jwppp_method_dimensions === 'responsive') ? 'selected="selected"' : '';
- 			echo '>' . esc_html(__('Responsive', 'jwppp')) . '</option>';
- 			echo '</select>';
- 			echo '<p class="description">' . esc_html(__('Select how define the measures of the player.', 'jwppp')) . '<br>';
- 			echo '</td>';
- 			echo '</tr>';
-
- 			//PLAYER FIXED WIDTH & HEIGHT
- 			echo '<tr class="more-fixed">';
- 			echo '<th scope="row">' . esc_html(__('Fixed measures', 'jwppp')) . '</th>';
- 			echo '<td>';
- 			echo '<input type="number" min="1" step="1" class="small-text" id="jwppp-player-width" name="jwppp-player-width" value="';
-			echo ($jwppp_player_width !== null) ? esc_html($jwppp_player_width) : '640';
-			echo '" />';
-			echo ' x ';
-			echo '<input type="number" min="1" step="1" class="small-text" id="jwppp-player-height" name="jwppp-player-height" value="';
-			echo ($jwppp_player_height !== null) ? esc_html($jwppp_player_height) : '360';
-			echo '" />';
- 			echo '<p class="description"></p>';
- 			echo '</td>';
- 			echo '</tr>';
-
- 			//PLAYER %
-			echo '<tr class="more-responsive">';
-			echo '<th scope="row">' . esc_html(__('Player width', 'jwppp')) . '</th>';
-			echo '<td>';
-			echo '<input type="number" min="10" step="5" class="small-text" id="jwppp-responsive-width" name="jwppp-responsive-width" value="';
-			echo ($jwppp_responsive_width !== null) ? sanitize_text_field($jwppp_responsive_width) : '100';
-			echo '" /> %';
-			echo '<p class="description">' . esc_html(__('Add the player\'s width (eg. 80%)', 'jwppp')) . '</p>';
-			echo '</td>';
-			echo '</tr>';
-
-			//PLAYER ASPECT RATIO
-			echo '<tr class="more-responsive">';
-			echo '<th scope="row">' . esc_html(__('Aspect ratio', 'jwppp')) . '</th>';
-			echo '<td>';
-			echo '<select id="jwppp-aspectratio" name="jwppp-aspectratio" class="small-text" />';
-			echo '<option name="16:10" value="16:10"';
-			echo ($jwppp_aspectratio === '16:10') ? ' selected="selected"' : '';
-			echo '>16:10</option>';
-			echo '<option name="16:9" value="16:9"';
-			echo ($jwppp_aspectratio === '16:9') ? ' selected="selected"' : '';
-			echo '>16:9</option>';
-			echo '<option name="4:3" value="4:3"';
-			echo ($jwppp_aspectratio === '4:3') ? ' selected="selected"' : '';
-			echo '>4:3</option>';
-			echo '</select>';
-			echo '<p class="description">' . esc_html(__('Select the aspect ratio of the player', 'jwppp')) . '</p>';
-			echo '</td>';
-			echo '</tr>';
-
-
-			//LOGO
-			$jwppp_logo = sanitize_text_field(get_option('jwppp-logo'));
-			if(isset($_POST['jwppp-logo']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
-				$jwppp_logo = sanitize_text_field($_POST['jwppp-logo']);
-				update_option('jwppp-logo', $jwppp_logo);
-			}
-
-			//LOGO POSITION
-			$jwppp_logo_vertical = sanitize_text_field(get_option('jwppp-logo-vertical'));
- 			if(isset($_POST['jwppp-logo-vertical']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
- 				$jwppp_logo_vertical = sanitize_text_field($_POST['jwppp-logo-vertical']);
- 				update_option('jwppp-logo-vertical', $jwppp_logo_vertical);
- 			}
-			$jwppp_logo_horizontal = sanitize_text_field(get_option('jwppp-logo-horizontal'));
- 			if(isset($_POST['jwppp-logo-horizontal']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
- 				$jwppp_logo_horizontal = sanitize_text_field($_POST['jwppp-logo-horizontal']);
- 				update_option('jwppp-logo-horizontal', $jwppp_logo_horizontal);
- 			}
-
-			//LOGO LINK
-			$jwppp_logo_link = sanitize_text_field(get_option('jwppp-logo-link'));
-			if(isset($_POST['jwppp-logo-link']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
-				$jwppp_logo_link = sanitize_text_field($_POST['jwppp-logo-link']);
-				update_option('jwppp-logo-link', $jwppp_logo_link);
-			}
-
-			//NEXT UP
-			$jwppp_next_up = sanitize_text_field(get_option('jwppp-next-up'));
-			if(isset($_POST['jwppp-next-up']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
-				$jwppp_next_up = sanitize_text_field($_POST['jwppp-next-up']);
-				update_option('jwppp-next-up', $jwppp_next_up);
-			}
-
-
-			//PLAYLIST TOOLTIP
-			$jwppp_playlist_tooltip = sanitize_text_field(get_option('jwppp-playlist-tooltip'));
-			if(isset($_POST['jwppp-playlist-tooltip']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
-				$jwppp_playlist_tooltip = sanitize_text_field($_POST['jwppp-playlist-tooltip']);
-				update_option('jwppp-playlist-tooltip', $jwppp_playlist_tooltip);
-			}
-
-
-			echo '<tr>';
-			echo '<th scope="row">' . esc_html(__('Logo', 'jwppp')) . '</th>';
-			echo '<td>';
-			echo '<input type="text" class="regular-text" id="jwppp-logo" name="jwppp-logo" disabled="disabled" ';
-			echo 'placeholder="' . esc_html(__('Image url', 'jwppp')) . '" value="" />';
-			echo '<p class="description">' . esc_html(__('Add your logo to the player.', 'jwppp')) . '<br>';
-			echo '</td>';
-			echo '</tr>';
-
-			echo '<tr>';
-			echo '<th scope="row">' . esc_html(__('Logo Position', 'jwppp')) . '</th>';
-			echo '<td>';
-			echo '<select id="jwppp-logo-vertical" name="jwppp-logo-vertical" />';
-			echo '<option id="top" name="top" value="top"';
-			echo ($jwppp_logo_vertical === 'top') ? ' selected="selected"' : '';
-			echo '>Top</option>';
-			echo '<option id="bottom" name="bottom" value="bottom"';
-			echo ($jwppp_logo_vertical === 'bottom') ? ' selected="selected"' : '';
-			echo '>Bottom</option>';
-			echo '</select>';
-			echo '<select style="margin-left: 0.5rem;" id="jwppp-logo-horizontal" name="jwppp-logo-horizontal" />';
-			echo '<option id="right" name="right" value="right"';
-			echo ($jwppp_logo_horizontal === 'right') ? ' selected="selected"' : '';
-			echo '>Right</option>';
-			echo '<option id="left" name="left" value="left"';
-			echo ($jwppp_logo_horizontal === 'left') ? ' selected="selected"' : '';
-			echo '>Left</option>';
-			echo '</select>';
-			echo '<p class="description">' . esc_html(__('Choose the logo position.', 'jwppp')) . '</p>';
-			echo '</td>';
-			echo '</tr>';
-
-			echo '<tr>';
-			echo '<th scope="row">' . esc_html(__('Logo Link', 'jwppp')) . '</th>';
-			echo '<td>';
-			echo '<input type="text" class="regular-text" id="jwppp-logo-link" name="jwppp-logo-link" disabled="disabled" ';
-			echo 'placeholder="' . esc_html(__('Link url', 'jwppp')) . '" value="" />';
-			echo '<p class="description">' . esc_html(__('Add a link to the logo.', 'jwppp')) . '<br>';
-			echo '</td>';
-			echo '</tr>';
-
-			echo '<tr>';
-			echo '<th scope="row">' . esc_html(__('Next Up', 'jwppp')) . '</th>';
-			echo '<td>';
-			echo '<input type="text" class="regular-text" id="jwppp-next-up" name="jwppp-next-up" disabled="disabled" ';
-			echo 'placeholder="' . esc_html(__('Next Up', 'jwppp')) . '" value="Next Up" />';
-			echo '<p class="description">' . esc_html(__('Add a different text for the "Next Up" prompt', 'jwppp')) . '</p>';
-			echo '</td>';
-			echo '</tr>';
-
-			echo '<tr>';
-			echo '<th scope="row">' . esc_html(__('Playlist tooltip', 'jwppp')) . '</th>';
-			echo '<td>';
-			echo '<input type="text" class="regular-text" id="jwppp-playlist-tooltip" name="jwppp-playlist-tooltip" disabled="disabled"';
-			echo 'placeholder="' . esc_html(__('Playlist', 'jwppp')) . '" value="Playlist" />';
-			echo '<p class="description">' . esc_html(__('Add a different text for the tooltip in Playlist mode', 'jwppp')) . '</p>';
-			echo '</td>';
-			echo '</tr>';
 
  			echo '</table>';
 
