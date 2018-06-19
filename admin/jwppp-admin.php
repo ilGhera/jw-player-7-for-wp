@@ -103,6 +103,30 @@ function skin_customization_per_version_callback() {
 add_action('wp_ajax_skin-customization', 'skin_customization_per_version_callback');
 
 
+//CHECK IF THE PLAYER COMES FROM JWP DASHBOARD 
+function is_dashboard_player() {
+	$jwplayer = get_option('jwppp-library');
+	$output = false;
+	if($jwplayer) {
+		?>
+		<script>
+		jQuery(document).ready(function($){
+			var player = '<?php echo $jwplayer; ?>';
+			$.getScript(player, function(){		
+				if(jwDefaults) {
+					<?php $output = true; ?>
+				}
+			})
+			console.log('<?php echo $output; ?>');
+		})
+		</script>
+		<?php
+	}
+
+	return $output;
+}
+
+
 //OPTION PAGE
 function jwppp_options() {
 	
@@ -446,26 +470,3 @@ function jwppp_footer_text($text) {
 	echo wp_kses($text, $allowed_tags);
 }
 add_filter('admin_footer_text', 'jwppp_footer_text');
-
-
-function is_dashboard_player() {
-	$jwplayer = get_option('jwppp-library');
-	$output = false;
-	if($jwplayer) {
-		?>
-		<script>
-		jQuery(document).ready(function($){
-			var player = '<?php echo $jwplayer; ?>';
-			$.getScript(player, function(){		
-				if(jwDefaults) {
-					<?php $output = true; ?>
-				}
-			})
-			console.log('<?php echo $output; ?>');
-		})
-		</script>
-		<?php
-	}
-
-	return $output;
-}
