@@ -365,9 +365,6 @@ function jwppp_options() {
 	 				update_option('jwppp-player-width', $jwppp_player_width);
 	 			}
 
-
-	 			}
-
 	 			//PLAYER %
 	 			$jwppp_responsive_width = sanitize_text_field(get_option('jwppp-responsive-width'));
 	 			if(isset($_POST['jwppp-responsive-width']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
