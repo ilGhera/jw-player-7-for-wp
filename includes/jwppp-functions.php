@@ -191,6 +191,8 @@ function jwppp_video_code($p, $width = null, $height = null) {
 			$p_id = get_the_ID();
 		}
 
+		$this_video = $p_id . 1;
+
 		//IS IT A DASHBOARD PLAYER?
 		$dashboard_player = is_dashboard_player();
 
@@ -202,8 +204,24 @@ function jwppp_video_code($p, $width = null, $height = null) {
 
 			/*Video*/
 			$jwppp_video_url = get_post_meta($p_id, '_jwppp-video-url-1', true);
+			$self_content = strpos($jwppp_video_url, 'http');
 
-			$output = ' <script src="https://content.jwplatform.com/players/' . $jwppp_video_url . '-' . $player_parts[0] . '.js"> </script>';
+			/*Output the player*/
+			$output = "<div id='jwppp-video-box-" . $this_video . "' style=\"margin: 1rem 0;\">\n";
+				$output .= "<div id='jwppp-video-" . $this_video . "'>";
+					$output .= __('Loading the player...', 'jwppp');
+				$output .= "</div>\n"; 
+			$output .= "</div>\n"; 
+			$output .= "<script type='text/javascript'>\n";
+				$output .= "var playerInstance_$this_video = jwplayer(\"jwppp-video-$this_video\");\n";
+				$output .= "playerInstance_$this_video.setup({\n";
+					if($self_content === 0) {
+					    $output .= "file: '" . $jwppp_video_url . "',\n"; 
+					} else {
+						$output .= "playlist: 'https://cdn.jwplayer.com/v2/media/$jwppp_video_url'\n";						
+					}
+				$output .= "})\n";
+			$output .= "</script>";
 
 		} else {
 	
@@ -246,8 +264,6 @@ function jwppp_video_code($p, $width = null, $height = null) {
 				$yt_video_image = 'https://img.youtube.com/vi/' . $yt_video_id . '/maxresdefault.jpg';
 			}
 			
-			$this_video = $p_id . 1;
-
 			$output = "<div id='jwppp-video-box-" . $this_video . "' style=\"margin: 1rem 0;\">\n";
 			$output .= "<div id='jwppp-video-" . $this_video . "'>";
 			$output .= __('Loading the player...', 'jwppp');
