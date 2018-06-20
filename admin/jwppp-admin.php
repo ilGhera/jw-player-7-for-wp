@@ -134,7 +134,7 @@ function jwppp_caption_style() {
 }
 
 
-//CHECK IF THE PLAYE COMES FROM THE JWP DASHBOARD
+//CHECK IF THE PLAYER COMES FROM JWP DASHBOARD 
 function is_dashboard_player() {
 	$jwplayer = get_option('jwppp-library');
 	$output = false;
