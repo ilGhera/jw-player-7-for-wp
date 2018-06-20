@@ -1,0 +1,15 @@
+{
+  "widgets": [
+    {
+      "widgetDivId": "<your widget div id>",
+      "playlist": "<input your recommendations or playlist json url>",
+      "videoPlayerId": "<your video player div id>",
+      "header": "More Videos",
+      "textColor": "#fff",
+      "backgroundColor": "#000",
+      "iconColor": "#fff",
+      "widgetLayout": "spotlight",
+      "widgetSize": "large"
+    }
+  ]
+}
