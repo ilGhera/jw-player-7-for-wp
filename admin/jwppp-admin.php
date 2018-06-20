@@ -135,27 +135,58 @@ function jwppp_caption_style() {
 
 
 //CHECK IF THE PLAYER COMES FROM JWP DASHBOARD 
-function is_dashboard_player() {
-	$jwplayer = get_option('jwppp-library');
+function is_dashboard_player($player = null) {
+	
+	$jwplayer = $player ? $player : get_option('jwppp-library');
 	$output = false;
+
 	if($jwplayer) {
-		?>
-		<script>
-		jQuery(document).ready(function($){
-			var player = '<?php echo $jwplayer; ?>';
-			$.getScript(player, function(){		
-				if(jwDefaults) {
-					<?php $output = true; ?>
-				}
-			})
-			console.log('<?php echo $output; ?>');
-		})
-		</script>
-		<?php
+		if(strpos($jwplayer, 'jwplatform.com') !== false) {
+			$output = true;
+		}
 	}
 
 	return $output;
 }
+
+
+//AJAX - UPDATE THE OPTIONS PAGE ON PLAYER LIBRARY CHANGES 
+function jwppp_player_check() {
+	$screen = get_current_screen();
+	if($screen->id === 'toplevel_page_jw-player-for-wp') {
+		?>
+		<script>
+			jQuery(document).ready(function($){
+				$('#jwppp-library').on('change', function() {
+					var player = $('#jwppp-library').val();
+					var data = {
+						'action': 'player_check',
+						'player': player
+					}
+					$.post(ajaxurl, data, function(response){
+						if(response === 'done') {
+							location.reload();
+						}
+					})					
+				})
+			})
+		</script>
+		<?php
+	}
+}
+add_action('admin_footer', 'jwppp_player_check');
+
+
+//CALLBACK - UPDATE OPTIONS PAGE
+function jwppp_player_check_callback() {
+	$player = isset($_POST['player']) ? $_POST['player'] : '';
+	if($player) {
+		update_option('jwppp-library', $player);
+		echo 'done';
+	}
+	exit;
+}
+add_action('wp_ajax_player_check', 'jwppp_player_check_callback');
 
 
 //OPTION PAGE
