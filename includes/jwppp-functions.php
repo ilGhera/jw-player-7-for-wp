@@ -94,7 +94,7 @@ function jwppp_single_video_box($post_id, $number) {
 //OUTPUT THE JWPPP META BOX WITH ALL VIDEOS
 function jwppp_meta_box_callback($post) {
 	$jwppp_videos = jwppp_get_post_videos($post->ID);
-	if($jwppp_videos !== null) {
+	if($jwppp_videos != null) {
 		foreach($jwppp_videos as $jwppp_video) {
 			$jwppp_number = explode('_jwppp-video-url-', $jwppp_video['meta_key']);
 			jwppp_single_video_box($post->ID, $jwppp_number[1]);
