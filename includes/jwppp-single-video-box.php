@@ -615,10 +615,10 @@ if(!$dashboard_player) {
 
 	$output .= '</ul>';
 
-	$output .= '</div>';
-	$output .= '</td>';
-
 }
+
+$output .= '</div>';
+$output .= '</td>';
 
 if($number<2) {
 	$output .= '<td class="add-video"><a class="jwppp-add"><img src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/add-video.png" /></a></td>';
