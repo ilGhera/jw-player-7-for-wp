@@ -1,0 +1,22 @@
+/**
+ * JWPPP Style
+ */
+
+.jwppp-alert {
+	display: block;
+	margin: 1rem 0 0;
+	padding: 0.6rem;
+	background: #F2DEDE;
+	border-radius: 0.2rem;
+	color: #a94442;	
+}
+
+.jwppp-alert a {
+	color: #a94442;	
+	text-decoration: underline;
+}
+
+.custom-skin-url,
+.custom-skin-name {
+	display: none; 
+}
