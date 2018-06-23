@@ -68,7 +68,7 @@ function jwppp_single_video_box($post_id, $number) {
 		$output  = '<div class="playlist-how-to" style="position:relative;background:#2FBFB0;color:#fff;padding:0.5rem 1rem;';
 		$output .= ($plist_hide) ? 'display:none;">' : 'display:block">';
 		$output .= 'Add a playlist of your videos using this code: <code style="display:inline-block;color:#fff;background:none;">[jwp-video n="' . jwppp_videos_string($post_id) . '"]</code>';
-		if(get_option('jwppp-position') != 'custom') {
+		if(get_option('jwppp-position') !== 'custom') {
 			$output .= '<a class="attention-mark" title="' . __('You need to set the VIDEO PLAYER POSITION option to CUSTOM in order to use this shortcode.', 'jwppp') . '"><img class="attention-mark" src="' . plugin_dir_url(__DIR__) . 'images/attention-mark.png" /></a></th>';			
 		}
 		$output .= '</div>';
@@ -94,7 +94,7 @@ function jwppp_single_video_box($post_id, $number) {
 //OUTPUT THE JWPPP META BOX WITH ALL VIDEOS
 function jwppp_meta_box_callback($post) {
 	$jwppp_videos = jwppp_get_post_videos($post->ID);
-	if($jwppp_videos != null) {
+	if(!empty($jwppp_videos)) {
 		foreach($jwppp_videos as $jwppp_video) {
 			$jwppp_number = explode('_jwppp-video-url-', $jwppp_video['meta_key']);
 			jwppp_single_video_box($post->ID, $jwppp_number[1]);
@@ -755,7 +755,7 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 	$this_video = $p_id . $number;
 
 	if($dashboard_player) {
-
+	
 		/*Player informations*/
 		$library_parts = explode('https://content.jwplatform.com/libraries/', get_option('jwppp-library'));
 		$player_parts = explode('.js', $library_parts[1]);
