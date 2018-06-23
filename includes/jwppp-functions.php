@@ -68,7 +68,7 @@ function jwppp_single_video_box($post_id, $number) {
 		$output  = '<div class="playlist-how-to" style="position:relative;background:#2FBFB0;color:#fff;padding:0.5rem 1rem;';
 		$output .= ($plist_hide) ? 'display:none;">' : 'display:block">';
 		$output .= 'Add a playlist of your videos using this code: <code style="display:inline-block;color:#fff;background:none;">[jwp-video n="' . jwppp_videos_string($post_id) . '"]</code>';
-		if(get_option('jwppp-position') != 'custom') {
+		if(get_option('jwppp-position') !== 'custom') {
 			$output .= '<a class="attention-mark" title="' . __('You need to set the VIDEO PLAYER POSITION option to CUSTOM in order to use this shortcode.', 'jwppp') . '"><img class="attention-mark" src="' . plugin_dir_url(__DIR__) . 'images/attention-mark.png" /></a></th>';			
 		}
 		$output .= '</div>';
@@ -94,7 +94,7 @@ function jwppp_single_video_box($post_id, $number) {
 //OUTPUT THE JWPPP META BOX WITH ALL VIDEOS
 function jwppp_meta_box_callback($post) {
 	$jwppp_videos = jwppp_get_post_videos($post->ID);
-	if($jwppp_videos != null) {
+	if(!empty($jwppp_videos)) {
 		foreach($jwppp_videos as $jwppp_video) {
 			$jwppp_number = explode('_jwppp-video-url-', $jwppp_video['meta_key']);
 			jwppp_single_video_box($post->ID, $jwppp_number[1]);
@@ -739,7 +739,7 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 
 	$output = "<div id='jwppp-video-box-" . esc_attr($this_video) . "' class='jwppp-video-box' data-video='" . esc_attr($n) . "' style=\"margin: 1rem 0;\">\n";
 	$output .= "<div id='jwppp-video-" . esc_attr($this_video) . "'>";
-	if(sanitize_text_field(get_option('jwppp-text')) != null) {
+	if(sanitize_text_field(get_option('jwppp-text')) !== null) {
 		$output .= sanitize_text_field(get_option('jwppp-text'));
 	} else {
 		$output .= esc_html(__('Loading the player...', 'jwppp'));
@@ -963,12 +963,12 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 				    $output .= ($jwppp_player_width !== null) ? esc_html($jwppp_player_width) : '640';
 				    $output .= "',\n";
 				    $output .= "height: '";
-				    $output .= ($jwppp_player_height != null) ? esc_html($jwppp_player_height) : '360';
+				    $output .= ($jwppp_player_height !== null) ? esc_html($jwppp_player_height) : '360';
 				    $output .= "',\n";
 				    
 				} else {
 					$output .= "width: '";
-					$output .= ($jwppp_responsive_width != null) ? esc_html($jwppp_responsive_width) . '%' : '100%';
+					$output .= ($jwppp_responsive_width !== null) ? esc_html($jwppp_responsive_width) . '%' : '100%';
 					$output .= "',\n";
 					$output .= "aspectratio: '";
 					if($ar) {
@@ -987,7 +987,7 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 	    	$output .= "skin: {\n";
 		    	if($player_version === '7') {
 
-			    	$output .= $jwppp_skin_name != 'none' ? "name: '" . esc_html($jwppp_skin_name) . "',\n" : '';
+			    	$output .= $jwppp_skin_name !== 'none' ? "name: '" . esc_html($jwppp_skin_name) . "',\n" : '';
 					$output .= $jwppp_skin_color_active ? "active: '" . esc_html($jwppp_skin_color_active) . "',\n" : '';
 					$output .= $jwppp_skin_color_inactive ? "inactive: '" . esc_html($jwppp_skin_color_inactive) . "',\n" : '';
 					$output .= $jwppp_skin_color_background ? "background: '" . esc_html($jwppp_skin_color_background) . "',\n" : '';
