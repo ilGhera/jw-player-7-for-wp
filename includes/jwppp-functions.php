@@ -226,7 +226,7 @@ function jwppp_save_single_video_data( $post_id ) {
 	}
 
 	$jwppp_videos = jwppp_get_post_videos($post_id);
-	if($jwppp_videos === null) {
+	if(empty($jwppp_videos)) {
 		$jwppp_videos = array(
 			array(
 				'meta_key' => '_jwppp-video-url-1', 
