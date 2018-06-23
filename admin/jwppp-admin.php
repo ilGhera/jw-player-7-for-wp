@@ -396,6 +396,13 @@ function jwppp_options() {
 	 				update_option('jwppp-player-width', $jwppp_player_width);
 	 			}
 
+	 			//PLAYER FIXED HEIGHT
+	 			$jwppp_player_height = sanitize_text_field(get_option('jwppp-player-height'));
+	 			if( isset($_POST['jwppp-player-height']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options') ) {
+	 				$jwppp_player_height = sanitize_text_field($_POST['jwppp-player-height']);
+	 				update_option('jwppp-player-height', $jwppp_player_height);
+	 			}
+
 	 			//PLAYER %
 	 			$jwppp_responsive_width = sanitize_text_field(get_option('jwppp-responsive-width'));
 	 			if(isset($_POST['jwppp-responsive-width']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
