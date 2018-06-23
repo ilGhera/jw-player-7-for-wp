@@ -64,7 +64,10 @@ function jwppp_single_video_box($post_id, $number) {
 		$plist_hide = false;
 	}
 
-	if($number === '1') {
+	//IS IT A DASHBOARD PLAYER?
+	$dashboard_player = is_dashboard_player();
+
+	if($number === '1' && !$dashboard_player) {
 		$output  = '<div class="playlist-how-to" style="position:relative;background:#2FBFB0;color:#fff;padding:0.5rem 1rem;';
 		$output .= ($plist_hide) ? 'display:none;">' : 'display:block">';
 		$output .= 'Add a playlist of your videos using this code: <code style="display:inline-block;color:#fff;background:none;">[jwp-video n="' . jwppp_videos_string($post_id) . '"]</code>';
