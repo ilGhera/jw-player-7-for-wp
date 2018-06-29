@@ -88,7 +88,7 @@ var sh_video_script = function(number) {
         //HIDE/ SHOW CONTENTS BASED ON THE MAIN FLAG
         $('#_jwppp-add-chapters-' + number).on('change',function() {
             if($('#_jwppp-add-chapters-' + number).prop('checked')) {
-                $('span.add-chapters.' + number).text('<?php echo __("Add", "jwppp"); ?>');
+                $('span.add-chapters.' + number).text('Add');
                 $('#_jwppp-chapters-subtitles-' + number).show();
                 $('#_jwppp-chapters-number-' + number).show();
                 
@@ -124,7 +124,7 @@ var sh_video_script = function(number) {
                 })
 
             } else {
-                $('span.add-chapters.' + number).text('<?php echo __("Add Chapters, Subtitles or Preview Thumbnails", "jwppp"); ?>');
+                $('span.add-chapters.' + number).text('Add Chapters, Subtitles or Preview Thumbnails');
                 $('#_jwppp-chapters-subtitles-' + number).hide();
                 $('#_jwppp-chapters-number-' + number).hide();
                 $('li#video-' + number + '-chapter').hide();
@@ -139,11 +139,11 @@ var sh_video_script = function(number) {
         function placeholder() {
             var selector = $('#_jwppp-chapters-subtitles-' + number);
             if($(selector).val() == 'thumbnails') {
-                var placeholder = '<?php echo esc_html(__("Thumbnail url", "jwppp")); ?>';                  
+                var placeholder = 'Thumbnail url';                  
             } else if($(selector).val() == 'subtitles') {
-                var placeholder = '<?php echo esc_html(__("Subtitle", "jwppp")); ?>';
+                var placeholder = 'Subtitle';
             } else {
-                var placeholder = '<?php echo esc_html(__("Chapter title", "jwppp")); ?>';
+                var placeholder = 'Chapter title';
             }
             $('ul.chapters-subtitles-' + number + ' li input[type=text]').attr('placeholder', placeholder);
         }
@@ -203,8 +203,8 @@ var sh_video_script = function(number) {
             if(n_sources > n_current_sources) {
                 for(n=n_current_sources+1; n == n_sources; n++) {
                     var element = '<li id="video-' + number + '-source" data-number="' + n + '">' + 
-                                  '<input type="text" style="margin-right:1rem;" name="_jwppp-' + number + '-source-' + n + '-url" value="" placeholder="<?php echo esc_html(__("Source url", "jwppp")); ?>" size="60" />' +
-                                  '<input type="text" name="_jwppp-' + number + '-source-' + n + '-label" class="source-label-' + number + '" style="margin-right:1rem;" value="" placeholder="<?php echo esc_html(__("Label (HD, 720p, 360p)", "jwppp")); ?>" size="30" />' +
+                                  '<input type="text" style="margin-right:1rem;" name="_jwppp-' + number + '-source-' + n + '-url" value="" placeholder="Source url" size="60" />' +
+                                  '<input type="text" name="_jwppp-' + number + '-source-' + n + '-label" class="source-label-' + number + '" style="margin-right:1rem;" value="" placeholder="Label (HD, 720p, 360p)" size="30" />' +
                                   '</li>';
 
                     $('ul.sources-' + number).append(element);
@@ -247,9 +247,9 @@ var sh_video_script = function(number) {
                 for(n=n_current_subtitles+1; n == n_chapters; n++) {
                     var element = '<li id="video-' + number + '-subtitle" data-number="' + n + '">' +
                             '<input type="text" style="margin-right:1rem;" name="_jwppp-' + number + '-subtitle-' + n + '-url"' +
-                            'placeholder="<?php echo  esc_html(__("Subtitles file url (VTT, SRT, DFXP)", "jwppp")); ?>"' +
+                            'placeholder="Subtitles file url (VTT, SRT, DFXP)"' +
                             'size="60" />' +
-                            '<input type="text" name="_jwppp-' + number + '-subtitle-' + n + '-label" style="margin-right:1rem;" value="" placeholder="<?php echo esc_html(__("Label (EN, IT, FR )", "jwppp")); ?>" size="30" />';
+                            '<input type="text" name="_jwppp-' + number + '-subtitle-' + n + '-label" style="margin-right:1rem;" value="" placeholder="Label (EN, IT, FR )" size="30" />';
                            '</li>';
                     $('ul.load-subtitles-' + number).append(element);
                     // placeholder();
