@@ -99,6 +99,7 @@ function jwppp_single_video_box($post_id, $number) {
 //OUTPUT THE JWPPP META BOX WITH ALL VIDEOS
 function jwppp_meta_box_callback($post) {
 	$jwppp_videos = jwppp_get_post_videos($post->ID);
+		
 	if(!empty($jwppp_videos)) {
 		foreach($jwppp_videos as $jwppp_video) {
 			$jwppp_number = explode('_jwppp-video-url-', $jwppp_video['meta_key']);
@@ -216,6 +217,7 @@ add_action( 'wp_ajax_jwppp_ajax_remove', 'jwppp_ajax_remove_video_callback' );
 //SAVE ALL INFORMATIONS OF THE SINGLE VIDEO
 function jwppp_save_single_video_data( $post_id ) {
 
+
 	if (defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE) {
 		return;
 	}
@@ -231,6 +233,8 @@ function jwppp_save_single_video_data( $post_id ) {
 	}
 
 	$jwppp_videos = jwppp_get_post_videos($post_id);
+	error_log('VIDEOS: ' . print_r($jwppp_videos, true));
+
 	if(empty($jwppp_videos)) {
 		$jwppp_videos = array(
 			array(
@@ -240,10 +244,20 @@ function jwppp_save_single_video_data( $post_id ) {
 		);
 	}
 
+	error_log('POST: ' . print_r($_POST['_jwppp-video-url-2'], true));
+	error_log(count($jwppp_videos));
+	error_log('SET: ' . isset( $_POST['_jwppp-video-url-2']));
+
+
 	foreach($jwppp_videos as $jwppp_video) {
+
 
 		$jwppp_number = explode('_jwppp-video-url-', $jwppp_video['meta_key']);
 		$number = $jwppp_number[1];
+
+			error_log('JWPPP_NUMBER: ' . print_r($jwppp_number, true));
+
+			error_log('VIDEO ' . $number . ': ' . sanitize_text_field($_POST['_jwppp-video-url-' . $number]));
 
 		if (!isset( $_POST['jwppp-meta-box-nonce-' . $number] )) {
 			return;
@@ -253,10 +267,13 @@ function jwppp_save_single_video_data( $post_id ) {
 			return;
 		}
 
+
 		if (!isset( $_POST['_jwppp-video-url-' . $number] )) {
 			return;
 		} else {
+
 			$video = sanitize_text_field($_POST['_jwppp-video-url-' . $number]);
+
 			if($video === null) {
 				delete_post_meta($post_id, '_jwppp-video-url-' . $number);
 			} else {
