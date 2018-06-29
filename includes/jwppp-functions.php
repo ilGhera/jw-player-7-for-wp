@@ -5,6 +5,8 @@
 
 require(plugin_dir_path(__FILE__) . 'jwppp-ajax-add-video-callback.php');
 require(plugin_dir_path(__FILE__) . 'jwppp-ajax-remove-video-callback.php');
+require(plugin_dir_path(__FILE__) . 'jwppp-sh-video-tools.php');
+
 
 //ADD META BOX
 function jwppp_add_meta_box() {
@@ -642,69 +644,65 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 	//IS IT A DASHBOARD PLAYER?
 	$dashboard_player = is_dashboard_player();
 
-	if(!$dashboard_player) {
-	
-		//GET THE OPTIONS
-		$jwppp_method_dimensions = sanitize_text_field(get_option('jwppp-method-dimensions'));
-		$jwppp_player_width = sanitize_text_field(get_option('jwppp-player-width'));
-		$jwppp_player_height = sanitize_text_field(get_option('jwppp-player-height'));
-		$jwppp_responsive_width = sanitize_text_field(get_option('jwppp-responsive-width'));
-		$jwppp_aspectratio = sanitize_text_field(get_option('jwppp-aspectratio'));
+	//GET THE OPTIONS
+	$jwppp_method_dimensions = sanitize_text_field(get_option('jwppp-method-dimensions'));
+	$jwppp_player_width = sanitize_text_field(get_option('jwppp-player-width'));
+	$jwppp_player_height = sanitize_text_field(get_option('jwppp-player-height'));
+	$jwppp_responsive_width = sanitize_text_field(get_option('jwppp-responsive-width'));
+	$jwppp_aspectratio = sanitize_text_field(get_option('jwppp-aspectratio'));
 
-		$player_version = sanitize_text_field(get_option('jwppp-player-version'));
+	$player_version = sanitize_text_field(get_option('jwppp-player-version'));
 
-		//SKIN CUSTOMIZATION - JWP7	
-		$jwppp_skin = sanitize_text_field(get_option('jwppp-skin'));
-		/*Is it a custom skin?*/
-		if($jwppp_skin == 'custom-skin') {
-			$jwppp_skin_name = sanitize_text_field(get_option('jwppp-custom-skin-name'));
-		} else {
-			$jwppp_skin_name = $jwppp_skin;
-		}
-
-		$jwppp_skin_color_active = sanitize_text_field(get_option('jwppp-skin-color-active'));
-		$jwppp_skin_color_inactive = sanitize_text_field(get_option('jwppp-skin-color-inactive'));
-		$jwppp_skin_color_background = sanitize_text_field(get_option('jwppp-skin-color-background'));
-
-
-		//SKIN CUSTOMIZATION - JWP8
-		$jwppp_skin_color_controlbar_text = sanitize_text_field(get_option('jwppp-skin-color-controlbar-text'));
-		$jwppp_skin_color_controlbar_icons = sanitize_text_field(get_option('jwppp-skin-color-controlbar-icons'));
-		$jwppp_skin_color_controlbar_active_icons = sanitize_text_field(get_option('jwppp-skin-color-controlbar-active-icons'));
-		$jwppp_skin_color_controlbar_background = sanitize_text_field(get_option('jwppp-skin-color-controlbar-background'));
-		$jwppp_skin_color_timeslider_progress = sanitize_text_field(get_option('jwppp-skin-color-timeslider-progress'));
-		$jwppp_skin_color_timeslider_rail = sanitize_text_field(get_option('jwppp-skin-color-timeslider-rail'));
-		$jwppp_skin_color_menus_text = sanitize_text_field(get_option('jwppp-skin-color-menus-text'));
-		$jwppp_skin_color_menus_active_text = sanitize_text_field(get_option('jwppp-skin-color-menus-active-text'));
-		$jwppp_skin_color_menus_background = sanitize_text_field(get_option('jwppp-skin-color-menus-background'));
-		$jwppp_skin_color_tooltips_text = sanitize_text_field(get_option('jwppp-skin-color-tooltips-text'));
-		$jwppp_skin_color_tooltips_background = sanitize_text_field(get_option('jwppp-skin-color-tooltips-background'));
-
-
-		$jwppp_logo = sanitize_text_field(get_option('jwppp-logo'));
-		$jwppp_logo_vertical = sanitize_text_field(get_option('jwppp-logo-vertical'));
-		$jwppp_logo_horizontal = sanitize_text_field(get_option('jwppp-logo-horizontal'));
-		$jwppp_logo_link = sanitize_text_field(get_option('jwppp-logo-link'));
-		$active_share = sanitize_text_field(get_option('jwppp-active-share'));	
-		$jwppp_embed_video = sanitize_text_field(get_option('jwppp-embed-video'));
-		$jwppp_show_related = sanitize_text_field(get_option('jwppp-show-related'));
-		$jwppp_related_heading = sanitize_text_field(get_option('jwppp-related-heading'));
-		$jwppp_next_up = sanitize_text_field(get_option('jwppp-next-up'));
-		$jwppp_playlist_tooltip = sanitize_text_field(get_option('jwppp-playlist-tooltip'));
-		$jwppp_show_ads = sanitize_text_field(get_option('jwppp-active-ads'));
-		$jwppp_ads_client = sanitize_text_field(get_option('jwppp-ads-client'));
-		$jwppp_ads_tag = sanitize_text_field(get_option('jwppp-ads-tag'));
-		$jwppp_ads_skip = sanitize_text_field(get_option('jwppp-ads-skip'));
-
-		//NEW SUBTITLES OPTIONS
-		$jwppp_sub_color = sanitize_text_field(get_option('jwppp-subtitles-color'));
-		$jwppp_sub_font_size = sanitize_text_field(get_option('jwppp-subtitles-font-size'));
-		$jwppp_sub_font_family = sanitize_text_field(get_option('jwppp-subtitles-font-family'));
-		$jwppp_sub_opacity = sanitize_text_field(get_option('jwppp-subtitles-opacity'));
-		$jwppp_sub_back_color = sanitize_text_field(get_option('jwppp-subtitles-back-color'));
-		$jwppp_sub_back_opacity = sanitize_text_field(get_option('jwppp-subtitles-back-opacity'));
-
+	//SKIN CUSTOMIZATION - JWP7	
+	$jwppp_skin = sanitize_text_field(get_option('jwppp-skin'));
+	/*Is it a custom skin?*/
+	if($jwppp_skin == 'custom-skin') {
+		$jwppp_skin_name = sanitize_text_field(get_option('jwppp-custom-skin-name'));
+	} else {
+		$jwppp_skin_name = $jwppp_skin;
 	}
+
+	$jwppp_skin_color_active = sanitize_text_field(get_option('jwppp-skin-color-active'));
+	$jwppp_skin_color_inactive = sanitize_text_field(get_option('jwppp-skin-color-inactive'));
+	$jwppp_skin_color_background = sanitize_text_field(get_option('jwppp-skin-color-background'));
+
+
+	//SKIN CUSTOMIZATION - JWP8
+	$jwppp_skin_color_controlbar_text = sanitize_text_field(get_option('jwppp-skin-color-controlbar-text'));
+	$jwppp_skin_color_controlbar_icons = sanitize_text_field(get_option('jwppp-skin-color-controlbar-icons'));
+	$jwppp_skin_color_controlbar_active_icons = sanitize_text_field(get_option('jwppp-skin-color-controlbar-active-icons'));
+	$jwppp_skin_color_controlbar_background = sanitize_text_field(get_option('jwppp-skin-color-controlbar-background'));
+	$jwppp_skin_color_timeslider_progress = sanitize_text_field(get_option('jwppp-skin-color-timeslider-progress'));
+	$jwppp_skin_color_timeslider_rail = sanitize_text_field(get_option('jwppp-skin-color-timeslider-rail'));
+	$jwppp_skin_color_menus_text = sanitize_text_field(get_option('jwppp-skin-color-menus-text'));
+	$jwppp_skin_color_menus_active_text = sanitize_text_field(get_option('jwppp-skin-color-menus-active-text'));
+	$jwppp_skin_color_menus_background = sanitize_text_field(get_option('jwppp-skin-color-menus-background'));
+	$jwppp_skin_color_tooltips_text = sanitize_text_field(get_option('jwppp-skin-color-tooltips-text'));
+	$jwppp_skin_color_tooltips_background = sanitize_text_field(get_option('jwppp-skin-color-tooltips-background'));
+
+
+	$jwppp_logo = sanitize_text_field(get_option('jwppp-logo'));
+	$jwppp_logo_vertical = sanitize_text_field(get_option('jwppp-logo-vertical'));
+	$jwppp_logo_horizontal = sanitize_text_field(get_option('jwppp-logo-horizontal'));
+	$jwppp_logo_link = sanitize_text_field(get_option('jwppp-logo-link'));
+	$active_share = sanitize_text_field(get_option('jwppp-active-share'));	
+	$jwppp_embed_video = sanitize_text_field(get_option('jwppp-embed-video'));
+	$jwppp_show_related = sanitize_text_field(get_option('jwppp-show-related'));
+	$jwppp_related_heading = sanitize_text_field(get_option('jwppp-related-heading'));
+	$jwppp_next_up = sanitize_text_field(get_option('jwppp-next-up'));
+	$jwppp_playlist_tooltip = sanitize_text_field(get_option('jwppp-playlist-tooltip'));
+	$jwppp_show_ads = sanitize_text_field(get_option('jwppp-active-ads'));
+	$jwppp_ads_client = sanitize_text_field(get_option('jwppp-ads-client'));
+	$jwppp_ads_tag = sanitize_text_field(get_option('jwppp-ads-tag'));
+	$jwppp_ads_skip = sanitize_text_field(get_option('jwppp-ads-skip'));
+
+	//NEW SUBTITLES OPTIONS
+	$jwppp_sub_color = sanitize_text_field(get_option('jwppp-subtitles-color'));
+	$jwppp_sub_font_size = sanitize_text_field(get_option('jwppp-subtitles-font-size'));
+	$jwppp_sub_font_family = sanitize_text_field(get_option('jwppp-subtitles-font-family'));
+	$jwppp_sub_opacity = sanitize_text_field(get_option('jwppp-subtitles-opacity'));
+	$jwppp_sub_back_color = sanitize_text_field(get_option('jwppp-subtitles-back-color'));
+	$jwppp_sub_back_opacity = sanitize_text_field(get_option('jwppp-subtitles-back-opacity'));
 
 	//GETTING THE POST/ PAGE ID
 	if($p) {
@@ -721,7 +719,10 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 		/*Video url or media id*/
 		$jwppp_video_url = get_post_meta($p_id, '_jwppp-video-url-' . $number, true);
 
-		if(!$dashboard_player) {
+		/*Is the video self hosted?*/
+		$sh_video = strrpos($jwppp_video_url, 'http') === 0 ? true : false;
+
+		if(!$dashboard_player || $sh_video) {
 
 			$video_image = get_post_meta($p_id, '_jwppp-video-image-' . $number, true);
 			$video_title = get_post_meta($p_id, '_jwppp-video-title-' . $number, true);
@@ -757,7 +758,7 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 
 	$this_video = $p_id . $number;
 
-	if($dashboard_player) {
+	if($dashboard_player && !$sh_video) {
 	
 		/*Player informations*/
 		$library_parts = explode('https://content.jwplatform.com/libraries/', get_option('jwppp-library'));
@@ -1002,154 +1003,160 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 					$output .= "},\n";
 				}
 			   
-				//PLAYER DIMENSIONS
-				if($width && $height) {
 
-					    $output .= "width: '" . esc_html($width) . "',\n";
-					    $output .= "height: '" . esc_html($height) . "',\n";
+			   	/*Options available only with self-hosted player*/
+			   	if(!$dashboard_player) {
+	
+					//PLAYER DIMENSIONS
+					if($width && $height) {
 
-				} else {
-				    
-				    if($jwppp_method_dimensions === 'fixed') {
-					    $output .= "width: '";
-					    $output .= ($jwppp_player_width !== null) ? esc_html($jwppp_player_width) : '640';
-					    $output .= "',\n";
-					    $output .= "height: '";
-					    $output .= ($jwppp_player_height != null) ? esc_html($jwppp_player_height) : '360';
-					    $output .= "',\n";
+						    $output .= "width: '" . esc_html($width) . "',\n";
+						    $output .= "height: '" . esc_html($height) . "',\n";
+
+					} else {
 					    
-					} else {
-						$output .= "width: '";
-						$output .= ($jwppp_responsive_width != null) ? esc_html($jwppp_responsive_width) . '%' : '100%';
-						$output .= "',\n";
-						$output .= "aspectratio: '";
-						if($ar) {
-							$output .= $ar;
-						} elseif($jwppp_aspectratio) {
-							$output .= esc_html($jwppp_aspectratio);
+					    if($jwppp_method_dimensions === 'fixed') {
+						    $output .= "width: '";
+						    $output .= ($jwppp_player_width !== null) ? esc_html($jwppp_player_width) : '640';
+						    $output .= "',\n";
+						    $output .= "height: '";
+						    $output .= ($jwppp_player_height != null) ? esc_html($jwppp_player_height) : '360';
+						    $output .= "',\n";
+						    
 						} else {
-							$output .= '16:9';
+							$output .= "width: '";
+							$output .= ($jwppp_responsive_width != null) ? esc_html($jwppp_responsive_width) . '%' : '100%';
+							$output .= "',\n";
+							$output .= "aspectratio: '";
+							if($ar) {
+								$output .= $ar;
+							} elseif($jwppp_aspectratio) {
+								$output .= esc_html($jwppp_aspectratio);
+							} else {
+								$output .= '16:9';
+							}
+							$output .= "',\n";
 						}
-						$output .= "',\n";
+
 					}
 
-				}
+					//SKIN
+			    	$output .= "skin: {\n";
+				    	if($player_version === '7') {
 
-				//SKIN
-		    	$output .= "skin: {\n";
-			    	if($player_version === '7') {
+					    	$output .= $jwppp_skin_name != 'none' ? "name: '" . esc_html($jwppp_skin_name) . "',\n" : '';
+							$output .= $jwppp_skin_color_active ? "active: '" . esc_html($jwppp_skin_color_active) . "',\n" : '';
+							$output .= $jwppp_skin_color_inactive ? "inactive: '" . esc_html($jwppp_skin_color_inactive) . "',\n" : '';
+							$output .= $jwppp_skin_color_background ? "background: '" . esc_html($jwppp_skin_color_background) . "',\n" : '';
 
-				    	$output .= $jwppp_skin_name != 'none' ? "name: '" . esc_html($jwppp_skin_name) . "',\n" : '';
-						$output .= $jwppp_skin_color_active ? "active: '" . esc_html($jwppp_skin_color_active) . "',\n" : '';
-						$output .= $jwppp_skin_color_inactive ? "inactive: '" . esc_html($jwppp_skin_color_inactive) . "',\n" : '';
-						$output .= $jwppp_skin_color_background ? "background: '" . esc_html($jwppp_skin_color_background) . "',\n" : '';
+				    	} elseif($player_version === '8') {
 
-			    	} elseif($player_version === '8') {
+					    	$output .= "controlbar: {\n";
+						    	$output .= $jwppp_skin_color_controlbar_text ? "text: '" . esc_html($jwppp_skin_color_controlbar_text) . "',\n" : '';
+						    	$output .= $jwppp_skin_color_controlbar_icons ? "icons: '" . esc_html($jwppp_skin_color_controlbar_icons) . "',\n" : '';
+						    	$output .= $jwppp_skin_color_controlbar_active_icons ? "iconsActive: '" . esc_html($jwppp_skin_color_controlbar_active_icons) . "',\n" : '';
+						    	$output .= $jwppp_skin_color_controlbar_background ? "background: '" . esc_html($jwppp_skin_color_controlbar_background) . "',\n" : '';
+					    	$output .= "},\n";
 
-				    	$output .= "controlbar: {\n";
-					    	$output .= $jwppp_skin_color_controlbar_text ? "text: '" . esc_html($jwppp_skin_color_controlbar_text) . "',\n" : '';
-					    	$output .= $jwppp_skin_color_controlbar_icons ? "icons: '" . esc_html($jwppp_skin_color_controlbar_icons) . "',\n" : '';
-					    	$output .= $jwppp_skin_color_controlbar_active_icons ? "iconsActive: '" . esc_html($jwppp_skin_color_controlbar_active_icons) . "',\n" : '';
-					    	$output .= $jwppp_skin_color_controlbar_background ? "background: '" . esc_html($jwppp_skin_color_controlbar_background) . "',\n" : '';
-				    	$output .= "},\n";
+					    	$output .= "timeslider: {\n";
+						    	$output .= $jwppp_skin_color_timeslider_progress ? "progress: '" . esc_html($jwppp_skin_color_timeslider_progress) . "',\n" : '';
+						    	$output .= $jwppp_skin_color_timeslider_rail ? "rail: '" . esc_html($jwppp_skin_color_timeslider_rail) . "',\n" : '';
+					    	$output .= "},\n";
 
-				    	$output .= "timeslider: {\n";
-					    	$output .= $jwppp_skin_color_timeslider_progress ? "progress: '" . esc_html($jwppp_skin_color_timeslider_progress) . "',\n" : '';
-					    	$output .= $jwppp_skin_color_timeslider_rail ? "rail: '" . esc_html($jwppp_skin_color_timeslider_rail) . "',\n" : '';
-				    	$output .= "},\n";
+					    	$output .= "menus: {\n";
+						    	$output .= $jwppp_skin_color_menus_text ? "text: '" . esc_html($jwppp_skin_color_menus_text) . "',\n" : '';
+						    	$output .= $jwppp_skin_color_menus_active_text ? "textActive: '" . esc_html($jwppp_skin_color_menus_active_text) . "',\n" : '';
+						    	$output .= $jwppp_skin_color_menus_background ? "background: '" . esc_html($jwppp_skin_color_menus_background) . "',\n" : '';
+					    	$output .= "},\n";
 
-				    	$output .= "menus: {\n";
-					    	$output .= $jwppp_skin_color_menus_text ? "text: '" . esc_html($jwppp_skin_color_menus_text) . "',\n" : '';
-					    	$output .= $jwppp_skin_color_menus_active_text ? "textActive: '" . esc_html($jwppp_skin_color_menus_active_text) . "',\n" : '';
-					    	$output .= $jwppp_skin_color_menus_background ? "background: '" . esc_html($jwppp_skin_color_menus_background) . "',\n" : '';
-				    	$output .= "},\n";
+					    	$output .= "tooltips: {\n";
+						    	$output .= $jwppp_skin_color_tooltips_text ? "text: '" . esc_html($jwppp_skin_color_tooltips_text) . "',\n" : '';
+						    	$output .= $jwppp_skin_color_tooltips_background ? "background: '" . esc_html($jwppp_skin_color_tooltips_background) . "',\n" : '';
+					    	$output .= "}\n";
 
-				    	$output .= "tooltips: {\n";
-					    	$output .= $jwppp_skin_color_tooltips_text ? "text: '" . esc_html($jwppp_skin_color_tooltips_text) . "',\n" : '';
-					    	$output .= $jwppp_skin_color_tooltips_background ? "background: '" . esc_html($jwppp_skin_color_tooltips_background) . "',\n" : '';
-				    	$output .= "}\n";
-
-			    	}
-		    	$output .= "},\n";
-
-				//LOGO
-			    if($jwppp_logo !== null) {
-			    	$output .= "logo: {\n";
-			    	$output .= "file: '" . esc_url($jwppp_logo) . "',\n";
-			    	$output .= "position: '" . esc_html($jwppp_logo_vertical) . '-' . esc_html($jwppp_logo_horizontal) . "',\n";
-			    	if($jwppp_logo_link !== null) {
-			    		$output .= "link: '" . esc_html($jwppp_logo_link) . "'\n";
-			    	}
+				    	}
 			    	$output .= "},\n";
-			    }
 
-			    // SHORTCODE OPTIONS FOR PLAYLISTS
-				if($jwppp_new_playlist) {
-					//AUTOPLAY
-					if($pl_autostart === '1') {
-				    	$output .= "autostart: 'true',\n";
+					//LOGO
+				    if($jwppp_logo !== null) {
+				    	$output .= "logo: {\n";
+				    	$output .= "file: '" . esc_url($jwppp_logo) . "',\n";
+				    	$output .= "position: '" . esc_html($jwppp_logo_vertical) . '-' . esc_html($jwppp_logo_horizontal) . "',\n";
+				    	if($jwppp_logo_link !== null) {
+				    		$output .= "link: '" . esc_html($jwppp_logo_link) . "'\n";
+				    	}
+				    	$output .= "},\n";
 				    }
 
-				    //MUTE
-				    if($pl_mute === '1') {
-				    	$output .= "mute: 'true',\n";
-				    }
+				    // SHORTCODE OPTIONS FOR PLAYLISTS
+					if($jwppp_new_playlist) {
+						//AUTOPLAY
+						if($pl_autostart === '1') {
+					    	$output .= "autostart: 'true',\n";
+					    }
 
-				    //REPEAT
-				    if($pl_repeat === '1') {
-				    	$output .= "repeat: 'true',\n";
-				    }
-				}    
-				    
-				//ADS
-				if($jwppp_show_ads === '1') {
-					$output .= "advertising: {\n";
-					$output .= "client: '" . esc_html($jwppp_ads_client) . "',\n";
-					$output .= "tag: '" . esc_html($jwppp_ads_tag) . "',\n";
-					if($jwppp_ads_skip !== '0') {
-						$output .= "skipoffset: " . esc_html($jwppp_ads_skip) . "\n";
+					    //MUTE
+					    if($pl_mute === '1') {
+					    	$output .= "mute: 'true',\n";
+					    }
+
+					    //REPEAT
+					    if($pl_repeat === '1') {
+					    	$output .= "repeat: 'true',\n";
+					    }
+					}    
+					    
+					//ADS
+					if($jwppp_show_ads === '1') {
+						$output .= "advertising: {\n";
+						$output .= "client: '" . esc_html($jwppp_ads_client) . "',\n";
+						$output .= "tag: '" . esc_html($jwppp_ads_tag) . "',\n";
+						if($jwppp_ads_skip !== '0') {
+							$output .= "skipoffset: " . esc_html($jwppp_ads_skip) . "\n";
+						}
+						$output .= "},\n";
 					}
-					$output .= "},\n";
-				}
 
-				//RELATED VIDEOS
-			    if($jwppp_show_related === '1' && jwppp_get_feed_url() !== null) {
-					$output .= "related: {\n";
-					$output .= "file: '" . jwppp_get_feed_url() . "',\n";
-					if($jwppp_related_heading !== null) {
-						$output .= "heading: '" . esc_html($jwppp_related_heading) . "',\n";
-					} else {
-						$output .= "heading: '" . esc_html(__('Related Videos', 'jwppp')) . "',\n";
+					//RELATED VIDEOS
+				    if($jwppp_show_related === '1' && jwppp_get_feed_url() !== null) {
+						$output .= "related: {\n";
+						$output .= "file: '" . jwppp_get_feed_url() . "',\n";
+						if($jwppp_related_heading !== null) {
+							$output .= "heading: '" . esc_html($jwppp_related_heading) . "',\n";
+						} else {
+							$output .= "heading: '" . esc_html(__('Related Videos', 'jwppp')) . "',\n";
+						}
+						$output .= "onclick: 'link'\n";				
+						$output .= "},\n";
 					}
-					$output .= "onclick: 'link'\n";				
-					$output .= "},\n";
-				}
 
-				//SUBTITLES STYLE
-	      		// if($jwppp_chapters_subtitles == 'subtitles' && jwppp_caption_style()) {
-	      		if( jwppp_caption_style() ) {
-	      			$output .= "captions: {\n";
-	      			$output .= $jwppp_sub_color ? "color: '" . esc_html(($jwppp_sub_color)) . "',\n" : "";
-	      			$output .= $jwppp_sub_font_size ? "fontSize: '" . esc_html(($jwppp_sub_font_size)) . "',\n" : "";
-	      			$output .= $jwppp_sub_font_family ? "fontFamily: '" . esc_html(($jwppp_sub_font_family)) . "',\n" : "";
-	      			$output .= $jwppp_sub_opacity ? "fontOpacity: '" . esc_html(($jwppp_sub_opacity)) . "',\n" : "";
-	      			$output .= $jwppp_sub_back_color ? "backgroundColor: '" . esc_html(($jwppp_sub_back_color)) . "',\n" : "";
-	      			$output .= $jwppp_sub_back_opacity ? "backgroundOpacity: '" . esc_html(($jwppp_sub_back_opacity)) . "',\n" : "";
-	      			$output .= "},\n";
-	      		}
+					//SUBTITLES STYLE
+		      		// if($jwppp_chapters_subtitles == 'subtitles' && jwppp_caption_style()) {
+		      		if( jwppp_caption_style() ) {
+		      			$output .= "captions: {\n";
+		      			$output .= $jwppp_sub_color ? "color: '" . esc_html(($jwppp_sub_color)) . "',\n" : "";
+		      			$output .= $jwppp_sub_font_size ? "fontSize: '" . esc_html(($jwppp_sub_font_size)) . "',\n" : "";
+		      			$output .= $jwppp_sub_font_family ? "fontFamily: '" . esc_html(($jwppp_sub_font_family)) . "',\n" : "";
+		      			$output .= $jwppp_sub_opacity ? "fontOpacity: '" . esc_html(($jwppp_sub_opacity)) . "',\n" : "";
+		      			$output .= $jwppp_sub_back_color ? "backgroundColor: '" . esc_html(($jwppp_sub_back_color)) . "',\n" : "";
+		      			$output .= $jwppp_sub_back_opacity ? "backgroundOpacity: '" . esc_html(($jwppp_sub_back_opacity)) . "',\n" : "";
+		      			$output .= "},\n";
+		      		}
 
-				//LOCALIZATION
-			    $output .= "localization: {\n";
-			    	if($jwppp_next_up) {
-					    $output .= "nextUp: '" . esc_html($jwppp_next_up) . "',\n";		    		
-			    	}
-			    	if($jwppp_playlist_tooltip) {
-					    $output .= "playlist: '" . esc_html($jwppp_playlist_tooltip) . "',\n";		    		
-			    	}
-				    if($jwppp_related_heading) {
-					    $output .= "related: '" . esc_html($jwppp_related_heading) . "',\n";			    	
-				    }
-			    $output .= "},\n";
+					//LOCALIZATION
+				    $output .= "localization: {\n";
+				    	if($jwppp_next_up) {
+						    $output .= "nextUp: '" . esc_html($jwppp_next_up) . "',\n";		    		
+				    	}
+				    	if($jwppp_playlist_tooltip) {
+						    $output .= "playlist: '" . esc_html($jwppp_playlist_tooltip) . "',\n";		    		
+				    	}
+					    if($jwppp_related_heading) {
+						    $output .= "related: '" . esc_html($jwppp_related_heading) . "',\n";			    	
+					    }
+				    $output .= "},\n";
+
+			   	}
 
 		$output .= "});\n";
 
@@ -1218,6 +1225,7 @@ function jwppp_video_s_code($var) {
 add_shortcode('jw7-video', 'jwppp_video_s_code');
 add_shortcode('jwp-video', 'jwppp_video_s_code');
 
+
 //EXECUTE SHORTCODES IN WIDGETS
 if(!has_filter('widget_text', 'do_shortcode')) {
 	add_filter('widget_text', 'do_shortcode');
@@ -1260,3 +1268,38 @@ function jwppp_add_player($content) {
 	return $content;
 }
 add_filter('the_content', 'jwppp_add_player');
+
+
+/**
+ * With cloud player and self hosted sources, all the tools are shown
+ */
+function self_media_source_callback() {
+	$confirmation = isset($_POST['confirmation']) ? sanitize_text_field($_POST['confirmation']) : '';
+	$post_id = isset($_POST['post-id']) ? sanitize_text_field($_POST['post-id']) : '';
+	$number = isset($_POST['number']) ? sanitize_text_field($_POST['number']) : '';
+	if($confirmation) {
+		$tools = sh_video_tools($post_id, $number);
+		echo $tools;
+	}
+	exit;
+}
+add_action('wp_ajax_self-media-source', 'self_media_source_callback');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

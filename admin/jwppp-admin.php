@@ -36,6 +36,7 @@ function jwppp_add_color_picker() {
     if( is_admin() ) { 
         wp_enqueue_style( 'wp-color-picker' );          
         wp_enqueue_script( 'wp-color-picker', array('jquery'), '', true ); 
+        wp_enqueue_script( 'sh-video-script', plugin_dir_url(__DIR__) . 'js/jwppp-sh-video.js' );
     }
 }
 add_action( 'admin_enqueue_scripts', 'jwppp_add_color_picker' );
