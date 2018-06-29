@@ -34,7 +34,7 @@ $output .= '<input type="text" id="_jwppp-video-url-' . esc_attr($number) . '" n
 $output .= ($video_url !== '1') ? 'value="' . esc_attr( $video_url ) . '" ' : 'value="" ';
 $output .= 'size="60" />';
 
-if(!$dashboard_player) {
+if($sh_video) {
 	$output .= '<input type="text" name="_jwppp-' . esc_attr($number) . '-main-source-label" id ="_jwppp-' . esc_attr($number) . '-main-source-label" class="source-label-' . esc_attr($number) . '" style="margin-right:1rem;';
 	$output .= '" value="' . esc_html($main_source_label) . '" placeholder="' . esc_html(__('Label (HD, 720p, 360p)', 'jwppp')) . '" size="30" />';
 }
