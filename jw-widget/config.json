@@ -1,9 +1,9 @@
 {
   "widgets": [
     {
-      "widgetDivId": "<your widget div id>",
-      "playlist": "<input your recommendations or playlist json url>",
-      "videoPlayerId": "<your video player div id>",
+      "widgetDivId": "jwppp-advanced-playlist",
+      "playlist": "https://cdn.jwplayer.com/v2/playlists/uGjAm4L6",
+      "videoPlayerId": "jwppp-video-26951",
       "header": "More Videos",
       "textColor": "#fff",
       "backgroundColor": "#000",

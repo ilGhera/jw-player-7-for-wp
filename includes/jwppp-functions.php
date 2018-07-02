@@ -217,6 +217,9 @@ add_action( 'wp_ajax_jwppp_ajax_remove', 'jwppp_ajax_remove_video_callback' );
 //SAVE ALL INFORMATIONS OF THE SINGLE VIDEO
 function jwppp_save_single_video_data( $post_id ) {
 
+	/*Is a Dashboard player?*/
+	$dashboard_player = is_dashboard_player();
+
 	if (defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE) {
 		return;
 	}
@@ -388,83 +391,87 @@ function jwppp_save_single_video_data( $post_id ) {
 			update_post_meta( $post_id, '_jwppp-subtitles-write-default-' . $number, $jwppp_subtitles_write_default );
 		}
 
+		/*Chapter and subtitles are available only with self-hosted player*/
+		if(!$dashboard_player) {
 
-		if($jwppp_add_chapters === '1') {
+			if($jwppp_add_chapters === '1') {
 
-			$chapters = sanitize_text_field($_POST['_jwppp-chapters-number-' . $number]);
-			update_post_meta($post_id, '_jwppp-chapters-number-' . $number, $chapters);
+				$chapters = sanitize_text_field($_POST['_jwppp-chapters-number-' . $number]);
+				update_post_meta($post_id, '_jwppp-chapters-number-' . $number, $chapters);
 
-			for($i=1; $i<$chapters+1; $i++) {
-				
-				if($jwppp_chapters_subtitles === 'subtitles' && $jwppp_subtitles_method === 'load') {
+				for($i=1; $i<$chapters+1; $i++) {
 					
-					//DELETE OLD DIFFERENT ELEMENTS
-					delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-title');
-					delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-start');
-					delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-end');
-					delete_post_meta($post_id, '_jwppp-subtitles-write-default-' . $number);
-
-
-					$sub_url = sanitize_text_field($_POST['_jwppp-' . $number . '-subtitle-' . $i . '-url']);
-					if($sub_url === null) {
-						delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url');
-					} else {
-						update_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url', $sub_url);
-					}
-
-					$sub_label = sanitize_text_field($_POST['_jwppp-' . $number . '-subtitle-' . $i . '-label']);
-					if($sub_label === null) {
-						delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label');
-					} else {
-						update_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label', $sub_label);
-					}
-
-
-				} else {
-
-					//DELETE OLD DIFFERENT ELEMENTS
-					delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url');
-					delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label');
-					delete_post_meta($post_id, '_jwppp-subtitles-load-default-' . $number);
-
-					$title = sanitize_text_field($_POST['_jwppp-' . $number . '-chapter-' . $i . '-title']);
-					if($title === null) {
+					if($jwppp_chapters_subtitles === 'subtitles' && $jwppp_subtitles_method === 'load') {
+						
+						//DELETE OLD DIFFERENT ELEMENTS
 						delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-title');
-					} else {
-						update_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-title', $title);
-					}
-
-					$start = sanitize_text_field($_POST['_jwppp-' . $number . '-chapter-' . $i . '-start']);
-					if($start === null) {
 						delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-start');
-					} else {
-						update_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-start', $start);
-					}
-
-					$end = sanitize_text_field($_POST['_jwppp-' . $number . '-chapter-' . $i . '-end']);
-					if($end === null) {
 						delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-end');
+						delete_post_meta($post_id, '_jwppp-subtitles-write-default-' . $number);
+
+
+						$sub_url = sanitize_text_field($_POST['_jwppp-' . $number . '-subtitle-' . $i . '-url']);
+						if($sub_url === null) {
+							delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url');
+						} else {
+							update_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url', $sub_url);
+						}
+
+						$sub_label = sanitize_text_field($_POST['_jwppp-' . $number . '-subtitle-' . $i . '-label']);
+						if($sub_label === null) {
+							delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label');
+						} else {
+							update_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label', $sub_label);
+						}
+
+
 					} else {
-						update_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-end', $end);
+
+						//DELETE OLD DIFFERENT ELEMENTS
+						delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url');
+						delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label');
+						delete_post_meta($post_id, '_jwppp-subtitles-load-default-' . $number);
+
+						$title = sanitize_text_field($_POST['_jwppp-' . $number . '-chapter-' . $i . '-title']);
+						if($title === null) {
+							delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-title');
+						} else {
+							update_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-title', $title);
+						}
+
+						$start = sanitize_text_field($_POST['_jwppp-' . $number . '-chapter-' . $i . '-start']);
+						if($start === null) {
+							delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-start');
+						} else {
+							update_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-start', $start);
+						}
+
+						$end = sanitize_text_field($_POST['_jwppp-' . $number . '-chapter-' . $i . '-end']);
+						if($end === null) {
+							delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-end');
+						} else {
+							update_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-end', $end);
+						}
+						
 					}
 					
 				}
-				
-			}
 
-		} else {
-			$chapters = sanitize_text_field($_POST['_jwppp-chapters-number-' . $number]);
-			for($i=1; $i<$chapters+1; $i++) {
-				delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-title');
-				delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-start');
-				delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-end');
-				delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url');
-				delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label');
-				delete_post_meta($post_id, '_jwppp-chapters-subtitles-' . $number );
-				delete_post_meta($post_id, '_jwppp-subtitles-method-' . $number);
-			}
-			delete_post_meta($post_id, '_jwppp-chapters-number-' . $number);
-		}			
+			} else {
+				$chapters = sanitize_text_field($_POST['_jwppp-chapters-number-' . $number]);
+				for($i=1; $i<$chapters+1; $i++) {
+					delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-title');
+					delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-start');
+					delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-end');
+					delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url');
+					delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label');
+					delete_post_meta($post_id, '_jwppp-chapters-subtitles-' . $number );
+					delete_post_meta($post_id, '_jwppp-subtitles-method-' . $number);
+				}
+				delete_post_meta($post_id, '_jwppp-chapters-number-' . $number);
+			}			
+
+		}
 		
 	}
 }
