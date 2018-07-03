@@ -1292,3 +1292,18 @@ function self_media_source_callback() {
 	exit;
 }
 add_action('wp_ajax_self-media-source', 'self_media_source_callback');
+
+
+/**
+ * Get user videos from JW Dashboard (playlist)
+ * @return array
+ */
+function get_videos_from_dashboard() {
+
+    $contents = file_get_contents('https://cdn.jwplayer.com/v2/playlists/uGjAm4L6?search=test');
+
+    if($contents) {
+    	$videos = json_decode($contents);
+    	return $videos->playlist;
+    }
+}

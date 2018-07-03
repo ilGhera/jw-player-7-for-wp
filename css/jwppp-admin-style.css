@@ -38,3 +38,39 @@ img.question-mark, img.attention-mark {
 	position:relative; 
 	top:0.2rem;
 }
+
+.jwppp-video-toggles {
+	margin-bottom: 0.3rem;
+	padding: 0;
+}
+
+.jwppp-video-toggles li {
+	float: left;
+	padding: 0.1rem 0.5rem;
+	margin: 0 0 0 0.2rem;
+	cursor: pointer;
+	border-radius: 0.2rem;
+	font-size: 90%;
+	background: #ddd;
+}
+
+.jwppp-video-toggles li.active {
+	color: #fff;
+	background: red;
+}
+
+.select2-results__option {
+	position: relative;
+	border-bottom: 1px solid #ddd;
+	padding: 12px !important;
+	margin: 0 !important;
+}
+
+.select2-results__option .video-img {
+	position: absolute;
+	top: 5px;
+}
+
+.select2-results__option .option-text {
+	padding: 0.6rem 0.3rem 0.6rem 5rem 
+}

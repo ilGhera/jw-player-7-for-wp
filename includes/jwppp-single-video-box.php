@@ -25,14 +25,38 @@ $sh_video = strrpos($video_url, 'http') === 0 ? true : false;
 $sources_number			       = get_post_meta($post_id, '_jwppp-sources-number-' . $number, true);
 $main_source_label 			   = get_post_meta($post_id, '_jwppp-' . $number . '-main-source-label', true );
 
-$output .= '<label for="_jwppp-video-url-' . esc_attr($number) . '">';
-$output .= '<strong>' . ($dashboard_player ? esc_html(__( 'Media URL or Media ID', 'jwppp' )) : esc_html(__( 'Media URL', 'jwppp' ))) . '</strong>';
-$output .= '<a class="question-mark" href="http://www.ilghera.com/support/topic/media-formats-supported/" title="More informations" target="_blank"><img class="question-mark" src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/question-mark.png" /></a></th>';
-$output .= '</label> ';
+$output .= '<ul class="jwppp-video-toggles">';
+	$output .= '<li class="active">' . esc_html(__('Choose', 'jwppp')) . '</li>';
+	$output .= '<li>' . esc_html(__('Add url', 'jwppp')) . '</li>';
+	$output .= '<div class="clear"></div>';
+$output .= '</ul>';
+
+
+// $output .= '<label for="_jwppp-video-url-' . esc_attr($number) . '">';
+// $output .= '<strong>' . ($dashboard_player ? esc_html(__( 'Media URL or Media ID', 'jwppp' )) : esc_html(__( 'Media URL', 'jwppp' ))) . '</strong>';
+// $output .= '<a class="question-mark" href="http://www.ilghera.com/support/topic/media-formats-supported/" title="More informations" target="_blank"><img class="question-mark" src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/question-mark.png" /></a></th>';
+// $output .= '</label> ';
 $output .= '<p>';
-$output .= '<input type="text" id="_jwppp-video-url-' . esc_attr($number) . '" name="_jwppp-video-url-' . esc_attr($number) . '" style="margin-right:1rem;" placeholder="' . ($dashboard_player ? esc_html(__('Add here your media url or media id', 'jwppp')) : esc_html(__('Add here your media url', 'jwppp'))) . '" ';
-$output .= ($video_url !== '1') ? 'value="' . esc_attr( $video_url ) . '" ' : 'value="" ';
-$output .= 'size="60" />';
+
+$output .= '<select id="_jwppp-video-url-' . esc_attr($number) . '" name="_jwppp-video-url-' . esc_attr($number) . '" class="select2" style="margin-right:1rem;">';
+
+	$output .= '<option name="" value="">' . esc_html('Select a video', 'jwppp') . '</option>';
+
+	$videos = get_videos_from_dashboard();
+
+	if($videos) {
+		foreach ($videos as $video) {
+			$output .= '<option name="' . $video->mediaid . '" data-mediaid="' . $video->mediaid . '" value="' . $video->mediaid . '"' . ($video_url === $video->mediaid ? ' selected="selecterd"' : '') . '><img src="' . $video->image . '">' . $video->title . '</option>';
+		}
+	}
+
+// $output .= ($video_url !== '1') ? 'value="' . esc_attr( $video_url ) . '" ' : 'value="" ';
+$output .= '</select>';
+
+
+// $output .= '<input type="text" id="_jwppp-video-url-' . esc_attr($number) . '" name="_jwppp-video-url-' . esc_attr($number) . '" style="margin-right:1rem;" placeholder="' . ($dashboard_player ? esc_html(__('Add here your media url or media id', 'jwppp')) : esc_html(__('Add here your media url', 'jwppp'))) . '" ';
+// $output .= ($video_url !== '1') ? 'value="' . esc_attr( $video_url ) . '" ' : 'value="" ';
+// $output .= 'size="60" />';
 
 if($sh_video) {
 	$output .= '<input type="text" name="_jwppp-' . esc_attr($number) . '-main-source-label" id ="_jwppp-' . esc_attr($number) . '-main-source-label" class="source-label-' . esc_attr($number) . '" style="margin-right:1rem;';

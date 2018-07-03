@@ -37,6 +37,11 @@ function jwppp_add_color_picker() {
         wp_enqueue_style( 'wp-color-picker' );          
         wp_enqueue_script( 'wp-color-picker', array('jquery'), '', true ); 
         wp_enqueue_script( 'sh-video-script', plugin_dir_url(__DIR__) . 'js/jwppp-sh-video.js' );
+
+        /*Select2*/
+	    wp_enqueue_style('select2-style', plugin_dir_url(__DIR__) . 'css/select2.min.css');
+	    wp_enqueue_script('select2', plugin_dir_url(__DIR__) . 'js/select2.min.js', array('jquery'));
+	    wp_enqueue_script('jwppp-select2', plugin_dir_url(__DIR__) . 'js/jwppp-select2.js', array('jquery'));
     }
 }
 add_action( 'admin_enqueue_scripts', 'jwppp_add_color_picker' );
