@@ -64,6 +64,15 @@ if($sh_video) {
 }
 
 $output .= '</p>';
+
+if(get_option('jwppp-position') === 'custom') {
+	$output .= '<code style="display:inline-block;margin:0.1rem 0.5rem 0 0;color:#888;">[jwp-video n="' . esc_attr($number) . '"]</code>';
+}
+
+if($sh_video) {
+	$output .= '<a class="button more-options-' . esc_attr($number) . '">' . esc_html(__('More options', 'jwppp')) . '</a>';
+
+}
 ?>
 
 <!-- BASIC SINGLE VIDEO OPTIONS -->
@@ -85,7 +94,7 @@ $output .= '</p>';
 			$('.order:visible').each(function(i, el) {
 				string.push($(el).html());	
 			})
-			$('.playlist-how-to code').html('[jwp-video n="' + string + '"]');
+			// $('.playlist-how-to code').html('[jwp-video n="' + string + '"]');
 		} else {
 			$('.playlist-how-to').hide();
 		}
@@ -123,7 +132,8 @@ $output .= '</p>';
 					sh_video_script(number);
 				})
 			} else {
-				$('.jwppp-video-' + number + '-tools').remove();
+				$('.button.more-options-' + number).remove();
+				$('.jwppp-more-options' + number).remove();
 			}
 		});
 	});
