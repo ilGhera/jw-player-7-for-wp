@@ -244,10 +244,15 @@ function jwppp_save_single_video_data( $post_id ) {
 		);
 	}
 
+	error_log('Videos: ' . print_r($jwppp_videos, true));
+	error_log('POST: '. print_r($_POST['_jwppp-video-url-2'], true));
+
 	foreach($jwppp_videos as $jwppp_video) {
 
 		$jwppp_number = explode('_jwppp-video-url-', $jwppp_video['meta_key']);
 		$number = $jwppp_number[1];
+
+		error_log('NUMBER: ' . $number);
 
 		if (!isset( $_POST['jwppp-meta-box-nonce-' . $number] )) {
 			return;
@@ -258,6 +263,8 @@ function jwppp_save_single_video_data( $post_id ) {
 		}
 
 		if (!isset( $_POST['_jwppp-video-url-' . $number] )) {
+
+			error_log('ERRORE');
 			return;
 		} else {
 			$video = sanitize_text_field($_POST['_jwppp-video-url-' . $number]);
@@ -266,6 +273,7 @@ function jwppp_save_single_video_data( $post_id ) {
 			} else {
 				update_post_meta( $post_id, '_jwppp-video-url-' . $number, $video );
 			}
+			error_log('SINGLE VIDEO: ' . $video);
 		}
 
 		if (!isset( $_POST['_jwppp-' . $number . '-main-source-label'] )) {
@@ -475,7 +483,7 @@ function jwppp_save_single_video_data( $post_id ) {
 		
 	}
 }
-add_action( 'save_post', 'jwppp_save_single_video_data');
+add_action( 'save_post', 'jwppp_save_single_video_data', 30, 1);
 
 
 //SCRIPT, LICENCE KEY AND CUSTOM SKIN FOR JW PLAYER

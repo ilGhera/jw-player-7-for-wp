@@ -8,5 +8,13 @@ function jwppp_ajax_add_video_callback( $post ) {
 	
 	include(plugin_dir_path(__FILE__) . 'jwppp-single-video-box.php');
 	
+	?>
+	<script>
+		jQuery(document).ready(function($){
+			jwppp_select2();
+		})
+	</script>
+	<?php
+
 	exit();
 }
