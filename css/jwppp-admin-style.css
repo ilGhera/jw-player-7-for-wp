@@ -59,6 +59,14 @@ img.question-mark, img.attention-mark {
 	background: red;
 }
 
+.jwppp-toggle-content {
+	display: none;
+}
+
+.jwppp-toggle-content.active {
+	display: block;
+}
+
 .select2-results__option {
 	position: relative;
 	border-bottom: 1px solid #ddd;

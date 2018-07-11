@@ -29,7 +29,7 @@ function sh_video_tools($post_id, $number) {
 	$jwppp_single_embed 		   = (isset($_POST['_jwppp-single-embed-' . $number])) ? sanitize_text_field($_POST['_jwppp-single-embed-' . $number]) : get_post_meta($post_id, '_jwppp-single-embed-' . $number, true);
 	$jwppp_download_video 		   = get_post_meta($post_id, '_jwppp-download-video-' . $number, true);
 
-	$output  = '<div class="jwppp-more-options-' . esc_attr($number) . '" style="margin-top:2rem;">';
+	$output  = '<div class="jwppp-more-options-' . esc_attr($number) . '" style="margin-top:2rem; display: none;">';
 	$output .= '<label for="_jwppp-add-sources-' . esc_attr($number) . '">';
 	$output .= '<strong>' . esc_html(__( 'More sources', 'jwppp' )) . '</strong>';
 	$output .= '<a class="question-mark" title="' . esc_attr(__('Used for quality toggling and alternate sources.', 'jwppp')) . '"><img class="question-mark" src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/question-mark.png" /></a></th>';
