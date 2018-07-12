@@ -33,6 +33,19 @@ var sh_video_script = function(number) {
             }
         })
 
+        //POSTER IMAGE PREVIW
+        $(document).on('change', '#_jwppp-video-image-' + number, function(){
+            if($(this).val()) {
+                $('.poster-image-preview.' + number).remove();
+                $('.poster-image-container-' + number).append('<img class="poster-image-preview ' + number + '" src="' + $(this).val() + '" style="display: none;">');
+                $('.poster-image-preview.' + number).fadeIn(300);
+            } else {
+                $('.poster-image-preview.' + number).fadeOut(300, function(){
+                    $(this).remove();
+                });
+            }
+        })
+        
         //CHAPTERS
         if($('#_jwppp-add-chapters-' + number).prop('checked') == false) {
 

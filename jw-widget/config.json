@@ -8,8 +8,8 @@
       "textColor": "#fff",
       "backgroundColor": "#000",
       "iconColor": "#fff",
-      "widgetLayout": "spotlight",
-      "widgetSize": "large"
+      "widgetLayout": "shelf",
+      "widgetSize": "medium"
     }
   ]
 }

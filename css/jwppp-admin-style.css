@@ -82,3 +82,11 @@ img.question-mark, img.attention-mark {
 .select2-results__option .option-text {
 	padding: 0.6rem 0.3rem 0.6rem 5rem 
 }
+
+.poster-image-preview {
+	position: absolute;
+	display: inline-block;
+	max-width: 267px;
+	max-height: 150px;
+	margin-left: 1rem;
+}
