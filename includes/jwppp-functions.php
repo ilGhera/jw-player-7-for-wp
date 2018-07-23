@@ -6,6 +6,7 @@
 require(plugin_dir_path(__FILE__) . 'jwppp-ajax-add-video-callback.php');
 require(plugin_dir_path(__FILE__) . 'jwppp-ajax-remove-video-callback.php');
 require(plugin_dir_path(__FILE__) . 'jwppp-sh-video-tools.php');
+require(plugin_dir_path(__DIR__) . 'botr/api.php');
 
 
 //ADD META BOX
@@ -406,6 +407,11 @@ function jwppp_save_single_video_data( $post_id ) {
 			update_post_meta( $post_id, '_jwppp-subtitles-write-default-' . $number, $jwppp_subtitles_write_default );
 		}
 
+		if(isset($_POST['playlist-carousel-hidden-' . $number])) {
+			$jwppp_playlist_carousel = isset($_POST['_jwppp-playlist-carousel-' . $number]) ? sanitize_text_field($_POST['_jwppp-playlist-carousel-' . $number]) : 0;
+			update_post_meta( $post_id, '_jwppp-playlist-carousel-' . $number, $jwppp_playlist_carousel );
+		}
+
 		/*Chapter and subtitles are available only with self-hosted player*/
 		if(!$dashboard_player) {
 
@@ -746,6 +752,10 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 		/*Is the video self hosted?*/
 		$sh_video = strrpos($jwppp_video_url, 'http') === 0 ? true : false;
 
+		/*Playlist carousel*/
+		$jwppp_playlist_carousel = get_post_meta($p_id, '_jwppp-playlist-carousel-' . $number, true);
+
+
 		if(!$dashboard_player || $sh_video) {
 
 			$video_image = get_post_meta($p_id, '_jwppp-video-image-' . $number, true);
@@ -801,6 +811,10 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 			}
 			$output .= "</div>\n"; 
 		$output .= "</div>\n"; 
+
+		/*Playlist carousel*/
+		$output .= $jwppp_playlist_carousel ? playlist_carousel() : '';
+
 		$output .= "<script type='text/javascript'>\n";
 			$output .= "var playerInstance_$this_video = jwplayer(\"jwppp-video-$this_video\");\n";
 			$output .= "playerInstance_$this_video.setup({\n";
@@ -1212,7 +1226,6 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 		}
 		
 		$output .= "</script>\n";
-		
 
 	}
 
@@ -1329,10 +1342,107 @@ add_action('wp_ajax_new-media-source', 'new_media_source_callback');
  */
 function get_videos_from_dashboard() {
 
-    $contents = file_get_contents('https://cdn.jwplayer.com/v2/playlists/uGjAm4L6?search=test');
+    // $contents = file_get_contents('https://cdn.jwplayer.com/v2/playlists/uGjAm4L6?search=test');
 
-    if($contents) {
-    	$videos = json_decode($contents);
-    	return $videos->playlist;
-    }
+    // if($contents) {
+    // 	$videos = json_decode($contents);
+    // 	return $videos->playlist;
+    // }
+}
+
+
+function playlist_carousel() {
+	
+	$output = '<div id="jwppp-playlist-carousel" class="jw-widget">';
+		$output .= '<div class="jw-widget-title"></div>';
+		$output .= '<div class="jw-widget-content"></div>';
+		$output .= '<div class="jw-widget-arrows">';
+			$output .= '<div class="arrow previous disabled">';
+				$output .= '<svg class="icon" width="61.1px" height="100px" viewBox="622.7 564.5 61.1 100" fill="#fff" xml:space="preserve">';
+					$output .= '<path d="M680.6,567.7c4.3,4.3,4.3,11.3,0,15.5l-31.2,31.2l31.2,31.2c4.3,4.3,4.3,11.3,0,15.5c-4.3,4.3-11.3,4.3-15.7,0l-39-39c-4.3-4.3-4.3-11.3,0-15.5l39.1-39C669.3,563.4,676.3,563.4,680.6,567.7z"/>';
+				$output .= '</svg>';
+			$output .= '</div>';
+			$output .= '<div class="arrow next">';
+				$output .= '<svg class="icon" width="61.3px" height="100px" viewBox="625.1 564.5 61.3 100" style="enable-background:new 625.1 564.5 61.3 100;" xml:space="preserve" fill="#fff">';
+					$output .= '<path d="M644,567.7l39.1,39c4.3,4.3,4.3,11.3,0,15.5l-39.1,39c-4.3,4.3-11.3,4.3-15.7,0c-4.3-4.3-4.3-11.3,0-15.5l31.3-31.2l-31.3-31.2c-4.3-4.3-4.3-11.3,0-15.5C632.6,563.4,639.6,563.4,644,567.7z"/>';
+				$output .= '</svg>';
+			$output .= '</div>';
+		$output .= '</div>';
+	$output .= '</div>';
+
+	return $output;
+}
+
+class jwppp_dasboard_api {
+
+	public function __construct() {
+
+		$this->api_key = get_option('jwppp-api-key');
+		$this->api_secret = get_option('jwppp-api-secret');
+
+		$this->api = $this->init();
+
+	}	
+
+	public function args_check() {
+		if($this->api_key && $this->api_secret) {
+			return true;
+		}
+		return false;
+	}	
+
+	public function init() {
+		// $botr_api = new BotrAPI('XDT6MCLd', 'VpX0PLdUFYOmIx1bv93Bla7G');	//hotmail
+		// $botr_api = new BotrAPI('5W4ggqCW', 'OQcKYS0wNqUz5bgWtRbG8yaD'); //info
+
+		$botr_api = null;
+		if(strlen($this->api_key) === 8 && strlen($this->api_secret) === 24) {
+			$botr_api = new BotrAPI($this->api_key, $this->api_secret);			
+		}
+		return $botr_api;
+	}
+
+	public function get_videos() {
+		if($this->api) {
+			$output = $this->api->call("/videos/list"); //videos					
+			if(isset($output['videos'])) {
+				return $output['videos'];
+			}
+		}
+		return null;
+	}
+
+	public function get_playlists() {
+		if($this->api) {
+			$output = $this->api->call("/channels/list"); //videos
+			if(isset($output['channels'])) {
+				return $output['channels'];
+			}
+		}
+		return null;
+	}
+
+	public function account_validation() {
+		if($this->api) {
+			$output = $this->api->call("/accounts/show", array('account_key' => $this->api_key)); //videos
+			if(isset($output['status'])) {
+				if($output['status'] === 'ok') {
+					return true;					
+				}
+			}
+		}
+		return false;
+	}
+
+	//TEMP
+	public function get_playlist_details($key) {
+		// return $this->api->call("/channels/show", array('channel_key' => $key)); //videos	
+	
+		$contents = file_get_contents('https://cdn.jwplayer.com/v2/playlists/' . $key);	
+		if($contents) {
+	    	$videos = json_decode($contents);
+	    	return $videos->playlist;
+	    }
+	}
+
 }

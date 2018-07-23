@@ -273,12 +273,14 @@ function jwppp_options() {
  			echo '</tr>';
 
  			if(!$dashboard_player) {
+
 	 			//JW PLAYER LICENCE KEY
 	 			$licence = sanitize_text_field(get_option('jwppp-licence'));
 	 			if( isset($_POST['jwppp-licence']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options') ) {
 	 				$licence = sanitize_text_field($_POST['jwppp-licence']);
 	 				update_option('jwppp-licence', $licence);
 	 			}
+
 	 			echo '<tr>';
 	 			echo '<th scope="row">' . esc_html(__('JWP Licence Key', 'jwppp'));
 	 			echo '<a href="https://www.ilghera.com/support/topic/jw-player-self-hosted-setup/" title="More informations" target="_blank"><img class="question-mark" src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/question-mark.png" /></a></th>';
@@ -287,6 +289,36 @@ function jwppp_options() {
 	 			echo '<p class="description">' . sanitize_text_field(__('Self hosted player? Please, add your JW Player license key.', 'jwppp')) . '</p>';
 	 			echo '</td>';
 	 			echo '</tr>'; 				
+
+ 			} else {
+
+	 			$api_key = sanitize_text_field(get_option('jwppp-api-key'));
+	 			if( isset($_POST['jwppp-api-key']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options') ) {
+	 				$api_key = sanitize_text_field($_POST['jwppp-api-key']);
+	 				update_option('jwppp-api-key', $api_key);
+	 			}
+	 			$api_secret = sanitize_text_field(get_option('jwppp-api-secret'));
+	 			if( isset($_POST['jwppp-api-secret']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options') ) {
+	 				$api_secret = sanitize_text_field($_POST['jwppp-api-secret']);
+	 				update_option('jwppp-api-secret', $api_secret);
+	 			}
+
+ 				echo '<tr>';
+	 			echo '<th scope="row">' . esc_html(__('API Credentials', 'jwppp'));
+	 			echo '<td>';
+	 			echo '<input type="text" class="regular-text" id="jwppp-api-key" name="jwppp-api-key" placeholder="' . esc_html(__('Add your API Key', 'jwppp')) . '" value="' . sanitize_text_field($api_key) . '" /><br>';
+	 			echo '<input type="text" class="regular-text" id="jwppp-api-secret" name="jwppp-api-secret" placeholder="' . esc_html(__('Add your API Secret', 'jwppp')) . '" value="' . sanitize_text_field($api_secret) . '" />';
+	 			echo '<p class="description">' . sanitize_text_field(__('Please add your API Credentials.', 'jwppp')) . '</p>';
+	 			
+				$api = new jwppp_dasboard_api();
+
+				if($api->args_check() && !$api->account_validation()) {
+					echo '<span class="jwppp-alert api">' . esc_html('It seems like your API Credentials are not correct.', 'jwppp') . '</span>';
+				}
+
+	 			echo '</td>';
+ 				echo '</tr>';
+
  			}
 
  			//POST TYPES WITH WHICH USE THE PLUGIN

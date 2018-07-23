@@ -11,6 +11,11 @@
 	color: #a94442;	
 }
 
+.jwppp-alert.api {
+	display: inline-block;
+	padding-left: 0.6rem 2rem;
+}
+
 .jwppp-alert a {
 	color: #a94442;	
 	text-decoration: underline;
@@ -76,17 +81,43 @@ img.question-mark, img.attention-mark {
 
 .select2-results__option .video-img {
 	position: absolute;
-	top: 5px;
 }
 
 .select2-results__option .option-text {
-	padding: 0.6rem 0.3rem 0.6rem 5rem 
+	padding: 0.6rem 0.3rem 0.6rem 5rem; 
+	display: inline-block;
 }
 
 .poster-image-preview {
 	position: absolute;
 	display: inline-block;
-	max-width: 267px;
-	max-height: 150px;
+	max-width: 208px;
+	max-height: 115px;
 	margin-left: 1rem;
+	right: 3rem;
+}
+
+.poster-image-preview.small {
+	max-height: 98px;
+}
+
+.jwppp-url {
+	width: 256px;
+}
+
+.jwppp-url {
+	margin-right:1rem;
+	background-color: #f7f7f7;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	outline: 0;
+	background-image: -webkit-linear-gradient(top, #fff 50%, #eee 100%);
+	background-image: -o-linear-gradient(top, #fff 50%, #eee 100%);
+	background-image: linear-gradient(to bottom, #fff 50%, #eee 100%);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFFFF', endColorstr='#FFEEEEEE', GradientType=0);
+}
+
+.playlist-carousel-container {
+	display: none;
 }

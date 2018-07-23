@@ -25,6 +25,24 @@ $sh_video = strrpos($video_url, 'http') === 0 ? true : false;
 $sources_number = get_post_meta($post_id, '_jwppp-sources-number-' . $number, true);
 $main_source_label = get_post_meta($post_id, '_jwppp-' . $number . '-main-source-label', true );
 
+/*Thumbnail*/
+$video_image = null;
+if($video_url && $video_url !== '1') {
+	if($sh_video) {
+		$video_image = get_post_meta($post_id, '_jwppp-video-image-' . $number, true);
+	} else {
+		$single_video_image = 'https://cdn.jwplayer.com/thumbs/' . $video_url . '-720.jpg';
+		if(@getimagesize($single_video_image)) {
+			$video_image = $single_video_image;
+		} else {
+			$video_image = plugin_dir_url(__DIR__) . 'images/playlist4.png';
+		}
+	}
+}
+if($video_image) {
+	$output .= '<img class="poster-image-preview ' . $number . (!$dashboard_player ? ' small' : '') . '" src="' . esc_html($video_image) . '">';
+}	
+
 if($dashboard_player) {
 
 	$output .= '<ul class="jwppp-video-toggles ' . $number . '">';
@@ -36,19 +54,44 @@ if($dashboard_player) {
 	/*Select*/
 	$output .= '<div class="jwppp-toggle-content ' . esc_attr($number) . ' choose' . (!$sh_video ? ' active' : '') . '">';
 		$output .= '<p>';
-			$output .= '<select id="_jwppp-video-url-' . esc_attr($number) . '" name="_jwppp-video-url-' . esc_attr($number) . '" class="select2" style="margin-right:1rem;">';
 
-				$output .= '<option name="" value="">' . esc_html('Select a video', 'jwppp') . '</option>';
+			$api = new jwppp_dasboard_api();
 
-				$videos = get_videos_from_dashboard();
+			if($api && $api->account_validation()) {
 
-				if($videos) {
-					foreach ($videos as $video) {
-						$output .= '<option name="' . $video->mediaid . '" data-mediaid="' . $video->mediaid . '" value="' . $video->mediaid . '"' . ($video_url === $video->mediaid ? ' selected="selecterd"' : '') . '><img src="' . $video->image . '">' . $video->title . '</option>';
+				$output .= '<select id="_jwppp-video-url-' . esc_attr($number) . '" name="_jwppp-video-url-' . esc_attr($number) . '" class="select2" style="margin-right:1rem;">';
+
+					$videos = $api->get_videos();
+					$playlists = $api->get_playlists();
+
+					/*Videos*/
+					$output .= '<option name="" value="">' . esc_html('Select a video', 'jwppp') . '</option>';
+					if($videos) {
+						foreach ($videos as $video) {
+							$output .= '<option name="' . $video['key'] . '" data-mediaid="' . $video['key'] . '" value="' . $video['key'] . '"' . ($video_url === $video['key'] ? ' selected="selecterd"' : '') . '>' . $video['title'] . '</option>';
+						}
 					}
-				}
 
-			$output .= '</select>';
+					/*Playlists*/
+					$output .= '<option name="" value="">' . esc_html('Select a playlist', 'jwppp') . '</option>';
+					if($playlists) {
+						foreach ($playlists as $playlist) {
+							$output .= '<option name="' . $playlist['key'] . '" class="playlist-element" data-mediaid="' . $playlist['key'] . '" value="' . $playlist['key'] . '"' . ($video_url === $playlist['key'] ? ' selected="selecterd"' : '') . '>' . $playlist['title'] . '</option>';
+						}
+					}
+
+				$output .= '</select>';
+
+			} elseif($api->args_check() && !$api->account_validation()) {
+
+				$output .= '<span class="jwppp-alert api">' . esc_html('It seems like your API Credentials are not correct.', 'jwppp') . '</span>';
+
+			} elseif(!$api->args_check()) {
+
+				$output .= '<span class="jwppp-alert api">' . esc_html('API Credentials are required for using this tool.', 'jwppp') . '</span>';
+
+			}
+
 		$output .= '</p>';		
 	$output .= '</div>';	
 
@@ -65,15 +108,15 @@ $output .= $dashboard_player ? '<div class="jwppp-toggle-content ' . esc_attr($n
 	}
 
 	$output .= '<p>';
-		$output .= '<input type="text" id="_jwppp-video-url-' . esc_attr($number) . '" name="_jwppp-video-url-' . esc_attr($number) . '" style="margin-right:1rem;" placeholder="' . esc_html(__('Add here your media url', 'jwppp')) . '" ';
+		$output .= '<input type="text" id="_jwppp-video-url-' . esc_attr($number) . '" class="jwppp-url" name="_jwppp-video-url-' . esc_attr($number) . '" placeholder="' . esc_html(__('Add here your media url', 'jwppp')) . '" ';
 		$output .= ($video_url !== '1') ? 'value="' . esc_attr( $video_url ) . '" ' : 'value="" ';
 		$output .= 'size="60" />';
 
-		// if($sh_video) {
-			$output .= '<input type="text" name="_jwppp-' . esc_attr($number) . '-main-source-label" id ="_jwppp-' . esc_attr($number) . '-main-source-label" class="source-label-' . esc_attr($number) . '" style="margin-right:1rem; display: none;';
-			$output .= '" value="' . esc_html($main_source_label) . '" placeholder="' . esc_html(__('Label (HD, 720p, 360p)', 'jwppp')) . '" size="30" />';
-		// }
+		$output .= '<input type="text" name="_jwppp-' . esc_attr($number) . '-main-source-label" id ="_jwppp-' . esc_attr($number) . '-main-source-label" class="source-label-' . esc_attr($number) . '" style="margin-right:1rem; display: none;';
+		$output .= '" value="' . esc_html($main_source_label) . '" placeholder="' . esc_html(__('Label (HD, 720p, 360p)', 'jwppp')) . '" size="30" />';
+
 	$output .= '</p>';
+
 $output .= $dashboard_player ? '</div>' : '';
 
 if(get_option('jwppp-position') === 'custom') {
@@ -84,6 +127,20 @@ $more_options_button = '<a class="button more-options-' . esc_attr($number) . '"
 if(!$dashboard_player || $sh_video) {
 	$output .= $more_options_button;
 }
+
+if($dashboard_player) {
+	$jwppp_playlist_carousel = get_post_meta($post_id, '_jwppp-playlist-carousel-' . $number, true);
+	$output .= '<div class="playlist-carousel-container ' . esc_attr($number) . '"' . ($jwppp_playlist_carousel ? ' style="display: inline-block;"' : '') . '>';
+		$output .= '<label for="_jwppp-playlist-carousel-' . esc_attr($number) . '">';
+		$output .= '<input type="checkbox" id="_jwppp-playlist-carousel-' . esc_attr($number) . '" name="_jwppp-playlist-carousel-' . esc_attr($number) . '" value="1"';
+		$output .= ($jwppp_playlist_carousel === '1') ? ' checked="checked"' : '';
+		$output .= ' />';
+		$output .= '<strong>' . esc_html(__('Show carousel', 'jwppp')) . '</strong>';
+		$output .= '</label>';
+		$output .= '<input type="hidden" name="playlist-carousel-hidden-' . esc_attr($number) . '" value="1" />';
+	$output .= '</div>';	
+}
+
 ?>
 
 <!-- BASIC SINGLE VIDEO OPTIONS -->
@@ -186,6 +243,31 @@ if(!$dashboard_player || $sh_video) {
 		/*Select value is required in input too*/
 		$(document).on('change', 'select#_jwppp-video-url-' + number, function(){			
 			$('input#_jwppp-video-url-' + number).val($(this).val());
+
+			//POSTER PREVIEW IMAGE
+            if($(this).val()) {
+            	var image_url = null;
+            	if($('option:selected', this).hasClass('playlist-element')) {
+	            	image_url = '../wp-content/plugins/jw-player-7-for-wp/images/playlist4.png';
+
+	            	$('.playlist-carousel-container.' + number).css({
+	            		'display': 'inline-block'
+	            	})
+
+            	} else {
+	            	image_url = 'https://cdn.jwplayer.com/thumbs/' + $(this).val() + '-720.jpg'
+					$('.playlist-carousel-container.' + number).hide();
+            	}
+
+                $('.poster-image-preview.' + number).remove();
+                $('.jwppp-' + number + ' .jwppp-input-wrap').prepend('<img class="poster-image-preview ' + number + '" src="' + image_url + '" style="display: none;">');
+                $('.poster-image-preview.' + number).fadeIn(300);
+            } else {
+                $('.poster-image-preview.' + number).fadeOut(300, function(){
+                    $(this).remove();
+                });
+            }
+
 		})
 	});
 })(jQuery);

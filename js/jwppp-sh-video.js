@@ -4,6 +4,19 @@
  */
 var sh_video_script = function(number) {
     jQuery(function($){
+
+        //VIDEO URL FIELD LENGTH ANIMATION 
+        $(document).on('focus', '.jwppp-url', function(){
+            $(this).animate({
+                'width': '507px'
+            })
+        })
+        $(document).on('focusout', '.jwppp-url', function(){
+            $(this).animate({
+                'width': '256px'
+            })
+        })
+
         //SHOW SOURCES LABELS IF THEY ARE MORE THAN TWO
         if($('#_jwppp-sources-number-' + number).val() > 1) {
             $('.source-label-' + number).show('slow');
@@ -37,7 +50,7 @@ var sh_video_script = function(number) {
         $(document).on('change', '#_jwppp-video-image-' + number, function(){
             if($(this).val()) {
                 $('.poster-image-preview.' + number).remove();
-                $('.poster-image-container-' + number).append('<img class="poster-image-preview ' + number + '" src="' + $(this).val() + '" style="display: none;">');
+                $('.jwppp-' + number + ' .jwppp-input-wrap').prepend('<img class="poster-image-preview ' + number + '" src="' + $(this).val() + '" style="display: none;">');
                 $('.poster-image-preview.' + number).fadeIn(300);
             } else {
                 $('.poster-image-preview.' + number).fadeOut(300, function(){

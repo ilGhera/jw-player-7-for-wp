@@ -63,9 +63,6 @@ function sh_video_tools($post_id, $number) {
 	$output .= '</label> ';
 	$output .= '<p class="poster-image-container-' . $number . '">';
 	$output .= '<input type="text" id="_jwppp-video-image-' . esc_attr($number) . '" name="_jwppp-video-image-' . esc_attr($number) .'" placeholder="' . esc_html(__('Add a different poster image for this video', 'jwppp')) . '" value="' . esc_attr( $video_image ) . '" size="60" />';
-	if($video_image) {
-		$output .= '<img class="poster-image-preview ' . $number . '" src="' . esc_html($video_image) . '">';
-	}
 	$output .= '</p>';
 
 	$output .= '<label for="_jwppp-video-title-' . esc_attr($number) . '">';
