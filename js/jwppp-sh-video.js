@@ -5,6 +5,8 @@
 var sh_video_script = function(number) {
     jQuery(function($){
 
+        var wrap = $('.jwppp-' + number + ' .jwppp-input-wrap');
+
         //VIDEO URL FIELD LENGTH ANIMATION 
         $(document).on('focus', '.jwppp-url', function(){
             $(this).animate({
@@ -46,11 +48,15 @@ var sh_video_script = function(number) {
             }
         })
 
-        //POSTER IMAGE PREVIW
+        //POSTER IMAGE PREVIEW
         $(document).on('change', '#_jwppp-video-image-' + number, function(){
             if($(this).val()) {
                 $('.poster-image-preview.' + number).remove();
-                $('.jwppp-' + number + ' .jwppp-input-wrap').prepend('<img class="poster-image-preview ' + number + '" src="' + $(this).val() + '" style="display: none;">');
+
+                /*Small class if the player is self-hosted*/
+                var small = $(wrap).hasClass('self') ? ' small' : '';
+                
+                $('.jwppp-' + number + ' .jwppp-input-wrap').prepend('<img class="poster-image-preview ' + number + small + '" src="' + $(this).val() + '" style="display: none;">');
                 $('.poster-image-preview.' + number).fadeIn(300);
             } else {
                 $('.poster-image-preview.' + number).fadeOut(300, function(){

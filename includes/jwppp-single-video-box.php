@@ -13,7 +13,7 @@ $output .= '<tbody class="ui-sortable">';
 
 $output .= '<tr class="row">';
 $output .= '<td class="order">' . esc_attr($number) . '</td>';
-$output .= '<td class="jwppp-input-wrap" style="width: 100%; padding-bottom: 1rem;">';
+$output .= '<td class="jwppp-input-wrap' . (!$dashboard_player ? ' self' : '') . '" style="width: 100%; padding-bottom: 1rem;">';
 wp_nonce_field( 'jwppp_save_single_video_data', 'jwppp-meta-box-nonce-' . $number );
 
 /*Single video details*/
