@@ -97,8 +97,12 @@ img.question-mark, img.attention-mark {
 	right: 3rem;
 }
 
-.poster-image-preview.small {
+.jwppp-input-wrap.medium .poster-image-preview {
 	max-height: 98px;
+}
+
+.jwppp-input-wrap.small .poster-image-preview {
+	max-height: 88px;
 }
 
 .jwppp-url {

@@ -7,13 +7,22 @@
 
 
 $dashboard_player = is_dashboard_player();
+$player_position = get_option('jwppp-position');
+
 $output = null;
 $output .= '<table class="widefat jwppp-' . esc_attr($number) . '" style="margin: 0.4rem 0;">';
 $output .= '<tbody class="ui-sortable">';
+ /*Class for preview image dimensions*/
+$image_class = null;
+if($player_position !== 'custom') {
+	$image_class = ' small'; 
+} elseif(!$dashboard_player) {
+	$image_class = ' medium'; 
+} 
 
 $output .= '<tr class="row">';
 $output .= '<td class="order">' . esc_attr($number) . '</td>';
-$output .= '<td class="jwppp-input-wrap' . (!$dashboard_player ? ' self' : '') . '" style="width: 100%; padding-bottom: 1rem;">';
+$output .= '<td class="jwppp-input-wrap' . $image_class . '" style="width: 100%; padding-bottom: 1rem;">';
 wp_nonce_field( 'jwppp_save_single_video_data', 'jwppp-meta-box-nonce-' . $number );
 
 /*Single video details*/
@@ -168,14 +177,14 @@ if($dashboard_player) {
 			$('input#_jwppp-video-url-' + number).val('');
 			$('select#_jwppp-video-url-' + number).val('').trigger('change');
 
-
-			console.log('Val: ' + $('select#_jwppp-video-url-' + number).val());
-
 			/*With cloud player and self hosted sources, all the tools are shown*/
 			if(video_type === 'add-url') {
 
 				/*Add the More options button*/
-				$('.jwppp-' + number + ' .jwppp-input-wrap').append($more_options_button);
+				// console.log($('.jwppp-' + number + ' .jwppp-input-wrap').find('.more-options-' + number));
+				if($('.jwppp-' + number + ' .jwppp-input-wrap').find('.more-options-' + number).length === 0) {
+					$('.jwppp-' + number + ' .jwppp-input-wrap').append($more_options_button);
+				}
 
 				var data = {
 					'action': 'self-media-source',

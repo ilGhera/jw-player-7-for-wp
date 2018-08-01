@@ -79,6 +79,20 @@
 	echo '</td>';
 	echo '</tr>';
 
+	//BIDDING
+	echo '<tr>';
+	echo '<th scope="row">' . __('Player bidding', 'jwppp') . '</th>';
+	echo '<td>';
+	echo '<label>';
+	echo '<input type="checkbox" id="jwppp-active-bidding" name="jwppp-active-bidding" value="1"';
+	echo ($active_ads == 1) ? ' checked="checked"' : '';
+	echo ' />';
+	echo __('Enable Video Player Bidding', 'jwppp');
+	echo '<p class="description">' . __('All the benefits of Header Bidding are now built directly into your JW Player. With a simple one-click integration, you get access to quality demand at scale with reduced latency.', 'jwppp') . '</p>';
+	echo '</label>';
+	echo '<td>';
+	echo '</tr>';	
+
 	echo '</table>';
 
 	echo '<input type="hidden" name="ads-sent" value="1" />';

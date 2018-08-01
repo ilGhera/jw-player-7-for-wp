@@ -535,8 +535,8 @@ function jwppp_add_header_code() {
 	wp_enqueue_style('jwppp-style', plugin_dir_url(__DIR__) . 'css/jwppp-style.css');
 
 	//JW WIDGET
-	wp_enqueue_style('jwppp-widget-style', plugin_dir_url(__DIR__) . 'jw-widget/css/jw-widget-min.css');
-	wp_enqueue_script('jwppp-widget', plugin_dir_url(__DIR__) . 'jw-widget/js/jw-widget-min.js');
+	// wp_enqueue_style('jwppp-widget-style', plugin_dir_url(__DIR__) . 'jw-widget/css/jw-widget-min.css');
+	// wp_enqueue_script('jwppp-widget', plugin_dir_url(__DIR__) . 'jw-widget/js/jw-widget-min.js');
 	
 }
 add_action('wp_enqueue_scripts', 'jwppp_add_header_code');
