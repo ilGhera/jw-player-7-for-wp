@@ -122,6 +122,20 @@ img.question-mark, img.attention-mark {
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFFFF', endColorstr='#FFEEEEEE', GradientType=0);
 }
 
+#jwppp-ads input[type="number"],
+#jwppp-ads select {
+	width: 192px;
+}
+
+input#jwppp-floor-price {
+	padding-left: 0.9rem;
+}
+
+span.currency {
+	position: absolute;
+	margin: 0.3rem 0.5rem 0 0.4rem;
+}
+
 .playlist-carousel-container {
 	display: none;
 }

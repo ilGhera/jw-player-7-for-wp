@@ -535,8 +535,8 @@ function jwppp_add_header_code() {
 	wp_enqueue_style('jwppp-style', plugin_dir_url(__DIR__) . 'css/jwppp-style.css');
 
 	//JW WIDGET
-	// wp_enqueue_style('jwppp-widget-style', plugin_dir_url(__DIR__) . 'jw-widget/css/jw-widget-min.css');
-	// wp_enqueue_script('jwppp-widget', plugin_dir_url(__DIR__) . 'jw-widget/js/jw-widget-min.js');
+	wp_enqueue_style('jwppp-widget-style', plugin_dir_url(__DIR__) . 'jw-widget/css/jw-widget-min.css');
+	wp_enqueue_script('jwppp-widget', plugin_dir_url(__DIR__) . 'jw-widget/js/jw-widget-min.js');
 	
 }
 add_action('wp_enqueue_scripts', 'jwppp_add_header_code');
@@ -725,6 +725,10 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 	$jwppp_ads_client = sanitize_text_field(get_option('jwppp-ads-client'));
 	$jwppp_ads_tag = sanitize_text_field(get_option('jwppp-ads-tag'));
 	$jwppp_ads_skip = sanitize_text_field(get_option('jwppp-ads-skip'));
+	$jwppp_bidding = sanitize_text_field(get_option('jwppp-active-bidding'));
+	$jwppp_channel_id = sanitize_text_field(get_option('jwppp-channel-id'));
+	$jwppp_mediation = sanitize_text_field(get_option('jwppp-mediation'));
+	$jwppp_floor_price = sanitize_text_field(get_option('jwppp-floor-price'));
 
 	//NEW SUBTITLES OPTIONS
 	$jwppp_sub_color = sanitize_text_field(get_option('jwppp-subtitles-color'));
@@ -1150,7 +1154,25 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 						$output .= "client: '" . esc_html($jwppp_ads_client) . "',\n";
 						$output .= "tag: '" . esc_html($jwppp_ads_tag) . "',\n";
 						if($jwppp_ads_skip !== '0') {
-							$output .= "skipoffset: " . esc_html($jwppp_ads_skip) . "\n";
+							$output .= "skipoffset: " . esc_html($jwppp_ads_skip) . ",\n";
+						}
+						if($jwppp_bidding) {
+							$output .= "bids: {\n";
+								$output .= "settings: {\n";
+									$output .= "mediationLayerAdServer: '" . esc_html($jwppp_mediation) . "',\n";
+									if($jwppp_mediation === 'jwp' && $jwppp_floor_price) {
+										$output .= "floorPriceCents: " . esc_html($jwppp_floor_price) * 100 . "\n";
+									}
+								$output .= "},\n";
+								$output .= "bidders: [\n";
+									$output .= "{\n";
+									$output .= "name: 'SpotX',\n";
+									$output .= "id: '" . esc_html($jwppp_channel_id) . "'\n";
+									$output .= "}\n";
+								$output .= "]\n";
+								// $output .= "";
+
+							$output .= "}\n";
 						}
 						$output .= "},\n";
 					}

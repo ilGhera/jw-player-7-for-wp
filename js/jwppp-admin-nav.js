@@ -111,11 +111,48 @@ jQuery(document).ready(function($) {
     $('#jwppp-active-ads').on('change',function() {
         if($('#jwppp-active-ads').prop('checked')) {
             $('.ads-options').show('slow');
+
+            if($('#jwppp-active-bidding').prop('checked') == false) {
+                $('.ads-options.bidding').hide();
+            }
+
         } else {
             $('.ads-options').hide();
         }
 
     });
+
+    if($('#jwppp-active-bidding').prop('checked') == false) {
+        $('.ads-options.bidding').hide();
+    }
+
+    $('#jwppp-active-bidding').on('change',function() {
+        if($('#jwppp-active-bidding').prop('checked')) {
+            $('.ads-options.bidding').show('slow');
+
+            if($('#jwppp-mediation').val() !== 'jwp') {
+                $('.ads-options.bidding.floor-price').hide();
+            }
+            
+        } else {
+            $('.ads-options.bidding').hide();
+        }
+
+    });
+
+    if($('#jwppp-mediation').val() !== 'jwp') {
+        $('.ads-options.bidding.floor-price').hide();
+    }
+
+    $('#jwppp-mediation').on('change',function() {
+        if($('.jwp').prop('selected')) {
+            $('.ads-options.bidding.floor-price').show('slow');
+        } else {
+            $('.ads-options.bidding.floor-price').hide();
+        }
+
+    });
+
 
     //COLOR FIELD FOR SUBTITLES
     $('.jwppp-color-field').wpColorPicker();
