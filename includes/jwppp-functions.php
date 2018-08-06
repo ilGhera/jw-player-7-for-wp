@@ -236,6 +236,10 @@ function jwppp_save_single_video_data( $post_id ) {
 	}
 
 	$jwppp_videos = jwppp_get_post_videos($post_id);
+
+
+	error_log('Videos: ' . print_r($jwppp_videos, true));
+	
 	if(empty($jwppp_videos)) {
 		$jwppp_videos = array(
 			array(
@@ -1160,7 +1164,7 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 							$output .= "bids: {\n";
 								$output .= "settings: {\n";
 									$output .= "mediationLayerAdServer: '" . esc_html($jwppp_mediation) . "',\n";
-									if($jwppp_mediation === 'jwp' && $jwppp_floor_price) {
+									if(in_array($jwppp_mediation, array('jwp', 'jwpdfp')) && $jwppp_floor_price) {
 										$output .= "floorPriceCents: " . esc_html($jwppp_floor_price) * 100 . "\n";
 									}
 								$output .= "},\n";

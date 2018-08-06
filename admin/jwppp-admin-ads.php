@@ -135,9 +135,22 @@
 	echo '<th scope="row">' . __('Mediation') . '</th>';
 	echo '<td>';
 	echo '<select id="jwppp-mediation" name="jwppp-mediation" />';
+	
 	echo '<option name="jwp" class="jwp" value="jwp"';
 	echo ($mediation == 'jwp') ? ' selected="selected"' : '';
 	echo '>JW Player</option>';
+
+
+	echo '<option name="jwpdfp" class="jwpdfp" value="jwpdfp"';
+	echo ($mediation == 'jwpdfp') ? ' selected="selected"' : '';
+	echo '>JW Player + DFP</option>';
+
+
+	echo '<option name="dfp" class="dfp" value="dfp"';
+	echo ($mediation == 'dfp') ? ' selected="selected"' : '';
+	echo '>Google Ad Manager</option>';
+
+
 	echo '<option name="jwpspotx" value="jwpspotx"';
 	echo ($mediation == 'jwpspotx') ? ' selected="selected"' : '';
 	echo '>SpotX as Primary Adserver</option>';

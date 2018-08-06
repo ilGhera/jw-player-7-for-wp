@@ -114,6 +114,10 @@ jQuery(document).ready(function($) {
 
             if($('#jwppp-active-bidding').prop('checked') == false) {
                 $('.ads-options.bidding').hide();
+            } else {
+                if($('#jwppp-mediation').val() !== 'jwp' && $('#jwppp-mediation').val() !== 'jwpdfp') {
+                    $('.ads-options.bidding.floor-price').hide();
+                }
             }
 
         } else {
@@ -130,7 +134,7 @@ jQuery(document).ready(function($) {
         if($('#jwppp-active-bidding').prop('checked')) {
             $('.ads-options.bidding').show('slow');
 
-            if($('#jwppp-mediation').val() !== 'jwp') {
+            if($('#jwppp-mediation').val() !== 'jwp' && $('#jwppp-mediation').val() !== 'jwpdfp') {
                 $('.ads-options.bidding.floor-price').hide();
             }
             
@@ -140,12 +144,12 @@ jQuery(document).ready(function($) {
 
     });
 
-    if($('#jwppp-mediation').val() !== 'jwp') {
+    if($('#jwppp-mediation').val() !== 'jwp' && $('#jwppp-mediation').val() !== 'jwpdfp') {
         $('.ads-options.bidding.floor-price').hide();
     }
 
     $('#jwppp-mediation').on('change',function() {
-        if($('.jwp').prop('selected')) {
+        if($('.jwp').prop('selected') || $('.jwpdfp').prop('selected')) {
             $('.ads-options.bidding.floor-price').show('slow');
         } else {
             $('.ads-options.bidding.floor-price').hide();
