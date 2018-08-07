@@ -253,8 +253,10 @@ if($dashboard_player) {
 		$(document).on('change', 'select#_jwppp-video-url-' + number, function(){			
 			$('input#_jwppp-video-url-' + number).val($(this).val());
 
+			var width = $(document).width();
+			
 			//POSTER PREVIEW IMAGE
-            if($(this).val()) {
+            if($(this).val() && width > 1112) {
             	var image_url = null;
             	if($('option:selected', this).hasClass('playlist-element')) {
 	            	image_url = '../wp-content/plugins/jw-player-7-for-wp/images/playlist4.png';

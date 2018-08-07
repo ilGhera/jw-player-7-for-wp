@@ -139,3 +139,12 @@ span.currency {
 .playlist-carousel-container {
 	display: none;
 }
+
+
+@media screen and (max-width: 1112px) {
+ 
+	.poster-image-preview {
+		display: none;
+	}
+
+}
