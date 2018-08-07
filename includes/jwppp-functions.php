@@ -1297,6 +1297,40 @@ add_shortcode('jw7-video', 'jwppp_video_s_code');
 add_shortcode('jwp-video', 'jwppp_video_s_code');
 
 
+//USED FOR OLD JWPLAYER SHORTCODES, CONTENTS ONLY FROM THE DASHBOARD
+function jwppp_simple_video_code($media_id) {
+	/*Output the player*/
+	$output = "<div id='jwppp-video-box-" . esc_attr($media_id) . "' class='jwppp-video-box' data-video='" . esc_attr($media_id) . "' style=\"margin: 1rem 0;\">\n";
+		$output .= "<div id='jwppp-video-" . esc_attr($media_id) . "'>";
+		if(sanitize_text_field(get_option('jwppp-text')) != null) {
+			$output .= sanitize_text_field(get_option('jwppp-text'));
+		} else {
+			$output .= esc_html(__('Loading the player...', 'jwppp'));
+		}
+		$output .= "</div>\n"; 
+	$output .= "</div>\n"; 
+
+	$output .= "<script type='text/javascript'>\n";
+		$output .= "var playerInstance_$media_id = jwplayer(\"jwppp-video-$media_id\");\n";
+		$output .= "playerInstance_$media_id.setup({\n";
+		$output .= "playlist: 'https://cdn.jwplayer.com/v2/media/$media_id'\n";						
+		$output .= "})\n";
+	$output .= "</script>";
+
+	return $output;
+}
+
+
+//OLD JWPLAYER SHORTCODE
+function jwppp_old_video_s_code($var) {
+	ob_start();
+	echo jwppp_simple_video_code($var[0]);
+	$output = ob_get_clean();
+	return $output;
+}
+add_shortcode('jwplayer', 'jwppp_old_video_s_code');
+
+
 //EXECUTE SHORTCODES IN WIDGETS
 if(!has_filter('widget_text', 'do_shortcode')) {
 	add_filter('widget_text', 'do_shortcode');
