@@ -16,9 +16,12 @@ var jwppp_select2 = function() {
 				    '<span><img style="width: 60px;" src="' + img + '" class="video-img" /><span class="option-text"> ' + video.text + '</span></span>'
 				);
 			} else {
-				var baseUrl = "https://assets-jpcust.jwpsrv.com/thumbs";
+				// var baseUrl = "https://assets-jpcust.jwpsrv.com/thumbs";
+				// var baseUrl = "https://cdn.jwplayer.com/thumbs/";
+				var baseUrl = "https://cdn.jwplayer.com/v2/media/";
 				var $video = $(
-				'<span><img style="width: 60px; max-height: 35px;" src="' + baseUrl + '/' + video.id + '-720.jpg" class="video-img" /><span class="option-text"> ' + video.text + '</span></span>'
+				// '<span><img style="width: 60px; max-height: 35px;" src="' + baseUrl + '/' + video.id + '-720.jpg" class="video-img" /><span class="option-text"> ' + video.text + '</span></span>'
+				'<span><img style="width: 60px; max-height: 35px;" src="' + baseUrl + video.id + '/poster.jpg" class="video-img" /><span class="option-text"> ' + video.text + '</span></span>'
 				);
 			}
 			return $video;
