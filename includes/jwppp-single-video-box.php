@@ -76,6 +76,9 @@ if($dashboard_player) {
 					/*Videos*/
 					$output .= '<option name="" value="">' . esc_html('Select a video', 'jwppp') . '</option>';
 					if($videos) {
+						// for ($i=0; $i < min(10, count($videos)); $i++) { 
+						// 	$output .= '<option name="' . $videos[$i]['key'] . '" data-mediaid="' . $videos[$i]['key'] . '" value="' . $videos[$i]['key'] . '"' . ($video_url === $videos[$i]['key'] ? ' selected="selecterd"' : '') . '>' . $videos[$i]['title'] . '</option>';
+						// }
 						foreach ($videos as $video) {
 							$output .= '<option name="' . $video['key'] . '" data-mediaid="' . $video['key'] . '" value="' . $video['key'] . '"' . ($video_url === $video['key'] ? ' selected="selecterd"' : '') . '>' . $video['title'] . '</option>';
 						}
@@ -254,7 +257,7 @@ if($dashboard_player) {
 			$('input#_jwppp-video-url-' + number).val($(this).val());
 
 			var width = $(document).width();
-			
+
 			//POSTER PREVIEW IMAGE
             if($(this).val() && width > 1112) {
             	var image_url = null;
