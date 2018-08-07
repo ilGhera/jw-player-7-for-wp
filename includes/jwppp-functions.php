@@ -36,6 +36,9 @@ function jwppp_get_post_videos($post_id) {
 		SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id = $post_id AND meta_key LIKE \"_jwppp-video-url-%\"
 	";
 	$videos = $wpdb->get_results($query, ARRAY_A);
+	if(count($videos) >= 1 && !get_post_meta($post_id, '_jwppp-video-url-1', true)) {		
+		array_unshift($videos, array('meta_key' => '_jwppp-video-url-1', 'meta_value' => 1));
+	}
 	return $videos;
 }
 
@@ -44,9 +47,10 @@ function jwppp_get_post_videos($post_id) {
 function jwppp_videos_string($post_id) {
 	$ids = array();
 	$videos = jwppp_get_post_videos($post_id);
-	foreach ($videos as $video) {
-		$video_id = explode('_jwppp-video-url-', $video['meta_key']);
-		$ids[] = $video_id[1];
+	if($videos) {
+		for ($i=1; $i <= count($videos); $i++) { 
+			$ids[] = $i;
+		}
 	}
 	$string = implode(',', $ids);
 	return $string;
@@ -70,7 +74,7 @@ function jwppp_single_video_box($post_id, $number) {
 	//IS IT A DASHBOARD PLAYER?
 	$dashboard_player = is_dashboard_player();
 
-	if($number === '1' && !$dashboard_player) {
+	if($number === 1 && !$dashboard_player) {
 		$output  = '<div class="playlist-how-to" style="position:relative;background:#2FBFB0;color:#fff;padding:0.5rem 1rem;';
 		$output .= ($plist_hide) ? 'display:none;">' : 'display:block">';
 		$output .= 'Add a playlist of your videos using this code: <code style="display:inline-block;color:#fff;background:none;">[jwp-video n="' . jwppp_videos_string($post_id) . '"]</code>';
@@ -102,10 +106,14 @@ function jwppp_meta_box_callback($post) {
 	$jwppp_videos = jwppp_get_post_videos($post->ID);
 		
 	if(!empty($jwppp_videos)) {
-		foreach($jwppp_videos as $jwppp_video) {
-			$jwppp_number = explode('_jwppp-video-url-', $jwppp_video['meta_key']);
-			jwppp_single_video_box($post->ID, $jwppp_number[1]);
+		for ($i=1; $i <= count($jwppp_videos) ; $i++) { 
+			jwppp_single_video_box($post->ID, $i);
 		}
+		// OLD LOOP
+		// foreach($jwppp_videos as $jwppp_video) {
+		// 	$jwppp_number = explode('_jwppp-video-url-', $jwppp_video['meta_key']);
+		// 	jwppp_single_video_box($post->ID, $jwppp_number[1]);
+		// }
 	} else {
 		jwppp_single_video_box($post->ID, 1);
 	}
@@ -238,7 +246,7 @@ function jwppp_save_single_video_data( $post_id ) {
 	$jwppp_videos = jwppp_get_post_videos($post_id);
 
 
-	error_log('Videos: ' . print_r($jwppp_videos, true));
+	// error_log('Videos: ' . print_r($jwppp_videos, true));
 	
 	if(empty($jwppp_videos)) {
 		$jwppp_videos = array(
