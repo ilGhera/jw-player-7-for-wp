@@ -140,7 +140,7 @@ if(!$dashboard_player || $sh_video) {
 	$output .= $more_options_button;
 }
 
-if($dashboard_player) {
+if($dashboard_player && !$sh_video) {
 	$jwppp_playlist_carousel = get_post_meta($post_id, '_jwppp-playlist-carousel-' . $number, true);
 	$output .= '<div class="playlist-carousel-container ' . esc_attr($number) . '"' . ($jwppp_playlist_carousel ? ' style="display: inline-block;"' : '') . '>';
 		$output .= '<label for="_jwppp-playlist-carousel-' . esc_attr($number) . '">';
@@ -165,6 +165,8 @@ if($dashboard_player) {
 		var $ext = $url.split('.').pop();
 		var $arr = ['xml', 'feed', 'php', 'rss'];
 		var $more_options_button = '<?php echo $more_options_button; ?>';
+
+
 
 		/*Video toggles*/
 		$(document).on('click', '.jwppp-video-toggles.' + number + ' li', function(){
@@ -228,18 +230,8 @@ if($dashboard_player) {
 
 		/*Media url change*/
 		$(document).on('change','#_jwppp-video-url-' + number, function() {
-			var $url = $(this).val();
 
-			/*Save new url*/
-			// var data = {
-			// 	'action': 'new-media-source',
-			// 	'post-id': post_id,
-			// 	'number': number,
-			// 	'url': $url
-			// }
-			// $.post(ajaxurl, data, function(response){
-			// 	console.log(response);
-			// })
+			var $url = $(this).val();
 			
 			/*Getting the extension for old type playlist*/
 			var $ext = $url.split('.').pop();
@@ -251,6 +243,12 @@ if($dashboard_player) {
 				$('.more-options-' + number).show();	
 			}
 		});
+
+		if($('.jwppp-video-toggles.' + number + ' li.active').data('video-type') == 'choose' && $('select#_jwppp-video-url-' + number + ' option:selected').hasClass('playlist-element')) {
+        	$('.playlist-carousel-container.' + number).css({
+        		'display': 'inline-block'
+        	})			
+		}	
 
 		/*Select value is required in input too*/
 		$(document).on('change', 'select#_jwppp-video-url-' + number, function(){			
@@ -271,6 +269,17 @@ if($dashboard_player) {
             	} else {
 	            	image_url = 'https://cdn.jwplayer.com/thumbs/' + $(this).val() + '-720.jpg'
 					$('.playlist-carousel-container.' + number).hide();
+					$('#_jwppp-playlist-carousel-' + number).removeAttr('checked');
+
+					/*Delete carousel option from the db*/
+					// var data = {
+					// 	'action': 'remove-carousel-option',
+					// 	'post_id': post_id,
+					// 	'number': number
+					// }
+					// $.post(ajaxurl, data, function(response){
+					// 	console.log(response);
+					// })
             	}
 
                 $('.poster-image-preview.' + number).remove();

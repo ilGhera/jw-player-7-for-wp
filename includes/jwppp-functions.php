@@ -829,7 +829,7 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 		$output .= "</div>\n"; 
 
 		/*Playlist carousel*/
-		$output .= $jwppp_playlist_carousel ? playlist_carousel() : '';
+		$output .= $jwppp_playlist_carousel ? jwppp_playlist_carousel($this_video) : '';
 
 		$output .= "<script type='text/javascript'>\n";
 			$output .= "var playerInstance_$this_video = jwplayer(\"jwppp-video-$this_video\");\n";
@@ -840,6 +840,39 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 					$output .= "playlist: 'https://cdn.jwplayer.com/v2/media/$jwppp_video_url'\n";						
 				}
 			$output .= "})\n";
+
+			if($jwppp_playlist_carousel) {
+				$carousel_style = sanitize_text_field(get_option('jwppp-playlist-carousel-style'));
+				$output .= "var e = new XMLHttpRequest;\n";
+				$output .= "e.onreadystatechange = function() { 4 === e.readyState && (e.status >= 200 && JSON.parse(e.responseText).widgets.forEach(function(e) { outPlayerWidget(e) })) }, e.open('GET', '" . plugin_dir_url(__DIR__) . "jw-widget/jwppp-carousel-config.php?playlist-id=$jwppp_video_url&player-id=$this_video&carousel-style=$carousel_style', !0), e.send()\n";
+			}
+
+			/*
+			// USEFULL FOR MORE THAN A CAROUSEL IN A SINGLE PAGE
+		    $jwppp_playlist_carousel_config = get_post_meta($p_id, '_jwppp-playlist-carousel-config', true) ? unserialize(sanitize_text_field(get_post_meta($p_id, '_jwppp-playlist-carousel-config', true))) : array();
+			$jwppp_playlist_carousel_config['widgets'][] = array(
+				'widgetDivId' => 'jwppp-playlist-carousel-' . $this_video,
+		        'playlist' => 'https://cdn.jwplayer.com/v2/playlists/' . $jwppp_video_url,
+		        'videoPlayerId' => $this_video,
+		        'header' => 'Test titolo',
+		        'textColor' => '#fff',
+		        'backgroundColor' => '#000',
+		        'iconColor' => '#fff',
+		        'widgetLayout' => 'shelf',
+		        'widgetSize' => 'medium'
+			);
+			update_post_meta($p_id, '_jwppp-playlist-carousel-config', serialize($jwppp_playlist_carousel_config));			
+			
+			$carousel_config = json_encode($jwppp_playlist_carousel_config, JSON_UNESCAPED_SLASHES); 
+			error_log('JSON: ' . $carousel_config);
+
+			$output .= "var e = new XMLHttpRequest;\n";
+			$output .= "e.onreadystatechange = function() { 4 === e.readyState && (e.status >= 200 && JSON.parse(e.responseText).widgets.forEach(function(e) { outPlayerWidget(e) })) }, e.open('GET', '" . $carousel_config . "', !0), e.send()\n";
+
+			}
+
+			*/
+
 		$output .= "</script>";
 
 	} else {
@@ -1419,9 +1452,9 @@ function get_videos_from_dashboard() {
 }
 
 
-function playlist_carousel() {
+function jwppp_playlist_carousel($player_id) {
 	
-	$output = '<div id="jwppp-playlist-carousel" class="jw-widget">';
+	$output = '<div id="jwppp-playlist-carousel-' . $player_id . '" class="jw-widget">';
 		$output .= '<div class="jw-widget-title"></div>';
 		$output .= '<div class="jw-widget-content"></div>';
 		$output .= '<div class="jw-widget-arrows">';
@@ -1440,6 +1473,22 @@ function playlist_carousel() {
 
 	return $output;
 }
+
+
+/**
+ * If a single video is selected, the carousel option is deleted if presents in the db
+ */
+// function jwppp_remove_carousel_option() {
+// 	$post_id = isset($_POST['post_id']) ? sanitize_text_field($_POST['post_id']) : '';
+// 	$number = isset($_POST['number']) ? sanitize_text_field($_POST['number']) : '';
+
+// 	if($post_id && $number) {
+// 		delete_post_meta($post_id, '_jwppp-playlist-carousel-' . $number);
+// 		echo '200';
+// 	}
+// 	exit;
+// }
+// add_action('wp_ajax_remove-carousel-option', 'jwppp_remove_carousel_option');
 
 class jwppp_dasboard_api {
 

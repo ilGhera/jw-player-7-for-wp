@@ -48,12 +48,12 @@
 
 	//SHOW RELATED?
 	echo '<tr>';
-	echo '<th scope="row">' . __('Active Related Videos option', 'jwppp') . '</th>';
+	echo '<th scope="row">' . __('Active Related Posts option', 'jwppp') . '</th>';
 	echo '<td>';
 	echo '<input type="checkbox" id="jwppp-show-related" name="jwppp-show-related" value="1"';
 	echo ($jwppp_show_related == 1) ? ' checked="checked"' : '';
 	echo '/>';
-	echo '<p class="description">' . __('Show Related Videos overlay as default option.', 'jwppp') . '</p>';
+	echo '<p class="description">' . __('Show Related Video Posts overlay as default option.', 'jwppp') . '</p>';
 	echo '</td>';
 	echo '</tr>';
 
@@ -120,7 +120,7 @@
 	echo '>' . $video_cat . '</option>';
 
 	echo '</select>';
-	echo '<p class="description">' . __('Use a taxonomy to get more specific related videos. It will be add to all post types you choosed.', 'jwppp') . '<br>';
+	echo '<p class="description">' . __('Use a taxonomy to get more specific related video posts. It will be add to all post types you choosed.', 'jwppp') . '<br>';
 	echo __('You can even use <strong>Video categories</strong> provided by this plugin.', 'jwppp') . '</p>';
 	echo '</td>';
 

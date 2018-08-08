@@ -222,10 +222,12 @@ function jwppp_options() {
 		<?php if(!$dashboard_player) { ?>
 			<a href="#" data-link="jwppp-skin" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Skin', 'jwppp')); ?></a>
 			<a href="#" data-link="jwppp-subtitles" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Subtitles', 'jwppp')); ?></a>
-			<a href="#" data-link="jwppp-related" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Related videos', 'jwppp')); ?></a>
+			<a href="#" data-link="jwppp-related" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Related posts', 'jwppp')); ?></a>
 			<a href="#" data-link="jwppp-social" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Sharing', 'jwppp')); ?></a>    
 			<a href="#" data-link="jwppp-ads" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Ads', 'jwppp')); ?></a>
-		<?php } ?>         
+		<?php } else { ?>
+			<a href="#" data-link="jwppp-playlist-carousel" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Playlist carousel', 'jwppp')); ?></a>    
+		<?php } ?>		         
 	</h2>
 
 
@@ -661,6 +663,7 @@ function jwppp_options() {
 
 	<?php include(plugin_dir_path(__FILE__) . 'jwppp-admin-ads.php'); ?>
 
+	<?php include(plugin_dir_path(__FILE__) . 'jwppp-admin-playlist-carousel.php'); ?>
 
 	</div><!-- WRAP LEFT -->
 	<div class="wrap-right" style="float:left; width:30%; text-align:center; padding-top:3rem;">
