@@ -1346,7 +1346,45 @@ function jwppp_simple_video_code($media_id) {
 	$output .= "<script type='text/javascript'>\n";
 		$output .= "var playerInstance_$media_id = jwplayer(\"jwppp-video-$media_id\");\n";
 		$output .= "playerInstance_$media_id.setup({\n";
-		$output .= "playlist: 'https://cdn.jwplayer.com/v2/media/$media_id'\n";						
+		$output .= "playlist: 'https://cdn.jwplayer.com/v2/media/$media_id',\n";		
+
+		//IS IT A DASHBOARD PLAYER?
+		$dashboard_player = is_dashboard_player();
+
+		//VARS
+		$jwppp_method_dimensions = sanitize_text_field(get_option('jwppp-method-dimensions'));
+		$jwppp_player_width = sanitize_text_field(get_option('jwppp-player-width'));
+		$jwppp_player_height = sanitize_text_field(get_option('jwppp-player-height'));
+		$jwppp_responsive_width = sanitize_text_field(get_option('jwppp-responsive-width'));
+		$jwppp_aspectratio = sanitize_text_field(get_option('jwppp-aspectratio'));
+
+		if(!$dashboard_player) {
+	
+			//PLAYER DIMENSIONS
+		    if($jwppp_method_dimensions === 'fixed') {
+			    $output .= "width: '";
+			    $output .= ($jwppp_player_width !== null) ? esc_html($jwppp_player_width) : '640';
+			    $output .= "',\n";
+			    $output .= "height: '";
+			    $output .= ($jwppp_player_height != null) ? esc_html($jwppp_player_height) : '360';
+			    $output .= "',\n";
+			    
+			} else {
+				$output .= "width: '";
+				$output .= ($jwppp_responsive_width != null) ? esc_html($jwppp_responsive_width) . '%' : '100%';
+				$output .= "',\n";
+				$output .= "aspectratio: '";
+				if($jwppp_aspectratio) {
+					$output .= esc_html($jwppp_aspectratio);
+				} else {
+					$output .= '16:9';
+				}
+				$output .= "',\n";
+			}
+
+
+		}
+
 		$output .= "})\n";
 	$output .= "</script>";
 

@@ -385,7 +385,7 @@ function jwppp_options() {
 	 			echo '<tr>';
 	 			echo '<th scope="row">' . esc_html(__('Video text', 'jwppp')) . '</th>';
 	 			echo '<td>';
-	 			echo '<textarea cols="40" rows="2" id="jwppp-text" name="jwppp-text" disabled="disabled" placeholder="' . esc_html(__('Loading the player...', 'jwppp')) . '"></textarea>';
+	 			echo '<textarea cols="40" rows="2" id="jwppp-text" name="jwppp-text" placeholder="' . esc_html(__('Loading the player...', 'jwppp')) . '">' . esc_html($jwppp_text) . '</textarea>';
 	 			echo '<p class="description">' . esc_html(__('Add custom text that appears while the player is loading.', 'jwppp')) . '<br>';
 	 			echo '</td>';
 	 			echo '</tr>';
@@ -564,8 +564,8 @@ function jwppp_options() {
 				echo '<tr>';
 				echo '<th scope="row">' . esc_html(__('Logo', 'jwppp')) . '</th>';
 				echo '<td>';
-				echo '<input type="text" class="regular-text" id="jwppp-logo" name="jwppp-logo" disabled="disabled" ';
-				echo 'placeholder="' . esc_html(__('Image url', 'jwppp')) . '" value="" />';
+				echo '<input type="text" class="regular-text" id="jwppp-logo" name="jwppp-logo" ';
+				echo 'placeholder="' . esc_html(__('Image url', 'jwppp')) . '" value="' . esc_html($jwppp_logo) . '" />';
 				echo '<p class="description">' . esc_html(__('Add your logo to the player.', 'jwppp')) . '<br>';
 				echo '</td>';
 				echo '</tr>';
@@ -596,8 +596,8 @@ function jwppp_options() {
 				echo '<tr>';
 				echo '<th scope="row">' . esc_html(__('Logo Link', 'jwppp')) . '</th>';
 				echo '<td>';
-				echo '<input type="text" class="regular-text" id="jwppp-logo-link" name="jwppp-logo-link" disabled="disabled" ';
-				echo 'placeholder="' . esc_html(__('Link url', 'jwppp')) . '" value="" />';
+				echo '<input type="text" class="regular-text" id="jwppp-logo-link" name="jwppp-logo-link" ';
+				echo 'placeholder="' . esc_html(__('Link url', 'jwppp')) . '" value="' . esc_html($jwppp_logo_link) . '" />';
 				echo '<p class="description">' . esc_html(__('Add a link to the logo.', 'jwppp')) . '<br>';
 				echo '</td>';
 				echo '</tr>';
@@ -605,8 +605,8 @@ function jwppp_options() {
 				echo '<tr>';
 				echo '<th scope="row">' . esc_html(__('Next Up', 'jwppp')) . '</th>';
 				echo '<td>';
-				echo '<input type="text" class="regular-text" id="jwppp-next-up" name="jwppp-next-up" disabled="disabled" ';
-				echo 'placeholder="' . esc_html(__('Next Up', 'jwppp')) . '" value="Next Up" />';
+				echo '<input type="text" class="regular-text" id="jwppp-next-up" name="jwppp-next-up" ';
+				echo 'placeholder="' . esc_html(__('Next Up', 'jwppp')) . '" value="' . esc_html($jwppp_next_up) . '" />';
 				echo '<p class="description">' . esc_html(__('Add a different text for the "Next Up" prompt', 'jwppp')) . '</p>';
 				echo '</td>';
 				echo '</tr>';
@@ -614,8 +614,8 @@ function jwppp_options() {
 				echo '<tr>';
 				echo '<th scope="row">' . esc_html(__('Playlist tooltip', 'jwppp')) . '</th>';
 				echo '<td>';
-				echo '<input type="text" class="regular-text" id="jwppp-playlist-tooltip" name="jwppp-playlist-tooltip" disabled="disabled"';
-				echo 'placeholder="' . esc_html(__('Playlist', 'jwppp')) . '" value="Playlist" />';
+				echo '<input type="text" class="regular-text" id="jwppp-playlist-tooltip" name="jwppp-playlist-tooltip" ';
+				echo 'placeholder="' . esc_html(__('Playlist', 'jwppp')) . '" value="' . esc_html($jwppp_playlist_tooltip) . '" />';
 				echo '<p class="description">' . esc_html(__('Add a different text for the tooltip in Playlist mode', 'jwppp')) . '</p>';
 				echo '</td>';
 				echo '</tr>';
