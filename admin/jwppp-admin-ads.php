@@ -85,7 +85,7 @@
 	echo ($ads_client == 'vast') ? ' selected="selected"' : '';
 	echo '>Vast</option>';
 	echo '</select>';
-	echo '<p class="description">' . __('Select your ADS Client. More info <a href="http://support.jwplayer.com/customer/portal/articles/1431638-ad-formats-reference" target="_blank">here</a>') . '</p>';
+	echo '<p class="description">' . __('Select your ADS Client. More info <a href="https://support.jwplayer.com/customer/portal/articles/1431638-ad-formats-reference" target="_blank">here</a>') . '</p>';
 	echo '</td>';
 	echo '</tr>';
 

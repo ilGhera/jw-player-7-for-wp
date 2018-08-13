@@ -4,7 +4,7 @@ $mediaID = $_GET['mediaID'];
 
 if ($mediaID) {
 $file = "https://cdn.jwplayer.com/v2/media/".$mediaID;
-$image = "http://content.jwplatform.com/thumbs/".$mediaID."-1920.jpg";
+$image = "https://content.jwplatform.com/thumbs/".$mediaID."-1920.jpg";
 
 $unique = Rand ( 0,1000000);
 $div = "jwplayer_unilad_".$unique;

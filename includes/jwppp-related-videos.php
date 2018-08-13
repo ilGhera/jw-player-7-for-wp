@@ -21,7 +21,7 @@ header('Content-Type: ' . feed_content_type('rss-http') . '; charset=' . get_opt
 
 $more = 1;
 
-echo "<rss version=\"2.0\" xmlns:media=\"http://search.yahoo.com/mrss/\">\n";
+echo "<rss version=\"2.0\" xmlns:media=\"https://search.yahoo.com/mrss/\">\n";
 
 echo "<channel>\n";	
 

@@ -115,7 +115,7 @@ $output .= $dashboard_player ? '<div class="jwppp-toggle-content ' . esc_attr($n
 	if(!$dashboard_player) {
 		$output .= '<label for="_jwppp-video-url-' . esc_attr($number) . '">';
 		$output .= '<strong>' . esc_html(__( 'Media URL', 'jwppp' )) . '</strong>';
-		$output .= '<a class="question-mark" href="http://www.ilghera.com/support/topic/media-formats-supported/" title="More informations" target="_blank"><img class="question-mark" src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/question-mark.png" /></a></th>';
+		$output .= '<a class="question-mark" href="https://www.ilghera.com/support/topic/media-formats-supported/" title="More informations" target="_blank"><img class="question-mark" src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/question-mark.png" /></a></th>';
 		$output .= '</label> ';
 	}
 

@@ -19,15 +19,15 @@ Player customization, related videos, social sharing and advertising are just an
 JW Player for Wordpress - Premium can be used with the cloud or even the self-hosted version of the player.<br>
 
 **Cloud**
-* Register a JW Player account at http://www.jwplayer.com/sign-up/
+* Register a JW Player account at https://www.jwplayer.com/sign-up/
 * Once you're logged in, copy your **Cloud Hosted Player Libraries** from https://dashboard.jwplayer.com/#/players/downloads
 * Paste your library url to the plugin options page.
 
 **Self hosted**
-* Register a JW Player account at http://www.jwplayer.com/sign-up/
+* Register a JW Player account at https://www.jwplayer.com/sign-up/
 * Once you're logged in, download the player and copy your Licence key from https://dashboard.jwplayer.com/#/players/downloads
 * Upload the folder to your site
-* Add the full url of **jwplayer.js** that you just uploaded, in the plugin options page; it will be something like http://example.com/FOLDER-UPLOADED/jwplayer.js
+* Add the full url of **jwplayer.js** that you just uploaded, in the plugin options page; it will be something like https://example.com/FOLDER-UPLOADED/jwplayer.js
 * Paste your Licence Key to the admin page of the plugin.
 
 After that, set your general preferences, choose the post types where you want to add videos and start to add content using the **JW Player for Wordpress** box that you'll find there.<br>

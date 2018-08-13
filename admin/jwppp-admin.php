@@ -667,7 +667,7 @@ function jwppp_options() {
 
 	</div><!-- WRAP LEFT -->
 	<div class="wrap-right" style="float:left; width:30%; text-align:center; padding-top:3rem;">
-		<iframe width="300" height="800" scrolling="no" src="http://www.ilghera.com/images/jwppp-premium-iframe.html"></iframe>
+		<iframe width="300" height="800" scrolling="no" src="https://www.ilghera.com/images/jwppp-premium-iframe.html"></iframe>
 	</div>
 	<div class="clear"></div>
 
@@ -681,7 +681,7 @@ function jwppp_options() {
 function jwppp_footer_text($text) {
 	$screen = get_current_screen();
 	if($screen->id === 'toplevel_page_jw-player-for-wp') {
-		$text = __('If you like <strong>JW Player for Wordpress - Premium</strong>, please give it a <a href="http://www.ilghera.com/product/jw-player-7-for-wordpress-premium" target="_blank">★★★★★</a> rating. Thanks in advance! ', 'jwppp');
+		$text = __('If you like <strong>JW Player for Wordpress - Premium</strong>, please give it a <a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium" target="_blank">★★★★★</a> rating. Thanks in advance! ', 'jwppp');
 	}
 
 	$allowed_tags = array(

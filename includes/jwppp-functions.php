@@ -1051,6 +1051,10 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 		}
 		$output .= "</div>\n"; 
 		$output .= "</div>\n"; 
+		
+		//TEMP: get the specific player for the single video
+		// $output .= '<script type="text/javascript" src="https://content.jwplatform.com/libraries/U9KNQYYx.js?ver=4.9.8"></script>';			
+
 		$output .= "<script type='text/javascript'>\n";
 			$output .= "var playerInstance_$this_video = jwplayer(\"jwppp-video-$this_video\");\n";
 			$output .= "playerInstance_$this_video.setup({\n";
