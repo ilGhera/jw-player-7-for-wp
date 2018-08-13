@@ -680,11 +680,7 @@ function jwppp_search_yt($jwppp_video_url='', $number='') {
 }
 
 
-//JW PLAYER CODE
-function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute, $pl_repeat) {
-
-	//IS IT A DASHBOARD PLAYER?
-	$dashboard_player = is_dashboard_player();
+function jwppp_sh_player_option($ar='', $width='', $height='') {
 
 	//GET THE OPTIONS
 	$jwppp_method_dimensions = sanitize_text_field(get_option('jwppp-method-dimensions'));
@@ -750,6 +746,171 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 	$jwppp_sub_back_color = sanitize_text_field(get_option('jwppp-subtitles-back-color'));
 	$jwppp_sub_back_opacity = sanitize_text_field(get_option('jwppp-subtitles-back-opacity'));
 
+	/*Player code*/
+	$output = null;
+
+	//PLAYER DIMENSIONS
+	if($width && $height) {
+
+		    $output .= "width: '" . esc_html($width) . "',\n";
+		    $output .= "height: '" . esc_html($height) . "',\n";
+
+	} else {
+	    
+	    if($jwppp_method_dimensions === 'fixed') {
+		    $output .= "width: '";
+		    $output .= ($jwppp_player_width !== null) ? esc_html($jwppp_player_width) : '640';
+		    $output .= "',\n";
+		    $output .= "height: '";
+		    $output .= ($jwppp_player_height != null) ? esc_html($jwppp_player_height) : '360';
+		    $output .= "',\n";
+		    
+		} else {
+			$output .= "width: '";
+			$output .= ($jwppp_responsive_width != null) ? esc_html($jwppp_responsive_width) . '%' : '100%';
+			$output .= "',\n";
+			$output .= "aspectratio: '";
+			if($ar) {
+				$output .= $ar;
+			} elseif($jwppp_aspectratio) {
+				$output .= esc_html($jwppp_aspectratio);
+			} else {
+				$output .= '16:9';
+			}
+			$output .= "',\n";
+		}
+
+	}
+
+	//SKIN
+	$output .= "skin: {\n";
+    	if($player_version === '7') {
+
+	    	$output .= $jwppp_skin_name != 'none' ? "name: '" . esc_html($jwppp_skin_name) . "',\n" : '';
+			$output .= $jwppp_skin_color_active ? "active: '" . esc_html($jwppp_skin_color_active) . "',\n" : '';
+			$output .= $jwppp_skin_color_inactive ? "inactive: '" . esc_html($jwppp_skin_color_inactive) . "',\n" : '';
+			$output .= $jwppp_skin_color_background ? "background: '" . esc_html($jwppp_skin_color_background) . "',\n" : '';
+
+    	} elseif($player_version === '8') {
+
+	    	$output .= "controlbar: {\n";
+		    	$output .= $jwppp_skin_color_controlbar_text ? "text: '" . esc_html($jwppp_skin_color_controlbar_text) . "',\n" : '';
+		    	$output .= $jwppp_skin_color_controlbar_icons ? "icons: '" . esc_html($jwppp_skin_color_controlbar_icons) . "',\n" : '';
+		    	$output .= $jwppp_skin_color_controlbar_active_icons ? "iconsActive: '" . esc_html($jwppp_skin_color_controlbar_active_icons) . "',\n" : '';
+		    	$output .= $jwppp_skin_color_controlbar_background ? "background: '" . esc_html($jwppp_skin_color_controlbar_background) . "',\n" : '';
+	    	$output .= "},\n";
+
+	    	$output .= "timeslider: {\n";
+		    	$output .= $jwppp_skin_color_timeslider_progress ? "progress: '" . esc_html($jwppp_skin_color_timeslider_progress) . "',\n" : '';
+		    	$output .= $jwppp_skin_color_timeslider_rail ? "rail: '" . esc_html($jwppp_skin_color_timeslider_rail) . "',\n" : '';
+	    	$output .= "},\n";
+
+	    	$output .= "menus: {\n";
+		    	$output .= $jwppp_skin_color_menus_text ? "text: '" . esc_html($jwppp_skin_color_menus_text) . "',\n" : '';
+		    	$output .= $jwppp_skin_color_menus_active_text ? "textActive: '" . esc_html($jwppp_skin_color_menus_active_text) . "',\n" : '';
+		    	$output .= $jwppp_skin_color_menus_background ? "background: '" . esc_html($jwppp_skin_color_menus_background) . "',\n" : '';
+	    	$output .= "},\n";
+
+	    	$output .= "tooltips: {\n";
+		    	$output .= $jwppp_skin_color_tooltips_text ? "text: '" . esc_html($jwppp_skin_color_tooltips_text) . "',\n" : '';
+		    	$output .= $jwppp_skin_color_tooltips_background ? "background: '" . esc_html($jwppp_skin_color_tooltips_background) . "',\n" : '';
+	    	$output .= "}\n";
+
+    	}
+	$output .= "},\n";
+
+	//LOGO
+    if($jwppp_logo !== null) {
+    	$output .= "logo: {\n";
+    	$output .= "file: '" . esc_url($jwppp_logo) . "',\n";
+    	$output .= "position: '" . esc_html($jwppp_logo_vertical) . '-' . esc_html($jwppp_logo_horizontal) . "',\n";
+    	if($jwppp_logo_link !== null) {
+    		$output .= "link: '" . esc_html($jwppp_logo_link) . "'\n";
+    	}
+    	$output .= "},\n";
+    }
+	    
+	//ADS
+	if($jwppp_show_ads === '1') {
+		$output .= "advertising: {\n";
+		$output .= "client: '" . esc_html($jwppp_ads_client) . "',\n";
+		$output .= "tag: '" . esc_html($jwppp_ads_tag) . "',\n";
+		if($jwppp_ads_skip !== '0') {
+			$output .= "skipoffset: " . esc_html($jwppp_ads_skip) . ",\n";
+		}
+		if($jwppp_bidding) {
+			$output .= "bids: {\n";
+				$output .= "settings: {\n";
+					$output .= "mediationLayerAdServer: '" . esc_html($jwppp_mediation) . "',\n";
+					if(in_array($jwppp_mediation, array('jwp', 'jwpdfp')) && $jwppp_floor_price) {
+						$output .= "floorPriceCents: " . esc_html($jwppp_floor_price) * 100 . "\n";
+					}
+				$output .= "},\n";
+				$output .= "bidders: [\n";
+					$output .= "{\n";
+					$output .= "name: 'SpotX',\n";
+					$output .= "id: '" . esc_html($jwppp_channel_id) . "'\n";
+					$output .= "}\n";
+				$output .= "]\n";
+				// $output .= "";
+
+			$output .= "}\n";
+		}
+		$output .= "},\n";
+	}
+
+	//RELATED VIDEOS
+    if($jwppp_show_related === '1' && jwppp_get_feed_url() !== null) {
+		$output .= "related: {\n";
+		$output .= "file: '" . jwppp_get_feed_url() . "',\n";
+		if($jwppp_related_heading !== null) {
+			$output .= "heading: '" . esc_html($jwppp_related_heading) . "',\n";
+		} else {
+			$output .= "heading: '" . esc_html(__('Related Videos', 'jwppp')) . "',\n";
+		}
+		$output .= "onclick: 'link'\n";				
+		$output .= "},\n";
+	}
+
+	//SUBTITLES STYLE
+		// if($jwppp_chapters_subtitles == 'subtitles' && jwppp_caption_style()) {
+		if( jwppp_caption_style() ) {
+			$output .= "captions: {\n";
+			$output .= $jwppp_sub_color ? "color: '" . esc_html(($jwppp_sub_color)) . "',\n" : "";
+			$output .= $jwppp_sub_font_size ? "fontSize: '" . esc_html(($jwppp_sub_font_size)) . "',\n" : "";
+			$output .= $jwppp_sub_font_family ? "fontFamily: '" . esc_html(($jwppp_sub_font_family)) . "',\n" : "";
+			$output .= $jwppp_sub_opacity ? "fontOpacity: '" . esc_html(($jwppp_sub_opacity)) . "',\n" : "";
+			$output .= $jwppp_sub_back_color ? "backgroundColor: '" . esc_html(($jwppp_sub_back_color)) . "',\n" : "";
+			$output .= $jwppp_sub_back_opacity ? "backgroundOpacity: '" . esc_html(($jwppp_sub_back_opacity)) . "',\n" : "";
+			$output .= "},\n";
+		}
+
+	//LOCALIZATION
+    $output .= "localization: {\n";
+    	if($jwppp_next_up) {
+		    $output .= "nextUp: '" . esc_html($jwppp_next_up) . "',\n";		    		
+    	}
+    	if($jwppp_playlist_tooltip) {
+		    $output .= "playlist: '" . esc_html($jwppp_playlist_tooltip) . "',\n";		    		
+    	}
+	    if($jwppp_related_heading) {
+		    $output .= "related: '" . esc_html($jwppp_related_heading) . "',\n";			    	
+	    }
+    $output .= "},\n";
+
+    return $output;
+
+}
+
+
+//JW PLAYER CODE
+function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute, $pl_repeat) {
+
+	//IS IT A DASHBOARD PLAYER?
+	$dashboard_player = is_dashboard_player();
+
+	// xxxxxx
+
 	//GETTING THE POST/ PAGE ID
 	if($p) {
 		$p_id = $p;
@@ -782,10 +943,14 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 			$jwppp_autoplay = get_post_meta($p_id, '_jwppp-autoplay-' . $number, true);
 			$jwppp_mute = get_post_meta($p_id, '_jwppp-mute-' . $number, true);
 			$jwppp_repeat = get_post_meta($p_id, '_jwppp-repeat-' . $number, true);
+			
+			/*Embed option*/
+			$jwppp_embed_video = sanitize_text_field(get_option('jwppp-embed-video'));
 			$jwppp_single_embed = get_post_meta($p_id, '_jwppp-single-embed-' . $number, true);
 			if(!$jwppp_single_embed) {
 				$jwppp_single_embed = $jwppp_embed_video;
 			}
+
 			$jwppp_download_video = get_post_meta($p_id, '_jwppp-download-video-' . $number, true);
 			$jwppp_add_chapters = get_post_meta($p_id, '_jwppp-add-chapters-' . $number, true);
 			$jwppp_chapters_subtitles = get_post_meta($p_id, '_jwppp-chapters-subtitles-' . $number, true);
@@ -1016,6 +1181,10 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 
 
 						//SHARING FOR SINGLE VIDEO
+						
+						/*General option*/
+						$active_share = sanitize_text_field(get_option('jwppp-active-share'));	
+						
 						if(!$jwppp_new_playlist && $active_share === '1') {
 							$output .= "sharing: {\n";
 								$jwppp_share_heading = sanitize_text_field(get_option('jwppp-share-heading'));
@@ -1089,177 +1258,30 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 						$output .= "sites: ['email','facebook','twitter','pinterest','tumblr','googleplus','reddit','linkedin'],\n";
 					$output .= "},\n";
 				}
+
+				// SHORTCODE OPTIONS FOR PLAYLISTS
+				if($jwppp_new_playlist) {
+					//AUTOPLAY
+					if($pl_autostart === '1') {
+				    	$output .= "autostart: 'true',\n";
+				    }
+
+				    //MUTE
+				    if($pl_mute === '1') {
+				    	$output .= "mute: 'true',\n";
+				    }
+
+				    //REPEAT
+				    if($pl_repeat === '1') {
+				    	$output .= "repeat: 'true',\n";
+				    }
+				}    
 			   
 
 			   	/*Options available only with self-hosted player*/
 			   	if(!$dashboard_player) {
 	
-					//PLAYER DIMENSIONS
-					if($width && $height) {
-
-						    $output .= "width: '" . esc_html($width) . "',\n";
-						    $output .= "height: '" . esc_html($height) . "',\n";
-
-					} else {
-					    
-					    if($jwppp_method_dimensions === 'fixed') {
-						    $output .= "width: '";
-						    $output .= ($jwppp_player_width !== null) ? esc_html($jwppp_player_width) : '640';
-						    $output .= "',\n";
-						    $output .= "height: '";
-						    $output .= ($jwppp_player_height != null) ? esc_html($jwppp_player_height) : '360';
-						    $output .= "',\n";
-						    
-						} else {
-							$output .= "width: '";
-							$output .= ($jwppp_responsive_width != null) ? esc_html($jwppp_responsive_width) . '%' : '100%';
-							$output .= "',\n";
-							$output .= "aspectratio: '";
-							if($ar) {
-								$output .= $ar;
-							} elseif($jwppp_aspectratio) {
-								$output .= esc_html($jwppp_aspectratio);
-							} else {
-								$output .= '16:9';
-							}
-							$output .= "',\n";
-						}
-
-					}
-
-					//SKIN
-			    	$output .= "skin: {\n";
-				    	if($player_version === '7') {
-
-					    	$output .= $jwppp_skin_name != 'none' ? "name: '" . esc_html($jwppp_skin_name) . "',\n" : '';
-							$output .= $jwppp_skin_color_active ? "active: '" . esc_html($jwppp_skin_color_active) . "',\n" : '';
-							$output .= $jwppp_skin_color_inactive ? "inactive: '" . esc_html($jwppp_skin_color_inactive) . "',\n" : '';
-							$output .= $jwppp_skin_color_background ? "background: '" . esc_html($jwppp_skin_color_background) . "',\n" : '';
-
-				    	} elseif($player_version === '8') {
-
-					    	$output .= "controlbar: {\n";
-						    	$output .= $jwppp_skin_color_controlbar_text ? "text: '" . esc_html($jwppp_skin_color_controlbar_text) . "',\n" : '';
-						    	$output .= $jwppp_skin_color_controlbar_icons ? "icons: '" . esc_html($jwppp_skin_color_controlbar_icons) . "',\n" : '';
-						    	$output .= $jwppp_skin_color_controlbar_active_icons ? "iconsActive: '" . esc_html($jwppp_skin_color_controlbar_active_icons) . "',\n" : '';
-						    	$output .= $jwppp_skin_color_controlbar_background ? "background: '" . esc_html($jwppp_skin_color_controlbar_background) . "',\n" : '';
-					    	$output .= "},\n";
-
-					    	$output .= "timeslider: {\n";
-						    	$output .= $jwppp_skin_color_timeslider_progress ? "progress: '" . esc_html($jwppp_skin_color_timeslider_progress) . "',\n" : '';
-						    	$output .= $jwppp_skin_color_timeslider_rail ? "rail: '" . esc_html($jwppp_skin_color_timeslider_rail) . "',\n" : '';
-					    	$output .= "},\n";
-
-					    	$output .= "menus: {\n";
-						    	$output .= $jwppp_skin_color_menus_text ? "text: '" . esc_html($jwppp_skin_color_menus_text) . "',\n" : '';
-						    	$output .= $jwppp_skin_color_menus_active_text ? "textActive: '" . esc_html($jwppp_skin_color_menus_active_text) . "',\n" : '';
-						    	$output .= $jwppp_skin_color_menus_background ? "background: '" . esc_html($jwppp_skin_color_menus_background) . "',\n" : '';
-					    	$output .= "},\n";
-
-					    	$output .= "tooltips: {\n";
-						    	$output .= $jwppp_skin_color_tooltips_text ? "text: '" . esc_html($jwppp_skin_color_tooltips_text) . "',\n" : '';
-						    	$output .= $jwppp_skin_color_tooltips_background ? "background: '" . esc_html($jwppp_skin_color_tooltips_background) . "',\n" : '';
-					    	$output .= "}\n";
-
-				    	}
-			    	$output .= "},\n";
-
-					//LOGO
-				    if($jwppp_logo !== null) {
-				    	$output .= "logo: {\n";
-				    	$output .= "file: '" . esc_url($jwppp_logo) . "',\n";
-				    	$output .= "position: '" . esc_html($jwppp_logo_vertical) . '-' . esc_html($jwppp_logo_horizontal) . "',\n";
-				    	if($jwppp_logo_link !== null) {
-				    		$output .= "link: '" . esc_html($jwppp_logo_link) . "'\n";
-				    	}
-				    	$output .= "},\n";
-				    }
-
-				    // SHORTCODE OPTIONS FOR PLAYLISTS
-					if($jwppp_new_playlist) {
-						//AUTOPLAY
-						if($pl_autostart === '1') {
-					    	$output .= "autostart: 'true',\n";
-					    }
-
-					    //MUTE
-					    if($pl_mute === '1') {
-					    	$output .= "mute: 'true',\n";
-					    }
-
-					    //REPEAT
-					    if($pl_repeat === '1') {
-					    	$output .= "repeat: 'true',\n";
-					    }
-					}    
-					    
-					//ADS
-					if($jwppp_show_ads === '1') {
-						$output .= "advertising: {\n";
-						$output .= "client: '" . esc_html($jwppp_ads_client) . "',\n";
-						$output .= "tag: '" . esc_html($jwppp_ads_tag) . "',\n";
-						if($jwppp_ads_skip !== '0') {
-							$output .= "skipoffset: " . esc_html($jwppp_ads_skip) . ",\n";
-						}
-						if($jwppp_bidding) {
-							$output .= "bids: {\n";
-								$output .= "settings: {\n";
-									$output .= "mediationLayerAdServer: '" . esc_html($jwppp_mediation) . "',\n";
-									if(in_array($jwppp_mediation, array('jwp', 'jwpdfp')) && $jwppp_floor_price) {
-										$output .= "floorPriceCents: " . esc_html($jwppp_floor_price) * 100 . "\n";
-									}
-								$output .= "},\n";
-								$output .= "bidders: [\n";
-									$output .= "{\n";
-									$output .= "name: 'SpotX',\n";
-									$output .= "id: '" . esc_html($jwppp_channel_id) . "'\n";
-									$output .= "}\n";
-								$output .= "]\n";
-								// $output .= "";
-
-							$output .= "}\n";
-						}
-						$output .= "},\n";
-					}
-
-					//RELATED VIDEOS
-				    if($jwppp_show_related === '1' && jwppp_get_feed_url() !== null) {
-						$output .= "related: {\n";
-						$output .= "file: '" . jwppp_get_feed_url() . "',\n";
-						if($jwppp_related_heading !== null) {
-							$output .= "heading: '" . esc_html($jwppp_related_heading) . "',\n";
-						} else {
-							$output .= "heading: '" . esc_html(__('Related Videos', 'jwppp')) . "',\n";
-						}
-						$output .= "onclick: 'link'\n";				
-						$output .= "},\n";
-					}
-
-					//SUBTITLES STYLE
-		      		// if($jwppp_chapters_subtitles == 'subtitles' && jwppp_caption_style()) {
-		      		if( jwppp_caption_style() ) {
-		      			$output .= "captions: {\n";
-		      			$output .= $jwppp_sub_color ? "color: '" . esc_html(($jwppp_sub_color)) . "',\n" : "";
-		      			$output .= $jwppp_sub_font_size ? "fontSize: '" . esc_html(($jwppp_sub_font_size)) . "',\n" : "";
-		      			$output .= $jwppp_sub_font_family ? "fontFamily: '" . esc_html(($jwppp_sub_font_family)) . "',\n" : "";
-		      			$output .= $jwppp_sub_opacity ? "fontOpacity: '" . esc_html(($jwppp_sub_opacity)) . "',\n" : "";
-		      			$output .= $jwppp_sub_back_color ? "backgroundColor: '" . esc_html(($jwppp_sub_back_color)) . "',\n" : "";
-		      			$output .= $jwppp_sub_back_opacity ? "backgroundOpacity: '" . esc_html(($jwppp_sub_back_opacity)) . "',\n" : "";
-		      			$output .= "},\n";
-		      		}
-
-					//LOCALIZATION
-				    $output .= "localization: {\n";
-				    	if($jwppp_next_up) {
-						    $output .= "nextUp: '" . esc_html($jwppp_next_up) . "',\n";		    		
-				    	}
-				    	if($jwppp_playlist_tooltip) {
-						    $output .= "playlist: '" . esc_html($jwppp_playlist_tooltip) . "',\n";		    		
-				    	}
-					    if($jwppp_related_heading) {
-						    $output .= "related: '" . esc_html($jwppp_related_heading) . "',\n";			    	
-					    }
-				    $output .= "},\n";
+					$output .= jwppp_sh_player_option($ar, $width, $height);
 
 			   	}
 
@@ -1358,32 +1380,12 @@ function jwppp_simple_video_code($media_id) {
 		$jwppp_responsive_width = sanitize_text_field(get_option('jwppp-responsive-width'));
 		$jwppp_aspectratio = sanitize_text_field(get_option('jwppp-aspectratio'));
 
-		if(!$dashboard_player) {
-	
-			//PLAYER DIMENSIONS
-		    if($jwppp_method_dimensions === 'fixed') {
-			    $output .= "width: '";
-			    $output .= ($jwppp_player_width !== null) ? esc_html($jwppp_player_width) : '640';
-			    $output .= "',\n";
-			    $output .= "height: '";
-			    $output .= ($jwppp_player_height != null) ? esc_html($jwppp_player_height) : '360';
-			    $output .= "',\n";
-			    
-			} else {
-				$output .= "width: '";
-				$output .= ($jwppp_responsive_width != null) ? esc_html($jwppp_responsive_width) . '%' : '100%';
-				$output .= "',\n";
-				$output .= "aspectratio: '";
-				if($jwppp_aspectratio) {
-					$output .= esc_html($jwppp_aspectratio);
-				} else {
-					$output .= '16:9';
-				}
-				$output .= "',\n";
-			}
+	   	/*Options available only with self-hosted player*/
+	   	if(!$dashboard_player) {
 
+			$output .= jwppp_sh_player_option();
 
-		}
+	   	}
 
 		$output .= "})\n";
 	$output .= "</script>";
