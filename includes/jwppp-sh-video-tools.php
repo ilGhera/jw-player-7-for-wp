@@ -29,6 +29,10 @@ function sh_video_tools($post_id, $number) {
 	$jwppp_single_embed 		   = (isset($_POST['_jwppp-single-embed-' . $number])) ? sanitize_text_field($_POST['_jwppp-single-embed-' . $number]) : get_post_meta($post_id, '_jwppp-single-embed-' . $number, true);
 	$jwppp_download_video 		   = get_post_meta($post_id, '_jwppp-download-video-' . $number, true);
 
+	/*ADS tags*/
+	$ads_tags					   = get_option('jwppp-ads-tag');
+	$jwppp_ads_tag				   = get_post_meta($post_id, '_jwppp-ads-tag-' . $number, true);
+
 	$output  = '<div class="jwppp-more-options-' . esc_attr($number) . '" style="margin-top:2rem; display: none;">';
 	$output .= '<label for="_jwppp-add-sources-' . esc_attr($number) . '">';
 	$output .= '<strong>' . esc_html(__( 'More sources', 'jwppp' )) . '</strong>';
@@ -74,6 +78,18 @@ function sh_video_tools($post_id, $number) {
 	$output .= '<strong>' . esc_html(__( 'Video description', 'jwppp' )) . '</strong>';
 	$output .= '</label> ';
 	$output .= '<p><input type="text" id="_jwppp-video-description-' . esc_attr($number) . '" name="_jwppp-video-description-' . esc_attr($number) . '" placeholder="' . esc_html(__('Add a description to your video', 'jwppp')) . '" value="' . esc_attr( $video_description ) . '" size="60" /></p>';
+
+	//ADS TAGS
+	$output .= '<label for="_jwppp-ads-tag-' . esc_attr($number) . '"><strong>' . esc_html(__('Ads tag', 'jwppp')) . '</strong></label>';
+	$output .= '<p>';
+	$output .= '<select name="_jwppp-ads-tag-' . esc_attr($number) . '">';
+	if($ads_tags) {
+		for ($i=0; $i < count($ads_tags); $i++) { 
+			$output .= '<option name="' . $i . '" value="' . $ads_tags[$i] . '"' . ($jwppp_ads_tag === $ads_tags[$i] ? ' selected="selected"' : '') . '>' . $ads_tags[$i] . '</option>';
+		}
+	}
+	$output .= '</select>';
+	$output .= '</p>';
 
 	$output .= '<p>';
 	$output .= '<label for="_jwppp-activate-media-type-' . esc_attr($number) . '">';

@@ -126,6 +126,28 @@ jQuery(document).ready(function($) {
 
     });
 
+    /*ADS Tags*/
+    $(document).on('click', '.add-tag-hover', function(){
+        var number = $('li #jwppp-ads-tag').length + 1;
+        var data = {
+            'action': 'add_ads_tag',
+            'number': number
+        }
+        $.post(ajaxurl, data, function(response){
+            $('.ads-options.tag ul').append(response);
+            console.log(number);
+            $('.hidden-total-tags').val(number);
+        })
+    })
+
+    $(document).on('click', '.remove-tag-hover', function(){
+        $(this).closest('li').remove();
+        var number = $('li #jwppp-ads-tag').length;
+        $('.hidden-total-tags').val(number);
+        
+    })
+
+    /*Bidding*/
     if($('#jwppp-active-bidding').prop('checked') == false) {
         $('.ads-options.bidding').hide();
     }

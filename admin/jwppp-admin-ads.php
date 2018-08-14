@@ -4,7 +4,7 @@
 
 	//ACTIVE ADS?
 	$active_ads = sanitize_text_field(get_option('jwppp-active-ads'));
-	if( isset($_POST['ads-sent']) ) {
+	if(isset($_POST['ads-sent']) ) {
 		$active_ads = isset($_POST['jwppp-active-ads']) ? $_POST['jwppp-active-ads'] : 0;
 		update_option('jwppp-active-ads', $active_ads);
 	}
@@ -17,10 +17,13 @@
 	}
 
 	//ADS TAG
-	$ads_tag = sanitize_text_field(get_option('jwppp-ads-tag'));
-	if(isset($_POST['jwppp-ads-tag'])) {
-		$ads_tag = sanitize_text_field($_POST['jwppp-ads-tag']);
-		update_option('jwppp-ads-tag', $ads_tag);
+	$ads_tags = get_option('jwppp-ads-tag');
+	if(isset($_POST['hidden-total-tags'])) {
+		$ads_tags = array();
+		for ($i=1; $i <= sanitize_text_field($_POST['hidden-total-tags']); $i++) { 
+			$ads_tags[] = sanitize_text_field($_POST['jwppp-ads-tag-' . $i]);
+		}
+		update_option('jwppp-ads-tag', $ads_tags);
 	}
 
 	//SKIPOFFSET
@@ -90,10 +93,27 @@
 	echo '</tr>';
 
 	//ADS TAG
-	echo '<tr class="ads-options">';
+	echo '<tr class="ads-options tag">';
 	echo '<th scope="row">' . __('Ads Tag', 'jwppp') . '</th>';
 	echo '<td>';
-	echo '<input type="text" class="regular-text" id="jwppp-ads-tag" name="jwppp-ads-tag" placeholder="' . __('Add the url of your XML file.', 'jwppp') . '" value="' . $ads_tag . '" />';
+	echo '<ul style="margin: 0;">';
+	
+	// echo '<input type="text" class="regular-text" id="jwppp-ads-tag" name="jwppp-ads-tag" placeholder="' . __('Add the url of your XML file.', 'jwppp') . '" value="' . $ads_tags . '" />';
+
+		// var_dump($ads_tags);
+
+	if(is_array($ads_tags) && !empty($ads_tags)) {
+		for ($i=1; $i <= count($ads_tags); $i++) { 
+			echo jwppp_ads_tag($i, $ads_tags[$i - 1]);
+		}
+	} elseif(is_string($ads_tags)) {
+		echo jwppp_ads_tag(1, $ads_tags);
+	} else {
+		echo jwppp_ads_tag(1);		
+	}
+
+	echo '</ul>';
+	echo '<input type="hidden" name="hidden-total-tags" class="hidden-total-tags" value="" />';
 	echo '<p class="description">' . __('Please, set this to the URL of the ad tag that contains the pre-roll ad.', 'jwppp') . '</p>';
 	echo '</td>';
 	echo '</tr>';

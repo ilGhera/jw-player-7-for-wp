@@ -365,6 +365,11 @@ function jwppp_save_single_video_data( $post_id ) {
 			delete_post_meta($post_id, '_jwppp-activate-media-type-' . $number);			
 		}
 
+		if(isset($_POST['_jwppp-ads-tag-' . $number])) {
+			$jwppp_ads_tag = sanitize_text_field($_POST['_jwppp-ads-tag-' . $number]);
+			update_post_meta($post_id, '_jwppp-ads-tag-' . $number, $jwppp_ads_tag);
+		}
+
 		if($jwppp_activate_media_type === '1') {
 			$media_type = sanitize_text_field($_POST['_jwppp-media-type-' . $number]);
 			update_post_meta( $post_id, '_jwppp-media-type-' . $number, $media_type );
@@ -729,14 +734,6 @@ function jwppp_sh_player_option($ar='', $width='', $height='') {
 	$jwppp_related_heading = sanitize_text_field(get_option('jwppp-related-heading'));
 	$jwppp_next_up = sanitize_text_field(get_option('jwppp-next-up'));
 	$jwppp_playlist_tooltip = sanitize_text_field(get_option('jwppp-playlist-tooltip'));
-	$jwppp_show_ads = sanitize_text_field(get_option('jwppp-active-ads'));
-	$jwppp_ads_client = sanitize_text_field(get_option('jwppp-ads-client'));
-	$jwppp_ads_tag = sanitize_text_field(get_option('jwppp-ads-tag'));
-	$jwppp_ads_skip = sanitize_text_field(get_option('jwppp-ads-skip'));
-	$jwppp_bidding = sanitize_text_field(get_option('jwppp-active-bidding'));
-	$jwppp_channel_id = sanitize_text_field(get_option('jwppp-channel-id'));
-	$jwppp_mediation = sanitize_text_field(get_option('jwppp-mediation'));
-	$jwppp_floor_price = sanitize_text_field(get_option('jwppp-floor-price'));
 
 	//NEW SUBTITLES OPTIONS
 	$jwppp_sub_color = sanitize_text_field(get_option('jwppp-subtitles-color'));
@@ -830,35 +827,6 @@ function jwppp_sh_player_option($ar='', $width='', $height='') {
     	$output .= "},\n";
     }
 	    
-	//ADS
-	if($jwppp_show_ads === '1') {
-		$output .= "advertising: {\n";
-		$output .= "client: '" . esc_html($jwppp_ads_client) . "',\n";
-		$output .= "tag: '" . esc_html($jwppp_ads_tag) . "',\n";
-		if($jwppp_ads_skip !== '0') {
-			$output .= "skipoffset: " . esc_html($jwppp_ads_skip) . ",\n";
-		}
-		if($jwppp_bidding) {
-			$output .= "bids: {\n";
-				$output .= "settings: {\n";
-					$output .= "mediationLayerAdServer: '" . esc_html($jwppp_mediation) . "',\n";
-					if(in_array($jwppp_mediation, array('jwp', 'jwpdfp')) && $jwppp_floor_price) {
-						$output .= "floorPriceCents: " . esc_html($jwppp_floor_price) * 100 . "\n";
-					}
-				$output .= "},\n";
-				$output .= "bidders: [\n";
-					$output .= "{\n";
-					$output .= "name: 'SpotX',\n";
-					$output .= "id: '" . esc_html($jwppp_channel_id) . "'\n";
-					$output .= "}\n";
-				$output .= "]\n";
-				// $output .= "";
-
-			$output .= "}\n";
-		}
-		$output .= "},\n";
-	}
-
 	//RELATED VIDEOS
     if($jwppp_show_related === '1' && jwppp_get_feed_url() !== null) {
 		$output .= "related: {\n";
@@ -903,13 +871,59 @@ function jwppp_sh_player_option($ar='', $width='', $height='') {
 }
 
 
+function jwppp_ads_tag($n, $url='') {
+	$ads_tag = $url ? $url : '';
+	$output = '<li>';
+		$output .= '<input type="text" class="regular-text" id="jwppp-ads-tag" name="jwppp-ads-tag-' . $n . '" placeholder="' . __('Add the url of your XML file.', 'jwppp') . '" value="' . $ads_tag . '" />';
+
+		if($n === 1) {
+
+			$output .= '<div class="add-tag-container">';
+				$output .= '<img class="add-tag" src="' . plugin_dir_url(__DIR__) . 'images/add-tag.png">';
+				$output .= '<img class="add-tag-hover" src="' . plugin_dir_url(__DIR__) . 'images/add-tag-hover.png">';
+			$output .= '</div>';				
+
+		} else {
+
+			$output .= '<div class="remove-tag-container">';
+				$output .= '<img class="remove-tag" src="' . plugin_dir_url(__DIR__) . 'images/remove-tag.png">';
+				$output .= '<img class="remove-tag-hover" src="' . plugin_dir_url(__DIR__) . 'images/remove-tag-hover.png">';
+			$output .= '</div>';
+
+		}
+	$output .= '</li>';
+
+	return $output;
+}
+
+
+function jwppp_ads_tag_callback() {
+	$n = isset($_POST['number']) ? $_POST['number'] : '';
+	if($n) {
+		echo jwppp_ads_tag($n);
+	}
+	exit;
+}
+add_action('wp_ajax_add_ads_tag', 'jwppp_ads_tag_callback');
+
 //JW PLAYER CODE
 function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute, $pl_repeat) {
 
 	//IS IT A DASHBOARD PLAYER?
 	$dashboard_player = is_dashboard_player();
 
-	// xxxxxx
+	/*General options*/
+
+	/*ADS*/
+	$jwppp_show_ads = sanitize_text_field(get_option('jwppp-active-ads'));
+	$jwppp_ads_client = sanitize_text_field(get_option('jwppp-ads-client'));
+	$jwppp_ads_tags = get_option('jwppp-ads-tag');
+	$jwppp_ads_skip = sanitize_text_field(get_option('jwppp-ads-skip'));
+	$jwppp_bidding = sanitize_text_field(get_option('jwppp-active-bidding'));
+	$jwppp_channel_id = sanitize_text_field(get_option('jwppp-channel-id'));
+	$jwppp_mediation = sanitize_text_field(get_option('jwppp-mediation'));
+	$jwppp_floor_price = sanitize_text_field(get_option('jwppp-floor-price'));
+
 
 	//GETTING THE POST/ PAGE ID
 	if($p) {
@@ -949,6 +963,12 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 			$jwppp_single_embed = get_post_meta($p_id, '_jwppp-single-embed-' . $number, true);
 			if(!$jwppp_single_embed) {
 				$jwppp_single_embed = $jwppp_embed_video;
+			}
+
+			/*Ads tag*/
+			$jwppp_ads_tag = get_post_meta($p_id, '_jwppp-ads-tag-' . $number, true);
+			if(!$jwppp_ads_tag) {
+				$jwppp_ads_tag = is_array($jwppp_ads_tags) ? $jwppp_ads_tags[0] : $jwppp_ads_tags;
 			}
 
 			$jwppp_download_video = get_post_meta($p_id, '_jwppp-download-video-' . $number, true);
@@ -1156,7 +1176,36 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 							$output .= "mediaid: '" . esc_attr($this_video) . $n++ . "',\n";
 						}
 
-						//MEIA-TYPE
+						//ADS
+						if($jwppp_show_ads === '1') {
+							$output .= "advertising: {\n";
+							$output .= "client: '" . esc_html($jwppp_ads_client) . "',\n";
+							$output .= "tag: '" . esc_html($jwppp_ads_tag) . "',\n";
+							if($jwppp_ads_skip !== '0') {
+								$output .= "skipoffset: " . esc_html($jwppp_ads_skip) . ",\n";
+							}
+							if($jwppp_bidding) {
+								$output .= "bids: {\n";
+									$output .= "settings: {\n";
+										$output .= "mediationLayerAdServer: '" . esc_html($jwppp_mediation) . "',\n";
+										if(in_array($jwppp_mediation, array('jwp', 'jwpdfp')) && $jwppp_floor_price) {
+											$output .= "floorPriceCents: " . esc_html($jwppp_floor_price) * 100 . "\n";
+										}
+									$output .= "},\n";
+									$output .= "bidders: [\n";
+										$output .= "{\n";
+										$output .= "name: 'SpotX',\n";
+										$output .= "id: '" . esc_html($jwppp_channel_id) . "'\n";
+										$output .= "}\n";
+									$output .= "]\n";
+									// $output .= "";
+
+								$output .= "}\n";
+							}
+							$output .= "},\n";
+						}
+
+						//MEDIA-TYPE
 						if($jwppp_media_type) {
 					    	$output .= "type: '" . esc_html($jwppp_media_type) . "',\n";
 					    }

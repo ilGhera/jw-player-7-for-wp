@@ -140,6 +140,29 @@ span.currency {
 	display: none;
 }
 
+.add-tag-container,
+.remove-tag-container {
+	display: inline;
+	position: relative;
+	top: 0.2rem;
+	margin-left: 0.3rem;
+	cursor: pointer;
+}
+
+.add-tag-hover,
+.remove-tag-hover {
+	display: none;
+}
+
+.add-tag-container:hover .add-tag,
+.remove-tag-container:hover .remove-tag {
+	display: none;
+}
+
+.add-tag-container:hover .add-tag-hover,
+.remove-tag-container:hover .remove-tag-hover {
+	display: inline;
+}
 
 @media screen and (max-width: 1112px) {
  
