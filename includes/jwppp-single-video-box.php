@@ -185,6 +185,9 @@ if($dashboard_player && !$sh_video) {
 			/*With cloud player and self hosted sources, all the tools are shown*/
 			if(video_type === 'add-url') {
 
+				/*Hide carousel option*/
+				$('.playlist-carousel-container.' + number).hide();
+
 				/*Add the More options button*/
 				// console.log($('.jwppp-' + number + ' .jwppp-input-wrap').find('.more-options-' + number));
 				if($('.jwppp-' + number + ' .jwppp-input-wrap').find('.more-options-' + number).length === 0) {

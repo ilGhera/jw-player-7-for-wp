@@ -83,11 +83,16 @@ function sh_video_tools($post_id, $number) {
 	$output .= '<label for="_jwppp-ads-tag-' . esc_attr($number) . '"><strong>' . esc_html(__('Ads tag', 'jwppp')) . '</strong></label>';
 	$output .= '<p>';
 	$output .= '<select name="_jwppp-ads-tag-' . esc_attr($number) . '">';
-	if($ads_tags) {
+	if(is_array($ads_tags) && !empty($ads_tags)) {
 		for ($i=0; $i < count($ads_tags); $i++) { 
 			$output .= '<option name="' . $i . '" value="' . $ads_tags[$i] . '"' . ($jwppp_ads_tag === $ads_tags[$i] ? ' selected="selected"' : '') . '>' . $ads_tags[$i] . '</option>';
 		}
+	} elseif(is_string($ads_tags)) {
+		$output .= '<option name="0" value="' . $ads_tags . '">' . $ads_tags . '</option>';
+	} else {
+		$output .= '<option name="" value="">' . esc_html(__('No ad tags available', 'jwppp')) . '</option>';		
 	}
+
 	$output .= '</select>';
 	$output .= '</p>';
 

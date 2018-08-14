@@ -20,8 +20,10 @@
 	$ads_tags = get_option('jwppp-ads-tag');
 	if(isset($_POST['hidden-total-tags'])) {
 		$ads_tags = array();
-		for ($i=1; $i <= sanitize_text_field($_POST['hidden-total-tags']); $i++) { 
-			$ads_tags[] = sanitize_text_field($_POST['jwppp-ads-tag-' . $i]);
+		for ($i=0; $i < sanitize_text_field($_POST['hidden-total-tags']); $i++) { 
+			if(sanitize_text_field($_POST['jwppp-ads-tag-' . ($i + 1)]) !== '') {
+				$ads_tags[] = sanitize_text_field($_POST['jwppp-ads-tag-' . ($i + 1)]);				
+			}
 		}
 		update_option('jwppp-ads-tag', $ads_tags);
 	}
@@ -102,10 +104,12 @@
 
 		// var_dump($ads_tags);
 
+	$total_tags = 1;
 	if(is_array($ads_tags) && !empty($ads_tags)) {
 		for ($i=1; $i <= count($ads_tags); $i++) { 
 			echo jwppp_ads_tag($i, $ads_tags[$i - 1]);
 		}
+		$total_tags = count($ads_tags);
 	} elseif(is_string($ads_tags)) {
 		echo jwppp_ads_tag(1, $ads_tags);
 	} else {
@@ -113,7 +117,7 @@
 	}
 
 	echo '</ul>';
-	echo '<input type="hidden" name="hidden-total-tags" class="hidden-total-tags" value="" />';
+	echo '<input type="hidden" name="hidden-total-tags" class="hidden-total-tags" value="' . esc_html($total_tags) . '" />';
 	echo '<p class="description">' . __('Please, set this to the URL of the ad tag that contains the pre-roll ad.', 'jwppp') . '</p>';
 	echo '</td>';
 	echo '</tr>';

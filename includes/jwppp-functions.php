@@ -906,23 +906,75 @@ function jwppp_ads_tag_callback() {
 }
 add_action('wp_ajax_add_ads_tag', 'jwppp_ads_tag_callback');
 
-//JW PLAYER CODE
-function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute, $pl_repeat) {
 
-	//IS IT A DASHBOARD PLAYER?
-	$dashboard_player = is_dashboard_player();
+function jwppp_ads_code_block($post_id, $number) {
 
-	/*General options*/
-
-	/*ADS*/
+	/*Ads options*/
 	$jwppp_show_ads = sanitize_text_field(get_option('jwppp-active-ads'));
 	$jwppp_ads_client = sanitize_text_field(get_option('jwppp-ads-client'));
-	$jwppp_ads_tags = get_option('jwppp-ads-tag');
+	$ads_tags = get_option('jwppp-ads-tag'); 
 	$jwppp_ads_skip = sanitize_text_field(get_option('jwppp-ads-skip'));
 	$jwppp_bidding = sanitize_text_field(get_option('jwppp-active-bidding'));
 	$jwppp_channel_id = sanitize_text_field(get_option('jwppp-channel-id'));
 	$jwppp_mediation = sanitize_text_field(get_option('jwppp-mediation'));
 	$jwppp_floor_price = sanitize_text_field(get_option('jwppp-floor-price'));
+
+	$output = null;
+
+	/*Code block*/
+	if($jwppp_show_ads === '1') {
+
+		/*Single video ads tag*/
+		$jwppp_ads_tag = get_post_meta($post_id, '_jwppp-ads-tag-' . $number, true);
+		
+		/*Delete single video ad tag if not available anymore*/
+		if(is_array($ads_tags) && !empty($ads_tags)) {
+			if(!in_array($jwppp_ads_tag, $ads_tags)) {
+				$jwppp_ads_tag = $ads_tags[0];
+				delete_post_meta($post_id, '_jwppp-ads-tag-' . $number);
+			}
+		} elseif(is_string($ads_tags)) {
+			if($jwppp_ads_tag !== $ads_tags) {
+				$jwppp_ads_tag = $ads_tags;
+				delete_post_meta($post_id, '_jwppp-ads-tag-' . $number);
+			}
+		}
+
+		$output .= "advertising: {\n";
+		$output .= "client: '" . esc_html($jwppp_ads_client) . "',\n";
+		$output .= "tag: '" . esc_html($jwppp_ads_tag) . "',\n";
+		if($jwppp_ads_skip !== '0') {
+			$output .= "skipoffset: " . esc_html($jwppp_ads_skip) . ",\n";
+		}
+		if($jwppp_bidding) {
+			$output .= "bids: {\n";
+				$output .= "settings: {\n";
+					$output .= "mediationLayerAdServer: '" . esc_html($jwppp_mediation) . "',\n";
+					if(in_array($jwppp_mediation, array('jwp', 'jwpdfp')) && $jwppp_floor_price) {
+						$output .= "floorPriceCents: " . esc_html($jwppp_floor_price) * 100 . "\n";
+					}
+				$output .= "},\n";
+				$output .= "bidders: [\n";
+					$output .= "{\n";
+					$output .= "name: 'SpotX',\n";
+					$output .= "id: '" . esc_html($jwppp_channel_id) . "'\n";
+					$output .= "}\n";
+				$output .= "]\n";
+				// $output .= "";
+
+			$output .= "}\n";
+		}
+		$output .= "},\n";
+	}
+
+	return $output;
+}
+
+//JW PLAYER CODE
+function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute, $pl_repeat) {
+
+	//IS IT A DASHBOARD PLAYER?
+	$dashboard_player = is_dashboard_player();
 
 
 	//GETTING THE POST/ PAGE ID
@@ -963,12 +1015,6 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 			$jwppp_single_embed = get_post_meta($p_id, '_jwppp-single-embed-' . $number, true);
 			if(!$jwppp_single_embed) {
 				$jwppp_single_embed = $jwppp_embed_video;
-			}
-
-			/*Ads tag*/
-			$jwppp_ads_tag = get_post_meta($p_id, '_jwppp-ads-tag-' . $number, true);
-			if(!$jwppp_ads_tag) {
-				$jwppp_ads_tag = is_array($jwppp_ads_tags) ? $jwppp_ads_tags[0] : $jwppp_ads_tags;
 			}
 
 			$jwppp_download_video = get_post_meta($p_id, '_jwppp-download-video-' . $number, true);
@@ -1022,8 +1068,12 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 				if($self_content === 0) {
 				    $output .= "file: '" . $jwppp_video_url . "',\n"; 
 				} else {
-					$output .= "playlist: 'https://cdn.jwplayer.com/v2/media/$jwppp_video_url'\n";						
+					$output .= "playlist: 'https://cdn.jwplayer.com/v2/media/$jwppp_video_url',\n";						
 				}
+
+				//ADS
+				$output .= jwppp_ads_code_block($p_id, $number);
+
 			$output .= "})\n";
 
 			if($jwppp_playlist_carousel) {
@@ -1177,33 +1227,7 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 						}
 
 						//ADS
-						if($jwppp_show_ads === '1') {
-							$output .= "advertising: {\n";
-							$output .= "client: '" . esc_html($jwppp_ads_client) . "',\n";
-							$output .= "tag: '" . esc_html($jwppp_ads_tag) . "',\n";
-							if($jwppp_ads_skip !== '0') {
-								$output .= "skipoffset: " . esc_html($jwppp_ads_skip) . ",\n";
-							}
-							if($jwppp_bidding) {
-								$output .= "bids: {\n";
-									$output .= "settings: {\n";
-										$output .= "mediationLayerAdServer: '" . esc_html($jwppp_mediation) . "',\n";
-										if(in_array($jwppp_mediation, array('jwp', 'jwpdfp')) && $jwppp_floor_price) {
-											$output .= "floorPriceCents: " . esc_html($jwppp_floor_price) * 100 . "\n";
-										}
-									$output .= "},\n";
-									$output .= "bidders: [\n";
-										$output .= "{\n";
-										$output .= "name: 'SpotX',\n";
-										$output .= "id: '" . esc_html($jwppp_channel_id) . "'\n";
-										$output .= "}\n";
-									$output .= "]\n";
-									// $output .= "";
-
-								$output .= "}\n";
-							}
-							$output .= "},\n";
-						}
+						$output .= jwppp_ads_code_block($p_id, $number);
 
 						//MEDIA-TYPE
 						if($jwppp_media_type) {

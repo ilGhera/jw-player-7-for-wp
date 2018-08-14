@@ -224,10 +224,10 @@ function jwppp_options() {
 			<a href="#" data-link="jwppp-subtitles" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Subtitles', 'jwppp')); ?></a>
 			<a href="#" data-link="jwppp-related" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Related posts', 'jwppp')); ?></a>
 			<a href="#" data-link="jwppp-social" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Sharing', 'jwppp')); ?></a>    
-			<a href="#" data-link="jwppp-ads" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Ads', 'jwppp')); ?></a>
 		<?php } else { ?>
 			<a href="#" data-link="jwppp-playlist-carousel" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Playlist carousel', 'jwppp')); ?></a>    
 		<?php } ?>		         
+		<a href="#" data-link="jwppp-ads" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Ads', 'jwppp')); ?></a>
 	</h2>
 
 
