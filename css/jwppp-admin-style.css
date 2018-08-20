@@ -164,6 +164,11 @@ span.currency {
 	display: inline;
 }
 
+select.jwppp-choose-player {
+	width: 507px;
+	max-width: 100%;
+}
+
 @media screen and (max-width: 1112px) {
  
 	.poster-image-preview {

@@ -10,7 +10,7 @@ $dashboard_player = is_dashboard_player();
 $player_position = get_option('jwppp-position');
 
 $output = null;
-$output .= '<table class="widefat jwppp-' . esc_attr($number) . '" style="margin: 0.4rem 0;">';
+$output .= '<table class="widefat jwppp-' . esc_attr($number) . '" style="margin: 0.4rem 0; width: 100%;">';
 $output .= '<tbody class="ui-sortable">';
  /*Class for preview image dimensions*/
 $image_class = null;
@@ -136,22 +136,22 @@ if(get_option('jwppp-position') === 'custom') {
 }
 
 $more_options_button = '<a class="button more-options-' . esc_attr($number) . '">' . esc_html(__('More options', 'jwppp')) . '</a>';
-if(!$dashboard_player || $sh_video) {
+// if(!$dashboard_player || $sh_video) {
 	$output .= $more_options_button;
-}
+// }
 
-if($dashboard_player && !$sh_video) {
-	$jwppp_playlist_carousel = get_post_meta($post_id, '_jwppp-playlist-carousel-' . $number, true);
-	$output .= '<div class="playlist-carousel-container ' . esc_attr($number) . '"' . ($jwppp_playlist_carousel ? ' style="display: inline-block;"' : '') . '>';
-		$output .= '<label for="_jwppp-playlist-carousel-' . esc_attr($number) . '">';
-		$output .= '<input type="checkbox" id="_jwppp-playlist-carousel-' . esc_attr($number) . '" name="_jwppp-playlist-carousel-' . esc_attr($number) . '" value="1"';
-		$output .= ($jwppp_playlist_carousel === '1') ? ' checked="checked"' : '';
-		$output .= ' />';
-		$output .= '<strong>' . esc_html(__('Show carousel', 'jwppp')) . '</strong>';
-		$output .= '</label>';
-		$output .= '<input type="hidden" name="playlist-carousel-hidden-' . esc_attr($number) . '" value="1" />';
-	$output .= '</div>';	
-}
+// if($dashboard_player && !$sh_video) {
+// 	$jwppp_playlist_carousel = get_post_meta($post_id, '_jwppp-playlist-carousel-' . $number, true);
+// 	$output .= '<div class="playlist-carousel-container ' . esc_attr($number) . '"' . ($jwppp_playlist_carousel ? ' style="display: inline-block;"' : '') . '>';
+// 		$output .= '<label for="_jwppp-playlist-carousel-' . esc_attr($number) . '">';
+// 		$output .= '<input type="checkbox" id="_jwppp-playlist-carousel-' . esc_attr($number) . '" name="_jwppp-playlist-carousel-' . esc_attr($number) . '" value="1"';
+// 		$output .= ($jwppp_playlist_carousel === '1') ? ' checked="checked"' : '';
+// 		$output .= ' />';
+// 		$output .= '<strong>' . esc_html(__('Show carousel', 'jwppp')) . '</strong>';
+// 		$output .= '</label>';
+// 		$output .= '<input type="hidden" name="playlist-carousel-hidden-' . esc_attr($number) . '" value="1" />';
+// 	$output .= '</div>';	
+// }
 
 ?>
 
@@ -185,14 +185,17 @@ if($dashboard_player && !$sh_video) {
 			/*With cloud player and self hosted sources, all the tools are shown*/
 			if(video_type === 'add-url') {
 
+
+				$('.jwppp-single-option-' + number).show();
+
 				/*Hide carousel option*/
 				$('.playlist-carousel-container.' + number).hide();
 
 				/*Add the More options button*/
 				// console.log($('.jwppp-' + number + ' .jwppp-input-wrap').find('.more-options-' + number));
-				if($('.jwppp-' + number + ' .jwppp-input-wrap').find('.more-options-' + number).length === 0) {
-					$('.jwppp-' + number + ' .jwppp-input-wrap').append($more_options_button);
-				}
+				// if($('.jwppp-' + number + ' .jwppp-input-wrap').find('.more-options-' + number).length === 0) {
+				// 	$('.jwppp-' + number + ' .jwppp-input-wrap').append($more_options_button);
+				// }
 
 				var data = {
 					'action': 'self-media-source',
@@ -200,13 +203,15 @@ if($dashboard_player && !$sh_video) {
 					'post-id': post_id,
 					'number': number
 				}
-				$.post(ajaxurl, data, function(response){
-					$(response).appendTo($('.jwppp-' + number + ' .jwppp-input-wrap'));
-					sh_video_script(number);
-				})
+				// $.post(ajaxurl, data, function(response){
+				// 	$(response).appendTo($('.jwppp-' + number + ' .jwppp-input-wrap'));
+				// 	sh_video_script(number);
+				// })
 			} else {
-				$('.button.more-options-' + number).remove();
-				$('.jwppp-more-options-' + number).remove();
+				$('.jwppp-single-option-' + number).hide();
+				$('.jwppp-single-option-' + number + '.cloud-option').show();
+				// $('.button.more-options-' + number).remove();
+				// $('.jwppp-more-options-' + number).remove();
 			}
 
 		})
@@ -301,10 +306,10 @@ if($dashboard_player && !$sh_video) {
 
 <?php
 
-if(!$dashboard_player || $sh_video) {
+// if(!$dashboard_player || $sh_video) {
 
 	/*Self hosted video tools*/
-	$output .= sh_video_tools($post_id, $number);
+	$output .= sh_video_tools($post_id, $number, $sh_video);
 	?>
 	<script>
 		jQuery(document).ready(function($){
@@ -313,7 +318,7 @@ if(!$dashboard_player || $sh_video) {
 		})
 	</script>
 	<?php
-}
+// }
 
 $output .= '</div>';
 $output .= '</td>';

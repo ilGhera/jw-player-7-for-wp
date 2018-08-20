@@ -370,6 +370,11 @@ function jwppp_save_single_video_data( $post_id ) {
 			update_post_meta($post_id, '_jwppp-ads-tag-' . $number, $jwppp_ads_tag);
 		}
 
+		if(isset($_POST['_jwppp-choose-player-' . $number])) {
+			$jwppp_choose_player = sanitize_text_field($_POST['_jwppp-choose-player-' . $number]);
+			update_post_meta($post_id, '_jwppp-choose-player-' . $number, $jwppp_choose_player);
+		}
+
 		if($jwppp_activate_media_type === '1') {
 			$media_type = sanitize_text_field($_POST['_jwppp-media-type-' . $number]);
 			update_post_meta( $post_id, '_jwppp-media-type-' . $number, $media_type );
@@ -976,6 +981,11 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 	//IS IT A DASHBOARD PLAYER?
 	$dashboard_player = is_dashboard_player();
 
+	/*Default dashboard player informations*/
+	if($dashboard_player) {
+		$library_parts = explode('https://content.jwplatform.com/libraries/', get_option('jwppp-library'));
+		$player_parts = explode('.js', $library_parts[1]);		
+	}
 
 	//GETTING THE POST/ PAGE ID
 	if($p) {
@@ -997,7 +1007,6 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 
 		/*Playlist carousel*/
 		$jwppp_playlist_carousel = get_post_meta($p_id, '_jwppp-playlist-carousel-' . $number, true);
-
 
 		if(!$dashboard_player || $sh_video) {
 
@@ -1041,10 +1050,6 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 
 	if($dashboard_player && !$sh_video) {
 	
-		/*Player informations*/
-		$library_parts = explode('https://content.jwplatform.com/libraries/', get_option('jwppp-library'));
-		$player_parts = explode('.js', $library_parts[1]);
-
 		/*Video*/
 		$self_content = strpos($jwppp_video_url, 'http');
 
@@ -1062,6 +1067,11 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 		/*Playlist carousel*/
 		$output .= $jwppp_playlist_carousel ? jwppp_playlist_carousel($this_video) : '';
 
+		/*Choose player*/
+		$choose_player = get_post_meta($p_id, '_jwppp-choose-player-' . $number, true) ? esc_html(get_post_meta($p_id, '_jwppp-choose-player-' . $number, true)) : esc_html($player_parts[0]);
+
+		/*Player choose - library*/
+		$output .= '<script type="text/javascript" src="https://content.jwplatform.com/libraries/' . $choose_player . '.js"></script>';			
 		$output .= "<script type='text/javascript'>\n";
 			$output .= "var playerInstance_$this_video = jwplayer(\"jwppp-video-$this_video\");\n";
 			$output .= "playerInstance_$this_video.setup({\n";
@@ -1122,9 +1132,13 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 		$output .= "</div>\n"; 
 		$output .= "</div>\n"; 
 		
-		//TEMP: get the specific player for the single video
-		// $output .= '<script type="text/javascript" src="https://content.jwplatform.com/libraries/U9KNQYYx.js?ver=4.9.8"></script>';			
+		if($dashboard_player) {
+			/*Choose player*/
+			$choose_player = get_post_meta($p_id, '_jwppp-choose-player-' . $number, true) ? esc_html(get_post_meta($p_id, '_jwppp-choose-player-' . $number, true)) : esc_html($player_parts[0]);
 
+			/*Player choose - library*/
+			$output .= '<script type="text/javascript" src="https://content.jwplatform.com/libraries/' . $choose_player . '.js"></script>';			
+		}
 		$output .= "<script type='text/javascript'>\n";
 			$output .= "var playerInstance_$this_video = jwplayer(\"jwppp-video-$this_video\");\n";
 			$output .= "playerInstance_$this_video.setup({\n";
@@ -1459,9 +1473,7 @@ function jwppp_simple_video_code($media_id) {
 
 	   	/*Options available only with self-hosted player*/
 	   	if(!$dashboard_player) {
-
 			$output .= jwppp_sh_player_option();
-
 	   	}
 
 		$output .= "})\n";
@@ -1677,6 +1689,16 @@ class jwppp_dasboard_api {
 	    	$videos = json_decode($contents);
 	    	return $videos->playlist;
 	    }
+	}
+
+	public function get_players() {
+		if($this->api) {
+			$output = $this->api->call("/players/list"); //videos			
+			if($output['status'] === 'ok') {
+				return $output['players'];					
+			}
+		}
+		return null;
 	}
 
 }
