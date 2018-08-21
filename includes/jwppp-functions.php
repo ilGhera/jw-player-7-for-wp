@@ -916,6 +916,20 @@ function jwppp_ads_tag_callback() {
 add_action('wp_ajax_add_ads_tag', 'jwppp_ads_tag_callback');
 
 
+function jwppp_ads_var_callback() {
+	// $post_id = isset($_POST['post_id']) ? sanitize_text_field($_POST['post_id']) : '';
+	// $number = isset($_POST['number']) ? sanitize_text_field($_POST['number']) : '';
+	$tag = isset($_POST['tag']) ? $_POST['tag'] : '';
+
+	// if($post_id && $number && $tag) {
+	if($tag) {
+		update_option('jwppp-ads-var', $tag);
+	}
+	exit;
+}
+add_action('wp_ajax_ads-var-name', 'jwppp_ads_var_callback');
+
+
 /**
  * Check if the single post/ page ad tag still exists in the option array
  * @param  array $tags the ad tags saved by the user
@@ -949,14 +963,14 @@ function jwppp_ads_code_block($post_id, $number) {
 	/*Is the main ads option activated?*/
 	if($jwppp_show_ads === '1') {
 
-		$output .= "advertising: {\n";
 
 		/*Single video ads tag*/
 		$jwppp_ads_tag = get_post_meta($post_id, '_jwppp-ads-tag-' . $number, true);
 
 		/*The single video ads option is not activated*/
 		if($jwppp_ads_tag === 'no-ads') {
-			$output .= "},\n";
+			$output .= "advertising: {},\n";
+
 			return $output;
 		
 		} else {
@@ -966,7 +980,24 @@ function jwppp_ads_code_block($post_id, $number) {
 
 			if($active_ads_var) {
 				$ads_var_name = sanitize_text_field(get_option('jwppp-ads-var-name'));
-				$output .= "},\n";
+					?>
+					<script>
+						jQuery(document).ready(function($){
+							var tag = <?php echo $ads_var_name; ?>;
+							var data = {
+								'action': 'ads-var-name',
+								// 'post_id': '<?php //echo $post_id; ?>',
+								// 'number': '<?php //echo $number; ?>',
+								'tag': tag
+							}
+							$.post(ajaxurl, data, function(response){
+							})
+						})
+
+					</script>
+					<?php
+				$ads_var = get_option('jwppp-ads-var');
+				$output .= "advertising: " . json_encode($ads_var, JSON_UNESCAPED_SLASHES) . ",\n";
 
 				return $output;
 			}
@@ -984,6 +1015,7 @@ function jwppp_ads_code_block($post_id, $number) {
 				}
 			}
 
+			$output .= "advertising: {\n";
 			$output .= "client: '" . esc_html($jwppp_ads_client) . "',\n";
 			$output .= "tag: '" . $jwppp_ads_tag . "',\n";
 			if($jwppp_ads_skip) {

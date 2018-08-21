@@ -109,8 +109,28 @@ jQuery(document).ready(function($) {
 
     $('#jwppp-active-ads').on('change',function() {
         if($('#jwppp-active-ads').prop('checked')) {
-            $('.ads-options').show('slow');
+            // $('.ads-options').show('slow');
 
+            /*ADS variable block*/
+            if($('#jwppp-active-ads-var').prop('checked')) {
+                $('.ads-options').hide();
+                $('.ads-options.ads-var-block').show('slow');
+            } else {
+                $('.ads-options').show('slow');
+                $('.ads-options.ads-var-block').hide();            
+                $('.ads-options.ads-var-block.activation').show('slow');            
+
+                if($('#jwppp-active-bidding').prop('checked') == false) {
+                    $('.ads-options.bidding').hide();
+                } else {
+                    if($('#jwppp-mediation').val() !== 'jwp' && $('#jwppp-mediation').val() !== 'jwpdfp') {
+                        $('.ads-options.bidding.floor-price').hide();
+                    }
+                }
+
+            }
+
+            /*Bidding*/
             if($('#jwppp-active-bidding').prop('checked') == false) {
                 $('.ads-options.bidding').hide();
             } else {
