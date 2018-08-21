@@ -967,6 +967,8 @@ function jwppp_ads_code_block($post_id, $number) {
 			if($active_ads_var) {
 				$ads_var_name = sanitize_text_field(get_option('jwppp-ads-var-name'));
 				$output .= "},\n";
+
+				return $output;
 			}
 			
 			/*Delete single video ad tag if not available anymore*/
