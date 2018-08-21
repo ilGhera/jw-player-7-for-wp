@@ -164,7 +164,8 @@ span.currency {
 	display: inline;
 }
 
-select.jwppp-choose-player {
+select.jwppp-choose-player,
+select.jwppp-ads-tag {
 	width: 507px;
 	max-width: 100%;
 }

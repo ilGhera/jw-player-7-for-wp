@@ -366,7 +366,7 @@ function jwppp_save_single_video_data( $post_id ) {
 		}
 
 		if(isset($_POST['_jwppp-ads-tag-' . $number])) {
-			$jwppp_ads_tag = sanitize_text_field($_POST['_jwppp-ads-tag-' . $number]);
+			$jwppp_ads_tag = $_POST['_jwppp-ads-tag-' . $number];
 			update_post_meta($post_id, '_jwppp-ads-tag-' . $number, $jwppp_ads_tag);
 		}
 
@@ -876,10 +876,14 @@ function jwppp_sh_player_option($ar='', $width='', $height='') {
 }
 
 
-function jwppp_ads_tag($n, $url='') {
-	$ads_tag = $url ? $url : '';
+function jwppp_ads_tag($n, $tag='') {
+	
+	$ad_url = isset($tag['url']) ? $tag['url'] : $tag;
+	$ad_label = isset($tag['label']) ? $tag['label'] : '';
+
 	$output = '<li>';
-		$output .= '<input type="text" class="regular-text" id="jwppp-ads-tag" name="jwppp-ads-tag-' . $n . '" placeholder="' . __('Add the url of your XML file.', 'jwppp') . '" value="' . $ads_tag . '" />';
+		$output .= '<input type="text" class="regular-text" id="jwppp-ads-tag" name="jwppp-ads-tag-' . $n . '" placeholder="' . __('Add the url of your XML file.', 'jwppp') . '" value="' . $ad_url . '" />';
+		$output .= '<input type="text" id="jwppp-ads-tag-label" name="jwppp-ads-tag-label' . $n . '" placeholder="' . __('Add a label for this tag', 'jwppp') . '" value="' . $ad_label . '" />';
 
 		if($n === 1) {
 
@@ -912,6 +916,22 @@ function jwppp_ads_tag_callback() {
 add_action('wp_ajax_add_ads_tag', 'jwppp_ads_tag_callback');
 
 
+/**
+ * Check if the single post/ page ad tag still exists in the option array
+ * @param  array $tags the ad tags saved by the user
+ * @param  string $tag  the single tag choosed for the specific video
+ * @return bool
+ */
+function jwppp_ads_tag_exists($tags, $tag) {
+	foreach($tags as $single) {
+		if($single['url'] === $tag) {
+			return true;
+		}
+	} 
+	return false;
+}
+
+
 function jwppp_ads_code_block($post_id, $number) {
 
 	/*Ads options*/
@@ -926,50 +946,68 @@ function jwppp_ads_code_block($post_id, $number) {
 
 	$output = null;
 
-	/*Code block*/
+	/*Is the main ads option activated?*/
 	if($jwppp_show_ads === '1') {
+
+		$output .= "advertising: {\n";
 
 		/*Single video ads tag*/
 		$jwppp_ads_tag = get_post_meta($post_id, '_jwppp-ads-tag-' . $number, true);
+
+		/*The single video ads option is not activated*/
+		if($jwppp_ads_tag === 'no-ads') {
+			$output .= "},\n";
+			return $output;
 		
-		/*Delete single video ad tag if not available anymore*/
-		if(is_array($ads_tags) && !empty($ads_tags)) {
-			if(!in_array($jwppp_ads_tag, $ads_tags)) {
-				$jwppp_ads_tag = $ads_tags[0];
-				delete_post_meta($post_id, '_jwppp-ads-tag-' . $number);
-			}
-		} elseif(is_string($ads_tags)) {
-			if($jwppp_ads_tag !== $ads_tags) {
-				$jwppp_ads_tag = $ads_tags;
-				delete_post_meta($post_id, '_jwppp-ads-tag-' . $number);
-			}
-		}
+		} else {
 
-		$output .= "advertising: {\n";
-		$output .= "client: '" . esc_html($jwppp_ads_client) . "',\n";
-		$output .= "tag: '" . esc_html($jwppp_ads_tag) . "',\n";
-		if($jwppp_ads_skip !== '0') {
-			$output .= "skipoffset: " . esc_html($jwppp_ads_skip) . ",\n";
-		}
-		if($jwppp_bidding) {
-			$output .= "bids: {\n";
-				$output .= "settings: {\n";
-					$output .= "mediationLayerAdServer: '" . esc_html($jwppp_mediation) . "',\n";
-					if(in_array($jwppp_mediation, array('jwp', 'jwpdfp')) && $jwppp_floor_price) {
-						$output .= "floorPriceCents: " . esc_html($jwppp_floor_price) * 100 . "\n";
-					}
+			/*Ads var block*/
+			$active_ads_var = sanitize_text_field(get_option('jwppp-active-ads-var'));
+
+			if($active_ads_var) {
+				$ads_var_name = sanitize_text_field(get_option('jwppp-ads-var-name'));
 				$output .= "},\n";
-				$output .= "bidders: [\n";
-					$output .= "{\n";
-					$output .= "name: 'SpotX',\n";
-					$output .= "id: '" . esc_html($jwppp_channel_id) . "'\n";
-					$output .= "}\n";
-				$output .= "]\n";
-				// $output .= "";
+			}
+			
+			/*Delete single video ad tag if not available anymore*/
+			if(is_array($ads_tags) && !empty($ads_tags)) {
+				if(!jwppp_ads_tag_exists($ads_tags, $jwppp_ads_tag)) {
+					$jwppp_ads_tag = $ads_tags[0]['url'];
+					delete_post_meta($post_id, '_jwppp-ads-tag-' . $number);
+				}
+			} elseif(is_string($ads_tags)) {
+				if($jwppp_ads_tag !== $ads_tags) {
+					$jwppp_ads_tag = $ads_tags;
+					delete_post_meta($post_id, '_jwppp-ads-tag-' . $number);
+				}
+			}
 
-			$output .= "}\n";
+			$output .= "client: '" . esc_html($jwppp_ads_client) . "',\n";
+			$output .= "tag: '" . $jwppp_ads_tag . "',\n";
+			if($jwppp_ads_skip) {
+				$output .= "skipoffset: " . esc_html($jwppp_ads_skip) . ",\n";
+			}
+			if($jwppp_bidding) {
+				$output .= "bids: {\n";
+					$output .= "settings: {\n";
+						$output .= "mediationLayerAdServer: '" . esc_html($jwppp_mediation) . "',\n";
+						if(in_array($jwppp_mediation, array('jwp', 'jwpdfp')) && $jwppp_floor_price) {
+							$output .= "floorPriceCents: " . esc_html($jwppp_floor_price) * 100 . "\n";
+						}
+					$output .= "},\n";
+					$output .= "bidders: [\n";
+						$output .= "{\n";
+						$output .= "name: 'SpotX',\n";
+						$output .= "id: '" . esc_html($jwppp_channel_id) . "'\n";
+						$output .= "}\n";
+					$output .= "]\n";
+					// $output .= "";
+
+				$output .= "}\n";
+			}
+			$output .= "},\n";
 		}
-		$output .= "},\n";
+
 	}
 
 	return $output;
@@ -1508,9 +1546,8 @@ function jwppp_add_player($content) {
 		$jwppp_videos = jwppp_get_post_videos($post->ID);
 		if($jwppp_videos) {
 			$video = null;
-			foreach($jwppp_videos as $jwppp_video) {
-				$jwppp_number = explode('_jwppp-video-url-', $jwppp_video['meta_key']);
-				$number 	  = $jwppp_number[1];
+			for ($i=1; $i <= count($jwppp_videos) ; $i++) { 
+				$number 	  = $i;
 				$post_id 	  = get_the_ID();
 				$video 	     .= jwppp_video_code(
 									$post_id, 

@@ -9,6 +9,23 @@
 		update_option('jwppp-active-ads', $active_ads);
 	}
 
+	//ACTIVE ADS VAR BLOCK
+	$active_ads_var = sanitize_text_field(get_option('jwppp-active-ads-var'));
+	/*If this option is activated, all the plugin ads options are hidden*/
+	$hide = $active_ads_var ? ' style="display: none;"' : '';
+	if(isset($_POST['ads-sent']) ) {
+		$hide = isset($_POST['jwppp-active-ads-var']) ? ' style="display: none;"' : '';
+		$active_ads_var = isset($_POST['jwppp-active-ads-var']) ? $_POST['jwppp-active-ads-var'] : 0;
+		update_option('jwppp-active-ads-var', $active_ads_var);
+	}
+
+	//ADS VAR BLOCK NAME
+	$ads_var_name = sanitize_text_field(get_option('jwppp-ads-var-name'));
+	if(isset($_POST['ads-sent']) ) {
+		$ads_var_name = isset($_POST['jwppp-ads-var-name']) ? sanitize_text_field($_POST['jwppp-ads-var-name']) : '';
+		update_option('jwppp-ads-var-name', $ads_var_name);
+	}
+
 	//ADS CLIENT
 	$ads_client = sanitize_text_field(get_option('jwppp-ads-client'));
 	if(isset($_POST['jwppp-ads-client'])) {
@@ -22,7 +39,10 @@
 		$ads_tags = array();
 		for ($i=0; $i < sanitize_text_field($_POST['hidden-total-tags']); $i++) { 
 			if(sanitize_text_field($_POST['jwppp-ads-tag-' . ($i + 1)]) !== '') {
-				$ads_tags[] = sanitize_text_field($_POST['jwppp-ads-tag-' . ($i + 1)]);				
+				$ads_tags[] = array(
+					'label' => sanitize_text_field($_POST['jwppp-ads-tag-label' . ($i + 1)]),
+					'url'   => $_POST['jwppp-ads-tag-' . ($i + 1)]
+				);
 			}
 		}
 		update_option('jwppp-ads-tag', $ads_tags);
@@ -78,8 +98,28 @@
 	echo '<td>';
 	echo '</tr>';
 
+	//ADS EMBED BLOCK VARIABLE
+	echo '<tr class="ads-options ads-var-block activation">';
+	echo '<th scope="row">' . __('Ads variable', 'jwppp') . '</th>';
+	echo '<td>';
+	echo '<input type="checkbox" id="jwppp-active-ads-var" name="jwppp-active-ads-var" value="1"';
+	echo ($active_ads_var == 1) ? ' checked="checked"' : '';
+	echo ' />';
+	echo '<p class="description">' . __('Use an advertising embed block variable.', 'jwppp') . '</p>';
+	echo '<td>';
+	echo '</tr>';
+
+	//ADS VARIABLE'S NAME
+	echo '<tr class="ads-options ads-var-block"' . (!$active_ads_var ? ' style="display: none;"' : '') . '>';
+	echo '<th scope="row">' . __('Ads variable name', 'jwppp') . '</th>';
+	echo '<td>';
+	echo '<input type="text" class="regular-text" id="jwppp-ads-var-name" name="jwppp-ads-var-name" value="' . $ads_var_name . '" />';
+	echo '<p class="description">' . __('Add the name of the advertising variable.', 'jwppp') . '</p>';
+	echo '<td>';
+	echo '</tr>';
+
 	//ADS CLIENT
-	echo '<tr class="ads-options">';
+	echo '<tr class="ads-options"' . $hide . '>';
 	echo '<th scope="row">' . __('Ads Client') . '</th>';
 	echo '<td>';
 	echo '<select id="jwppp-ads-client" name="jwppp-ads-client" />';
@@ -95,7 +135,7 @@
 	echo '</tr>';
 
 	//ADS TAG
-	echo '<tr class="ads-options tag">';
+	echo '<tr class="ads-options tag"' . $hide . '>';
 	echo '<th scope="row">' . __('Ads Tag', 'jwppp') . '</th>';
 	echo '<td>';
 	echo '<ul style="margin: 0;">';
@@ -123,7 +163,7 @@
 	echo '</tr>';
 
 	//SKIPOFFSET
-	echo '<tr class="ads-options">';
+	echo '<tr class="ads-options"' . $hide . '>';
 	echo '<th scope="row">' . __('Ad Skipping', 'jwppp') . '</th>';
 	echo '<td>';
 	echo '<input type="number" min="0" step="1" class="small-text" id="jwppp-ads-skip" name="jwppp-ads-skip" value="' . $ads_skip . '" />';
@@ -132,7 +172,7 @@
 	echo '</tr>';
 
 	//BIDDING
-	echo '<tr class="ads-options">';
+	echo '<tr class="ads-options"' . $hide . '>';
 	echo '<th scope="row">' . __('Player Bidding', 'jwppp') . '</th>';
 	echo '<td>';
 	echo '<label>';
@@ -146,7 +186,7 @@
 	echo '</tr>';	
 
 	//SPOTX CHANNEL ID
-	echo '<tr class="ads-options bidding">';
+	echo '<tr class="ads-options bidding"' . $hide . '>';
 	echo '<th scope="row"><img src="' . plugin_dir_url(__DIR__) . 'images/spotx-70.png"></th>';
 	echo '<td>';
 	echo '<input type="text" class="regular-text" id="jwppp-channel-id" name="jwppp-channel-id" placeholder="' . __('Add a Channel ID', 'jwppp') . '" value="' . $channel_id . '" />';
@@ -155,7 +195,7 @@
 	echo '</tr>';
 
 	//MEDIATION
-	echo '<tr class="ads-options bidding">';
+	echo '<tr class="ads-options bidding"' . $hide . '>';
 	echo '<th scope="row">' . __('Mediation') . '</th>';
 	echo '<td>';
 	echo '<select id="jwppp-mediation" name="jwppp-mediation" />';
@@ -184,7 +224,7 @@
 	echo '</tr>';
 
 	//FLOOR PRICE
-	echo '<tr class="ads-options bidding floor-price">';
+	echo '<tr class="ads-options bidding floor-price"' . $hide . '>';
 	echo '<th scope="row">' . __('Floor Price', 'jwppp') . '</th>';
 	echo '<td>';
 	echo '<span class="currency">$</span>';

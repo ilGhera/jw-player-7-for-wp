@@ -1,5 +1,4 @@
 //JW PLAYER PREMIUM PLUGIN
-
 jQuery(document).ready(function($) {
 
 	//TABS
@@ -125,6 +124,27 @@ jQuery(document).ready(function($) {
         }
 
     });
+
+    /*ADS variable block*/
+    $('#jwppp-active-ads-var').on('change', function(){
+        if($(this).prop('checked')) {
+            $('.ads-options').hide();
+            $('.ads-options.ads-var-block').show('slow');
+        } else {
+            $('.ads-options').show('slow');
+            $('.ads-options.ads-var-block').hide();            
+            $('.ads-options.ads-var-block.activation').show('slow');            
+
+            if($('#jwppp-active-bidding').prop('checked') == false) {
+                $('.ads-options.bidding').hide();
+            } else {
+                if($('#jwppp-mediation').val() !== 'jwp' && $('#jwppp-mediation').val() !== 'jwpdfp') {
+                    $('.ads-options.bidding.floor-price').hide();
+                }
+            }
+
+        }
+    })
 
     /*ADS Tags*/
     $(document).on('click', '.add-tag-hover', function(){

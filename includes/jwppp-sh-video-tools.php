@@ -30,8 +30,12 @@ function sh_video_tools($post_id, $number, $sh_video) {
 	$jwppp_download_video 		   = get_post_meta($post_id, '_jwppp-download-video-' . $number, true);
 
 	/*ADS tags*/
+	$active_ads 				   = get_option('jwppp-active-ads');
 	$ads_tags					   = get_option('jwppp-ads-tag');
 	$jwppp_ads_tag				   = get_post_meta($post_id, '_jwppp-ads-tag-' . $number, true);
+
+	/*Ads var block*/
+	$active_ads_var = sanitize_text_field(get_option('jwppp-active-ads-var'));
 
 	/*Choose player*/
 	$choose_player = get_post_meta($post_id, '_jwppp-choose-player-' . $number, true);
@@ -124,24 +128,31 @@ function sh_video_tools($post_id, $number, $sh_video) {
 
 
 	//ADS TAGS
-	$output .= '<div class="jwppp-single-option-' . $number . ' cloud-option">';
-		$output .= '<label for="_jwppp-ads-tag-' . esc_attr($number) . '"><strong>' . esc_html(__('Ads tag', 'jwppp')) . '</strong></label>';
-		$output .= '<p>';
-		$output .= '<select name="_jwppp-ads-tag-' . esc_attr($number) . '">';
-		if(is_array($ads_tags) && !empty($ads_tags)) {
-			for ($i=0; $i < count($ads_tags); $i++) { 
-				$output .= '<option name="' . $i . '" value="' . $ads_tags[$i] . '"' . ($jwppp_ads_tag === $ads_tags[$i] ? ' selected="selected"' : '') . '>' . $ads_tags[$i] . '</option>';
-			}
-		} elseif(is_string($ads_tags)) {
-			$output .= '<option name="0" value="' . $ads_tags . '">' . $ads_tags . '</option>';
-		} else {
-			$output .= '<option name="" value="">' . esc_html(__('No ad tags available', 'jwppp')) . '</option>';		
-		}
+	if($active_ads && !$active_ads_var) {
+		$output .= '<div class="jwppp-single-option-' . $number . ' cloud-option">';
+			$output .= '<label for="_jwppp-ads-tag-' . esc_attr($number) . '"><strong>' . esc_html(__('Ads tag', 'jwppp')) . '</strong></label>';
+			$output .= '<p>';
+			$output .= '<select class="jwppp-ads-tag" name="_jwppp-ads-tag-' . esc_attr($number) . '">';
+				if($ads_tags) {
+					if(is_array($ads_tags) && !empty($ads_tags)) {
+						for ($i=0; $i < count($ads_tags); $i++) { 
+							$output .= '<option name="' . $ads_tags[$i]['label'] . '" value="' . $ads_tags[$i]['url'] . '"' . ($jwppp_ads_tag === $ads_tags[$i]['url'] ? ' selected="selected"' : '') . '>' . ($ads_tags[$i]['label'] ? $ads_tags[$i]['label'] : 'Tag ' . ($i + 1)) . '</option>';
+						}
+					} elseif(is_string($ads_tags)) {
+						$output .= '<option name="0" value="' . $ads_tags . '">' . $ads_tags . '</option>';
+					}
+					
+					/*Advertise disabled*/
+					$output .= '<option name="" value="no-ads"' . ($jwppp_ads_tag === 'no-ads' ? ' selected="selected"' : '') . '>' . esc_html(__('No advertise for this video', 'jwppp')) . '</option>';		
 
-		$output .= '</select>';
-		$output .= '</p>';
-	$output .= '</div>';
+				} else {
+					$output .= '<option name="" value="">' . esc_html(__('No ad tags available', 'jwppp')) . '</option>';		
+				}
 
+			$output .= '</select>';
+			$output .= '</p>';
+		$output .= '</div>';
+	}
 
 	//PLAYLIST CAROUSEL
 	if($dashboard_player && !$sh_video) {
