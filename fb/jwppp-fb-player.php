@@ -1,4 +1,6 @@
 <?php
+$player = isset($_GET['player']) ? $_GET['player'] : '';
+$player_url = isset($_GET['player_url']) ? $_GET['player_url'] : '';
 $mediaID = isset($_GET['mediaID']) ? $_GET['mediaID'] : '';
 $mediaURL = isset($_GET['mediaURL']) ? $_GET['mediaURL'] : '';
 $file = null;
@@ -13,16 +15,18 @@ if($mediaID) {
 $unique = Rand ( 0,1000000);
 $div = "jwplayer_unilad_" . $unique;
 
-if($file) {
-	?>
-	<html>
-		<body>
-			<script src="https://content.jwplatform.com/libraries/uTe0TMnD.js"></script>
-			<div id="<?php echo $div;?>"></div>
-			<script type="text/JavaScript">
-				playerInstance = jwplayer('<?php echo $div;?>');
-				playerInstance.setup({ 
-					<?php
+if($file && ($player || $player_url)) {
+	echo "<html>";
+		echo "<body>";
+			if($player) {
+				echo "<script src=\"https://content.jwplatform.com/libraries/$player.js\"></script>";			
+			} else {
+				echo "<script src=\"$player_url\"></script>";							
+			}
+			echo "<div id=\"$div\"></div>";
+			echo "<script type=\"text/JavaScript\">";
+				echo "playerInstance = jwplayer('$div');";
+				echo "playerInstance.setup({ ";
 					if($mediaID) {
 						echo "playlist: '$file',\n";
 						echo "image: '$image'\n";
@@ -30,10 +34,8 @@ if($file) {
 						echo "file: '$file',\n";
 						echo "image: '$image'\n";
 					}
-					?>
-				});
-			</script>
-		</body>
-	</html>
-	<?php
+				echo "});";
+			echo "</script>";
+		echo "</body>";
+	echo "</html>";
 }

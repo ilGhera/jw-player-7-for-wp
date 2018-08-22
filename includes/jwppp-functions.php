@@ -1125,11 +1125,14 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 		/*Video*/
 		$self_content = strpos($jwppp_video_url, 'http');
 
+		/*Choose player*/
+		$choose_player = get_post_meta($p_id, '_jwppp-choose-player-' . $number, true) ? esc_html(get_post_meta($p_id, '_jwppp-choose-player-' . $number, true)) : esc_html($player_parts[0]);
+
 		/*Output the player*/
 		$output = "<div id='jwppp-video-box-" . esc_attr($this_video) . "' class='jwppp-video-box' data-video='" . esc_attr($n) . "' style=\"margin: 1rem 0;\">\n";
 
 			/*FB Instant Articles*/
-			$output .= '<span class="jwppp-instant" style="display: none;" data-video="' . plugin_dir_url(__DIR__) . 'fb/jwppp-fb-player.php?mediaID=' . $jwppp_video_url . '" data-width="480" data-height="270"></span>';
+			$output .= '<span class="jwppp-instant" style="display: none;" data-video="' . plugin_dir_url(__DIR__) . 'fb/jwppp-fb-player.php?player=' . $choose_player . '&mediaID=' . $jwppp_video_url . '" data-width="480" data-height="270"></span>';
 
 			$output .= "<div id='jwppp-video-" . esc_attr($this_video) . "' class='jwplayer'>";
 			if(sanitize_text_field(get_option('jwppp-text')) != null) {
@@ -1142,9 +1145,6 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 
 		/*Playlist carousel*/
 		$output .= $jwppp_playlist_carousel ? jwppp_playlist_carousel($this_video) : '';
-
-		/*Choose player*/
-		$choose_player = get_post_meta($p_id, '_jwppp-choose-player-' . $number, true) ? esc_html(get_post_meta($p_id, '_jwppp-choose-player-' . $number, true)) : esc_html($player_parts[0]);
 
 		/*Player choose - library*/
 		$output .= '<script type="text/javascript" src="https://content.jwplatform.com/libraries/' . $choose_player . '.js"></script>';			
@@ -1201,9 +1201,17 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 
 		$output = "<div id='jwppp-video-box-" . esc_attr($this_video) . "' class='jwppp-video-box' data-video='" . esc_attr($n) . "' style=\"margin: 1rem 0;\">\n";
 
+		if($dashboard_player) {
+			/*Choose player*/
+			$choose_player = get_post_meta($p_id, '_jwppp-choose-player-' . $number, true) ? esc_html(get_post_meta($p_id, '_jwppp-choose-player-' . $number, true)) : esc_html($player_parts[0]);
+			$instant_player = 'player=' . $choose_player;
+		} else {
+			$instant_player = 'player_url=' . get_option('jwppp-library');
+		}
+
 		/*FB Instant Articles*/
 		$instant_image = $video_image ? $video_image : get_option('jwppp-poster-image');
-		$output .= '<span class="jwppp-instant" style="display: none;" data-video="' . plugin_dir_url(__DIR__) . 'fb/jwppp-fb-player.php?mediaURL=' . $jwppp_video_url . '&image=' . $instant_image . '" data-width="480" data-height="270"></span>';
+		$output .= '<span class="jwppp-instant" style="display: none;" data-video="' . plugin_dir_url(__DIR__) . 'fb/jwppp-fb-player.php?' . $instant_player . '&mediaURL=' . $jwppp_video_url . '&image=' . $instant_image . '" data-width="480" data-height="270"></span>';
 
 		$output .= "<div id='jwppp-video-" . esc_attr($this_video) . "' class='jwplayer'>";
 		if(sanitize_text_field(get_option('jwppp-text')) != null) {
@@ -1215,9 +1223,6 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 		// $output .= "</div>\n"; 
 		
 		if($dashboard_player) {
-			/*Choose player*/
-			$choose_player = get_post_meta($p_id, '_jwppp-choose-player-' . $number, true) ? esc_html(get_post_meta($p_id, '_jwppp-choose-player-' . $number, true)) : esc_html($player_parts[0]);
-
 			/*Player choose - library*/
 			$output .= '<script type="text/javascript" src="https://content.jwplatform.com/libraries/' . $choose_player . '.js"></script>';			
 		}
