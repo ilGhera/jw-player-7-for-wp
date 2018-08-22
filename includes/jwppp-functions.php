@@ -1127,14 +1127,18 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 
 		/*Output the player*/
 		$output = "<div id='jwppp-video-box-" . esc_attr($this_video) . "' class='jwppp-video-box' data-video='" . esc_attr($n) . "' style=\"margin: 1rem 0;\">\n";
-			$output .= "<div id='jwppp-video-" . esc_attr($this_video) . "'>";
+
+			/*FB Instant Articles*/
+			$output .= '<span class="jwppp-instant" style="display: none;" data-video="' . plugin_dir_url(__DIR__) . 'fb/jwppp-fb-player.php?mediaID=' . $jwppp_video_url . '" data-width="480" data-height="270"></span>';
+
+			$output .= "<div id='jwppp-video-" . esc_attr($this_video) . "' class='jwplayer'>";
 			if(sanitize_text_field(get_option('jwppp-text')) != null) {
 				$output .= sanitize_text_field(get_option('jwppp-text'));
 			} else {
 				$output .= esc_html(__('Loading the player...', 'jwppp'));
 			}
 			$output .= "</div>\n"; 
-		$output .= "</div>\n"; 
+		// $output .= "</div>\n"; 
 
 		/*Playlist carousel*/
 		$output .= $jwppp_playlist_carousel ? jwppp_playlist_carousel($this_video) : '';
@@ -1191,18 +1195,24 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 			*/
 
 		$output .= "</script>";
+		$output .= "</div>"; //jwppp-video-box  
 
 	} else {
 
 		$output = "<div id='jwppp-video-box-" . esc_attr($this_video) . "' class='jwppp-video-box' data-video='" . esc_attr($n) . "' style=\"margin: 1rem 0;\">\n";
-		$output .= "<div id='jwppp-video-" . esc_attr($this_video) . "'>";
+
+		/*FB Instant Articles*/
+		$instant_image = $video_image ? $video_image : get_option('jwppp-poster-image');
+		$output .= '<span class="jwppp-instant" style="display: none;" data-video="' . plugin_dir_url(__DIR__) . 'fb/jwppp-fb-player.php?mediaURL=' . $jwppp_video_url . '&image=' . $instant_image . '" data-width="480" data-height="270"></span>';
+
+		$output .= "<div id='jwppp-video-" . esc_attr($this_video) . "' class='jwplayer'>";
 		if(sanitize_text_field(get_option('jwppp-text')) != null) {
 			$output .= sanitize_text_field(get_option('jwppp-text'));
 		} else {
 			$output .= esc_html(__('Loading the player...', 'jwppp'));
 		}
 		$output .= "</div>\n"; 
-		$output .= "</div>\n"; 
+		// $output .= "</div>\n"; 
 		
 		if($dashboard_player) {
 			/*Choose player*/
@@ -1479,6 +1489,8 @@ function jwppp_video_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute,
 		
 		$output .= "</script>\n";
 
+		$output .= "</div>"; //jwppp-video-box  
+
 	}
 
 	if(get_post_meta($p_id, '_jwppp-video-url-' . $number, true)) { return $output; }
@@ -1526,30 +1538,30 @@ function jwppp_simple_video_code($media_id) {
 			$output .= esc_html(__('Loading the player...', 'jwppp'));
 		}
 		$output .= "</div>\n"; 
+
+		$output .= "<script type='text/javascript'>\n";
+			$output .= "var playerInstance_$media_id = jwplayer(\"jwppp-video-$media_id\");\n";
+			$output .= "playerInstance_$media_id.setup({\n";
+			$output .= "playlist: 'https://cdn.jwplayer.com/v2/media/$media_id',\n";		
+
+			//IS IT A DASHBOARD PLAYER?
+			$dashboard_player = is_dashboard_player();
+
+			//VARS
+			$jwppp_method_dimensions = sanitize_text_field(get_option('jwppp-method-dimensions'));
+			$jwppp_player_width = sanitize_text_field(get_option('jwppp-player-width'));
+			$jwppp_player_height = sanitize_text_field(get_option('jwppp-player-height'));
+			$jwppp_responsive_width = sanitize_text_field(get_option('jwppp-responsive-width'));
+			$jwppp_aspectratio = sanitize_text_field(get_option('jwppp-aspectratio'));
+
+		   	/*Options available only with self-hosted player*/
+		   	if(!$dashboard_player) {
+				$output .= jwppp_sh_player_option();
+		   	}
+
+			$output .= "})\n";
+		$output .= "</script>";
 	$output .= "</div>\n"; 
-
-	$output .= "<script type='text/javascript'>\n";
-		$output .= "var playerInstance_$media_id = jwplayer(\"jwppp-video-$media_id\");\n";
-		$output .= "playerInstance_$media_id.setup({\n";
-		$output .= "playlist: 'https://cdn.jwplayer.com/v2/media/$media_id',\n";		
-
-		//IS IT A DASHBOARD PLAYER?
-		$dashboard_player = is_dashboard_player();
-
-		//VARS
-		$jwppp_method_dimensions = sanitize_text_field(get_option('jwppp-method-dimensions'));
-		$jwppp_player_width = sanitize_text_field(get_option('jwppp-player-width'));
-		$jwppp_player_height = sanitize_text_field(get_option('jwppp-player-height'));
-		$jwppp_responsive_width = sanitize_text_field(get_option('jwppp-responsive-width'));
-		$jwppp_aspectratio = sanitize_text_field(get_option('jwppp-aspectratio'));
-
-	   	/*Options available only with self-hosted player*/
-	   	if(!$dashboard_player) {
-			$output .= jwppp_sh_player_option();
-	   	}
-
-		$output .= "})\n";
-	$output .= "</script>";
 
 	return $output;
 }
