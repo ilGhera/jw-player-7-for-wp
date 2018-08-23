@@ -17,7 +17,7 @@ if($playlist_id && $player_id) {
       echo '{';
         echo '"widgetDivId": "jwppp-playlist-carousel-' . $player_id . '",';
         echo '"playlist": "https://cdn.jwplayer.com/v2/playlists/' . $playlist_id . '",';
-        echo '"videoPlayerId": "' . $player_id . '",';
+        echo '"videoPlayerId": "jwppp-video-' . $player_id . '",';
         echo '"header": "' . $title . '",';
         echo '"textColor": "' . $text_color . '",';
         echo '"backgroundColor": "' . $background_color . '",';

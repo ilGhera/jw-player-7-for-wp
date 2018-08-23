@@ -2,6 +2,7 @@
 .jw-widget.large {
     width: 100%;
     max-width: 1030px;
+    margin-top: 1rem;
 }
 
 .jw-widget {
