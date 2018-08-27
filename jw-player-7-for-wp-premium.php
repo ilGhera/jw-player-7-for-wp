@@ -14,20 +14,20 @@
  */
 
 
-//HEY, WHAT ARE YOU DOING?
+/*No direct access*/
 if ( !defined( 'ABSPATH' ) ) exit;
 
 
-add_action( 'plugins_loaded', 'jwppp_premium_load', 1 );	
-
+/**
+ * Fired on the activation.
+ */
 function jwppp_premium_load() {
 
-	//FUNCTION CHECK 
 	if ( !function_exists( 'is_plugin_active' ) ) {
     	require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
  	}
 
- 	//OFF THE FREE ONE
+ 	/*Deactivation of the free version*/
 	if( is_plugin_active('jw-player-7-for-wp/jw-player-7-for-wp.php') || function_exists('jwppp_load') ) {
 		deactivate_plugins('jw-player-7-for-wp/jw-player-7-for-wp.php');
 	    remove_action( 'plugins_loaded', 'jwppp_load' );
@@ -35,13 +35,12 @@ function jwppp_premium_load() {
 
 	}
 
-	//DON'T NEED IT ANYMORE
+	/*Deactivation of the specific plugin fo related videos*/
 	if( is_plugin_active('related-videos-for-jw-player/related-videos-for-jwplayer.php') ) {
 		deactivate_plugins('related-videos-for-jw-player/related-videos-for-jwplayer.php');
  	}
 
-	//DATABASE UPDATE
-
+	/*Database update if required*/
 	global $wpdb;
 
 	if(get_option('jwppp-database-version') < '1.1.1') {
@@ -87,21 +86,23 @@ function jwppp_premium_load() {
 			}			
 		}
 		
-		//UPDATE DATABASE VERSION
+		/*Database update*/
 		update_option('jwppp-database-version', '1.4.0');
 	
 	}
 
-	//INTERNATIONALIZATION
+	/*Internationalization*/
 	load_plugin_textdomain('jwppp', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
-	//FILES REQUIRED
+	/*Files required*/
 	include( plugin_dir_path( __FILE__ ) . 'admin/jwppp-admin.php');
 	include( plugin_dir_path( __FILE__ ) . 'includes/jwppp-functions.php');
 	include( plugin_dir_path( __FILE__ ) . 'includes/jwppp-related-videos.php');
 }
+add_action( 'plugins_loaded', 'jwppp_premium_load', 1 );	
 
-//CALL THE "UPDATE-CHECKER"
+
+/*Update checher*/
 require( plugin_dir_path( __FILE__ ) . 'plugin-update-checker/plugin-update-checker.php');
 $jwpppUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
     'https://www.ilghera.com/wp-update-server-2/?action=get_metadata&slug=jw-player-7-for-wp-premium',

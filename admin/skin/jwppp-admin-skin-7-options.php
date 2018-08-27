@@ -1,19 +1,23 @@
 <?php
-//SKIN SELECT
+/**
+ * Skin options 7
+ * @author ilGhera
+ * @package jw-player-7-for-wp/admin/skin
+ * @version 1.6.0
+ */
+
 $jwppp_skin = sanitize_text_field(get_option('jwppp-skin'));
 if(isset($_POST['jwppp-skin'])) {
 	$jwppp_skin = sanitize_text_field($_POST['jwppp-skin']);
 	update_option('jwppp-skin', $jwppp_skin);
 }
 
-//CUSTOM SKIN URL
 $jwppp_custom_skin_url = sanitize_text_field(get_option('jwppp-custom-skin-url'));
 if(isset($_POST['custom-skin-url'])) {
 	$jwppp_custom_skin_url = sanitize_text_field($_POST['custom-skin-url']);
 	update_option('jwppp-custom-skin-url', $jwppp_custom_skin_url);
 }
 
-//CUSTOM SKIN NAME
 $jwppp_custom_skin_name = sanitize_text_field(get_option('jwppp-custom-skin-name'));
 if(isset($_POST['custom-skin-name'])) {
 	$jwppp_custom_skin_name = sanitize_text_field($_POST['custom-skin-name']);

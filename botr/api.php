@@ -17,7 +17,8 @@
 
     class BotrAPI {
         private $_version = '1.4';
-        private $_url = 'http://api.bitsontherun.com/v1';
+        // private $_url = 'http://api.bitsontherun.com/v1';
+        private $_url = 'https://api.jwplatform.com/';
         private $_library;
 
         private $_key, $_secret;
