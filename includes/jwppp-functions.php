@@ -922,9 +922,8 @@ function jwppp_ads_var_callback() {
 	$tag = isset($_POST['tag']) ? $_POST['tag'] : '';
 
 	// if($post_id && $number && $tag) {
-	if($tag) {
-		update_option('jwppp-ads-var', $tag);
-	}
+	update_option('jwppp-ads-var', $tag);
+	echo $tag;
 	exit;
 }
 add_action('wp_ajax_ads-var-name', 'jwppp_ads_var_callback');
@@ -983,11 +982,13 @@ function jwppp_ads_code_block($post_id, $number) {
 					?>
 					<script>
 						jQuery(document).ready(function($){
-							var tag = <?php echo $ads_var_name; ?>;
+							var tag = null;
+							if (typeof <?php echo $ads_var_name; ?> !== 'undefined') {
+								tag = <?php echo $ads_var_name; ?>;
+							}
+							console.log(tag);
 							var data = {
 								'action': 'ads-var-name',
-								// 'post_id': '<?php //echo $post_id; ?>',
-								// 'number': '<?php //echo $number; ?>',
 								'tag': tag
 							}
 							$.post(ajaxurl, data, function(response){
