@@ -833,17 +833,17 @@ function jwppp_sh_player_option($ar='', $width='', $height='') {
     }
 	    
 	//RELATED VIDEOS
-    if($jwppp_show_related === '1' && jwppp_get_feed_url() !== null) {
-		$output .= "related: {\n";
-		$output .= "file: '" . jwppp_get_feed_url() . "',\n";
-		if($jwppp_related_heading !== null) {
-			$output .= "heading: '" . esc_html($jwppp_related_heading) . "',\n";
-		} else {
-			$output .= "heading: '" . esc_html(__('Related Videos', 'jwppp')) . "',\n";
-		}
-		$output .= "onclick: 'link'\n";				
-		$output .= "},\n";
-	}
+    // if($jwppp_show_related === '1' && jwppp_get_feed_url() !== null) {
+		// $output .= "related: {\n";
+		// $output .= "file: '" . jwppp_get_feed_url() . "',\n";
+		// if($jwppp_related_heading !== null) {
+			// $output .= "heading: '" . esc_html($jwppp_related_heading) . "',\n";
+		// } else {
+			// $output .= "heading: '" . esc_html(__('Related Videos', 'jwppp')) . "',\n";
+		// }
+		// $output .= "onclick: 'link'\n";				
+		// $output .= "},\n";
+	// }
 
 	//SUBTITLES STYLE
 		// if($jwppp_chapters_subtitles == 'subtitles' && jwppp_caption_style()) {
@@ -866,9 +866,9 @@ function jwppp_sh_player_option($ar='', $width='', $height='') {
     	if($jwppp_playlist_tooltip) {
 		    $output .= "playlist: '" . esc_html($jwppp_playlist_tooltip) . "',\n";		    		
     	}
-	    if($jwppp_related_heading) {
-		    $output .= "related: '" . esc_html($jwppp_related_heading) . "',\n";			    	
-	    }
+	    // if($jwppp_related_heading) {
+		    // $output .= "related: '" . esc_html($jwppp_related_heading) . "',\n";			    	
+	    // }
     $output .= "},\n";
 
     return $output;
@@ -961,52 +961,50 @@ function jwppp_ads_code_block($post_id, $number) {
 	/*Is the main ads option activated?*/
 	if($jwppp_show_ads === '1') {
 
-
 		/*Single video ads tag*/
 		$jwppp_ads_tag = get_post_meta($post_id, '_jwppp-ads-tag-' . $number, true);
 
-		/*The single video ads option is not activated*/
-		if($jwppp_ads_tag === 'no-ads') {
+		/*Ads var block*/
+		$active_ads_var = sanitize_text_field(get_option('jwppp-active-ads-var'));
+
+		if($active_ads_var) {
+			$ads_var_name = sanitize_text_field(get_option('jwppp-ads-var-name'));
+				?>
+				<script>
+					jQuery(document).ready(function($){
+						var tag = null;
+						if (typeof <?php echo $ads_var_name; ?> !== 'undefined') {
+							tag = <?php echo $ads_var_name; ?>;
+						}
+						var data = {
+							'action': 'ads-var-name',
+							'tag': tag
+						}
+						$.post(ajaxurl, data, function(response){
+						})
+					})
+
+				</script>
+				<?php
+			$ads_var = get_option('jwppp-ads-var');
+			// $output .= "advertising: " . json_decode($ads_var, 'JSON_UNESCAPED_SLASHES') . ",\n";
+			$output .= "advertising: {\n";
+			if(is_array($ads_var)){
+				foreach ($ads_var as $key => $value) {
+					$output .= "'$key': '" . str_replace('\\', '', $value) . "',\n";
+				}
+			}
+			$output .= "},\n";
+
+			return $output;
+
+		} elseif($jwppp_ads_tag === 'no-ads') { //The single video ads option is not activated
+
 			$output .= "advertising: {},\n";
 
 			return $output;
 		
 		} else {
-
-			/*Ads var block*/
-			$active_ads_var = sanitize_text_field(get_option('jwppp-active-ads-var'));
-
-			if($active_ads_var) {
-				$ads_var_name = sanitize_text_field(get_option('jwppp-ads-var-name'));
-					?>
-					<script>
-						jQuery(document).ready(function($){
-							var tag = null;
-							if (typeof <?php echo $ads_var_name; ?> !== 'undefined') {
-								tag = <?php echo $ads_var_name; ?>;
-							}
-							var data = {
-								'action': 'ads-var-name',
-								'tag': tag
-							}
-							$.post(ajaxurl, data, function(response){
-							})
-						})
-
-					</script>
-					<?php
-				$ads_var = get_option('jwppp-ads-var');
-				// $output .= "advertising: " . json_decode($ads_var, 'JSON_UNESCAPED_SLASHES') . ",\n";
-				$output .= "advertising: {\n";
-				if(is_array($ads_var)){
-					foreach ($ads_var as $key => $value) {
-						$output .= "'$key': '" . str_replace('\\', '', $value) . "',\n";
-					}
-				}
-				$output .= "},\n";
-
-				return $output;
-			}
 			
 			/*Delete single video ad tag if not available anymore*/
 			if(is_array($ads_tags) && !empty($ads_tags)) {

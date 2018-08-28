@@ -254,7 +254,9 @@ function jwppp_options() {
 		<?php if(!$dashboard_player) { ?>
 			<a href="#" data-link="jwppp-skin" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Skin', 'jwppp')); ?></a>
 			<a href="#" data-link="jwppp-subtitles" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Subtitles', 'jwppp')); ?></a>
+			<?php /*
 			<a href="#" data-link="jwppp-related" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Related posts', 'jwppp')); ?></a>
+			*/ ?>
 			<a href="#" data-link="jwppp-social" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Sharing', 'jwppp')); ?></a>    
 		<?php } else { ?>
 			<a href="#" data-link="jwppp-playlist-carousel" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Playlist carousel', 'jwppp')); ?></a>    
