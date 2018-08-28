@@ -696,6 +696,7 @@ function jwppp_options() {
  	</div>
 	
 	<?php
+	/*Skin customization based on the player in use*/
 	if(get_option('jwppp-player-version') === '7') {
 		
 		require(plugin_dir_path(__FILE__) . 'skin/jwppp-admin-skin-7-options.php');
@@ -710,8 +711,7 @@ function jwppp_options() {
 	<div name="jwppp-skin" id="jwppp-skin" class="jwppp-admin" style="display: none;">
 		<div class="jwppp-alert"><?php esc_html_e(__('Skin customization options depends from the JW Player version in use.<br>Please add first the <b><i>Player library URL</i></b>', 'jwppp')); ?></div>		
 	</div>
-	<!-- END - SKIN -->
-
+	
 
 	<?php include(plugin_dir_path(__FILE__) . 'jwppp-admin-subtitles.php'); ?>
 

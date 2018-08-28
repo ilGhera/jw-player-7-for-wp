@@ -923,7 +923,6 @@ function jwppp_ads_var_callback() {
 
 	// if($post_id && $number && $tag) {
 	update_option('jwppp-ads-var', $tag);
-	echo $tag;
 	exit;
 }
 add_action('wp_ajax_ads-var-name', 'jwppp_ads_var_callback');
@@ -986,7 +985,6 @@ function jwppp_ads_code_block($post_id, $number) {
 							if (typeof <?php echo $ads_var_name; ?> !== 'undefined') {
 								tag = <?php echo $ads_var_name; ?>;
 							}
-							console.log(tag);
 							var data = {
 								'action': 'ads-var-name',
 								'tag': tag
@@ -998,7 +996,14 @@ function jwppp_ads_code_block($post_id, $number) {
 					</script>
 					<?php
 				$ads_var = get_option('jwppp-ads-var');
-				$output .= "advertising: " . json_encode($ads_var, JSON_UNESCAPED_SLASHES) . ",\n";
+				// $output .= "advertising: " . json_decode($ads_var, 'JSON_UNESCAPED_SLASHES') . ",\n";
+				$output .= "advertising: {\n";
+				if(is_array($ads_var)){
+					foreach ($ads_var as $key => $value) {
+						$output .= "'$key': '" . str_replace('\\', '', $value) . "',\n";
+					}
+				}
+				$output .= "},\n";
 
 				return $output;
 			}
