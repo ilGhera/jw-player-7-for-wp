@@ -74,8 +74,10 @@ if($dashboard_player) {
 					$playlists = $api->get_playlists();
 
 					/*Videos*/
-					$output .= '<option name="" value="">' . esc_html('Select a video', 'jwppp') . '</option>';
-					if($videos) {
+					if(is_array($videos)) {
+
+						$output .= '<option name="" value="">' . esc_html('Select a video', 'jwppp') . '</option>';
+						
 						// for ($i=0; $i < min(10, count($videos)); $i++) { 
 						// 	$output .= '<option name="' . $videos[$i]['key'] . '" data-mediaid="' . $videos[$i]['key'] . '" value="' . $videos[$i]['key'] . '"' . ($video_url === $videos[$i]['key'] ? ' selected="selecterd"' : '') . '>' . $videos[$i]['title'] . '</option>';
 						// }

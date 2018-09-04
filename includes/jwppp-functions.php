@@ -1695,6 +1695,16 @@ function jwppp_playlist_carousel($player_id) {
 	return $output;
 }
 
+//TEST
+function jwppp_get_videos_callback() {
+	if(isset($_POST['go'])) {
+		$api = new jwppp_dasboard_api();
+		$videos = $api->search_videos();
+		echo $videos;
+		exit;
+	}
+}
+add_action('wp_ajax_get-videos-url', 'jwppp_get_videos_callback');
 
 /**
  * If a single video is selected, the carousel option is deleted if presents in the db
@@ -1740,57 +1750,68 @@ class jwppp_dasboard_api {
 		return $botr_api;
 	}
 
+	public function call($url) {
+		$output = wp_remote_get(
+			$url, 
+			array(
+				'timeout' => 5
+			)
+		);
+
+		if(is_wp_error($output)) {
+			error_log('Error: call to JW Player API failed.');
+			return;
+		}
+
+		return unserialize($output['body']);
+	}
+
+	public function search_videos() {
+		if($this->api) {
+			$url = $this->api->call_url("videos/list", array('api_format' => 'json')); //videos					
+			return $url;
+		}
+	}
+
 	public function get_videos() {
 		if($this->api) {
-			$output = $this->api->call("/videos/list", array('result_limit' => 1000, 'order_by' => 'date:desc')); //videos					
+			$url = $this->api->call_url("videos/list", array('result_limit' => 10, 'order_by' => 'date:desc')); //videos					
+			$output = $this->call($url);
 			if(isset($output['videos'])) {
-				return $output['videos'];
+				return $output['videos'];				
 			}
 		}
-		return null;
 	}
 
 	public function get_playlists() {
 		if($this->api) {
-			$output = $this->api->call("/channels/list"); //videos
+			$url = $this->api->call_url("channels/list"); //videos
+			$output = $this->call($url);
 			if(isset($output['channels'])) {
 				return $output['channels'];
 			}
 		}
-		return null;
 	}
 
 	public function account_validation() {
 		if($this->api) {
-			$output = $this->api->call("/accounts/show", array('account_key' => $this->api_key)); //videos
-			if(isset($output['status'])) {
-				if($output['status'] === 'ok') {
-					return true;					
-				}
+			$url = $this->api->call_url("accounts/show", array('account_key' => $this->api_key)); //videos
+			$output = $this->call($url);
+			if(isset($output['status']) && $output['status'] === 'ok') {
+				return true;					
 			}
 		}
 		return false;
 	}
 
-	//TEMP
-	public function get_playlist_details($key) {
-		// return $this->api->call("/channels/show", array('channel_key' => $key)); //videos	
-	
-		$contents = file_get_contents('https://cdn.jwplayer.com/v2/playlists/' . $key);	
-		if($contents) {
-	    	$videos = json_decode($contents);
-	    	return $videos->playlist;
-	    }
-	}
-
 	public function get_players() {
 		if($this->api) {
-			$output = $this->api->call("/players/list"); //videos			
-			if($output['status'] === 'ok') {
+			$url = $this->api->call_url("players/list"); //videos			
+			$output = $this->call($url);
+			if(isset($output['players'])) {
 				return $output['players'];					
 			}
 		}
-		return null;
 	}
 
 }
