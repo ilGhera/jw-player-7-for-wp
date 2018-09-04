@@ -1775,7 +1775,7 @@ class jwppp_dasboard_api {
 
 	public function get_videos() {
 		if($this->api) {
-			$url = $this->api->call_url("videos/list", array('result_limit' => 10, 'order_by' => 'date:desc')); //videos					
+			$url = $this->api->call_url("videos/list", array('result_limit' => 1000, 'order_by' => 'date:desc')); //videos					
 			$output = $this->call($url);
 			if(isset($output['videos'])) {
 				return $output['videos'];				
