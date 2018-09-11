@@ -109,7 +109,9 @@ img.question-mark, img.attention-mark {
 	width: 256px;
 }
 
-.jwppp-url {
+.jwppp-url,
+.jwppp-search-content {
+	width: 256px;
 	margin-right:1rem;
 	background-color: #f7f7f7;
 	border: 1px solid #aaa;
@@ -168,6 +170,63 @@ select.jwppp-choose-player,
 select.jwppp-ads-tag {
 	width: 507px;
 	max-width: 100%;
+}
+
+.jwppp-video-list {
+	display: none;
+	position: absolute;
+	/*background: #e5e5e5;*/
+	margin-top: -0.5rem;
+	/*border-top: 1px solid #e5e5e5;*/
+	/*border-bottom: 1px solid #e5e5e5;*/
+	border: 1px solid #e5e5e5;
+	z-index: 9999;
+	border-radius: 0 0 10px 10px;
+	box-shadow: 5px 5px 10px #ccc;
+	width: 400px;
+	max-width: 100%;
+	overflow: hidden;
+}
+
+.jwppp-video-list li,
+.jwppp-loading {
+	padding: 1.2rem 1rem;
+	margin: 0;
+	background: #fff;
+	cursor: pointer;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.jwppp-video-list li span {
+	padding-left: 5rem;
+	display: inline-block;
+}
+
+.jwppp-video-list li:last-child {
+	border-radius: 0 0 10px 10px;
+	border-bottom: 0;
+}
+
+.jwppp-video-list li:first-child {
+	border-radius: 0;
+	/*border-bottom: 0;*/
+}
+
+.jwppp-video-list li:hover {
+	/*text-decoration: underline;*/
+	box-shadow: inset 0 0 10px #e5e5e5;
+}
+
+li .video-img {
+	width: 60px; 
+	max-height: 35px;
+	margin-top: -0.5rem;
+	position: absolute;
+}
+
+.jwppp-no-results {
+	color: red;
+	font-weight: bold;
 }
 
 @media screen and (max-width: 1112px) {

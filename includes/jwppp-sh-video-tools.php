@@ -116,7 +116,7 @@ function sh_video_tools($post_id, $number, $sh_video) {
 		$output .= '<label for="_jwppp-video-title-' . esc_attr($number) . '">';
 		$output .= '<strong>' . esc_html(__( 'Video title', 'jwppp' )) . '</strong>';
 		$output .= '</label> ';
-		$output .= '<p><input type="text" id="_jwppp-video-title-' . esc_attr($number) . '" name="_jwppp-video-title-' . esc_attr($number) . '" placeholder="' . esc_html(__('Add a title to your video', 'jwppp')) . '" value="' . esc_attr( $video_title ) . '" size="60" /></p>';
+		$output .= '<p><input type="text" id="_jwppp-video-title-' . esc_attr($number) . '" class="jwppp-title" name="_jwppp-video-title-' . esc_attr($number) . '" placeholder="' . esc_html(__('Add a title to your video', 'jwppp')) . '" value="' . esc_attr( $video_title ) . '" size="60" /></p>';
 	$output .= '</div>';
 
 	$output .= '<div class="jwppp-single-option-' . $number . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';

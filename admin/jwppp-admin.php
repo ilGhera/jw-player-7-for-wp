@@ -40,6 +40,9 @@ function jwppp_enqueue_scripts() {
 	    wp_enqueue_style('select2-style', plugin_dir_url(__DIR__) . 'css/select2.min.css');
 	    wp_enqueue_script('select2', plugin_dir_url(__DIR__) . 'js/select2.min.js', array('jquery'));
 	    wp_enqueue_script('jwppp-select2', plugin_dir_url(__DIR__) . 'js/jwppp-select2.js', array('jquery'));
+	    wp_localize_script('jwppp-select2', 'jwpppselect2', array(
+		    'pluginUrl' => plugin_dir_url(__DIR__)
+		));
     }
 }
 add_action('admin_enqueue_scripts', 'jwppp_enqueue_scripts');

@@ -1696,15 +1696,37 @@ function jwppp_playlist_carousel($player_id) {
 }
 
 //TEST
-function jwppp_get_videos_callback() {
+function jwppp_get_url_callback() {
 	if(isset($_POST['go'])) {
 		$api = new jwppp_dasboard_api();
-		$videos = $api->search_videos();
-		echo $videos;
+		$url = $api->video_list_url();
+		echo $url;
 		exit;
 	}
 }
-add_action('wp_ajax_get-videos-url', 'jwppp_get_videos_callback');
+add_action('wp_ajax_get-videos-url', 'jwppp_get_url_callback');
+
+
+//TEST
+function jwppp_get_videos_callback() {
+
+	$api = new jwppp_dasboard_api();
+
+	if(isset($_POST['value'])) {
+		$term = sanitize_text_field($_POST['value']);
+		if($term){
+			$videos = $api->search_videos($term);
+			// error_log('TOT: ' . count($videos));
+			// error_log('Risultati ricerca: ' . print_r($videos, true));
+		} else {
+			$videos = $api->get_videos();
+		}
+	}
+
+	echo json_encode($videos);
+	exit;
+}
+add_action('wp_ajax_search-content', 'jwppp_get_videos_callback');
 
 /**
  * If a single video is selected, the carousel option is deleted if presents in the db
@@ -1766,16 +1788,26 @@ class jwppp_dasboard_api {
 		return unserialize($output['body']);
 	}
 
-	public function search_videos() {
+	public function video_list_url() {
 		if($this->api) {
 			$url = $this->api->call_url("videos/list", array('api_format' => 'json')); //videos					
 			return $url;
 		}
 	}
 
+	public function search_videos($term) {
+		if($this->api) {
+			$url = $this->api->call_url("videos/list", array('search' => $term, 'result_limit' => 12, 'order_by' => 'date:desc')); //videos					
+			$output = $this->call($url);
+			if(isset($output['videos'])) {
+				return $output['videos'];				
+			}
+		}
+	}
+
 	public function get_videos() {
 		if($this->api) {
-			$url = $this->api->call_url("videos/list", array('result_limit' => 1000, 'order_by' => 'date:desc')); //videos					
+			$url = $this->api->call_url("videos/list", array('result_limit' => 6, 'order_by' => 'date:asc')); //videos					
 			$output = $this->call($url);
 			if(isset($output['videos'])) {
 				return $output['videos'];				
