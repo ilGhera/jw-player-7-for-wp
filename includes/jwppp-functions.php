@@ -1715,15 +1715,17 @@ function jwppp_get_videos_callback() {
 	if(isset($_POST['value'])) {
 		$term = sanitize_text_field($_POST['value']);
 		if($term){
-			$videos = $api->search_videos($term);
+			$videos = $api->search($term);
+			$playlists = $api->search($term, true);
 			// error_log('TOT: ' . count($videos));
 			// error_log('Risultati ricerca: ' . print_r($videos, true));
 		} else {
 			$videos = $api->get_videos();
+			$playlists = $api->get_playlists();			
 		}
 	}
 
-	echo json_encode($videos);
+	echo json_encode(array('videos' => $videos, 'playlists' => $playlists));
 	exit;
 }
 add_action('wp_ajax_search-content', 'jwppp_get_videos_callback');
@@ -1795,19 +1797,25 @@ class jwppp_dasboard_api {
 		}
 	}
 
-	public function search_videos($term) {
+	public function search($term, $playlist = false) {
 		if($this->api) {
-			$url = $this->api->call_url("videos/list", array('search' => $term, 'result_limit' => 12, 'order_by' => 'date:desc')); //videos					
+			if($playlist) {
+				$url = $this->api->call_url("channels/list", array('search' => $term, 'result_limit' => 15));
+				$key = 'channels';
+			} else {
+				$url = $this->api->call_url("videos/list", array('search' => $term, 'result_limit' => 15, 'order_by' => 'date:desc'));	
+				$key = 'videos';							
+			}
 			$output = $this->call($url);
-			if(isset($output['videos'])) {
-				return $output['videos'];				
+			if(isset($output[$key])) {
+				return $output[$key];				
 			}
 		}
 	}
 
 	public function get_videos() {
 		if($this->api) {
-			$url = $this->api->call_url("videos/list", array('result_limit' => 6, 'order_by' => 'date:asc')); //videos					
+			$url = $this->api->call_url("videos/list", array('result_limit' => 15, 'order_by' => 'date:asc')); //videos					
 			$output = $this->call($url);
 			if(isset($output['videos'])) {
 				return $output['videos'];				

@@ -728,9 +728,9 @@ function jwppp_options() {
 
 	<?php include(plugin_dir_path(__FILE__) . 'jwppp-admin-playlist-carousel.php'); ?>
 
-	</div><!-- WRAP LEFT -->
+	</div><!-- wrap-left -->
 	<div class="wrap-right" style="float:left; width:30%; text-align:center; padding-top:3rem;">
-		<iframe width="300" height="800" scrolling="no" src="https://www.ilghera.com/images/jwppp-premium-iframe.html"></iframe>
+		<iframe width="300" height="800" scrolling="no" src="https://www.ilghera.com/images/jwppp-premium-iframe.html"></iframe><!-- TEMP -->
 	</div>
 	<div class="clear"></div>
 
@@ -740,7 +740,12 @@ function jwppp_options() {
 
 }
 
-//JWPPP FOOTER TEXT
+
+/**
+ * Adds footer text in the plugin options page asking for a review
+ * @param  string $text the default footer text
+ * @return string       the customized text
+ */
 function jwppp_footer_text($text) {
 	$screen = get_current_screen();
 	if($screen->id === 'toplevel_page_jw-player-for-wp') {
@@ -760,8 +765,11 @@ function jwppp_footer_text($text) {
 add_filter('admin_footer_text', 'jwppp_footer_text');
 
 
-//UPDATE MESSAGE
-function jwppp_update_message( $plugin_data, $response) {
+/**
+ * When a new update is available, this function shows the right message to the user based on his Premium Key status 
+ * @return string
+ */
+function jwppp_update_message( $plugin_data, $response) { //TEMP
 	$key = get_option('jwppp-premium-key');
 	$message = null;
 

@@ -1,10 +1,17 @@
-<!-- START PLAYLIST CAROUSEL -->
+<?php
+/**
+ * Playlist carousel options
+ * @author ilGhera
+ * @package jw-player-7-for-wp/admin
+ * @version 1.6.0
+ */
+?>
 <div name="jwppp-playlist-carousel" id="jwppp-playlist-carousel" class="jwppp-admin" style="display: none;">
 	<?php
 	$jwppp_playlist_carousel_style = unserialize(base64_decode(sanitize_text_field(get_option('jwppp-playlist-carousel-style'))));
 
-	$jwppp_playlist_carousel_title = isset($jwppp_playlist_carousel_style['title']) ? $jwppp_playlist_carousel_style['title'] : 'More Videos';
-	$jwppp_playlist_carousel_text_color = isset($jwppp_playlist_carousel_style['text_color']) ? $jwppp_playlist_carousel_style['text_color'] : '#fff';
+	$jwppp_playlist_carousel_title = isset($jwppp_playlist_carousel_style['title']) ? sanitize_text_field($jwppp_playlist_carousel_style['title']) : 'More Videos';
+	$jwppp_playlist_carousel_text_color = isset($jwppp_playlist_carousel_style['text_color']) ? sanitize_text_field($jwppp_playlist_carousel_style['text_color']) : '#fff';
 	$jwppp_playlist_carousel_background_color = isset($jwppp_playlist_carousel_style['background_color']) ? $jwppp_playlist_carousel_style['background_color'] : '#000';
 	$jwppp_playlist_carousel_icon_color = isset($jwppp_playlist_carousel_style['icon_color']) ? $jwppp_playlist_carousel_style['icon_color'] : '#fff';
 
