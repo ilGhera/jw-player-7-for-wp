@@ -24,27 +24,27 @@ var select_content = function(){
 
 			/*Video details*/
 			if(!reset) {
-				var description = $(this).data('description') ? $(this).data('description') : '-';
+				var description = $(this).data('description');
 
 				if($(this).hasClass('playlist-element')) {
 					var items = $(this).data('videos') ? $(this).data('videos') : '0';
 
-					$('.jwppp-video-details').html(
-						'<span>Title</span>: ' + video_title + '<br>' +
-						'<span>Description</span>: ' + description + '<br>' +
+					$('.jwppp-video-details-' + number).html(
+						(video_title ? '<span>Title</span>: ' + video_title + '<br>' : '') +
+						(description ? '<span>Description</span>: ' + description + '<br>' : '') +
 						'<span>Items</span>: ' + items + '<br>'
 					);
 
 				} else {
 					var get_duration = $(this).data('duration') ? ($(this).data('duration') / 60) : ''; //in minutes
-					var duration = get_duration ? (Math.round(get_duration * 100) / 100) : '-';
-					var tags = $(this).data('tags') ? $(this).data('tags') : '-';
+					var duration = get_duration ? (Math.round(get_duration * 100) / 100) : '';
+					var tags = $(this).data('tags');
 
-					$('.jwppp-video-details').html(
-						'<span>Title</span>: ' + video_title + '<br>' +
-						'<span>Description</span>: ' + description + '<br>' +
-						'<span>Duration</span>: ' + (duration ? duration.toString().replace('.', ':') + ' minutes' : '-') + '<br>' +
-						'<span>Tags</span>: ' + tags + '<br>'
+					$('.jwppp-video-details-' + number).html(
+						(video_title ? '<span>Title</span>: ' + video_title + '<br>' : '') +
+						(description ? '<span>Description</span>: ' + description + '<br>' : '') +
+						(duration ? '<span>Duration</span>: ' + duration.toString().replace('.', ':') + ' minutes<br>' : '') +
+						(tags ? '<span>Tags</span>: ' + tags + '<br>' : '')
 					);
 				}
 			}

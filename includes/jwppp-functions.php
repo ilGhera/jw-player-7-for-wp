@@ -1730,6 +1730,30 @@ function jwppp_get_videos_callback() {
 }
 add_action('wp_ajax_search-content', 'jwppp_get_videos_callback');
 
+function jwppp_get_current_video_details() {
+
+	$api = new jwppp_dasboard_api();
+
+	if(isset($_POST['media_id'])) {
+		$media_id = sanitize_text_field($_POST['media_id']);
+		if($media_id){
+			$videos = $api->get_videos($media_id);
+			if(isset($videos[0])){
+				echo json_encode($videos[0]);				
+			} else {
+				$playlists = $api->get_playlists($media_id);
+				if(isset($playlists[0])) {
+					echo json_encode($playlists[0]);				
+				}
+			}
+		}
+	}
+
+	exit;
+}
+add_action('wp_ajax_current-video-details', 'jwppp_get_current_video_details');
+
+
 /**
  * If a single video is selected, the carousel option is deleted if presents in the db
  */
@@ -1813,9 +1837,15 @@ class jwppp_dasboard_api {
 		}
 	}
 
-	public function get_videos() {
+	public function get_videos($media_id = null) {
 		if($this->api) {
-			$url = $this->api->call_url("videos/list", array('result_limit' => 15, 'order_by' => 'date:asc')); //videos					
+			
+			$parameters = array('result_limit' => 15, 'order_by' => 'date:desc');
+			if($media_id) {
+				$parameters['video_keys_filter'] = $media_id;
+			}
+
+			$url = $this->api->call_url("videos/list", $parameters); //videos					
 			$output = $this->call($url);
 			if(isset($output['videos'])) {
 				return $output['videos'];				
@@ -1823,9 +1853,15 @@ class jwppp_dasboard_api {
 		}
 	}
 
-	public function get_playlists() {
+	public function get_playlists($media_id = null) {
 		if($this->api) {
-			$url = $this->api->call_url("channels/list"); //videos
+
+			$parameters = array('result_limit' => 5);
+			if($media_id) {
+				$parameters['search'] = $media_id;
+			}
+
+			$url = $this->api->call_url("channels/list", $parameters);
 			$output = $this->call($url);
 			if(isset($output['channels'])) {
 				return $output['channels'];

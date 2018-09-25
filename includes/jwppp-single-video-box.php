@@ -22,7 +22,7 @@ if($player_position !== 'custom') {
 
 $output .= '<tr class="row">';
 $output .= '<td class="order">' . esc_attr($number) . '</td>';
-$output .= '<td class="jwppp-input-wrap' . $image_class . '" style="width: 100%; padding-bottom: 1rem;">';
+$output .= '<td class="jwppp-input-wrap' . $image_class . '" style="width: 100%; padding-bottom: 1rem; position: relative;">';
 wp_nonce_field( 'jwppp_save_single_video_data', 'jwppp-meta-box-nonce-' . $number );
 
 /*Single video details*/
@@ -228,32 +228,40 @@ $more_options_button = '<a class="button more-options-' . esc_attr($number) . '"
 		var $arr = ['xml', 'feed', 'php', 'rss'];
 		var $more_options_button = '<?php echo $more_options_button; ?>';
 
-		/*Video details*/
-		var current_video_element = $('#_jwppp-video-list-' + number + ' span li.selected');
-		var title = $('#_jwppp-video-title-' + number).val();
-		var description = $(current_video_element).data('description') ? $(current_video_element).data('description') : '-';
-
-		if($(current_video_element).hasClass('playlist-element')) {
-			var items = $(current_video_element).data('videos') ? $(current_video_element).data('videos') : '0';
-
-			$('.jwppp-video-details-' + number).html(
-				'<span>Title</span>: ' + title + '<br>' +
-				'<span>Description</span>: ' + description + '<br>' +
-				'<span>Items</span>: ' + items + '<br>'
-			);
-
-		} else {
-			var get_duration = $(current_video_element).data('duration') ? ($(current_video_element).data('duration') / 60) : ''; //in minutes
-			var duration = get_duration ? (Math.round(get_duration * 100) / 100) : '-';
-			var tags = $(current_video_element).data('tags') ? $(current_video_element).data('tags') : '-';
-
-			$('.jwppp-video-details-' + number).html(
-				'<span>Title</span>: ' + title + '<br>' +
-				'<span>Description</span>: ' + description + '<br>' +
-				'<span>Duration</span>: ' + (duration ? duration.toString().replace('.', ':') + ' minutes' : '-') + '<br>' +
-				'<span>Tags</span>: ' + tags + '<br>'
-			);
+		var data = {
+			'action': 'current-video-details',
+			'media_id': $url
 		}
+
+		$.post(ajaxurl, data, function(response){
+			var info = JSON.parse(response);
+
+			/*Video details*/
+			var title = $('#_jwppp-video-title-' + number).val();
+
+			if($url && title) {
+				if(info.videos) {
+					$('.jwppp-video-details-' + number).html(
+						(title ? '<span>Title</span>: ' + title + '<br>' : '') +
+						(info.description ? '<span>Description</span>: ' + info.description + '<br>' : '') +
+						'<span>Items</span>: ' + info.videos.total + '<br>'
+					);
+
+				} else {
+					var get_duration = info.duration ? (info.duration / 60) : ''; //in minutes
+					var duration = get_duration ? (Math.round(get_duration * 100) / 100) : '';
+
+					$('.jwppp-video-details-' + number).html(
+						(title ? '<span>Title</span>: ' + title + '<br>' : '') +
+						(info.description ? '<span>Description</span>: ' + info.description + '<br>' : '') +
+						(duration ? '<span>Duration</span>: ' + duration.toString().replace('.', ':') + ' minutes<br>' : '') +
+						(info.tags ? '<span>Tags</span>: ' + info.tags + '<br>' : '')
+					);
+				}			
+			}
+
+
+		})
 
 
 		/*Video toggles*/
@@ -351,7 +359,7 @@ $more_options_button = '<a class="button more-options-' . esc_attr($number) . '"
 			}
 		});
 
-		if($('.jwppp-video-toggles.' + number + ' li.active').data('video-type') == 'choose' && $(current_video_element).hasClass('playlist-element')) {
+		if($('.jwppp-video-toggles.' + number + ' li.active').data('video-type') == 'choose' && $('#_jwppp-video-list-' + 1 + 'li.selected').hasClass('playlist-element')) {
         	$('.playlist-carousel-container.' + number).css({
         		'display': 'inline-block'
         	})			
