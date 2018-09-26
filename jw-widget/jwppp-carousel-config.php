@@ -1,4 +1,10 @@
 <?php
+/**
+ * JW Player carousel widget configuration
+ * @author ilGhera
+ * @package jw-player-7-for-wp/jw-widget
+ * @version 1.6.0
+ */
 
 /*Get data*/
 $playlist_id = isset($_GET['playlist-id']) ? $_GET['playlist-id'] : '';

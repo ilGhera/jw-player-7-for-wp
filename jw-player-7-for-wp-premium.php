@@ -6,7 +6,7 @@
  * It works with the latest version of the famous video player and it gives you full control of all the options available.
  * Player customization, related videos, social sharing and advertising are just an example.
  * Author: ilGhera
- * Version: 1.5.2
+ * Version: 1.6.0
  * Author URI: https://www.ilghera.com 
  * Requires at least: 4.0
  * Tested up to: 4.9

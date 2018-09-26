@@ -35,15 +35,18 @@ var select_content = function(){
 						'<span>Items</span>: ' + items + '<br>'
 					);
 
-				} else {
-					var get_duration = $(this).data('duration') ? ($(this).data('duration') / 60) : ''; //in minutes
-					var duration = get_duration ? (Math.round(get_duration * 100) / 100) : '';
+				} else {					
+					var duration = null; 
+					if($(this).data('duration') > 0) {
+						duration = new Date($(this).data('duration') * 1000).toISOString().substr(11, 8);
+					}
+					
 					var tags = $(this).data('tags');
 
 					$('.jwppp-video-details-' + number).html(
 						(video_title ? '<span>Title</span>: ' + video_title + '<br>' : '') +
 						(description ? '<span>Description</span>: ' + description + '<br>' : '') +
-						(duration ? '<span>Duration</span>: ' + duration.toString().replace('.', ':') + ' minutes<br>' : '') +
+						(duration ? '<span>Duration</span>: ' + duration + '<br>' : '') +
 						(tags ? '<span>Tags</span>: ' + tags + '<br>' : '')
 					);
 				}

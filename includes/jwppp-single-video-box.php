@@ -124,38 +124,6 @@ if($dashboard_player) {
 					$output .= '</span>';
 				$output .= '</ul>';
 
-				/*
-				$output .= '<select id="_jwppp-video-url-' . esc_attr($number) . '" name="_jwppp-video-url-' . esc_attr($number) . '" class="select2" style="margin-right:1rem;">';
-
-					$videos = $api->get_videos();
-					$playlists = $api->get_playlists();
-
-					/*Videos
-					if(is_array($videos)) {
-
-						$output .= '<option name="" value="">' . esc_html('Select a video', 'jwppp') . '</option>';
-						
-						/*For limiting contents
-						// for ($i=0; $i < min(10, count($videos)); $i++) { 
-						// 	$output .= '<option name="' . $videos[$i]['key'] . '" data-mediaid="' . $videos[$i]['key'] . '" value="' . $videos[$i]['key'] . '"' . ($video_url === $videos[$i]['key'] ? ' selected="selecterd"' : '') . '>' . $videos[$i]['title'] . '</option>';
-						// }
-						
-						foreach ($videos as $video) {
-							$output .= '<option name="' . $video['key'] . '" data-mediaid="' . $video['key'] . '" value="' . $video['key'] . '"' . ($video_url === $video['key'] ? ' selected="selecterd"' : '') . '>' . $video['title'] . '</option>';
-						}
-					}
-
-					/*Playlists
-					$output .= '<option name="" value="">' . esc_html('Select a playlist', 'jwppp') . '</option>';
-					if($playlists) {
-						foreach ($playlists as $playlist) {
-							$output .= '<option name="' . $playlist['key'] . '" class="playlist-element" data-mediaid="' . $playlist['key'] . '" value="' . $playlist['key'] . '"' . ($video_url === $playlist['key'] ? ' selected="selecterd"' : '') . '>' . $playlist['title'] . '</option>';
-						}
-					}
-
-				$output .= '</select>';
-				*/			
-
 			} elseif($api->args_check() && !$api->account_validation()) {
 
 				$output .= '<span class="jwppp-alert api">' . esc_html('It seems like your API Credentials are not correct.', 'jwppp') . '</span>';
@@ -241,20 +209,30 @@ $more_options_button = '<a class="button more-options-' . esc_attr($number) . '"
 
 			if($url && title) {
 				if(info.videos) {
+					/*It is a playlist*/
 					$('.jwppp-video-details-' + number).html(
 						(title ? '<span>Title</span>: ' + title + '<br>' : '') +
 						(info.description ? '<span>Description</span>: ' + info.description + '<br>' : '') +
 						'<span>Items</span>: ' + info.videos.total + '<br>'
 					);
 
+					/*Display the playlist carousel option*/
+		        	$('.playlist-carousel-container.' + number).css({
+		        		'display': 'inline-block'
+		        	})			
+
+
 				} else {
-					var get_duration = info.duration ? (info.duration / 60) : ''; //in minutes
-					var duration = get_duration ? (Math.round(get_duration * 100) / 100) : '';
+					/*It is a single video*/
+					var duration = null; 
+					if(info.duration > 0) {
+						duration = new Date(info.duration * 1000).toISOString().substr(11, 8);
+					}
 
 					$('.jwppp-video-details-' + number).html(
 						(title ? '<span>Title</span>: ' + title + '<br>' : '') +
 						(info.description ? '<span>Description</span>: ' + info.description + '<br>' : '') +
-						(duration ? '<span>Duration</span>: ' + duration.toString().replace('.', ':') + ' minutes<br>' : '') +
+						(duration ? '<span>Duration</span>: ' + duration + '<br>' : '') +
 						(info.tags ? '<span>Tags</span>: ' + info.tags + '<br>' : '')
 					);
 				}			
@@ -316,6 +294,7 @@ $more_options_button = '<a class="button more-options-' . esc_attr($number) . '"
 			} else {
 				$('.jwppp-single-option-' + number).hide();
 				$('.jwppp-single-option-' + number + '.cloud-option').show();
+				$('.playlist-carousel-container.' + number).hide();
 				$('.jwppp-' + number + ' .jwppp-input-wrap').append('<div class="jwppp-video-details jwppp-video-details-' + number + '"></div>');
 				// $('.button.more-options-' + number).remove();
 				// $('.jwppp-more-options-' + number).remove();
@@ -358,12 +337,6 @@ $more_options_button = '<a class="button more-options-' . esc_attr($number) . '"
 				$('.more-options-' + number).show();	
 			}
 		});
-
-		if($('.jwppp-video-toggles.' + number + ' li.active').data('video-type') == 'choose' && $('#_jwppp-video-list-' + 1 + 'li.selected').hasClass('playlist-element')) {
-        	$('.playlist-carousel-container.' + number).css({
-        		'display': 'inline-block'
-        	})			
-		}	
 
 	});
 })(jQuery);

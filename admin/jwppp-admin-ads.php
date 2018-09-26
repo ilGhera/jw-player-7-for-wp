@@ -90,6 +90,7 @@
 		update_option('jwppp-floor-price', $floor_price);
 	}
 
+	/*Define the allowed tags for wp_kses*/
 	$allowed_tags = array(
 		'u' => [],
 		'strong' => [],

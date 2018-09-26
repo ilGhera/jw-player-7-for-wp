@@ -1,7 +1,7 @@
 === JW Player for Wordpress - Premium ===
 Contributors: ghera74
 Tags: jw player, jw player 7, jw player 8, jwplayer, jwplayer 7, jwplayer 8, video, embed video, youtube, related video, video preroll, video chapters, video subtitles
-Version: 1.5.2
+Version: 1.6.0
 Requires at least: 4.0
 Tested up to: 4.9
 License: GPLv2
@@ -50,6 +50,12 @@ That's all, you're ready to go!
 6. Single video options
 
 == Changelog ==
+
+
+= 1.6.0 =
+Release Date: xxxxxxxx
+
+* xxxxxxxx : xxxxxxxx
 
 
 = 1.5.2 =
