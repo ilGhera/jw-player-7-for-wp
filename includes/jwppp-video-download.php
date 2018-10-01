@@ -1,15 +1,16 @@
 <?php
-
-/*
- *
- * JW-PLAYER FOR WORDPRESS - PREMIUM
+/**
  * Video download
- *
- */ 
+ * @author ilGhera
+ * @package jw-player-7-for-wp/includes
+ * @version 1.6.0
+ */
 	
-$file = $_GET['file'];
-$title = basename($file);
+$file = isset($_GET['file']) ? $_GET['file'] : '';
+$title = $file ? basename($file) : '';
 	
-header("Content-type: application/x-file-to-save"); 
-header("Content-Disposition: attachment; filename=".$title); 
-readfile($file);
+if($file && $title) {
+	header("Content-type: application/x-file-to-save"); 
+	header("Content-Disposition: attachment; filename=" . $title); 
+	readfile($file);
+}

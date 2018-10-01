@@ -1,4 +1,13 @@
-var select_content = function(){
+/**
+ * Used with player and media contents from the cloud
+ * @author ilGhera
+ * @package jw-player-7-for-wp/js
+ * @version 1.6.0
+ *
+ *
+ * Fired when a media content in the list is clicked
+ */
+var jwppp_select_content = function(){
 	jQuery(function($){
 		$(document).on('click', 'ul.jwppp-video-list li', function(){
 		
@@ -15,7 +24,6 @@ var select_content = function(){
 				var video_title = $('span', this).text();
 
 			}
-			// console.log('Media id: ' + media_id);
 			
 			$('#_jwppp-video-url-' + number + '.choose').attr('value', media_id);
 			$('#_jwppp-video-url-' + number + '.jwppp-url').attr('value', media_id);
@@ -55,11 +63,11 @@ var select_content = function(){
 			/*Image preview*/
 			var width = $(document).width();
 
-			//POSTER PREVIEW IMAGE
             if(media_id && width > 1112) {
             	var image_url = null;
             	if($(this).hasClass('playlist-element')) {
-	            	image_url = jwpppselect2.pluginUrl + '/images/playlist4.png';
+	            	
+	            	image_url = jwppp_select.pluginUrl + '/images/playlist4.png';
 
 	            	$('.playlist-carousel-container.' + number).css({
 	            		'display': 'inline-block'
@@ -76,7 +84,9 @@ var select_content = function(){
                 $('.poster-image-preview.' + number).remove();
                 $('.jwppp-' + number + ' .jwppp-input-wrap').prepend('<img class="poster-image-preview ' + number + '" src="' + image_url + '" style="display: none;">');
                 $('.poster-image-preview.' + number).fadeIn(300);
+          
             } else {
+
                 $('.poster-image-preview.' + number).fadeOut(300, function(){
                     $(this).remove();
                 });
@@ -85,9 +95,12 @@ var select_content = function(){
 		})
 	})
 }
-select_content();
+jwppp_select_content();
 
 
+/**
+ * Delay used after keyup on searching media contents
+ */
 var delay = (function(){
 	var timer = 0;
 	return function(callback, ms){
@@ -97,7 +110,12 @@ var delay = (function(){
 })();
 
 
-var search_content = function(number){
+/**
+ * Search contents in the dashboard based on the text typed by the user		
+ * @param  {id} number the video number of the post/ page
+ * @return {mixed}     the videos and playlists returned by the api call
+ */
+var jwppp_search_content = function(number){
 	jQuery(function($){
 
 		$(document).on('focusin', '.jwppp-search-content', function(){
@@ -113,8 +131,7 @@ var search_content = function(number){
 		$(document).on('keyup', '.jwppp-search-content', function(){
 			var number = $(this).data('number'); 
 			var list_container = $('ul#_jwppp-video-list-' + number + ' span.jwppp-list-container');
-			$(list_container).html('<li class="jwppp-loading"><img src="' + jwpppselect2.pluginUrl + '/images/loading.gif"></li>');
-			// console.log(jwpppselect2.pluginUrl + '/images/loading.gif');
+			$(list_container).html('<li class="jwppp-loading"><img src="' + jwppp_select.pluginUrl + '/images/loading.gif"></li>');
 
 			var value = $(this).val().trim();
 			var data = {
@@ -133,7 +150,7 @@ var search_content = function(number){
 
 					/*Single videos*/
 					if(videos.length > 0) {
-						$(list_container).html('<li class="results">Videos found</li>');
+						$(list_container).html('<li class="results reset">Videos found</li>');
 						for (var i = 0; i < videos.length; i++) {
 							// console.log(videos[i]);
 							$(list_container).append(
@@ -154,7 +171,7 @@ var search_content = function(number){
 					if(playlists.length > 0) {
 						var pl_reset = $('ul#_jwppp-video-list-' + number + ' span.jwppp-list-container:contains("Playlists found")');
 						if($(pl_reset).length == 0) {
-							$(list_container).append('<li class="results">Playlists found</li>');						
+							$(list_container).append('<li class="results reset">Playlists found</li>');						
 						}
 						$('.jwppp-loading').remove();
 						$('.playlist-element').remove();
@@ -167,7 +184,7 @@ var search_content = function(number){
 								'data-videos="' + (playlists[i].videos.total ? playlists[i].videos.total : '-') + '" ' + 
 								'data-tags="' + (playlists[i].tags ? playlists[i].tags : '-') + '" ' + 
 								'>' + 
-								'<img class="video-img" src="' + jwpppselect2.pluginUrl + '/images/playlist4.png">' + 
+								'<img class="video-img" src="' + jwppp_select.pluginUrl + '/images/playlist4.png">' + 
 								'<span>' + playlists[i].title + '</span>' +
 								'</li>'
 							);
@@ -184,4 +201,4 @@ var search_content = function(number){
 		})
 	})
 }
-search_content();
+jwppp_search_content();

@@ -208,6 +208,20 @@ span.jwppp-list-container {
 	display: inline-block;
 }
 
+.jwppp-video-list li.reset span {
+    position: absolute;
+    right: 1rem;
+    color: #fff;
+    background: #dadada;
+    padding: 0 0.5rem;
+    border-radius: 0.2rem;
+    display: none;
+}
+
+.jwppp-video-list li.reset:hover span {
+	display: inline-block;
+}
+
 .jwppp-video-list li.reset:hover,
 .jwppp-video-list li.results:hover {
 	box-shadow: none;
@@ -241,7 +255,7 @@ li .video-img {
 .jwppp-video-details {
 	position: absolute;
 	right: 40%;
-	top: 10%;
+	top: 0.7rem;
 	display: inline-block;
 	width: 400px;
 	height: 100px;

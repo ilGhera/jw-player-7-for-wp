@@ -10,7 +10,7 @@
  * Register plugin scripts and style
  */
 function jwppp_register_js_menu() {
-	wp_register_script('jwppp-admin-nav', plugin_dir_url(__DIR__) . 'js/jwppp-admin-nav.js', array('jquery'), '1.0', true );
+	wp_register_script('jwppp-admin', plugin_dir_url(__DIR__) . 'js/jwppp-admin.js', array('jquery'), '1.0', true );
 	wp_enqueue_style('jwppp-admin-style', plugin_dir_url(__DIR__) . 'css/jwppp-admin-style.css');
 }
 add_action( 'admin_init', 'jwppp_register_js_menu' );
@@ -20,7 +20,7 @@ add_action( 'admin_init', 'jwppp_register_js_menu' );
  * Menu's script
  */
 function jwppp_js_menu() {
-	wp_enqueue_script('jwppp-admin-nav');
+	wp_enqueue_script('jwppp-admin');
 }
 add_action( 'admin_menu', 'jwppp_js_menu' );
 
@@ -34,10 +34,10 @@ function jwppp_enqueue_scripts() {
     	/*ColorPicker*/
         wp_enqueue_style('wp-color-picker');
         wp_enqueue_script('wp-color-picker', array('jquery'), '', true); 
-        wp_enqueue_script('sh-video-script', plugin_dir_url(__DIR__) . 'js/jwppp-sh-video.js');
+        wp_enqueue_script('jwppp-single-video', plugin_dir_url(__DIR__) . 'js/jwppp-single-video.js');
 
-	    wp_enqueue_script('jwppp-select2', plugin_dir_url(__DIR__) . 'js/jwppp-select2.js', array('jquery'));
-	    wp_localize_script('jwppp-select2', 'jwpppselect2', array(
+	    wp_enqueue_script('jwppp-select', plugin_dir_url(__DIR__) . 'js/jwppp-select.js', array('jquery'));
+	    wp_localize_script('jwppp-select', 'jwppp_select', array(
 		    'pluginUrl' => plugin_dir_url(__DIR__)
 		));
     }

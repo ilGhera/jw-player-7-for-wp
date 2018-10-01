@@ -1,71 +1,86 @@
 <?php
 /**
- * Tools available for self hosted video
- * @param  int $post_id the post id
- * @param  int $number  the video number
- * @return moxed        all the tools for the single video
+ * Single video tools
+ * @author ilGhera
+ * @package jw-player-7-for-wp/includes
+ * @version 1.6.0
+ * @param  int $post_id    the post id
+ * @param  int $number     the video number
+ * @param  bool $sh_video  is the video sel-hosted?
+ * @return mixed           all the tools for the single video
  */
-function sh_video_tools($post_id, $number, $sh_video) {
+function jwppp_video_tools($post_id, $number, $sh_video) {
 	
 	/*Is a Dashboard player?*/
 	$dashboard_player = is_dashboard_player();
 	
 	/*Single video details*/
-	$video_title 				   = get_post_meta($post_id, '_jwppp-video-title-' . $number, true);
-	$video_description 			   = get_post_meta($post_id, '_jwppp-video-description-' . $number, true);
+	$video_title 	   = get_post_meta($post_id, '_jwppp-video-title-' . $number, true);
+	$video_description = get_post_meta($post_id, '_jwppp-video-description-' . $number, true);
+
+	/*Used only with self hosted vidoes*/
 	$video_image 				   = get_post_meta($post_id, '_jwppp-video-image-' . $number, true);
 	$add_chapters				   = get_post_meta($post_id, '_jwppp-add-chapters-' . $number, true);
 	$jwppp_chapters_subtitles      = get_post_meta($post_id, '_jwppp-chapters-subtitles-' . $number, true);
 	$jwppp_subtitles_method        = get_post_meta($post_id, '_jwppp-subtitles-method-' . $number, true);
-	$jwppp_activate_media_type     = get_post_meta($post_id, '_jwppp-activate-media-type-' . $number, true);
 	$jwppp_subtitles_load_default  = get_post_meta($post_id, '_jwppp-subtitles-load-default-' . $number, true);
 	$jwppp_subtitles_write_default = get_post_meta($post_id, '_jwppp-subtitles-write-default-' . $number, true);
+	$jwppp_activate_media_type     = get_post_meta($post_id, '_jwppp-activate-media-type-' . $number, true);
 	$jwppp_media_type 			   = get_post_meta($post_id, '_jwppp-media-type-' . $number, true);
 	$jwppp_autoplay 			   = get_post_meta($post_id, '_jwppp-autoplay-' . $number, true);
 	$jwppp_mute 				   = get_post_meta($post_id, '_jwppp-mute-' . $number, true);
 	$jwppp_repeat 				   = get_post_meta($post_id, '_jwppp-repeat-' . $number, true);
 	$jwppp_share_video 			   = get_option('jwppp-active-share');
-	$jwppp_embed_video			   = get_option('jwppp-embed-video');
-	$jwppp_single_embed 		   = (isset($_POST['_jwppp-single-embed-' . $number])) ? sanitize_text_field($_POST['_jwppp-single-embed-' . $number]) : get_post_meta($post_id, '_jwppp-single-embed-' . $number, true);
 	$jwppp_download_video 		   = get_post_meta($post_id, '_jwppp-download-video-' . $number, true);
+	$jwppp_embed_video			   = get_option('jwppp-embed-video');
 
-	/*ADS tags*/
-	$active_ads 				   = get_option('jwppp-active-ads');
-	$ads_tags					   = get_option('jwppp-ads-tag');
-	$jwppp_ads_tag				   = get_post_meta($post_id, '_jwppp-ads-tag-' . $number, true);
+	$jwppp_single_embed = null;
+	if(isset($_POST['_jwppp-single-embed-' . $number])) {
+		$jwppp_single_embed = sanitize_text_field($_POST['_jwppp-single-embed-' . $number]);
+	} else {
+		$jwppp_single_embed = get_post_meta($post_id, '_jwppp-single-embed-' . $number, true);	
+	}
+
+	/*Ads tags*/
+	$active_ads    = get_option('jwppp-active-ads');
+	$ads_tags	   = get_option('jwppp-ads-tag');
+	$jwppp_ads_tag = get_post_meta($post_id, '_jwppp-ads-tag-' . $number, true);
 
 	/*Ads var block*/
-	$active_ads_var = sanitize_text_field(get_option('jwppp-active-ads-var'));
+	$active_ads_var = get_option('jwppp-active-ads-var');
 
 	/*Choose player*/
 	$choose_player = get_post_meta($post_id, '_jwppp-choose-player-' . $number, true);
 
 	$output  = '<div class="jwppp-more-options-' . esc_attr($number) . '" style="margin-top:2rem; display: none;">';
 
-	// PLAYER SELECTION
 	if($dashboard_player) {
+
 		/*API*/
 		$api = new jwppp_dasboard_api();
-		$output .= '<div class="jwppp-single-option-' . $number . ' cloud-option">';
+
+		/*Choose player*/
+		$output .= '<div class="jwppp-single-option-' . esc_attr($number) . ' cloud-option">';
 			
 			$players = $api->get_players();
-			$library_parts = explode('https://content.jwplatform.com/libraries/', sanitize_text_field(get_option('jwppp-library')));
+			$library_parts = explode('https://content.jwplatform.com/libraries/', get_option('jwppp-library'));
 
 			$output .= '<label for="_jwppp-choose-player-' . esc_attr($number) . '"><strong>' . esc_html(__('Select a player', 'jwppp')) . '</strong></label>';
 			$output .= '<p>';
 			$output .= '<select class="jwppp-choose-player" name="_jwppp-choose-player-' . esc_attr($number) . '">';
+
 			if(is_array($players) && !empty($players)) {
 				foreach($players as $player) { 
-
 					$selected = false;
 					if($choose_player && $choose_player === $player['key']) {
 						$selected = true;
 					} elseif(!$choose_player && $library_parts[1] === $player['key'] . '.js') {
 						$selected = true;
 					}
-					$output .= '<option name="' . $player['key'] . '" value="' . $player['key'] . '"' . ($selected ? ' selected="selected"' : '') . '>' . $player['name'] . '</option>';
+					$output .= '<option name="' . sanitize_text_field($player['key']) . '" value="' . sanitize_text_field($player['key']) . '"' . ($selected ? ' selected="selected"' : '') . '>' . sanitize_text_field($player['name']) . '</option>';
 				}
 			}
+
 			$output .= '</select>';
 			$output .= '</p>';
 
@@ -73,7 +88,8 @@ function sh_video_tools($post_id, $number, $sh_video) {
 	}
 
 
-	$output .= '<div class="jwppp-single-option-' . $number . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';
+	/*More sources*/
+	$output .= '<div class="jwppp-single-option-' . esc_attr($number) . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';
 		$output .= '<label for="_jwppp-add-sources-' . esc_attr($number) . '">';
 		$output .= '<strong>' . esc_html(__( 'More sources', 'jwppp' )) . '</strong>';
 		$output .= '<a class="question-mark" title="' . esc_attr(__('Used for quality toggling and alternate sources.', 'jwppp')) . '"><img class="question-mark" src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/question-mark.png" /></a></th>';
@@ -94,16 +110,18 @@ function sh_video_tools($post_id, $number, $sh_video) {
 		for($n=1; $n<$sources+1; $n++) {
 			$source_url  = get_post_meta($post_id, '_jwppp-' . $number . '-source-' . $n . '-url', true);
 			$source_label = get_post_meta($post_id, '_jwppp-' . $number . '-source-' . $n . '-label', true);
-			$output .= '<li id="video-' . esc_attr($number) . '-source" data-number="' . $n . '">';	
+			$output .= '<li id="video-' . esc_attr($number) . '-source" data-number="' . esc_attr($n) . '">';	
 			$output .= '<input type="text" style="margin-right:1rem;" name="_jwppp-' . esc_attr($number) . '-source-' . esc_attr($n) . '-url" id="_jwppp-' . esc_attr($number) . '-source-' . esc_attr($n) . '-url" value="' . esc_url($source_url) . '" placeholder="' . esc_html(__('Source url', 'jwppp')) . '" size="60" />';
-			$output .= '<input type="text" name="_jwppp-' . esc_attr($number) . '-source-' . esc_attr($n) . '-label" class="source-label-' . esc_attr($number) . '" style="margin-right:1rem;" value="' . esc_attr($source_label) . '" placeholder="' . esc_html(__('Label (HD, 720p, 360p)', 'jwppp')) . '" size="30" />';
+			$output .= '<input type="text" name="_jwppp-' . esc_attr($number) . '-source-' . esc_attr($n) . '-label" class="source-label-' . esc_attr($number) . '" style="margin-right:1rem;' . ($sources <= 1 ? ' display: none;' : '') . '" value="' . esc_attr($source_label) . '" placeholder="' . esc_html(__('Label (HD, 720p, 360p)', 'jwppp')) . '" size="30" />';
 			$output .= '</li>';
 		}
 
 		$output .= '</ul>';
 	$output .= '</div>';
 
-	$output .= '<div class="jwppp-single-option-' . $number . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';
+
+	/*Poster image*/
+	$output .= '<div class="jwppp-single-option-' . esc_attr($number) . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';
 		$output .= '<label for="_jwppp-video-image-' . esc_attr($number) . '">';
 		$output .= '<strong>' . esc_html(__( 'Video poster image', 'jwppp' )) . '</strong>';
 		$output .= '</label> ';
@@ -112,14 +130,18 @@ function sh_video_tools($post_id, $number, $sh_video) {
 		$output .= '</p>';
 	$output .= '</div>';
 
-	$output .= '<div class="jwppp-single-option-' . $number . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';
+
+	/*Video title*/
+	$output .= '<div class="jwppp-single-option-' . esc_attr($number) . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';
 		$output .= '<label for="_jwppp-video-title-' . esc_attr($number) . '">';
 		$output .= '<strong>' . esc_html(__( 'Video title', 'jwppp' )) . '</strong>';
 		$output .= '</label> ';
 		$output .= '<p><input type="text" id="_jwppp-video-title-' . esc_attr($number) . '" class="jwppp-title" name="_jwppp-video-title-' . esc_attr($number) . '" placeholder="' . esc_html(__('Add a title to your video', 'jwppp')) . '" value="' . esc_attr( $video_title ) . '" size="60" /></p>';
 	$output .= '</div>';
 
-	$output .= '<div class="jwppp-single-option-' . $number . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';
+
+	/*Video description*/
+	$output .= '<div class="jwppp-single-option-' . esc_attr($number) . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';
 		$output .= '<label for="_jwppp-video-description-' . esc_attr($number) . '">';
 		$output .= '<strong>' . esc_html(__( 'Video description', 'jwppp' )) . '</strong>';
 		$output .= '</label> ';
@@ -127,16 +149,16 @@ function sh_video_tools($post_id, $number, $sh_video) {
 	$output .= '</div>';
 
 
-	//ADS TAGS
+	/*Ads tags*/
 	if($active_ads && !$active_ads_var) {
-		$output .= '<div class="jwppp-single-option-' . $number . ' cloud-option">';
+		$output .= '<div class="jwppp-single-option-' . esc_attr($number) . ' cloud-option">';
 			$output .= '<label for="_jwppp-ads-tag-' . esc_attr($number) . '"><strong>' . esc_html(__('Ads tag', 'jwppp')) . '</strong></label>';
 			$output .= '<p>';
 			$output .= '<select class="jwppp-ads-tag" name="_jwppp-ads-tag-' . esc_attr($number) . '">';
 				if($ads_tags) {
 					if(is_array($ads_tags) && !empty($ads_tags)) {
 						for ($i=0; $i < count($ads_tags); $i++) { 
-							$output .= '<option name="' . $ads_tags[$i]['label'] . '" value="' . $ads_tags[$i]['url'] . '"' . ($jwppp_ads_tag === $ads_tags[$i]['url'] ? ' selected="selected"' : '') . '>' . ($ads_tags[$i]['label'] ? $ads_tags[$i]['label'] : 'Tag ' . ($i + 1)) . '</option>';
+							$output .= '<option name="' . esc_html($ads_tags[$i]['label']) . '" value="' . $ads_tags[$i]['url'] . '"' . ($jwppp_ads_tag === $ads_tags[$i]['url'] ? ' selected="selected"' : '') . '>' . ($ads_tags[$i]['label'] ? esc_html($ads_tags[$i]['label']) : 'Tag ' . (esc_attr($i) + 1)) . '</option>';
 						}
 					} elseif(is_string($ads_tags)) {
 						$output .= '<option name="0" value="' . $ads_tags . '">' . $ads_tags . '</option>';
@@ -154,10 +176,11 @@ function sh_video_tools($post_id, $number, $sh_video) {
 		$output .= '</div>';
 	}
 
-	//PLAYLIST CAROUSEL
+
+	/*Playlist carousel*/
 	if($dashboard_player && !$sh_video) {
 		$jwppp_playlist_carousel = get_post_meta($post_id, '_jwppp-playlist-carousel-' . $number, true);
-		$output .= '<div class="jwppp-single-option-' . $number . ' cloud-option playlist-carousel-container ' . esc_attr($number) . '"' . ($jwppp_playlist_carousel ? ' style="display: inline-block;"' : '') . '>';
+		$output .= '<div class="jwppp-single-option-' . esc_attr($number) . ' cloud-option playlist-carousel-container ' . esc_attr($number) . '"' . ($jwppp_playlist_carousel ? ' style="display: inline-block;"' : '') . '>';
 			$output .= '<label for="_jwppp-playlist-carousel-' . esc_attr($number) . '">';
 			$output .= '<input type="checkbox" id="_jwppp-playlist-carousel-' . esc_attr($number) . '" name="_jwppp-playlist-carousel-' . esc_attr($number) . '" value="1"';
 			$output .= ($jwppp_playlist_carousel === '1') ? ' checked="checked"' : '';
@@ -168,7 +191,9 @@ function sh_video_tools($post_id, $number, $sh_video) {
 		$output .= '</div>';	
 	}
 
-	$output .= '<div class="jwppp-single-option-' . $number . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';
+
+	/*Media type*/
+	$output .= '<div class="jwppp-single-option-' . esc_attr($number) . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';
 		$output .= '<p>';
 		$output .= '<label for="_jwppp-activate-media-type-' . esc_attr($number) . '">';
 		$output .= '<input type="checkbox" id="_jwppp-activate-media-type-' . esc_attr($number) . '" name="_jwppp-activate-media-type-' . esc_attr($number) . '" value="1"';
@@ -196,7 +221,8 @@ function sh_video_tools($post_id, $number, $sh_video) {
 	/*Options available only with self-hosted player*/
 	if(!$dashboard_player) {
 
-		$output .= '<div class="jwppp-single-option-' . $number . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';
+		/*Autoplay*/
+		$output .= '<div class="jwppp-single-option-' . esc_attr($number) . '">';
 			$output .= '<p>';
 			$output .= '<label for="_jwppp-autoplay-' . esc_attr($number) . '">';
 			$output .= '<input type="checkbox" id="_jwppp-autoplay-' . esc_attr($number) . '" name="_jwppp-autoplay-' . esc_attr($number) . '" value="1"';
@@ -208,7 +234,9 @@ function sh_video_tools($post_id, $number, $sh_video) {
 			$output .= '</p>';
 		$output .= '</div>';
 
-		$output .= '<div class="jwppp-single-option-' . $number . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';
+
+		/*Mute*/
+		$output .= '<div class="jwppp-single-option-' . esc_attr($number) . '">';
 			$output .= '<p>';
 			$output .= '<label for="_jwppp-mute-' . esc_attr($number) . '">';
 			$output .= '<input type="checkbox" id="_jwppp-mute-' . esc_attr($number) . '" name="_jwppp-mute-' . esc_attr($number) . '" value="1"';
@@ -220,7 +248,9 @@ function sh_video_tools($post_id, $number, $sh_video) {
 			$output .= '</p>';
 		$output .= '</div>';
 
-		$output .= '<div class="jwppp-single-option-' . $number . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';
+
+		/*Repeat*/
+		$output .= '<div class="jwppp-single-option-' . esc_attr($number) . '">';
 			$output .= '<p>';
 			$output .= '<label for="_jwppp-repeat-' . esc_attr($number) . '">';
 			$output .= '<input type="checkbox" id="_jwppp-repeat-' . esc_attr($number) . '" name="_jwppp-repeat-' . esc_attr($number) . '" value="1"';
@@ -232,6 +262,8 @@ function sh_video_tools($post_id, $number, $sh_video) {
 			$output .= '</p>';
 		$output .= '</div>';
 
+
+		/*Embed video*/
 		if($jwppp_share_video) {
 			if($jwppp_single_embed === '1') {
 				$checked = 'checked="checked"';
@@ -241,7 +273,7 @@ function sh_video_tools($post_id, $number, $sh_video) {
 				$checked = ($jwppp_embed_video === '1') ? 'checked="checked"' : '';
 			}
 
-			$output .= '<div class="jwppp-single-option-' . $number . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';
+			$output .= '<div class="jwppp-single-option-' . esc_attr($number) . '">';
 				$output .= '<p>';
 				$output .= '<label for="_jwppp-single-embed-' . esc_attr($number) . '">';
 				$output .= '<input type="checkbox" id="_jwppp-single-embed-' . esc_attr($number) . '" name="_jwppp-single-embed-' . esc_attr($number) . '" value="1"';
@@ -254,8 +286,8 @@ function sh_video_tools($post_id, $number, $sh_video) {
 			$output .= '</div>';
 		}
 
-		//DOWNLOAD VIDEO
-		$output .= '<div class="jwppp-single-option-' . $number . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';
+		/*Download video*/
+		$output .= '<div class="jwppp-single-option-' . esc_attr($number) . '">';
 			$output .= '<p>';
 			$output .= '<label for="_jwppp-download-video-' . esc_attr($number) . '">';
 			$output .= '<input type="checkbox" id="_jwppp-download-video-' . esc_attr($number) . '" name="_jwppp-download-video-' . esc_attr($number) . '" value="1"';
@@ -268,7 +300,9 @@ function sh_video_tools($post_id, $number, $sh_video) {
 			$output .= '</p>';
 		$output .= '</div>';
 
-		$output .= '<div class="jwppp-single-option-' . $number . '"' . ($dashboard_player && !$sh_video ? ' style="display: none;"' : '') . '>';
+
+		/*Chapters & subtitles*/
+		$output .= '<div class="jwppp-single-option-' . esc_attr($number) . '">';
 			$output .= '<p>';
 			$output .= '<label for="_jwppp-add-chapters-' . esc_attr($number) . '">';
 			$output .= '<input type="checkbox" id="_jwppp-add-chapters-' . esc_attr($number) . '" name="_jwppp-add-chapters-' . esc_attr($number) . '" value="1"';
@@ -292,7 +326,7 @@ function sh_video_tools($post_id, $number, $sh_video) {
 			$output .= '>Thumbnails</option>';
 			$output .= '</select>';
 
-			//SUBTITLES METHOD SELECTOR
+			/*Subtitles method selector*/
 			$output .= '<select style="margin-left:0.3rem;" name="_jwppp-subtitles-method-' . esc_attr($number) . '" id="_jwppp-subtitles-method-' . esc_attr($number) . '">';
 			$output .= '<option name="manual" id="manual" value="manual"';
 			$output .= ($jwppp_subtitles_method === 'manual') ? ' selected="selected"' : '';
@@ -308,7 +342,7 @@ function sh_video_tools($post_id, $number, $sh_video) {
 				$chapters = 1;
 			}
 
-			$output .= '<input type="number" class="small-text" style="margin-left:0.3rem; display:inline; position: relative; top:2px;" id="_jwppp-chapters-number-' .  esc_attr($number) . '" name="_jwppp-chapters-number-' .  esc_attr($number) . '" value="' . $chapters . '">';
+			$output .= '<input type="number" class="small-text" style="margin-left:0.3rem; display:inline; position: relative; top:2px;" id="_jwppp-chapters-number-' .  esc_attr($number) . '" name="_jwppp-chapters-number-' .  esc_attr($number) . '" value="' . esc_attr($chapters) . '">';
 
 			$output .= '</p>';
 
@@ -333,7 +367,7 @@ function sh_video_tools($post_id, $number, $sh_video) {
 				$output .= '    ' . esc_html(__('End', 'jwppp')) . '    <input type="number" name="_jwppp-' . esc_attr($number) . '-chapter-' . esc_attr($i) . '-end" style="margin-right:0.5rem;" min="1" step="1" class="small-text" value="' . esc_attr($end) . '" />';
 				$output .= esc_html(__('in seconds', 'jwpend'));
 
-				//SUBTITLES ACTIVATED BY DEFAULT
+				/*Subtitles activated by default*/
 				if($i === '1') {
 					$output .= '<label for="_jwppp-subtitles-write-default-' . esc_attr($number) . '" style="display: inline-block; margin-left: 1rem;">';
 					$output .= '<input type="checkbox" id="_jwppp-subtitles-write-default-' . esc_attr($number) . '" name="_jwppp-subtitles-write-default-' . esc_attr($number) . '" value="1"';

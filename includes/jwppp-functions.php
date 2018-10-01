@@ -5,7 +5,7 @@
 
 require(plugin_dir_path(__FILE__) . 'jwppp-ajax-add-video-callback.php');
 require(plugin_dir_path(__FILE__) . 'jwppp-ajax-remove-video-callback.php');
-require(plugin_dir_path(__FILE__) . 'jwppp-sh-video-tools.php');
+require(plugin_dir_path(__FILE__) . 'jwppp-video-tools.php');
 require(plugin_dir_path(__DIR__) . 'botr/api.php');
 
 
@@ -146,7 +146,7 @@ function jwppp_ajax_add_video() {
 
 						$.post(ajaxurl, data, function(response) {
 							var element = '.jwppp-' + response;
-							$(element).hide();
+							$(element).remove();
 
 							//CHANGE PLAYLIST-HOW-TO
 							var tot = $('.jwppp-input-wrap:visible').length;
@@ -199,7 +199,7 @@ function jwppp_ajax_remove_video() {
 
 				$.post(ajaxurl, data, function(response) {
 					var element = '.jwppp-' + response;
-					$(element).hide();
+					$(element).remove();
 				
 				//CHANGE PLAYLIST-HOW-TO
 				var tot = $('.jwppp-input-wrap:visible').length;
@@ -221,6 +221,50 @@ function jwppp_ajax_remove_video() {
 }
 add_action( 'admin_footer', 'jwppp_ajax_remove_video' );
 add_action( 'wp_ajax_jwppp_ajax_remove', 'jwppp_ajax_remove_video_callback' );
+
+function jwppp_db_delete_video($post_id, $number) {
+	/*Delete all data in the db*/
+	delete_post_meta( $post_id, '_jwppp-video-url-' . $number);
+	delete_post_meta( $post_id, '_jwppp-video-mobile-url-' . $number);
+	delete_post_meta( $post_id, '_jwppp-video-image-' . $number);
+	delete_post_meta( $post_id, '_jwppp-video-title-' . $number);
+	delete_post_meta( $post_id, '_jwppp-video-description-' . $number);
+	delete_post_meta( $post_id, '_jwppp-autoplay-' . $number);
+	delete_post_meta( $post_id, '_jwppp-single-embed-' . $number);
+	delete_post_meta( $post_id, '_jwppp-activate-media-type-' . $number);
+	delete_post_meta( $post_id, '_jwppp-media-type-' . $number);
+	delete_post_meta( $post_id, '_jwppp-choose-player-' . $number);
+	delete_post_meta( $post_id, '_jwppp-playlist-carousel-' . $number);
+	delete_post_meta( $post_id, '_jwppp-mute-' . $number);
+	delete_post_meta( $post_id, '_jwppp-repeat-' . $number);
+	delete_post_meta( $post_id, '_jwppp-download-video-' . $number);
+	delete_post_meta( $post_id, '_jwppp-ads-tag-' . $number);
+	delete_post_meta( $post_id, '_jwppp-add-chapters-' . $number);
+	delete_post_meta( $post_id, '_jwppp-chapters-subtitles-' . $number);
+	delete_post_meta( $post_id, '_jwppp-subtitles-method-' . $number);
+
+	/*Delete all sources and labels*/
+	$sources = get_post_meta( $post_id, '_jwppp-sources-number-' . $number, true);
+	if($sources) {
+		for ($i=0; $i <= ($sources + 1); $i++) { 
+			delete_post_meta( $post_id, '_jwppp-' . $number . '-main-source-label');
+			delete_post_meta( $post_id, '_jwppp-' . $number . '-source-' . $i . '-url');
+			delete_post_meta( $post_id, '_jwppp-' . $number . '-source-' . $i . '-label');
+		}
+		delete_post_meta( $post_id, '_jwppp-sources-number-' . $number);
+	}
+
+	/*Delete all chapters*/
+	$chapters = get_post_meta( $post_id, '_jwppp-chapters-number-' . $number);
+	if($chapters) {
+		for($n=0; $n <= ((int)$chapters + 1); $n++) {
+			delete_post_meta( $post_id, '_jwppp-' . $number . '-chapter-' . $n . '-title');
+			delete_post_meta( $post_id, '_jwppp-' . $number . '-chapter-' . $n . '-start');
+			delete_post_meta( $post_id, '_jwppp-' . $number . '-chapter-' . $n . '-end');
+		}
+		delete_post_meta( $post_id, '_jwppp-chapters-number-' . $number);		
+	}
+}
 
 
 //SAVE ALL INFORMATIONS OF THE SINGLE VIDEO
@@ -270,252 +314,260 @@ function jwppp_save_single_video_data( $post_id ) {
 			return;
 		}
 
-		if (isset( $_POST['_jwppp-video-url-' . $number] )) {
+
+		/*All video post_meta are saved only if the video url is set*/
+		if (isset( $_POST['_jwppp-video-url-' . $number] ) && $_POST['_jwppp-video-url-' . $number] !== '') {
+			
 			$video = sanitize_text_field($_POST['_jwppp-video-url-' . $number]);
 			if(!$video) {
 				delete_post_meta($post_id, '_jwppp-video-url-' . $number);
 			} else {
 				update_post_meta( $post_id, '_jwppp-video-url-' . $number, $video );
 			}
-		}
 
-		if (isset( $_POST['_jwppp-sources-number-' . $number] )) {
+			if (isset( $_POST['_jwppp-sources-number-' . $number] )) {
 
-			$sources = sanitize_text_field($_POST['_jwppp-sources-number-' . $number]);
+				$sources = sanitize_text_field($_POST['_jwppp-sources-number-' . $number]);
 
-			for($i=1; $i <= $sources; $i++) {	
-				$source_url = sanitize_text_field($_POST['_jwppp-' . $number . '-source-' . $i . '-url']);
-				if(!$source_url) {
-					delete_post_meta($post_id, '_jwppp-' . $number . '-source-' . $i . '-url');
-				} else {
-					update_post_meta($post_id, '_jwppp-' . $number . '-source-' . $i . '-url', $source_url);
-				}
-
-				$source_label = sanitize_text_field($_POST['_jwppp-' . $number . '-source-' . $i . '-label']);
-				if(!$source_label) {
-					delete_post_meta($post_id, '_jwppp-' . $number . '-source-' . $i . '-label');
-				} else {
-					update_post_meta($post_id, '_jwppp-' . $number . '-source-' . $i . '-label', $source_label);
-				}
-			}
-
-			update_post_meta($post_id, '_jwppp-sources-number-' . $number, $sources);				
-		
-		} else {
-
-			$sources = get_post_meta($post_id, '_jwppp-sources-number-' . $number, true);
-			if($sources) {
-				for ($i=1; $i <= $sources; $i++) { 
-					delete_post_meta($post_id, '_jwppp-' . $number . '-source-' . $i . '-url');
-					delete_post_meta($post_id, '_jwppp-' . $number . '-source-' . $i . '-label');
-				}
-			}				
-			delete_post_meta($post_id, '_jwppp-sources-number-' . $number);
-		}
-
-		if (isset( $_POST['_jwppp-' . $number . '-main-source-label'] )) {
-			$label = sanitize_text_field($_POST['_jwppp-' . $number . '-main-source-label']);
-			if(!$label) {
-				delete_post_meta($post_id, '_jwppp-' . $number . '-main-source-label');
-			} else {
-				update_post_meta( $post_id, '_jwppp-' . $number . '-main-source-label', $label );
-			}
-		} else {
-			delete_post_meta($post_id, '_jwppp-' . $number . '-main-source-label');			
-		}
-
-		if (isset( $_POST['_jwppp-video-image-' . $number] )) {
-			$image = sanitize_text_field($_POST['_jwppp-video-image-' . $number]);
-			if(!$image) {
-				delete_post_meta($post_id, '_jwppp-video-image-' . $number);
-			} else {
-				update_post_meta( $post_id, '_jwppp-video-image-' . $number, $image );
-			}
-		} else {
-			delete_post_meta($post_id, '_jwppp-video-image-' . $number);
-		}
-
-		if (isset( $_POST['_jwppp-video-title-' . $number] )) {
-			$title = sanitize_text_field($_POST['_jwppp-video-title-' . $number]);
-			if(!$title) {
-				delete_post_meta($post_id, '_jwppp-video-title-' . $number);
-			} else {
-				update_post_meta( $post_id, '_jwppp-video-title-' . $number, $title );
-			}
-		} else {
-			delete_post_meta($post_id, '_jwppp-video-title-' . $number);
-		}
-
-		if (isset( $_POST['_jwppp-video-description-' . $number] )) {
-			$description = sanitize_text_field($_POST['_jwppp-video-description-' . $number]);
-			if(!$description) {
-				delete_post_meta($post_id, '_jwppp-video-description-' . $number);
-			} else {;
-				update_post_meta( $post_id, '_jwppp-video-description-' . $number, $description );
-			}
-		} else {
-			delete_post_meta($post_id, '_jwppp-video-description-' . $number);			
-		}
-
-		$jwppp_activate_media_type = null;
-		if(isset($_POST['activate-media-type-hidden-' . $number])) {
-			$jwppp_activate_media_type = isset($_POST['_jwppp-activate-media-type-' . $number]) ? sanitize_text_field($_POST['_jwppp-activate-media-type-' . $number]) : 0;
-			update_post_meta( $post_id, '_jwppp-activate-media-type-' . $number, $jwppp_activate_media_type );
-		} else {
-			delete_post_meta($post_id, '_jwppp-activate-media-type-' . $number);			
-		}
-
-		if(isset($_POST['_jwppp-ads-tag-' . $number])) {
-			$jwppp_ads_tag = $_POST['_jwppp-ads-tag-' . $number];
-			update_post_meta($post_id, '_jwppp-ads-tag-' . $number, $jwppp_ads_tag);
-		}
-
-		if(isset($_POST['_jwppp-choose-player-' . $number])) {
-			$jwppp_choose_player = sanitize_text_field($_POST['_jwppp-choose-player-' . $number]);
-			update_post_meta($post_id, '_jwppp-choose-player-' . $number, $jwppp_choose_player);
-		}
-
-		if($jwppp_activate_media_type === '1') {
-			$media_type = sanitize_text_field($_POST['_jwppp-media-type-' . $number]);
-			update_post_meta( $post_id, '_jwppp-media-type-' . $number, $media_type );
-		} else {
-			delete_post_meta($post_id, '_jwppp-media-type-' . $number);
-		}
-
-		if(isset($_POST['autoplay-hidden-' . $number])) {
-			$jwppp_autoplay = isset($_POST['_jwppp-autoplay-' . $number]) ? sanitize_text_field($_POST['_jwppp-autoplay-' . $number]) : 0;
-			update_post_meta( $post_id, '_jwppp-autoplay-' . $number, $jwppp_autoplay );
-		}
-
-		if(isset($_POST['mute-hidden-' . $number])) {
-			$jwppp_mute = isset($_POST['_jwppp-mute-' . $number]) ? sanitize_text_field($_POST['_jwppp-mute-' . $number]) : 0;
-			update_post_meta( $post_id, '_jwppp-mute-' . $number, $jwppp_mute );
-		}
-
-		if(isset($_POST['repeat-hidden-' . $number])) {
-			$jwppp_repeat = isset($_POST['_jwppp-repeat-' . $number]) ? sanitize_text_field($_POST['_jwppp-repeat-' . $number]) : 0;
-			update_post_meta( $post_id, '_jwppp-repeat-' . $number, $jwppp_repeat );
-		}
-
-		if(isset($_POST['single-embed-hidden-' . $number])) {
-			$jwppp_single_embed = isset($_POST['_jwppp-single-embed-' . $number]) ? sanitize_text_field($_POST['_jwppp-single-embed-' . $number]) : 0;
-			update_post_meta( $post_id, '_jwppp-single-embed-' . $number, $jwppp_single_embed );
-		}
-
-		if(isset($_POST['download-video-hidden-' . $number])) {
-			$jwppp_download_video = isset($_POST['_jwppp-download-video-' . $number]) ? sanitize_text_field($_POST['_jwppp-download-video-' . $number]) : 0;
-			update_post_meta( $post_id, '_jwppp-download-video-' . $number, $jwppp_download_video );
-		}
-		
-		$jwppp_add_chapters = null;
-		if(isset($_POST['add-chapters-hidden-' . $number])) {
-			$jwppp_add_chapters = isset($_POST['_jwppp-add-chapters-' . $number]) ? sanitize_text_field($_POST['_jwppp-add-chapters-' . $number]) : 0;
-			$jwppp_chapters_subtitles = sanitize_text_field($_POST['_jwppp-chapters-subtitles-' . $number]);
-
-			$jwppp_subtitles_method = ($jwppp_chapters_subtitles === 'subtitles') ? sanitize_text_field($_POST['_jwppp-subtitles-method-' . $number]) : '';
-
-			update_post_meta( $post_id, '_jwppp-add-chapters-' . $number, $jwppp_add_chapters );
-			update_post_meta( $post_id, '_jwppp-chapters-subtitles-' . $number, $jwppp_chapters_subtitles);
-			update_post_meta( $post_id, '_jwppp-subtitles-method-' . $number, $jwppp_subtitles_method);
-		}
-
-		if(isset($_POST['subtitles-load-default-hidden-' . $number])) {
-			$jwppp_subtitles_load_default = isset($_POST['_jwppp-subtitles-load-default-' . $number]) ? sanitize_text_field($_POST['_jwppp-subtitles-load-default-' . $number]) : 0;
-			update_post_meta( $post_id, '_jwppp-subtitles-load-default-' . $number, $jwppp_subtitles_load_default );
-		}
-
-		if(isset($_POST['subtitles-write-default-hidden-' . $number])) {
-			$jwppp_subtitles_write_default = isset($_POST['_jwppp-subtitles-write-default-' . $number]) ? sanitize_text_field($_POST['_jwppp-subtitles-write-default-' . $number]) : 0;
-			update_post_meta( $post_id, '_jwppp-subtitles-write-default-' . $number, $jwppp_subtitles_write_default );
-		}
-
-		if(isset($_POST['playlist-carousel-hidden-' . $number])) {
-			$jwppp_playlist_carousel = isset($_POST['_jwppp-playlist-carousel-' . $number]) ? sanitize_text_field($_POST['_jwppp-playlist-carousel-' . $number]) : 0;
-			update_post_meta( $post_id, '_jwppp-playlist-carousel-' . $number, $jwppp_playlist_carousel );
-		}
-
-		/*Chapter and subtitles are available only with self-hosted player*/
-		if(!$dashboard_player) {
-
-			if($jwppp_add_chapters === '1') {
-
-				$chapters = sanitize_text_field($_POST['_jwppp-chapters-number-' . $number]);
-				update_post_meta($post_id, '_jwppp-chapters-number-' . $number, $chapters);
-
-				for($i=1; $i<$chapters+1; $i++) {
-					
-					if($jwppp_chapters_subtitles === 'subtitles' && $jwppp_subtitles_method === 'load') {
-						
-						//DELETE OLD DIFFERENT ELEMENTS
-						delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-title');
-						delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-start');
-						delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-end');
-						delete_post_meta($post_id, '_jwppp-subtitles-write-default-' . $number);
-
-
-						$sub_url = sanitize_text_field($_POST['_jwppp-' . $number . '-subtitle-' . $i . '-url']);
-						if(!$sub_url) {
-							delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url');
-						} else {
-							update_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url', $sub_url);
-						}
-
-						$sub_label = sanitize_text_field($_POST['_jwppp-' . $number . '-subtitle-' . $i . '-label']);
-						if(!$sub_label) {
-							delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label');
-						} else {
-							update_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label', $sub_label);
-						}
-
-
+				for($i=1; $i <= $sources; $i++) {	
+					$source_url = sanitize_text_field($_POST['_jwppp-' . $number . '-source-' . $i . '-url']);
+					if(!$source_url) {
+						delete_post_meta($post_id, '_jwppp-' . $number . '-source-' . $i . '-url');
 					} else {
+						update_post_meta($post_id, '_jwppp-' . $number . '-source-' . $i . '-url', $source_url);
+					}
 
-						//DELETE OLD DIFFERENT ELEMENTS
-						delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url');
-						delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label');
-						delete_post_meta($post_id, '_jwppp-subtitles-load-default-' . $number);
+					$source_label = sanitize_text_field($_POST['_jwppp-' . $number . '-source-' . $i . '-label']);
+					if(!$source_label) {
+						delete_post_meta($post_id, '_jwppp-' . $number . '-source-' . $i . '-label');
+					} else {
+						update_post_meta($post_id, '_jwppp-' . $number . '-source-' . $i . '-label', $source_label);
+					}
+				}
 
-						$title = sanitize_text_field($_POST['_jwppp-' . $number . '-chapter-' . $i . '-title']);
-						if(!$title) {
+				update_post_meta($post_id, '_jwppp-sources-number-' . $number, $sources);				
+			
+			} else {
+
+				$sources = get_post_meta($post_id, '_jwppp-sources-number-' . $number, true);
+				if($sources) {
+					for ($i=1; $i <= $sources; $i++) { 
+						delete_post_meta($post_id, '_jwppp-' . $number . '-source-' . $i . '-url');
+						delete_post_meta($post_id, '_jwppp-' . $number . '-source-' . $i . '-label');
+					}
+				}				
+				delete_post_meta($post_id, '_jwppp-sources-number-' . $number);
+			}
+
+			if (isset( $_POST['_jwppp-' . $number . '-main-source-label'] )) {
+				$label = sanitize_text_field($_POST['_jwppp-' . $number . '-main-source-label']);
+				if(!$label) {
+					delete_post_meta($post_id, '_jwppp-' . $number . '-main-source-label');
+				} else {
+					update_post_meta( $post_id, '_jwppp-' . $number . '-main-source-label', $label );
+				}
+			} else {
+				delete_post_meta($post_id, '_jwppp-' . $number . '-main-source-label');			
+			}
+
+			if (isset( $_POST['_jwppp-video-image-' . $number] )) {
+				$image = sanitize_text_field($_POST['_jwppp-video-image-' . $number]);
+				if(!$image) {
+					delete_post_meta($post_id, '_jwppp-video-image-' . $number);
+				} else {
+					update_post_meta( $post_id, '_jwppp-video-image-' . $number, $image );
+				}
+			} else {
+				delete_post_meta($post_id, '_jwppp-video-image-' . $number);
+			}
+
+			if (isset( $_POST['_jwppp-video-title-' . $number] )) {
+				$title = sanitize_text_field($_POST['_jwppp-video-title-' . $number]);
+				if(!$title) {
+					delete_post_meta($post_id, '_jwppp-video-title-' . $number);
+				} else {
+					update_post_meta( $post_id, '_jwppp-video-title-' . $number, $title );
+				}
+			} else {
+				delete_post_meta($post_id, '_jwppp-video-title-' . $number);
+			}
+
+			if (isset( $_POST['_jwppp-video-description-' . $number] )) {
+				$description = sanitize_text_field($_POST['_jwppp-video-description-' . $number]);
+				if(!$description) {
+					delete_post_meta($post_id, '_jwppp-video-description-' . $number);
+				} else {;
+					update_post_meta( $post_id, '_jwppp-video-description-' . $number, $description );
+				}
+			} else {
+				delete_post_meta($post_id, '_jwppp-video-description-' . $number);			
+			}
+
+			$jwppp_activate_media_type = null;
+			if(isset($_POST['activate-media-type-hidden-' . $number])) {
+				$jwppp_activate_media_type = isset($_POST['_jwppp-activate-media-type-' . $number]) ? sanitize_text_field($_POST['_jwppp-activate-media-type-' . $number]) : 0;
+				update_post_meta( $post_id, '_jwppp-activate-media-type-' . $number, $jwppp_activate_media_type );
+			} else {
+				delete_post_meta($post_id, '_jwppp-activate-media-type-' . $number);			
+			}
+
+			if(isset($_POST['_jwppp-ads-tag-' . $number])) {
+				$jwppp_ads_tag = $_POST['_jwppp-ads-tag-' . $number];
+				update_post_meta($post_id, '_jwppp-ads-tag-' . $number, $jwppp_ads_tag);
+			}
+
+			if(isset($_POST['_jwppp-choose-player-' . $number])) {
+				$jwppp_choose_player = sanitize_text_field($_POST['_jwppp-choose-player-' . $number]);
+				update_post_meta($post_id, '_jwppp-choose-player-' . $number, $jwppp_choose_player);
+			}
+
+			if($jwppp_activate_media_type === '1') {
+				$media_type = sanitize_text_field($_POST['_jwppp-media-type-' . $number]);
+				update_post_meta( $post_id, '_jwppp-media-type-' . $number, $media_type );
+			} else {
+				delete_post_meta($post_id, '_jwppp-media-type-' . $number);
+			}
+
+			if(isset($_POST['autoplay-hidden-' . $number])) {
+				$jwppp_autoplay = isset($_POST['_jwppp-autoplay-' . $number]) ? sanitize_text_field($_POST['_jwppp-autoplay-' . $number]) : 0;
+				update_post_meta( $post_id, '_jwppp-autoplay-' . $number, $jwppp_autoplay );
+			}
+
+			if(isset($_POST['mute-hidden-' . $number])) {
+				$jwppp_mute = isset($_POST['_jwppp-mute-' . $number]) ? sanitize_text_field($_POST['_jwppp-mute-' . $number]) : 0;
+				update_post_meta( $post_id, '_jwppp-mute-' . $number, $jwppp_mute );
+			}
+
+			if(isset($_POST['repeat-hidden-' . $number])) {
+				$jwppp_repeat = isset($_POST['_jwppp-repeat-' . $number]) ? sanitize_text_field($_POST['_jwppp-repeat-' . $number]) : 0;
+				update_post_meta( $post_id, '_jwppp-repeat-' . $number, $jwppp_repeat );
+			}
+
+			if(isset($_POST['single-embed-hidden-' . $number])) {
+				$jwppp_single_embed = isset($_POST['_jwppp-single-embed-' . $number]) ? sanitize_text_field($_POST['_jwppp-single-embed-' . $number]) : 0;
+				update_post_meta( $post_id, '_jwppp-single-embed-' . $number, $jwppp_single_embed );
+			}
+
+			if(isset($_POST['download-video-hidden-' . $number])) {
+				$jwppp_download_video = isset($_POST['_jwppp-download-video-' . $number]) ? sanitize_text_field($_POST['_jwppp-download-video-' . $number]) : 0;
+				update_post_meta( $post_id, '_jwppp-download-video-' . $number, $jwppp_download_video );
+			}
+			
+			$jwppp_add_chapters = null;
+			if(isset($_POST['add-chapters-hidden-' . $number])) {
+				$jwppp_add_chapters = isset($_POST['_jwppp-add-chapters-' . $number]) ? sanitize_text_field($_POST['_jwppp-add-chapters-' . $number]) : 0;
+				$jwppp_chapters_subtitles = sanitize_text_field($_POST['_jwppp-chapters-subtitles-' . $number]);
+
+				$jwppp_subtitles_method = ($jwppp_chapters_subtitles === 'subtitles') ? sanitize_text_field($_POST['_jwppp-subtitles-method-' . $number]) : '';
+
+				update_post_meta( $post_id, '_jwppp-add-chapters-' . $number, $jwppp_add_chapters );
+				update_post_meta( $post_id, '_jwppp-chapters-subtitles-' . $number, $jwppp_chapters_subtitles);
+				update_post_meta( $post_id, '_jwppp-subtitles-method-' . $number, $jwppp_subtitles_method);
+			}
+
+			if(isset($_POST['subtitles-load-default-hidden-' . $number])) {
+				$jwppp_subtitles_load_default = isset($_POST['_jwppp-subtitles-load-default-' . $number]) ? sanitize_text_field($_POST['_jwppp-subtitles-load-default-' . $number]) : 0;
+				update_post_meta( $post_id, '_jwppp-subtitles-load-default-' . $number, $jwppp_subtitles_load_default );
+			}
+
+			if(isset($_POST['subtitles-write-default-hidden-' . $number])) {
+				$jwppp_subtitles_write_default = isset($_POST['_jwppp-subtitles-write-default-' . $number]) ? sanitize_text_field($_POST['_jwppp-subtitles-write-default-' . $number]) : 0;
+				update_post_meta( $post_id, '_jwppp-subtitles-write-default-' . $number, $jwppp_subtitles_write_default );
+			}
+
+			if(isset($_POST['playlist-carousel-hidden-' . $number])) {
+				$jwppp_playlist_carousel = isset($_POST['_jwppp-playlist-carousel-' . $number]) ? sanitize_text_field($_POST['_jwppp-playlist-carousel-' . $number]) : 0;
+				update_post_meta( $post_id, '_jwppp-playlist-carousel-' . $number, $jwppp_playlist_carousel );
+			}
+
+			/*Chapter and subtitles are available only with self-hosted player*/
+			if(!$dashboard_player) {
+
+				if($jwppp_add_chapters === '1') {
+
+					$chapters = sanitize_text_field($_POST['_jwppp-chapters-number-' . $number]);
+					update_post_meta($post_id, '_jwppp-chapters-number-' . $number, $chapters);
+
+					for($i=1; $i<$chapters+1; $i++) {
+						
+						if($jwppp_chapters_subtitles === 'subtitles' && $jwppp_subtitles_method === 'load') {
+							
+							//DELETE OLD DIFFERENT ELEMENTS
 							delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-title');
-						} else {
-							update_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-title', $title);
-						}
-
-						$start = sanitize_text_field($_POST['_jwppp-' . $number . '-chapter-' . $i . '-start']);
-						if(!$start) {
 							delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-start');
-						} else {
-							update_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-start', $start);
-						}
-
-						$end = sanitize_text_field($_POST['_jwppp-' . $number . '-chapter-' . $i . '-end']);
-						if(!$end) {
 							delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-end');
+							delete_post_meta($post_id, '_jwppp-subtitles-write-default-' . $number);
+
+
+							$sub_url = sanitize_text_field($_POST['_jwppp-' . $number . '-subtitle-' . $i . '-url']);
+							if(!$sub_url) {
+								delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url');
+							} else {
+								update_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url', $sub_url);
+							}
+
+							$sub_label = sanitize_text_field($_POST['_jwppp-' . $number . '-subtitle-' . $i . '-label']);
+							if(!$sub_label) {
+								delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label');
+							} else {
+								update_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label', $sub_label);
+							}
+
+
 						} else {
-							update_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-end', $end);
+
+							//DELETE OLD DIFFERENT ELEMENTS
+							delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url');
+							delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label');
+							delete_post_meta($post_id, '_jwppp-subtitles-load-default-' . $number);
+
+							$title = sanitize_text_field($_POST['_jwppp-' . $number . '-chapter-' . $i . '-title']);
+							if(!$title) {
+								delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-title');
+							} else {
+								update_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-title', $title);
+							}
+
+							$start = sanitize_text_field($_POST['_jwppp-' . $number . '-chapter-' . $i . '-start']);
+							if(!$start) {
+								delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-start');
+							} else {
+								update_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-start', $start);
+							}
+
+							$end = sanitize_text_field($_POST['_jwppp-' . $number . '-chapter-' . $i . '-end']);
+							if(!$end) {
+								delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-end');
+							} else {
+								update_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-end', $end);
+							}
+							
 						}
 						
 					}
-					
-				}
 
-			} else {
-				$chapters = sanitize_text_field($_POST['_jwppp-chapters-number-' . $number]);
-				for($i=1; $i<$chapters+1; $i++) {
-					delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-title');
-					delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-start');
-					delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-end');
-					delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url');
-					delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label');
-					delete_post_meta($post_id, '_jwppp-chapters-subtitles-' . $number );
-					delete_post_meta($post_id, '_jwppp-subtitles-method-' . $number);
-				}
-				delete_post_meta($post_id, '_jwppp-chapters-number-' . $number);
-			}			
+				} else {
+					$chapters = sanitize_text_field($_POST['_jwppp-chapters-number-' . $number]);
+					for($i=1; $i<$chapters+1; $i++) {
+						delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-title');
+						delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-start');
+						delete_post_meta($post_id, '_jwppp-' . $number . '-chapter-' . $i . '-end');
+						delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url');
+						delete_post_meta($post_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label');
+						delete_post_meta($post_id, '_jwppp-chapters-subtitles-' . $number );
+						delete_post_meta($post_id, '_jwppp-subtitles-method-' . $number);
+					}
+					delete_post_meta($post_id, '_jwppp-chapters-number-' . $number);
+				}			
 
-		}
+			}
+			
+		} else {
+
+			/*Delete all video informations from the db*/
+			jwppp_db_delete_video($post_id, $number);
 		
+		}			
 	}
 
 }
@@ -638,7 +690,7 @@ function jwppp_get_feed_url() {
 	if($terms !== null) {
 		$feed = get_term_link($terms[0]->term_id, $taxonomy); 
 		if(get_option('permalink_structure')) {
-			$feed .= '/related-videos';
+			$feed .= 'related-videos';
 		} else {
 			$feed .= '&feed=related-videos';
 		}
@@ -1729,11 +1781,12 @@ add_action('wp_ajax_search-content', 'jwppp_get_videos_callback');
 
 function jwppp_get_current_video_details() {
 
-	$api = new jwppp_dasboard_api();
-
 	if(isset($_POST['media_id'])) {
 		$media_id = sanitize_text_field($_POST['media_id']);
-		if($media_id){
+		$sh_video = strrpos($media_id, 'http') === 0 ? true : false;
+
+		if(!$sh_video){
+			$api = new jwppp_dasboard_api();
 			$videos = $api->get_videos($media_id);
 			if(isset($videos[0])){
 				echo json_encode($videos[0]);				

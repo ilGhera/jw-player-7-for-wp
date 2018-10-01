@@ -1,7 +1,14 @@
-//JW PLAYER PREMIUM PLUGIN
+/**
+ * Main js file
+ * @author ilGhera
+ * @package jw-player-7-for-wp/js
+ * @version 1.6.0
+ */
 jQuery(document).ready(function($) {
 
-	//TABS
+	/**
+     * Tabs menu navigation
+     */
 	var jwppp_pagination = function() {
 
         var $contents = $('.jwppp-admin')
@@ -38,10 +45,10 @@ jQuery(document).ready(function($) {
         })
                 
     }
-
     jwppp_pagination();
 
-	//RELATED VIDEOS THUMBNAIL/ CUSTOM FIELD
+
+	/*Related videos options, thumbnail/ custom field*/
     if($('#jwppp-show-related').prop('checked') == false) {
         $('.related-options').hide();
     }
@@ -71,7 +78,8 @@ jQuery(document).ready(function($) {
         }
     });
 
-    //SHARE
+
+    /*Share options*/
     if($('#jwppp-active-share').prop('checked') == false) {
         $('.share-options').hide();
     }
@@ -85,7 +93,8 @@ jQuery(document).ready(function($) {
 
     });
 
-    //DIMENSIONS METHOD
+
+    /*Player dimensions*/
     if($('#fixed').prop('selected') == true) {
         $('.more-responsive').hide();
     } else {
@@ -102,14 +111,14 @@ jQuery(document).ready(function($) {
         }
     }); 
 
-    //ADS
+
+    /*Ads options*/
     if($('#jwppp-active-ads').prop('checked') == false) {
         $('.ads-options').hide();
     }
 
     $('#jwppp-active-ads').on('change',function() {
         if($('#jwppp-active-ads').prop('checked')) {
-            // $('.ads-options').show('slow');
 
             /*ADS variable block*/
             if($('#jwppp-active-ads-var').prop('checked')) {
@@ -206,6 +215,7 @@ jQuery(document).ready(function($) {
 
     });
 
+    /*Mediation*/
     if($('#jwppp-mediation').val() !== 'jwp' && $('#jwppp-mediation').val() !== 'jwpdfp') {
         $('.ads-options.bidding.floor-price').hide();
     }
@@ -220,7 +230,7 @@ jQuery(document).ready(function($) {
     });
 
 
-    //COLOR FIELD FOR SUBTITLES
+    /*Color field for subtitles*/
     $('.jwppp-color-field').wpColorPicker();
 
 });

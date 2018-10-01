@@ -1,10 +1,24 @@
-<?php //ADD CHAPTERS
-require('../../../../wp-load.php');
+<?php
+/**
+ * Video chapters
+ * @author ilGhera
+ * @package jw-player-7-for-wp/includes
+ * @version 1.6.0
+ * @return string   the chapters set by the publisher in a WEBVTT file
+ */
 
-$id = $_GET['id'];
-$number = $_GET['number'];
-$n_chapters = get_post_meta($id, '_jwppp-chapters-number-' . $number, true);
+/*Load the wp core functionalities*/
+if(!defined(ABSPATH)){
+    $path = explode('/wp-content/', dirname(__FILE__));
+    include_once($path[0] . '/wp-load.php');
+}
 
+
+/**
+ * Set the time format 
+ * @param  int $seconds the time in seconds set by the publisher
+ * @return string       the formatted time for the WEVTT file
+ */
 function return_time($seconds) {
 	$hours = floor($seconds / 3600);
 	$mins = floor(($seconds - ($hours*3600)) / 60);
@@ -14,18 +28,27 @@ function return_time($seconds) {
 	$time .= sprintf("%02d", $secs) . '.000';
 	return $time;
 }
-echo "WEBVTT\n";
-echo "\n";
 
-for($i=1; $i<$n_chapters+1; $i++) {
 
-	$start = get_post_meta($id, '_jwppp-' . $number . '-chapter-' . $i . '-start', true);
-	$end = get_post_meta($id, '_jwppp-' . $number . '-chapter-' . $i . '-end', true);
+/*Get the video informations*/
+$id = isset($_GET['id']) ? sanitize_text_field($_GET['id']) : '';
+$number = isset($_GET['number']) ? sanitize_text_field($_GET['number']) : '';
+$n_chapters = get_post_meta($id, '_jwppp-chapters-number-' . $number, true);
 
-	echo "Chapter $i\n";
-	echo return_time($start);
-	echo ' --> ';
-	echo return_time($end) . "\n";
-	echo get_post_meta($id, '_jwppp-' . $number . '-chapter-' . $i . '-title', true) . "\n";
+if($id && $number && $n_chapters >= 1) {
+	echo "WEBVTT\n";
 	echo "\n";
+
+	for($i=1; $i<$n_chapters+1; $i++) {
+
+		$start = get_post_meta($id, '_jwppp-' . $number . '-chapter-' . $i . '-start', true);
+		$end = get_post_meta($id, '_jwppp-' . $number . '-chapter-' . $i . '-end', true);
+
+		echo "Chapter $i\n";
+		echo esc_html(return_time($start));
+		echo ' --> ';
+		echo esc_html(return_time($end)) . "\n";
+		echo esc_html(get_post_meta($id, '_jwppp-' . $number . '-chapter-' . $i . '-title', true)) . "\n";
+		echo "\n";
+	}
 }

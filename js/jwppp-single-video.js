@@ -1,40 +1,236 @@
 /**
- * Tools available with every self-hosted video
- * @param  {int} number the video's number in the post/ page
+ * Single video script
+ * @author ilGhera
+ * @package jw-player-7-for-wp/js
+ * @version 1.6.0
+ * @param  {int} number  the video's number in the post/ page
+ * @param  {int} post_id the post/ page id
  */
-var sh_video_script = function(number) {
+var jwppp_single_video = function(number, post_id) {
     jQuery(function($){
 
+        var $get_url = $('#_jwppp-video-url-' + number).val(); 
+        var $url = $get_url != 1 ? $get_url : '';
+        var $ext = $url.split('.').pop();
+        var $arr = ['xml', 'feed', 'php', 'rss'];
         var wrap = $('.jwppp-' + number + ' .jwppp-input-wrap');
 
-        //VIDEO URL FIELD LENGTH ANIMATION 
-        $(document).on('focus', '.jwppp-url', function(){
+        var data = {
+            'action': 'current-video-details',
+            'media_id': $url
+        }
+
+        /*Ajax - get video informations*/
+        $.post(ajaxurl, data, function(response){            
+
+            /*Video details*/
+            var title = $('#_jwppp-video-title-' + number).val();
+
+            if(response) {
+    
+                /*Video from the dasboard*/
+            
+                var info = JSON.parse(response);
+
+                if(info.videos) {
+
+                    /*It is a playlist*/
+                    $('.jwppp-video-details-' + number).html(
+                        (title ? '<span>Title</span>: ' + title + '<br>' : '') +
+                        (info.description ? '<span>Description</span>: ' + info.description + '<br>' : '') +
+                        '<span>Items</span>: ' + info.videos.total + '<br>'
+                    );
+
+                    /*Display the playlist carousel option*/
+                    $('.playlist-carousel-container.' + number).css({
+                        'display': 'inline-block'
+                    })          
+
+                } else {
+
+                    /*It is a single video*/
+                    var duration = null; 
+                    if(info.duration > 0) {
+                        duration = new Date(info.duration * 1000).toISOString().substr(11, 8);
+                    }
+
+                    $('.jwppp-video-details-' + number).html(
+                        (title ? '<span>Title</span>: ' + title + '<br>' : '') +
+                        (info.description ? '<span>Description</span>: ' + info.description + '<br>' : '') +
+                        (duration ? '<span>Duration</span>: ' + duration + '<br>' : '') +
+                        (info.tags ? '<span>Tags</span>: ' + info.tags + '<br>' : '')
+                    );
+                } 
+
+            } else {
+
+                /*Self-hosted video*/
+                var description = $('#_jwppp-video-description-' + number).val();
+
+                $('.jwppp-video-details-' + number).html(
+                    (title ? '<span>Title</span>: ' + title + '<br>' : '') +
+                    (description ? '<span>Description</span>: ' + description + '<br>' : '')
+                );
+
+            }
+
+        })
+
+        /*Video toggles*/
+        $(document).on('click', '.jwppp-video-toggles.' + number + ' li', function(){
+            $('.jwppp-video-toggles.' + number + ' li').removeClass('active');
+            $(this).addClass('active');
+
+            var video_type = $(this).data('video-type');
+
+            $('.jwppp-toggle-content.' + number).removeClass('active');
+            $('.jwppp-toggle-content.' + number + '.' + video_type).addClass('active');
+
+            /*Delete the input field value on toggle change*/
+            $('input#_jwppp-video-url-' + number).val('');
+            $('#_jwppp-video-title-' + number + '.jwppp-title').val('');
+            $('#_jwppp-video-title-' + number).val('');
+
+            /*Delete preview image*/
+            $('.poster-image-preview.' + number).remove();
+
+            /*Video details*/
+            $('.jwppp-video-details-' + number).html('');
+
+            /*With cloud player and self hosted sources, all the tools are shown*/
+            if(video_type === 'add-url') {
+
+                /*Video title*/
+                $('#_jwppp-video-title-' + number).val('');
+
+                $('.jwppp-single-option-' + number).show();
+
+                /*Hide carousel option*/
+                $('.playlist-carousel-container.' + number).hide();
+
+                var data = {
+                    'action': 'self-media-source',
+                    'confirmation': 1,
+                    'post-id': post_id,
+                    'number': number
+                }
+
+            } else {
+
+                $('.jwppp-single-option-' + number).hide();
+                $('.jwppp-single-option-' + number + '.cloud-option').show();
+                $('.playlist-carousel-container.' + number).hide();
+ 
+            }
+
+        })
+
+        /*Changwe playlist-how-to*/
+        var tot = $('.jwppp-input-wrap:visible').length;
+        if(tot > 1) {
+            $('.playlist-how-to').show('slow');
+            
+            var string = [];
+            $('.order:visible').each(function(i, el) {
+                string.push($(el).html());  
+            })
+        } else {
+            $('.playlist-how-to').hide();
+        }
+
+        $('.jwppp-more-options-' + number).hide();
+
+        if($.inArray($ext, $arr)>-1) {
+            $('.more-options-' + number).hide();
+        };
+
+        /*Media url change*/
+        $(document).on('change','#_jwppp-video-url-' + number, function() {
+
+            var $url = $(this).val();
+            
+            /*Getting the extension for old type playlist*/
+            var $ext = $url.split('.').pop();
+            var $arr = ['xml', 'feed', 'php', 'rss'];
+            if($.inArray($ext, $arr)>-1) {
+                $('.more-options-' + number).hide();
+                $('.jwppp-more-options-' + number).hide();
+            } else {
+                $('.more-options-' + number).show();    
+            }
+        });
+
+        /*Video url field length animation*/ 
+        $(document).on('focus', '#_jwppp-video-url-' + number, function(){
             $(this).animate({
                 'width': '507px'
             })
+            $('.jwppp-video-details-' + number).hide();
         })
-        $(document).on('focusout', '.jwppp-url', function(){
-            $(this).animate({
-                'width': '256px'
-            })
+        $(document).on('focusout', '#_jwppp-video-url-' + number, function(){
+    
+            /*Not animate if more options are open*/
+            if($('.more-options-' + number).text() == 'More options') {
+                $(this).animate({
+                    'width': '256px'
+                })
+                setTimeout(function(){
+                    $('.jwppp-video-details-' + number).show();                
+                }, 300)
+
+            } 
         })
 
-        //SHOW SOURCES LABELS IF THEY ARE MORE THAN TWO
-        if($('#_jwppp-sources-number-' + number).val() > 1) {
-            $('.source-label-' + number).show('slow');
-        } else {
-            $('.source-label-' + number).hide();
-        }
-
+        /*More options button*/
         $('.more-options-' + number).click(function() {
             $('.jwppp-more-options-' + number).toggle('fast');
-            // $('.more-options').text('Less options');
+
             $(this).text(function(i, text) {
                 return text == 'More options' ? 'Less options' : 'More options';
             });
+
+            var method = $('.jwppp-video-toggles.' + number + ' li.active');
+
+            if($(method).data('video-type') == 'add-url' || method.length == 0) {
+
+                setTimeout(function(){
+                    var url_field = $('#_jwppp-video-url-' + number + '.jwppp-url');
+                    var n_sources = $('#_jwppp-sources-number-' + number).val();
+
+                    if($('.more-options-' + number).text() == 'Less options') {
+
+                        $('.jwppp-video-details-' + number).hide();
+                        $(url_field).animate({'width': '507px'})
+                        if(n_sources >= 2) {
+                            $('#_jwppp-' + number +'-main-source-label').show();                    
+                        }
+
+                    } else {
+
+                        $(url_field).animate({'width': '256px'})
+                        $('#_jwppp-' + number +'-main-source-label').hide();
+
+                         /*Self-hosted video*/
+                        var title = $('.jwppp-more-options-' + number + ' #_jwppp-video-title-' + number).val();
+                        var description = $('#_jwppp-video-description-' + number).val();
+
+                        $('.jwppp-video-details-' + number).html(
+                            (title ? '<span>Title</span>: ' + title + '<br>' : '') +
+                            (description ? '<span>Description</span>: ' + description + '<br>' : '')
+                        );
+
+                        setTimeout(function(){
+                            $('.jwppp-video-details-' + number).show();
+                        }, 300)
+
+                    }
+                }, 400)
+
+            }
+
         });
         
-        //MEDIA TYPE
+        /*Media type*/
         if($('#_jwppp-activate-media-type-' + number).prop('checked') == false) {
             $('#_jwppp-media-type-' + number).hide();
         } else {
@@ -48,7 +244,7 @@ var sh_video_script = function(number) {
             }
         })
 
-        //POSTER IMAGE PREVIEW
+        /*Poster image preview*/
         $(document).on('change', '#_jwppp-video-image-' + number, function(){
             if($(this).val()) {
                 $('.poster-image-preview.' + number).remove();
@@ -65,7 +261,7 @@ var sh_video_script = function(number) {
             }
         })
         
-        //CHAPTERS
+        /*Chapters*/
         if($('#_jwppp-add-chapters-' + number).prop('checked') == false) {
 
             $('#_jwppp-chapters-subtitles-' + number).hide();
@@ -82,14 +278,14 @@ var sh_video_script = function(number) {
             $('label[for="_jwppp-subtitles-write-default-' + number + '"]').hide();
             $('label[for="_jwppp-subtitles-load-default-' + number + '"]').hide();
 
-            //IF SUBTITLES ARE ACTIVATED, SELECT MANUAL/ LOAD IS SHOWN
+            /*If subtitles are activated, manual/ load option is shown*/
             if($('#_jwppp-chapters-subtitles-' + number).val() == 'subtitles') {
                 $('#_jwppp-subtitles-method-' + number).show();
                 $('label[for="_jwppp-subtitles-write-default-' + number + '"]').show();
                 $('label[for="_jwppp-subtitles-load-default-' + number + '"]').show();
             }
 
-            //IF SUBTITLE METHOD IS SET TO "LOAD", THE ELEMENTS CHANGE
+            /*If subtitle method is set to "load", the elements change*/
             var sub_method = $('#_jwppp-subtitles-method-' + number).val();
             if(sub_method == 'load') {
                 $('.load-subtitles-' + number).show();
@@ -117,7 +313,7 @@ var sh_video_script = function(number) {
             })
         }
 
-        //HIDE/ SHOW CONTENTS BASED ON THE MAIN FLAG
+        /*Hide/ show contents based on the main flag*/
         $('#_jwppp-add-chapters-' + number).on('change',function() {
             if($('#_jwppp-add-chapters-' + number).prop('checked')) {
                 $('span.add-chapters.' + number).text('Add');
@@ -125,7 +321,7 @@ var sh_video_script = function(number) {
                 $('#_jwppp-chapters-number-' + number).show();
                 
 
-                //IF SUBTITLES ARE ACTIVATED, SELECT MANUAL/ LOAD IS SHOWN
+                /*If subtitles are activated, manual/ load option is shown*/
                 if($('#_jwppp-chapters-subtitles-' + number).val() == 'subtitles') {
                     $('#_jwppp-subtitles-method-' + number).show();
                 }
@@ -147,7 +343,6 @@ var sh_video_script = function(number) {
                     }
                 })
 
-                // $('li#video-' + number + '-subtitle').hide();
                 $('li#video-' + number + '-subtitle').each(function(i,el) {
                     var numb = $(el).data('number');
                     if(numb <= n_chapters) {
@@ -166,8 +361,7 @@ var sh_video_script = function(number) {
             }
         });
 
-
-        //SET DIFFERENT PLACEHOLDER FOR DIFFERENTS ELEMENT TYPES 
+        /*Set different placeholder for differents element types*/ 
         function placeholder() {
             var selector = $('#_jwppp-chapters-subtitles-' + number);
             if($(selector).val() == 'thumbnails') {
@@ -180,8 +374,7 @@ var sh_video_script = function(number) {
             $('ul.chapters-subtitles-' + number + ' li input[type=text]').attr('placeholder', placeholder);
         }
 
-
-        //CHANGE CONTENTS BASED ON THE TOOL SELECTED
+        /*Change contents based on the tool selected*/
         $('#_jwppp-chapters-subtitles-' + number).on('change', function(){
             
             placeholder();
@@ -208,8 +401,7 @@ var sh_video_script = function(number) {
             }
         })
 
-
-        //CHANGE ELEMENT TYPE BASED ON SUBTITLES METHOS
+        /*Change element type based on subtitles methos*/
         $('#_jwppp-subtitles-method-' + number).on('change', function(){
             if($(this).val() == 'load') {
                 $('.load-subtitles-' + number).show();
@@ -220,12 +412,12 @@ var sh_video_script = function(number) {
             }
         })
         
-        //CHANGE THE ELEMENTS NUMBER BASE ON THE NUMBER TOOL
+        /*Change the elements number base on the number tool*/
         $('#_jwppp-sources-number-' + number).on('change',function() {
             var n_sources          = $(this).val();
             var n_current_sources  = $('li#video-' + number + '-source').length;
 
-            //SHOW LABELs IF ALTERNATIVES SOURCE EXIST
+            /*Show labels if alternatives source exist*/
             if(n_sources > 1) {
                 $('.source-label-' + number).show('slow');
             } else {
@@ -253,7 +445,7 @@ var sh_video_script = function(number) {
             })
         })
 
-        //CHAPTER NUMBER
+        /*Chapter number*/
         $('#_jwppp-chapters-number-' + number).on('change',function() {
 
             var n_chapters          = $(this).val();
@@ -284,7 +476,6 @@ var sh_video_script = function(number) {
                             '<input type="text" name="_jwppp-' + number + '-subtitle-' + n + '-label" style="margin-right:1rem;" value="" placeholder="Label (EN, IT, FR )" size="30" />';
                            '</li>';
                     $('ul.load-subtitles-' + number).append(element);
-                    // placeholder();
                 }
             }
 
@@ -310,4 +501,3 @@ var sh_video_script = function(number) {
         })
     })
 }
-
