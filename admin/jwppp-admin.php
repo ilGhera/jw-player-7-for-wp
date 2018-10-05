@@ -226,6 +226,68 @@ add_action('wp_ajax_player_check', 'jwppp_player_check_callback');
 
 
 /**
+ * Single ads tag used in ajax callback funztion 
+ * @param  int    $n   the video number
+ * @param  string $tag the ads tag
+ * @return mixed  the html element with url and label
+ */
+function jwppp_ads_tag($n, $tag='') {
+	
+	$ad_url = isset($tag['url']) ? $tag['url'] : $tag;
+	$ad_label = isset($tag['label']) ? sanitize_text_field($tag['label']) : '';
+
+	$output = '<li>';
+		$output .= '<input type="text" class="regular-text" id="jwppp-ads-tag" name="jwppp-ads-tag-' . esc_attr($n) . '" placeholder="' . esc_html(__('Add the url of your XML file.', 'jwppp')) . '" value="' . $ad_url . '" />';
+		$output .= '<input type="text" id="jwppp-ads-tag-label" name="jwppp-ads-tag-label' . esc_attr($n) . '" placeholder="' . esc_html(__('Add a label for this tag', 'jwppp')) . '" value="' . esc_html($ad_label) . '" />';
+
+		if($n === 1) {
+
+			$output .= '<div class="add-tag-container">';
+				$output .= '<img class="add-tag" src="' . plugin_dir_url(__DIR__) . 'images/add-tag.png">';
+				$output .= '<img class="add-tag-hover" src="' . plugin_dir_url(__DIR__) . 'images/add-tag-hover.png">';
+			$output .= '</div>';				
+
+		} else {
+
+			$output .= '<div class="remove-tag-container">';
+				$output .= '<img class="remove-tag" src="' . plugin_dir_url(__DIR__) . 'images/remove-tag.png">';
+				$output .= '<img class="remove-tag-hover" src="' . plugin_dir_url(__DIR__) . 'images/remove-tag-hover.png">';
+			$output .= '</div>';
+
+		}
+	$output .= '</li>';
+
+	return $output;
+}
+
+
+/**
+ * Callback - add a new ads tag
+ */
+function jwppp_ads_tag_callback() {
+	$n = isset($_POST['number']) ? sanitize_text_field($_POST['number']) : '';
+	if($n) {
+		echo jwppp_ads_tag($n);
+	}
+	exit;
+}
+add_action('wp_ajax_add_ads_tag', 'jwppp_ads_tag_callback');
+
+
+/**
+ * Save the ads var name in the db
+ */
+function jwppp_ads_var_callback() {
+
+	$tag = isset($_POST['tag']) ? $_POST['tag'] : '';
+	update_option('jwppp-ads-var', $tag);
+
+	exit;
+}
+add_action('wp_ajax_ads-var-name', 'jwppp_ads_var_callback');
+
+
+/**
  * Plugin options page
  */
 function jwppp_options() {
@@ -254,9 +316,7 @@ function jwppp_options() {
 		<?php if(!$dashboard_player) { ?>
 			<a href="#" data-link="jwppp-skin" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Skin', 'jwppp')); ?></a>
 			<a href="#" data-link="jwppp-subtitles" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Subtitles', 'jwppp')); ?></a>
-			<?php /*
 			<a href="#" data-link="jwppp-related" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Related posts', 'jwppp')); ?></a>
-			*/ ?>
 			<a href="#" data-link="jwppp-social" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Sharing', 'jwppp')); ?></a>    
 		<?php } else { ?>
 			<a href="#" data-link="jwppp-playlist-carousel" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Playlist carousel', 'jwppp')); ?></a>    

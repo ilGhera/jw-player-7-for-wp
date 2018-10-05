@@ -108,13 +108,6 @@ var jwppp_single_video = function(number, post_id) {
                 /*Hide carousel option*/
                 $('.playlist-carousel-container.' + number).hide();
 
-                var data = {
-                    'action': 'self-media-source',
-                    'confirmation': 1,
-                    'post-id': post_id,
-                    'number': number
-                }
-
             } else {
 
                 $('.jwppp-single-option-' + number).hide();
