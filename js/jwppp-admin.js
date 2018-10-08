@@ -48,20 +48,6 @@ jQuery(document).ready(function($) {
     jwppp_pagination();
 
 
-	/*Related videos options, thumbnail/ custom field*/
-    if($('#jwppp-show-related').prop('checked') == false) {
-        $('.related-options').hide();
-    }
-
-    $('#jwppp-show-related').on('change',function() {
-        if($('#jwppp-show-related').prop('checked')) {
-            $('.related-options').show('slow');
-        } else {
-            $('.related-options').hide();
-        }
-
-    });
-
     if($("#thumbnail").val() == 'featured-image') {
         $(".cf-row").hide();
     }

@@ -53,8 +53,6 @@ function jwppp_sh_player_option($ar='', $width='', $height='') {
 	$jwppp_logo_link = sanitize_text_field(get_option('jwppp-logo-link'));
 	$active_share = sanitize_text_field(get_option('jwppp-active-share'));	
 	$jwppp_embed_video = sanitize_text_field(get_option('jwppp-embed-video'));
-	$jwppp_show_related = sanitize_text_field(get_option('jwppp-show-related'));
-	$jwppp_related_heading = sanitize_text_field(get_option('jwppp-related-heading'));
 	$jwppp_next_up = sanitize_text_field(get_option('jwppp-next-up'));
 	$jwppp_playlist_tooltip = sanitize_text_field(get_option('jwppp-playlist-tooltip'));
 
@@ -150,19 +148,6 @@ function jwppp_sh_player_option($ar='', $width='', $height='') {
     	$output .= "},\n";
     }
 	    
-	/*Related videos*/
-    if($jwppp_show_related === '1' && jwppp_get_feed_url() !== null) {
-		$output .= "related: {\n";
-		$output .= "file: '" . jwppp_get_feed_url() . "',\n";
-		if($jwppp_related_heading !== null) {
-			$output .= "heading: '" . esc_html($jwppp_related_heading) . "',\n";
-		} else {
-			$output .= "heading: '" . esc_html(__('Related Videos', 'jwppp')) . "',\n";
-		}
-		$output .= "onclick: 'link'\n";				
-		$output .= "},\n";
-	}
-
 	/*Subtitles style*/
 	if( jwppp_caption_style() ) {
 		$output .= "captions: {\n";

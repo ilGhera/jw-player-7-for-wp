@@ -1,6 +1,6 @@
 === JW Player for Wordpress - Premium ===
 Contributors: ghera74
-Tags: jw player, jw player 7, jw player 8, jwplayer, jwplayer 7, jwplayer 8, video, embed video, youtube, related video, video preroll, video chapters, video subtitles
+Tags: jw player, jw player 7, jw player 8, jwplayer, jwplayer 7, jwplayer 8, video, embed video, youtube, video preroll, video chapters, video subtitles
 Version: 1.6.0
 Requires at least: 4.0
 Tested up to: 4.9
@@ -8,13 +8,13 @@ License: GPLv2
 
 JW Player for Wordpress - Premium is the complete solution for using JW Player into Wordpress.
 It works with the latest version of the famous video player and it gives you full control of all the options available.
-Player customization, related videos, social sharing and advertising are just an example.
+Player customization, social sharing and advertising are just an example.
 
 
 == Description ==
 **JW Player for Wordpress - Premium** is the complete solution for using JW Player into Wordpress.
 It works with the latest version of the famous video player and it gives you full control of all the options available.
-Player customization, related videos, social sharing and advertising are just an example.
+Player customization, social sharing and advertising are just an example.
 
 JW Player for Wordpress - Premium can be used with the cloud or even the self-hosted version of the player.<br>
 
@@ -41,10 +41,10 @@ That's all, you're ready to go!
 * Once Activated, go to <strong>JW Player</strong> menu and set you preferences.
 
 
-== Screenshots ==
+== Screenshots == TEMP
 1. Post types and position
 2. Full player customization
-3. Advanced related videos
+
 4. Sharing options
 5. Video ads
 6. Single video options

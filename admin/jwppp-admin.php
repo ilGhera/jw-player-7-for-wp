@@ -316,7 +316,6 @@ function jwppp_options() {
 		<?php if(!$dashboard_player) { ?>
 			<a href="#" data-link="jwppp-skin" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Skin', 'jwppp')); ?></a>
 			<a href="#" data-link="jwppp-subtitles" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Subtitles', 'jwppp')); ?></a>
-			<a href="#" data-link="jwppp-related" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Related posts', 'jwppp')); ?></a>
 			<a href="#" data-link="jwppp-social" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Sharing', 'jwppp')); ?></a>    
 		<?php } else { ?>
 			<a href="#" data-link="jwppp-playlist-carousel" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Playlist carousel', 'jwppp')); ?></a>    
@@ -777,8 +776,6 @@ function jwppp_options() {
 
 	<?php include(plugin_dir_path(__FILE__) . 'jwppp-admin-subtitles.php'); ?>
 
-	<?php include(plugin_dir_path(__FILE__) . 'jwppp-admin-related-videos.php'); ?>
-
 	<?php include(plugin_dir_path(__FILE__) . 'jwppp-admin-sharing.php'); ?>
 
 	<?php include(plugin_dir_path(__FILE__) . 'jwppp-admin-ads.php'); ?>
@@ -796,68 +793,3 @@ function jwppp_options() {
 <?php
 
 }
-
-
-/**
- * Adds footer text in the plugin options page asking for a review
- * @param  string $text the default footer text
- * @return string       the customized text
- */
-function jwppp_footer_text($text) {
-	$screen = get_current_screen();
-	if($screen->id === 'toplevel_page_jw-player-for-wp') {
-		$text = __('If you like <strong>JW Player for Wordpress - Premium</strong>, please give it a <a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium" target="_blank">★★★★★</a> rating. Thanks in advance! ', 'jwppp');
-	}
-
-	$allowed_tags = array(
-		'strong' => [],
-		'a'		 => [
-			'href'   => [],
-			'target' => []
-		]
-	);
-
-	echo wp_kses($text, $allowed_tags);
-}
-add_filter('admin_footer_text', 'jwppp_footer_text');
-
-
-/**
- * When a new update is available, this function shows the right message to the user based on his Premium Key status 
- * @return string
- */
-function jwppp_update_message( $plugin_data, $response) { //TEMP
-	$key = get_option('jwppp-premium-key');
-	$message = null;
-
-	if(!$key) {
-
-		$message = 'A <b>Premium Key</b> is required for keeping this plugin up to date. Please, add yours in the <a href="' . esc_url(admin_url()) . 'admin.php/?page=jw-player-for-wp">options page</a> or click <a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">here</a> for prices and details.';
-	
-	} else {
-	
-		$decoded_key = explode('|', base64_decode($key));
-	    $bought_date = date( 'd-m-Y', strtotime($decoded_key[1]));
-	    $limit = strtotime($bought_date . ' + 365 day');
-	    $now = strtotime('today');
-
-	    if($limit < $now) { 
-	        $message = 'It seems like your <strong>Premium Key</strong> is expired. Please, click <a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">here</a> for prices and details.';
-	    } elseif($decoded_key[2] !== '241') {
-	    	$message = 'It seems like your <strong>Premium Key</strong> is not valid. Please, click <a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">here</a> for prices and details.';
-	    }
-
-	}
-
-	$allowed_tags = array(
-		'strong' => [],
-		'a'		 => [
-			'href'   => [],
-			'target' => []
-		]
-	);
-
-	echo ($message) ? '<br><span class="jwppp-alert">' . wp_kses($message, $allowed_tags) . '</span>' : '';
-
-}
-add_action('in_plugin_update_message-' . basename(dirname(__DIR__)) . '/jw-player-7-for-wp-premium.php', 'jwppp_update_message', 10, 2);
