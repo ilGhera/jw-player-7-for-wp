@@ -76,7 +76,7 @@ $output .= '<table class="widefat jwppp-' . esc_attr($number) . '" style="margin
 
 							if($api && $api->account_validation()) {
 
-								$output .= '<input type="text" autocomplete="off" id="_jwppp-video-title-' . esc_attr($number) . '" class="jwppp-search-content choose" data-number="' . esc_attr($number) . '" placeholder="' . esc_html(__('Search video or playlist', 'jwppp')) . '" style="margin-right:1rem;" value="' . esc_html($video_title) . '"><br>';
+								$output .= '<input type="text" autocomplete="off" id="_jwppp-video-title-' . esc_attr($number) . '" class="jwppp-search-content choose" data-number="' . esc_attr($number) . '" placeholder="' . esc_html(__('Select video/playlist or search by ID', 'jwppp')) . '" style="margin-right:1rem;" value="' . esc_html($video_title) . '"><br>';
 
 								$output .= '<input type="hidden" name="_jwppp-video-url-' . esc_attr($number) . '" id="_jwppp-video-url-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_url) . '">';
 

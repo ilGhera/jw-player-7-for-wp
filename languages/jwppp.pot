@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JW Player for Wordpress - Premium 1.5.0\n"
-"POT-Creation-Date: 2018-10-08 17:34+0200\n"
+"POT-Creation-Date: 2018-10-08 22:10+0200\n"
 "PO-Revision-Date: 2015-12-31 00:25+0100\n"
 "Last-Translator: ilGhera <info@ilghera.com>\n"
 "Language-Team: ilGhera <info@ilghera.com>\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid ""
 "This option is only available with the <u>JW Player Enterprise license</u> "
 "-- details <a href=\"https://www.jwplayer.com/pricing/\" target=\"_blank"
-"\">here</a>. "
+"\">here</a> "
 msgstr ""
 
 #: admin/jwppp-admin-ads.php:123
@@ -37,7 +37,7 @@ msgid "Ads Variable"
 msgstr ""
 
 #: admin/jwppp-admin-ads.php:128
-msgid "Use an advertising embed block variable."
+msgid "Use an advertising embed block variable"
 msgstr ""
 
 #: admin/jwppp-admin-ads.php:134
@@ -72,7 +72,7 @@ msgid "Ad Skipping"
 msgstr ""
 
 #: admin/jwppp-admin-ads.php:186
-msgid "Total seconds viewers must watch an ad before being allowed to skip."
+msgid "Total seconds viewers must watch an ad before being allowed to skip"
 msgstr ""
 
 #: admin/jwppp-admin-ads.php:192
@@ -91,7 +91,7 @@ msgid ""
 "\t\tSpotX is the leading video ad serving platform and gives publishers "
 "control, transparency and insights to maximize revenue.<br>\n"
 "<a href=\"https://support.jwplayer.com/articles/how-to-setup-video-player-"
-"bidding\" target=\"_blank\">Contact SpotX to get started</a>."
+"bidding\" target=\"_blank\">Contact SpotX to get started</a>"
 msgstr ""
 
 #: admin/jwppp-admin-ads.php:215
@@ -99,7 +99,7 @@ msgid "Add a Channel ID"
 msgstr ""
 
 #: admin/jwppp-admin-ads.php:216
-msgid "Channel ID."
+msgid "Channel ID"
 msgstr ""
 
 #: admin/jwppp-admin-ads.php:222
@@ -131,7 +131,7 @@ msgid "Floor Price"
 msgstr ""
 
 #: admin/jwppp-admin-ads.php:255
-msgid "Set floor price."
+msgid "Set floor price"
 msgstr ""
 
 #: admin/jwppp-admin-ads.php:262 admin/jwppp-admin-sharing.php:78
@@ -276,7 +276,7 @@ msgid "It looks like you do not have sufficient permissions to view this page."
 msgstr ""
 
 #: admin/jwppp-admin.php:308 includes/jwppp-functions.php:33
-msgid "JW Player for Wordpress - Premium"
+msgid "JW Player for Wordpress - VIP"
 msgstr ""
 
 #: admin/jwppp-admin.php:315
@@ -693,7 +693,7 @@ msgid "Add url"
 msgstr ""
 
 #: includes/jwppp-single-video-box.php:79
-msgid "Search video or playlist"
+msgid "Select video/playlist or search by ID"
 msgstr ""
 
 #: includes/jwppp-single-video-box.php:91

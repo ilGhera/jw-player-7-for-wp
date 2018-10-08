@@ -1,4 +1,4 @@
-=== JW Player for Wordpress - Premium ===
+=== JW Player for Wordpress - VIP ===
 Contributors: ghera74
 Tags: jw player, jw player 7, jw player 8, jwplayer, jwplayer 7, jwplayer 8, video, embed video, youtube, video preroll, video chapters, video subtitles
 Version: 1.6.0
@@ -6,17 +6,17 @@ Requires at least: 4.0
 Tested up to: 4.9
 License: GPLv2
 
-JW Player for Wordpress - Premium is the complete solution for using JW Player into Wordpress.
+JW Player for Wordpress - VIP is the complete solution for using JW Player into Wordpress.
 It works with the latest version of the famous video player and it gives you full control of all the options available.
 Player customization, social sharing and advertising are just an example.
 
 
 == Description ==
-**JW Player for Wordpress - Premium** is the complete solution for using JW Player into Wordpress.
+**JW Player for Wordpress - VIP** is the complete solution for using JW Player into Wordpress.
 It works with the latest version of the famous video player and it gives you full control of all the options available.
 Player customization, social sharing and advertising are just an example.
 
-JW Player for Wordpress - Premium can be used with the cloud or even the self-hosted version of the player.<br>
+JW Player for Wordpress - VIP can be used with the cloud or even the self-hosted version of the player.<br>
 
 **Cloud**
 * Register a JW Player account at https://www.jwplayer.com/sign-up/
@@ -35,9 +35,9 @@ Just add the url of your self-hosted video, YouTube video or MP3.<br>
 That's all, you're ready to go!
 
 == Installation ==
-* Download JW Player for Wordpress - Premium
-* Upload the 'jw-player-7-for-wp-premium’ directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
-* Activate JW Player for Wordpress - Premium from your Plugins page.
+* Download JW Player for Wordpress - VIP
+* Upload the 'jw-player-7-for-wp-vip’ directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
+* Activate JW Player for Wordpress - VIP from your Plugins page.
 * Once Activated, go to <strong>JW Player</strong> menu and set you preferences.
 
 

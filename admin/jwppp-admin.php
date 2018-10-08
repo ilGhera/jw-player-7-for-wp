@@ -62,7 +62,7 @@ function jwppp_check_color($value) {
  * Register menu page
  */
 function jwppp_add_menu() {
-	$jwppp_page = add_menu_page('JW Player for Wordpress - Premium', 'JW Player', 'manage_options', 'jw-player-for-wp', 'jwppp_options', 'dashicons-format-video');
+	$jwppp_page = add_menu_page('JW Player for Wordpress - VIP', 'JW Player', 'manage_options', 'jw-player-for-wp', 'jwppp_options', 'dashicons-format-video');
 	
 	add_action('admin_print_scripts-' . $jwppp_page, 'jwppp_js_menu');
 	
@@ -305,7 +305,7 @@ function jwppp_options() {
 	echo '<div class="wrap-left" style="float:left; width:70%;">';
 
 	echo '<div id="jwppp-description">';
-		echo "<h1 class=\"jwppp main\">" . esc_html(__( 'JW Player for Wordpress - Premium', 'jwppp' )) . "<span style=\"font-size:60%;\"> 1.5.2</span></h1>";
+		echo "<h1 class=\"jwppp main\">" . esc_html(__( 'JW Player for Wordpress - VIP', 'jwppp' )) . "</h1>";
 	echo '</div>';
 
 	?>
