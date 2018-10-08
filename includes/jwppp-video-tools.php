@@ -65,7 +65,7 @@ function jwppp_video_tools($post_id, $number, $sh_video) {
 			$players = $api->get_players();
 			$library_parts = explode('https://content.jwplatform.com/libraries/', get_option('jwppp-library'));
 
-			$output .= '<label for="_jwppp-choose-player-' . esc_attr($number) . '"><strong>' . esc_html(__('Select a player', 'jwppp')) . '</strong></label>';
+			$output .= '<label for="_jwppp-choose-player-' . esc_attr($number) . '"><strong>' . esc_html(__('Select Player', 'jwppp')) . '</strong></label>';
 			$output .= '<p>';
 			$output .= '<select class="jwppp-choose-player" name="_jwppp-choose-player-' . esc_attr($number) . '">';
 
@@ -152,7 +152,7 @@ function jwppp_video_tools($post_id, $number, $sh_video) {
 	/*Ad tag*/
 	if($active_ads && !$active_ads_var) {
 		$output .= '<div class="jwppp-single-option-' . esc_attr($number) . ' cloud-option">';
-			$output .= '<label for="_jwppp-ads-tag-' . esc_attr($number) . '"><strong>' . esc_html(__('Ad tag', 'jwppp')) . '</strong></label>';
+			$output .= '<label for="_jwppp-ads-tag-' . esc_attr($number) . '"><strong>' . esc_html(__('Select Ad tag', 'jwppp')) . '</strong></label>';
 			$output .= '<p>';
 			$output .= '<select class="jwppp-ads-tag" name="_jwppp-ads-tag-' . esc_attr($number) . '">';
 				if($ads_tags) {

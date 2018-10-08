@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JW Player for Wordpress - Premium 1.5.0\n"
-"POT-Creation-Date: 2018-10-08 13:09+0200\n"
+"POT-Creation-Date: 2018-10-08 17:34+0200\n"
 "PO-Revision-Date: 2015-12-31 00:25+0100\n"
 "Last-Translator: ilGhera <info@ilghera.com>\n"
 "Language-Team: ilGhera <info@ilghera.com>\n"
@@ -726,7 +726,7 @@ msgid "Show options"
 msgstr ""
 
 #: includes/jwppp-video-tools.php:68
-msgid "Select a player"
+msgid "Select Player"
 msgstr ""
 
 #: includes/jwppp-video-tools.php:94
@@ -766,7 +766,7 @@ msgid "Add a description to your video"
 msgstr ""
 
 #: includes/jwppp-video-tools.php:155
-msgid "Ad tag"
+msgid "Select Ad tag"
 msgstr ""
 
 #: includes/jwppp-video-tools.php:168
