@@ -269,6 +269,42 @@ li .video-img {
 	font-weight: bold;
 }
 
+.jwppp-banner {
+	display: inline-block;
+	width:300px;
+	padding:0;
+	font-size:12px;
+	font-family: "Open Sans", sans-serif;
+	text-align: left;
+	color:#2FBFB0;    
+    background: #fff;
+    border: 1px solid #2EBFB0;
+    margin: 0.5rem 0;
+}
+
+.jwppp-banner ul,
+.jwppp-banner p {
+    margin: 0;
+    padding: 5%;
+    list-style: none;
+}
+.jwppp-banner li {
+    padding: 0.3rem 0;
+    margin: 0;
+}
+
+.jwppp-banner a {
+    color: #2EBFB0;
+}
+
+.jwppp-banner h3 {
+    display: block;
+    background: #2FBFB0;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    margin: 0;
+}
+
 @media screen and (max-width: 1720px) {
 	.jwppp-video-details {
 		width: 300px;

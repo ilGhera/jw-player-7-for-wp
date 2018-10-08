@@ -76,7 +76,7 @@ $output .= '<table class="widefat jwppp-' . esc_attr($number) . '" style="margin
 
 							if($api && $api->account_validation()) {
 
-								$output .= '<input type="text" autocomplete="off" id="_jwppp-video-title-' . esc_attr($number) . '" class="jwppp-search-content choose" data-number="' . esc_attr($number) . '" placeholder="Search for a video or playlist" style="margin-right:1rem;" value="' . esc_html($video_title) . '"><br>';
+								$output .= '<input type="text" autocomplete="off" id="_jwppp-video-title-' . esc_attr($number) . '" class="jwppp-search-content choose" data-number="' . esc_attr($number) . '" placeholder="' . esc_html(__('Search video or playlist', 'jwppp')) . '" style="margin-right:1rem;" value="' . esc_html($video_title) . '"><br>';
 
 								$output .= '<input type="hidden" name="_jwppp-video-url-' . esc_attr($number) . '" id="_jwppp-video-url-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_url) . '">';
 
@@ -163,7 +163,7 @@ $output .= '<table class="widefat jwppp-' . esc_attr($number) . '" style="margin
 					$output .= '<code style="display:inline-block;margin:0.1rem 0.5rem 0 0.2rem;color:#888;">[jwp-video n="' . esc_attr($number) . '"]</code>';
 				}
 
-				$output .= '<a class="button more-options-' . esc_attr($number) . '">' . esc_html(__('More options', 'jwppp')) . '</a>';
+				$output .= '<a class="button more-options-' . esc_attr($number) . '">' . esc_html(__('Show options', 'jwppp')) . '</a>';
 
 				/*Single video tools*/
 				$output .= jwppp_video_tools($post_id, $number, $sh_video);

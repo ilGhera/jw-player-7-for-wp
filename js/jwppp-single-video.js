@@ -163,7 +163,7 @@ var jwppp_single_video = function(number, post_id) {
         $(document).on('focusout', '#_jwppp-video-url-' + number, function(){
     
             /*Not animate if more options are open*/
-            if($('.more-options-' + number).text() == 'More options') {
+            if($('.more-options-' + number).text() == 'Show options') {
                 $(this).animate({
                     'width': '256px'
                 })
@@ -179,7 +179,7 @@ var jwppp_single_video = function(number, post_id) {
             $('.jwppp-more-options-' + number).toggle('fast');
 
             $(this).text(function(i, text) {
-                return text == 'More options' ? 'Less options' : 'More options';
+                return text == 'Show options' ? 'Hide options' : 'Show options';
             });
 
             var method = $('.jwppp-video-toggles.' + number + ' li.active');

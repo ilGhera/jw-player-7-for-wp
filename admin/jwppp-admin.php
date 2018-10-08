@@ -329,28 +329,6 @@ function jwppp_options() {
 		echo '<form id="jwppp-options" method="post" action="">';
 		echo '<table class="form-table">';
 
-		/*Plugin premium key*/
-		$key = sanitize_text_field(get_option('jwppp-premium-key'));
-		if( isset($_POST['jwppp-premium-key']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
-			$key = sanitize_text_field($_POST['jwppp-premium-key']);
-			update_option('jwppp-premium-key', $key);
-		}
-		echo '<tr>';
-		echo '<th scope="row">' . esc_html(__('Premium Key', 'jwppp')) . '</th>';
-		echo '<td>';
-		echo '<input type="text" class="regular-text" name="jwppp-premium-key" id="jwppp-premium-key" placeholder="' . esc_html(__('Add your Premium Key', 'jwppp' )) . '" value="' . esc_html($key) . '" />';
-		echo '<p class="description">';
-		echo wp_kses(
-			__('Please, paste here the <strong>Premium Key</strong> that you received buying this plugin.<br>You\'ll be able to keep upgraded with the new versions of JW Player for Wordpress - Premium.', 'jwppp'), 
-			array(
-				'strong' =>[], 
-				'br' => []
-			)
-		);
-		echo '</p>';
-		echo '</td>';
-		echo '</tr>';
-
 		/*JW Player library url*/
 		$library = sanitize_text_field(get_option('jwppp-library'));
 		if( isset($_POST['jwppp-library']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options') ) {
@@ -368,7 +346,7 @@ function jwppp_options() {
 		echo '<a href="https://www.ilghera.com/documentation/setup-the-player/" title="More informations" target="_blank"><img class="question-mark" src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/question-mark.png" /></a></th>';
 		echo '<td>';
 		echo '<input type="text" class="regular-text" id="jwppp-library" name="jwppp-library" placeholder="https://content.jwplatform.com/libraries/jREFGDT.js" value="' . esc_url($library) . '" />';
-		echo '<p class="description">You can use a cloud or a self hosted library.</p>';
+		echo '<p class="description">' . esc_html(__('Cloud-hosted or self-hosted player library URL', 'jwppp')) . '</p>';
 		echo '</td>';
 		echo '</tr>';
 
@@ -415,7 +393,7 @@ function jwppp_options() {
 			echo '<td>';
 			echo '<input type="text" class="regular-text" id="jwppp-api-key" name="jwppp-api-key" placeholder="' . esc_html(__('Add your API Key', 'jwppp')) . '" value="' . esc_html($api_key) . '" /><br>';
 			echo '<input type="text" class="regular-text" id="jwppp-api-secret" name="jwppp-api-secret" placeholder="' . esc_html(__('Add your API Secret', 'jwppp')) . '" value="' . esc_html($api_secret) . '" />';
-			echo '<p class="description">' . esc_html(__('Please add your API Credentials.', 'jwppp')) . '</p>';
+			echo '<p class="description">' . esc_html(__('API Key and Secret.', 'jwppp')) . '</p>';
 			
 			/*Api class instance*/
 			$api = new jwppp_dasboard_api();
@@ -455,7 +433,7 @@ function jwppp_options() {
 
 			}
 
-			echo '<p class="description">' . esc_html(__('Select the type of content where display videos.', 'jwppp')) . '<br>';
+			echo '<p class="description">' . esc_html(__('Content types that use video.', 'jwppp')) . '<br>';
 			echo '</td>';
 			echo '</tr>';
 
@@ -480,9 +458,8 @@ function jwppp_options() {
 			echo ' />' . esc_html(__('Custom', 'jwppp'));
 			echo '</select>';
 			echo '<p class="description">';
-			echo esc_html(__('Select the location where you want the video player is displayed.', 'jwppp')) . '<br>';
 			echo wp_kses(
-				__('For custom position use the shortcode <b>[jwp-video]</b>.', 'jwppp'),
+				__('Position of the video embed. Custom position requires use of shortcode <b>[jwp-video]</b> provided by the plugin.', 'jwppp'),
 				array(
 					'b' => []
 				)
@@ -501,10 +478,10 @@ function jwppp_options() {
 				}
 
 				echo '<tr>';
-				echo '<th scope="row">' . esc_html(__('Video text', 'jwppp')) . '</th>';
+				echo '<th scope="row">' . esc_html(__('Video Loading Message', 'jwppp')) . '</th>';
 				echo '<td>';
 				echo '<textarea cols="40" rows="2" id="jwppp-text" name="jwppp-text" placeholder="' . esc_html(__('Loading the player...', 'jwppp')) . '">' . esc_html($jwppp_text) . '</textarea>';
-				echo '<p class="description">' . esc_html(__('Add custom text that appears while the player is loading.', 'jwppp')) . '<br>';
+				echo '<p class="description">' . esc_html(__('Video loading message.', 'jwppp')) . '<br>';
 				echo '</td>';
 				echo '</tr>';
 
@@ -520,7 +497,7 @@ function jwppp_options() {
 				echo '<th scope="row">' . esc_html(__('Default poster image', 'jwppp')) . '</th>';
 				echo '<td>';
 				echo '<input type="text" class="regular-text" id="poster-image" name="poster-image" value="' . esc_url($poster_image) . '" />';
-				echo '<p class="description">' . esc_html(__('Add the url of a default poster image.', 'jwppp')) . '</p>';
+				echo '<p class="description">' . esc_html(__('Default poster image URL.', 'jwppp')) . '</p>';
 				echo '<td>';
 				echo '</tr>';
 
@@ -538,7 +515,7 @@ function jwppp_options() {
 				echo '<input type="checkbox" id="post-thumbnail" name="post-thumbnail" ';
 				echo ($thumbnail === '1') ? ' checked="checked"' : '';
 				echo 'value="1" />' . esc_html(__('Use the post thumbnail', 'jwppp'));
-				echo '<p class="description">' . esc_html(__('When present, use the post thumbnail as poster image.', 'jwppp')) . '</p>';
+				echo '<p class="description">' . esc_html(__('Use post thumbnail as poster image.', 'jwppp')) . '</p>';
 				echo '<td>';
 				echo '</tr>';
 
@@ -551,7 +528,7 @@ function jwppp_options() {
 				}
 
 				echo '<tr>';
-				echo '<th scope="row">Player dimensions</th>';
+				echo '<th scope="row">' . esc_html(__('Player Embed Type', 'jwppp')) . '</th>';
 				echo '<td>';
 				echo '<select id="jwppp-method-dimensions" name="jwppp-method-dimensions" />';
 				echo '<option name="fixed" id="fixed" value="fixed" ';
@@ -561,7 +538,7 @@ function jwppp_options() {
 				echo ($jwppp_method_dimensions === 'responsive') ? 'selected="selected"' : '';
 				echo '>' . esc_html(__('Responsive', 'jwppp')) . '</option>';
 				echo '</select>';
-				echo '<p class="description">' . esc_html(__('Select how define the measures of the player.', 'jwppp')) . '<br>';
+				echo '<p class="description">' . esc_html(__('Player embed type.', 'jwppp')) . '<br>';
 				echo '</td>';
 				echo '</tr>';
 
@@ -608,7 +585,7 @@ function jwppp_options() {
 				echo '<input type="number" min="10" step="5" class="small-text" id="jwppp-responsive-width" name="jwppp-responsive-width" value="';
 				echo ($jwppp_responsive_width !== null) ? esc_html($jwppp_responsive_width) : '100';
 				echo '" /> %';
-				echo '<p class="description">' . esc_html(__('Add the player\'s width (eg. 80%)', 'jwppp')) . '</p>';
+				echo '<p class="description">' . esc_html(__('Player width', 'jwppp')) . '</p>';
 				echo '</td>';
 				echo '</tr>';
 
@@ -621,7 +598,7 @@ function jwppp_options() {
 				}
 
 				echo '<tr class="more-responsive">';
-				echo '<th scope="row">' . esc_html(__('Aspect ratio', 'jwppp')) . '</th>';
+				echo '<th scope="row">' . esc_html(__('Player Aspect Ratio', 'jwppp')) . '</th>';
 				echo '<td>';
 				echo '<select id="jwppp-aspectratio" name="jwppp-aspectratio" class="small-text" />';
 				echo '<option name="16:10" value="16:10"';
@@ -634,7 +611,7 @@ function jwppp_options() {
 				echo ($jwppp_aspectratio === '4:3') ? ' selected="selected"' : '';
 				echo '>4:3</option>';
 				echo '</select>';
-				echo '<p class="description">' . esc_html(__('Select the aspect ratio of the player', 'jwppp')) . '</p>';
+				echo '<p class="description">' . esc_html(__('Player aspect ratio', 'jwppp')) . '</p>';
 				echo '</td>';
 				echo '</tr>';
 			
@@ -647,11 +624,11 @@ function jwppp_options() {
 				}
 
 				echo '<tr>';
-				echo '<th scope="row">' . esc_html(__('Logo', 'jwppp')) . '</th>';
+				echo '<th scope="row">' . esc_html(__('Logo Image', 'jwppp')) . '</th>';
 				echo '<td>';
 				echo '<input type="text" class="regular-text" id="jwppp-logo" name="jwppp-logo" ';
 				echo 'placeholder="' . esc_html(__('Image url', 'jwppp')) . '" value="' . esc_html($jwppp_logo) . '" />';
-				echo '<p class="description">' . esc_html(__('Add your logo to the player.', 'jwppp')) . '<br>';
+				echo '<p class="description">' . esc_html(__('Custom logo image URL.', 'jwppp')) . '<br>';
 				echo '</td>';
 				echo '</tr>';
 
@@ -687,7 +664,7 @@ function jwppp_options() {
 				echo ($jwppp_logo_horizontal === 'left') ? ' selected="selected"' : '';
 				echo '>Left</option>';
 				echo '</select>';
-				echo '<p class="description">' . esc_html(__('Choose the logo position.', 'jwppp')) . '</p>';
+				echo '<p class="description">' . esc_html(__('Logo position.', 'jwppp')) . '</p>';
 				echo '</td>';
 				echo '</tr>';
 
@@ -704,7 +681,7 @@ function jwppp_options() {
 				echo '<td>';
 				echo '<input type="text" class="regular-text" id="jwppp-logo-link" name="jwppp-logo-link" ';
 				echo 'placeholder="' . esc_html(__('Link url', 'jwppp')) . '" value="' . esc_url($jwppp_logo_link) . '" />';
-				echo '<p class="description">' . esc_html(__('Add a link to the logo.', 'jwppp')) . '<br>';
+				echo '<p class="description">' . esc_html(__('Logo click-through URL.', 'jwppp')) . '<br>';
 				echo '</td>';
 				echo '</tr>';
 
@@ -717,11 +694,11 @@ function jwppp_options() {
 				}
 
 				echo '<tr>';
-				echo '<th scope="row">' . esc_html(__('Next Up', 'jwppp')) . '</th>';
+				echo '<th scope="row">' . esc_html(__('User Prompt', 'jwppp')) . '</th>';
 				echo '<td>';
 				echo '<input type="text" class="regular-text" id="jwppp-next-up" name="jwppp-next-up" ';
 				echo 'placeholder="' . esc_html(__('Next Up', 'jwppp')) . '" value="' . esc_html($jwppp_next_up) . '" />';
-				echo '<p class="description">' . esc_html(__('Add a different text for the "Next Up" prompt', 'jwppp')) . '</p>';
+				echo '<p class="description">' . esc_html(__('Text for user prompt', 'jwppp')) . '</p>';
 				echo '</td>';
 				echo '</tr>';
 
@@ -734,11 +711,11 @@ function jwppp_options() {
 				}
 
 				echo '<tr>';
-				echo '<th scope="row">' . esc_html(__('Playlist tooltip', 'jwppp')) . '</th>';
+				echo '<th scope="row">' . esc_html(__('Playlist Tooltip', 'jwppp')) . '</th>';
 				echo '<td>';
 				echo '<input type="text" class="regular-text" id="jwppp-playlist-tooltip" name="jwppp-playlist-tooltip" ';
 				echo 'placeholder="' . esc_html(__('Playlist', 'jwppp')) . '" value="' . esc_html($jwppp_playlist_tooltip) . '" />';
-				echo '<p class="description">' . esc_html(__('Add a different text for the tooltip in Playlist mode', 'jwppp')) . '</p>';
+				echo '<p class="description">' . esc_html(__('Text for playlist tooltip.', 'jwppp')) . '</p>';
 				echo '</td>';
 				echo '</tr>';
 				
@@ -784,7 +761,14 @@ function jwppp_options() {
 
 	</div><!-- wrap-left -->
 	<div class="wrap-right" style="float:left; width:30%; text-align:center; padding-top:3rem;">
-		<iframe width="300" height="800" scrolling="no" src="https://www.ilghera.com/images/jwppp-premium-iframe.html"></iframe><!-- TEMP -->
+		<div class="jwppp-banner">
+		<h3>Resources</h3>
+			<ul>
+				<li><a href="https://vip.wordpress.com/plugins/jwplayer/" target="_blank">WP VIP Plugin Info</a></li>
+				<li><a href="https://support.jwplayer.com/articles/jw-player-wordpress-plugin-reference" target="_blank">Plugin Reference</a></li>
+				<li><a href="https://support.jwplayer.com/submit-support-case" target="_blank">Support</li></a>
+			</ul>
+		</div>
 	</div>
 	<div class="clear"></div>
 

@@ -64,50 +64,50 @@
 	echo '<form id="jwppp-subtitles" name="jwppp-subtitles" method="post" action="">';
 	echo '<table class="form-table">';
 	echo '<tr>';
-	echo '<th scope="row">' . esc_html(__('Text color', 'jwppp')) . '</th>';
+	echo '<th scope="row">' . esc_html(__('Text Color', 'jwppp')) . '</th>';
 	echo '<td>';
 	echo '<input type="text" class="jwppp-color-field" name="jwppp-subtitles-color" value="' . esc_html($sub_color) . '">';
-	echo '<p class="description">' . esc_html(__('Choose the text-color for your subtitles.', 'jwppp')) . '</p>';
+	echo '<p class="description">' . esc_html(__('Color of subtitles text.', 'jwppp')) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 
 	echo '<tr>';
-	echo '<th scope="row">' . esc_html(__('Font size', 'jwppp')) . '</th>';
+	echo '<th scope="row">' . esc_html(__('Font Size', 'jwppp')) . '</th>';
 	echo '<td>';
 	echo '<input type="number" class="jwppp-subtitles-font-size" min="8" max="30" step="1" name="jwppp-subtitles-font-size" value="' . esc_html($sub_font_size) . '">';
-	echo '<p class="description">' . esc_html(__('Choose the font-size for your subtitles.', 'jwppp')) . '</p>';
+	echo '<p class="description">' . esc_html(__('Font size of subtitles.', 'jwppp')) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 
 	echo '<tr>';
-	echo '<th scope="row">' . esc_html(__('Font family', 'jwppp')) . '</th>';
+	echo '<th scope="row">' . esc_html(__('Font Family', 'jwppp')) . '</th>';
 	echo '<td>';
 	echo '<input type="text" class="jwppp-subtitles-font-family" name="jwppp-subtitles-font-family" value="' . esc_html($sub_font_family) . '">';
-	echo '<p class="description">' . esc_html(__('Choose the font-family for your subtitles.', 'jwppp')) . '</p>';
+	echo '<p class="description">' . esc_html(__('Font family of subtitles.', 'jwppp')) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 
 	echo '<tr>';
-	echo '<th scope="row">' . esc_html(__('Font opacity', 'jwppp')) . '</th>';
+	echo '<th scope="row">' . esc_html(__('Font Opacity', 'jwppp')) . '</th>';
 	echo '<td>';
 	echo '<input type="number" class="jwppp-subtitles-opacity" min="0" max="100" step="10" name="jwppp-subtitles-opacity" value="' . esc_html($sub_opacity) . '">';
-	echo '<p class="description">' . esc_html(__('Add opacity to your subtitles.', 'jwppp')) . '</p>';
+	echo '<p class="description">' . esc_html(__('Opacity of subtitles.', 'jwppp')) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 
 	echo '<tr>';
-	echo '<th scope="row">' . esc_html(__('Background color', 'jwppp')) . '</th>';
+	echo '<th scope="row">' . esc_html(__('Background Color', 'jwppp')) . '</th>';
 	echo '<td>';
 	echo '<input type="text" class="jwppp-color-field" name="jwppp-subtitles-back-color" value="' . esc_html($sub_back_color) . '">';
-	echo '<p class="description">' . esc_html(__('Choose the background-color for your subtitles.', 'jwppp')) . '</p>';
+	echo '<p class="description">' . esc_html(__('Background color of subtitles.', 'jwppp')) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 
 	echo '<tr>';
-	echo '<th scope="row">' . esc_html(__('Background opacity', 'jwppp')) . '</th>';
+	echo '<th scope="row">' . esc_html(__('Background Opacity', 'jwppp')) . '</th>';
 	echo '<td>';
 	echo '<input type="number" class="jwppp-subtitles-back-opacity" min="0" max="100" step="10" name="jwppp-subtitles-back-opacity" value="' . esc_html($sub_back_opacity) . '">';
-	echo '<p class="description">' . esc_html(__('Add opacity to your subtitles background.', 'jwppp')) . '</p>';
+	echo '<p class="description">' . esc_html(__('Opacity of subtitles.', 'jwppp')) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 

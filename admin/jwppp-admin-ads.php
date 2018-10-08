@@ -99,7 +99,8 @@
 		'a' => [
 			'href'   => [],
 			'target' => []
-		]
+		],
+		'br' => []
 	);
 
 	echo '<form id="jwppp-ads" name="jwppp-ads" method="post" action="">';
@@ -113,13 +114,13 @@
 	echo ($active_ads === '1') ? ' checked="checked"' : '';
 	echo ' />';
 	echo '<p class="description">' . wp_kses(__('Add a <strong>Basic Preroll Video Ads</strong>', 'jwppp'), $allowed_tags) . '</p>';
-	echo '<p class="description">' . wp_kses(__('This option is available only with the <u>Enterprise JW Player license</u>, details <a href="https://www.jwplayer.com/pricing/" target="_blank">here</a>. ', 'jwppp'), $allowed_tags) . '</p>';
+	echo '<p class="description">' . wp_kses(__('This option is only available with the <u>JW Player Enterprise license</u> -- details <a href="https://www.jwplayer.com/pricing/" target="_blank">here</a>. ', 'jwppp'), $allowed_tags) . '</p>';
 	echo '<td>';
 	echo '</tr>';
 
 	/*Ads embed block variable*/
 	echo '<tr class="ads-options ads-var-block activation">';
-	echo '<th scope="row">' . __('Ads variable', 'jwppp') . '</th>';
+	echo '<th scope="row">' . __('Ads Variable', 'jwppp') . '</th>';
 	echo '<td>';
 	echo '<input type="checkbox" id="jwppp-active-ads-var" name="jwppp-active-ads-var" value="1"';
 	echo ($active_ads_var === '1') ? ' checked="checked"' : '';
@@ -155,7 +156,7 @@
 
 	/*Ads tag*/
 	echo '<tr class="ads-options tag"' . $hide . '>';
-	echo '<th scope="row">' . esc_html(__('Ads Tag', 'jwppp')) . '</th>';
+	echo '<th scope="row">' . esc_html(__('Ad Tags', 'jwppp')) . '</th>';
 	echo '<td>';
 	echo '<ul style="margin: 0;">';
 	
@@ -173,7 +174,7 @@
 
 	echo '</ul>';
 	echo '<input type="hidden" name="hidden-total-tags" class="hidden-total-tags" value="' . esc_html($total_tags) . '" />';
-	echo '<p class="description">' . esc_html(__('Please, set this to the URL of the ad tag that contains the pre-roll ad.', 'jwppp')) . '</p>';
+	echo '<p class="description">' . esc_html(__('Ad tag URL | Ad Tag Name', 'jwppp')) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 
@@ -182,7 +183,7 @@
 	echo '<th scope="row">' . esc_html(__('Ad Skipping', 'jwppp')) . '</th>';
 	echo '<td>';
 	echo '<input type="number" min="0" step="1" class="small-text" id="jwppp-ads-skip" name="jwppp-ads-skip" value="' . esc_html($ads_skip) . '" />';
-	echo '<p class="description">' . esc_html(__('Please, set an amount of time (seconds) that you want your viewers to watch an ad before being allowed to skip it.', 'jwppp')) . '</p>';
+	echo '<p class="description">' . esc_html(__('Total seconds viewers must watch an ad before being allowed to skip.', 'jwppp')) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 
@@ -195,7 +196,14 @@
 	echo ($active_bidding === '1') ? ' checked="checked"' : '';
 	echo ' />';
 	echo esc_html(__('Enable Video Player Bidding', 'jwppp'));
-	echo '<p class="description">' . wp_kses(__('All the benefits of Header Bidding are now built directly into your JW Player. With a simple one-click integration, you get access to quality demand at scale with reduced latency. <a href="https://support.jwplayer.com/articles/how-to-setup-video-player-bidding" target="_blank">Read more</a>', 'jwppp'), $allowed_tags) . '</p>';
+	echo '<p class="description">';
+	echo wp_kses(
+		__('All the benefits of Header Bidding are now built directly into your JW Player. With a simple one-click integration, you get access to quality demand at scale with reduced latency. 
+		SpotX is the leading video ad serving platform and gives publishers control, transparency and insights to maximize revenue.<br>
+<a href="https://support.jwplayer.com/articles/how-to-setup-video-player-bidding" target="_blank">Contact SpotX to get started</a>.', 'jwppp'), 
+		$allowed_tags
+	);
+	echo '</p>';
 	echo '</label>';
 	echo '<td>';
 	echo '</tr>';	
@@ -205,7 +213,7 @@
 	echo '<th scope="row"><img src="' . plugin_dir_url(__DIR__) . 'images/spotx-70.png"></th>';
 	echo '<td>';
 	echo '<input type="text" class="regular-text" id="jwppp-channel-id" name="jwppp-channel-id" placeholder="' . esc_html(__('Add a Channel ID', 'jwppp')) . '" value="' . esc_html($channel_id) . '" />';
-	echo '<p class="description">' . wp_kses(__('Don\'t you have one? <a href="https://www.spotx.tv/video-player-bidding/" target="blank">Contact SpotX to get started</a>.', 'jwppp'), $allowed_tags) . '</p>';
+	echo '<p class="description">' . wp_kses(__('Channel ID.', 'jwppp'), $allowed_tags) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 
@@ -234,7 +242,7 @@
 	echo ($mediation === 'jwpspotx') ? ' selected="selected"' : '';
 	echo '>' . esc_html(__('SpotX as Primary Adserver', 'jwppp')) . '</option>';
 	echo '</select>';
-	echo '<p class="description">' . esc_html(__('Select one option', 'jwppp')) . '</p>';
+	echo '<p class="description">' . esc_html(__('Select mediation option', 'jwppp')) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 
@@ -244,7 +252,7 @@
 	echo '<td>';
 	echo '<span class="currency">$</span>';
 	echo '<input type="number" min="0" step="0.01" class="small-text" id="jwppp-floor-price" name="jwppp-floor-price" value="' . esc_html($floor_price) . '" />';
-	echo '<p class="description">' . esc_html(__('Please, specify a floor price.', 'jwppp')) . '</p>';
+	echo '<p class="description">' . esc_html(__('Set floor price.', 'jwppp')) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 

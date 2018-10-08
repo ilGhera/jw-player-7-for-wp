@@ -43,12 +43,12 @@
 
 	/*Active share?*/
 	echo '<tr>';
-	echo '<th scope="row">' . esc_html(__('Active Share option', 'jwppp')) . '</th>';
+	echo '<th scope="row">' . esc_html(__('Activate Sharing Option', 'jwppp')) . '</th>';
 	echo '<td>';
 	echo '<input type="checkbox" id="jwppp-active-share" name="jwppp-active-share" value="1"';
 	echo ($active_share === '1') ? ' checked="checked"' : '' ;
 	echo ' />';
-	echo '<p class="description">' . wp_kses(__('Active <strong>share video</strong> as default option. You\'ll be able to change it on single video.', 'jwppp'), $allowed_tags) . '</p>';
+	echo '<p class="description">' . esc_html(__('Activate sharing option -- can be changed on single video.', 'jwppp')) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 

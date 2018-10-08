@@ -41,14 +41,6 @@ That's all, you're ready to go!
 * Once Activated, go to <strong>JW Player</strong> menu and set you preferences.
 
 
-== Screenshots == TEMP
-1. Post types and position
-2. Full player customization
-
-4. Sharing options
-5. Video ads
-6. Single video options
-
 == Changelog ==
 
 

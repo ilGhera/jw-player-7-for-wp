@@ -149,10 +149,10 @@ function jwppp_video_tools($post_id, $number, $sh_video) {
 	$output .= '</div>';
 
 
-	/*Ads tags*/
+	/*Ad tag*/
 	if($active_ads && !$active_ads_var) {
 		$output .= '<div class="jwppp-single-option-' . esc_attr($number) . ' cloud-option">';
-			$output .= '<label for="_jwppp-ads-tag-' . esc_attr($number) . '"><strong>' . esc_html(__('Ads tag', 'jwppp')) . '</strong></label>';
+			$output .= '<label for="_jwppp-ads-tag-' . esc_attr($number) . '"><strong>' . esc_html(__('Ad tag', 'jwppp')) . '</strong></label>';
 			$output .= '<p>';
 			$output .= '<select class="jwppp-ads-tag" name="_jwppp-ads-tag-' . esc_attr($number) . '">';
 				if($ads_tags) {
@@ -228,7 +228,7 @@ function jwppp_video_tools($post_id, $number, $sh_video) {
 			$output .= '<input type="checkbox" id="_jwppp-autoplay-' . esc_attr($number) . '" name="_jwppp-autoplay-' . esc_attr($number) . '" value="1"';
 			$output .= ($jwppp_autoplay === '1') ? ' checked="checked"' : '';
 			$output .= ' />';
-			$output .= '<strong>' . esc_html(__('Autostarting on page load.', 'jwppp')) . '</strong>';
+			$output .= '<strong>' . esc_html(__('Autostart on page load', 'jwppp')) . '</strong>';
 			$output .= '</label>';
 			$output .= '<input type="hidden" name="autoplay-hidden-' . esc_attr($number) . '" value="1" />';
 			$output .= '</p>';
@@ -242,7 +242,7 @@ function jwppp_video_tools($post_id, $number, $sh_video) {
 			$output .= '<input type="checkbox" id="_jwppp-mute-' . esc_attr($number) . '" name="_jwppp-mute-' . esc_attr($number) . '" value="1"';
 			$output .= ($jwppp_mute === '1') ? ' checked="checked"' : '';
 			$output .= ' />';
-			$output .= '<strong>' . esc_html(__('Mute the video during playback.', 'jwppp')) . '</strong>';
+			$output .= '<strong>' . esc_html(__('Mute', 'jwppp')) . '</strong>';
 			$output .= '</label>';
 			$output .= '<input type="hidden" name="mute-hidden-' . esc_attr($number) . '" value="1" />';
 			$output .= '</p>';
@@ -256,7 +256,7 @@ function jwppp_video_tools($post_id, $number, $sh_video) {
 			$output .= '<input type="checkbox" id="_jwppp-repeat-' . esc_attr($number) . '" name="_jwppp-repeat-' . esc_attr($number) . '" value="1"';
 			$output .= ($jwppp_repeat === '1') ? ' checked="checked"' : '';
 			$output .= ' />';
-			$output .= '<strong>' . esc_html(__('Repeat the video during playback.', 'jwppp')) . '</strong>';
+			$output .= '<strong>' . esc_html(__('Repeat', 'jwppp')) . '</strong>';
 			$output .= '</label>';
 			$output .= '<input type="hidden" name="repeat-hidden-' . esc_attr($number) . '" value="1" />';
 			$output .= '</p>';
@@ -293,7 +293,7 @@ function jwppp_video_tools($post_id, $number, $sh_video) {
 			$output .= '<input type="checkbox" id="_jwppp-download-video-' . esc_attr($number) . '" name="_jwppp-download-video-' . esc_attr($number) . '" value="1"';
 			$output .= ($jwppp_download_video === '1') ? ' checked="checked"' : '';
 			$output .= ' />';
-			$output .= '<strong>' . esc_html(__('Allow to download this video', 'jwppp')) . '</strong>';
+			$output .= '<strong>' . esc_html(__('Allow download', 'jwppp')) . '</strong>';
 			$output .= '<a class="question-mark" title="' . esc_html(__('Only with self-hosted videos and not with playlists.', 'jwppp')) . '"><img class="question-mark" src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/question-mark.png" /></a></th>';
 			$output .= '</label>';
 			$output .= '<input type="hidden" name="download-video-hidden-' . esc_attr($number) . '" value="1" />';
