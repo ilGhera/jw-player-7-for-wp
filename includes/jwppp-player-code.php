@@ -123,7 +123,9 @@ function jwppp_player_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute
 				if($self_content === 0) {
 				    $output .= "file: '" . esc_html($jwppp_video_url) . "',\n"; 
 				} else {
-					$output .= "playlist: 'https://cdn.jwplayer.com/v2/media/" . esc_html($jwppp_video_url) . "',\n";						
+					// $output .= "playlist: 'https://cdn.jwplayer.com/v2/media/" . esc_html($jwppp_video_url) . "',\n";		
+					$output .= "playlist: '" . jwppp_get_signed_url(esc_html($jwppp_video_url)) . "',\n";		
+
 				}
 
 				/*Ads block*/

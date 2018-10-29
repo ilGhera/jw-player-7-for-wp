@@ -17,6 +17,8 @@ require(plugin_dir_path(__FILE__) . 'jwppp-player-code.php');
 require(plugin_dir_path(__DIR__)  . 'classes/jwppp-dashboard-api.php');
 require(plugin_dir_path(__DIR__)  . 'botr/api.php');
 
+require_once(plugin_dir_path(__DIR__) .'libraries/JWT.php');
+use \Firebase\JWT\JWT;
 
 /**
  * Add meta box
@@ -459,6 +461,28 @@ function jwppp_ads_tag_exists($tags, $tag) {
 		}
 	} 
 	return false;
+}
+
+
+/**
+ * Generate signed urls 
+ * @param  string $media_id the media id
+ * @return string
+ */
+function jwppp_get_signed_url($media_id) {
+
+	$token_secret = get_option('jwppp-api-secret');
+
+	$resource = "v2/media/" . $media_id;
+	$exp = ceil((time() + 3600)/180) * 180; // Link is valid for 1hr but normalized to 3 minutes to promote better caching
+	$token_body = array(
+	    "resource" => $resource,
+	    "exp" => $exp
+	);
+
+	$jwt = JWT::encode($token_body, $token_secret);
+
+	return "https://cdn.jwplayer.com/$resource?token=$jwt";
 }
 
 
