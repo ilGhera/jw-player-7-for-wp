@@ -88,13 +88,13 @@ function jwppp_player_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute
 	/*Specific video element defined by his number and the post id*/
 	$this_video = $p_id . $number;
 
+	/*Check if the security option is activated*/
+	$security_embeds = get_option('jwppp-secure-player-embeds');
+
 	if($dashboard_player && !$sh_video) {
 	
 		/*Video*/
 		$self_content = strpos($jwppp_video_url, 'http');
-
-		/*Check if the security option is activated*/
-		$security_embeds = get_option('jwppp-secure-player-embeds');
 
 		/*Choose player*/
 		$choose_player = get_post_meta($p_id, '_jwppp-choose-player-' . $number, true) ? esc_html(get_post_meta($p_id, '_jwppp-choose-player-' . $number, true)) : esc_html($player_parts[0]);
@@ -182,9 +182,12 @@ function jwppp_player_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute
 		$output .= "</div>\n"; 
 		
 		if($dashboard_player) {
-
 			/*Player choose - library*/
-			$output .= '<script type="text/javascript" src="https://content.jwplatform.com/libraries/' . esc_html($choose_player) . '.js"></script>';			
+			if($security_embeds) {
+				$output .= '<script type="text/javascript" src="' . jwppp_get_signed_url(esc_html($choose_player), true) . '"></script>';			
+			} else {
+				$output .= '<script type="text/javascript" src="https://content.jwplatform.com/libraries/' . esc_html($choose_player) . '.js"></script>';			
+			}
 		}
 
 		$output .= "<script type='text/javascript'>\n";
