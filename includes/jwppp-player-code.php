@@ -93,6 +93,9 @@ function jwppp_player_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute
 		/*Video*/
 		$self_content = strpos($jwppp_video_url, 'http');
 
+		/*Check if the security option is activated*/
+		$security_embeds = get_option('jwppp-secure-player-embeds');
+
 		/*Choose player*/
 		$choose_player = get_post_meta($p_id, '_jwppp-choose-player-' . $number, true) ? esc_html(get_post_meta($p_id, '_jwppp-choose-player-' . $number, true)) : esc_html($player_parts[0]);
 
@@ -116,16 +119,23 @@ function jwppp_player_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute
 		$output .= $jwppp_playlist_carousel ? jwppp_playlist_carousel($this_video) : '';
 
 		/*Player choose - library*/
-		$output .= '<script type="text/javascript" src="https://content.jwplatform.com/libraries/' . esc_html($choose_player) . '.js"></script>';			
+		if($security_embeds) {
+			$output .= '<script type="text/javascript" src="' . jwppp_get_signed_url(esc_html($choose_player), true) . '"></script>';			
+		} else {
+			$output .= '<script type="text/javascript" src="https://content.jwplatform.com/libraries/' . esc_html($choose_player) . '.js"></script>';			
+		}
+
 		$output .= "<script type='text/javascript'>\n";
 			$output .= "var playerInstance_" . esc_html($this_video) . " = jwplayer('jwppp-video-" . esc_html($this_video) . "');\n";
 			$output .= "playerInstance_" . esc_html($this_video) . ".setup({\n";
-				if($self_content === 0) {
-				    $output .= "file: '" . esc_html($jwppp_video_url) . "',\n"; 
-				} else {
-					// $output .= "playlist: 'https://cdn.jwplayer.com/v2/media/" . esc_html($jwppp_video_url) . "',\n";		
-					$output .= "playlist: '" . jwppp_get_signed_url(esc_html($jwppp_video_url)) . "',\n";		
 
+				/*Check if the security option is activated*/
+				$security_urls = get_option('jwppp-secure-video-urls');
+
+				if($security_urls) {
+					$output .= "playlist: '" . jwppp_get_signed_url(esc_html($jwppp_video_url)) . "',\n";		
+				} else {
+					$output .= "playlist: 'https://cdn.jwplayer.com/v2/media/" . esc_html($jwppp_video_url) . "',\n";							
 				}
 
 				/*Ads block*/

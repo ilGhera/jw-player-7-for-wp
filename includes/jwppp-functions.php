@@ -465,16 +465,25 @@ function jwppp_ads_tag_exists($tags, $tag) {
 
 
 /**
- * Generate signed urls 
- * @param  string $media_id the media id
+ * Generate signed URLs 
+ * @param  string $media_id the media id or player id
  * @return string
  */
-function jwppp_get_signed_url($media_id) {
+function jwppp_get_signed_url($media_id, $embeds = false) {
 
 	$token_secret = get_option('jwppp-api-secret');
 
-	$resource = "v2/media/" . $media_id;
-	$exp = ceil((time() + 3600)/180) * 180; // Link is valid for 1hr but normalized to 3 minutes to promote better caching
+	if($embeds) {
+		$resource = 'libraries/' . $media_id . '.js';
+		$base_url = 'https://content.jwplatform.com';
+	} else {
+		$resource = 'v2/media/' . $media_id;
+		$base_url = 'https://cdn.jwplayer.com';		
+	}
+
+	$timeout = get_option('jwppp-secure-timeout') ? get_option('jwppp-secure-timeout') : 60;
+
+	$exp = ceil( (time() + ($timeout * 60) ) / 180) * 180; // Link is valid for 1hr but normalized to 3 minutes to promote better caching
 	$token_body = array(
 	    "resource" => $resource,
 	    "exp" => $exp
@@ -482,7 +491,7 @@ function jwppp_get_signed_url($media_id) {
 
 	$jwt = JWT::encode($token_body, $token_secret);
 
-	return "https://cdn.jwplayer.com/$resource?token=$jwt";
+	return "$base_url/$resource?token=$jwt";
 }
 
 

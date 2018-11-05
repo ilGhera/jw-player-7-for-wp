@@ -319,6 +319,7 @@ function jwppp_options() {
 			<a href="#" data-link="jwppp-social" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Sharing', 'jwppp')); ?></a>    
 		<?php } else { ?>
 			<a href="#" data-link="jwppp-playlist-carousel" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Playlist carousel', 'jwppp')); ?></a>    
+			<a href="#" data-link="jwppp-security" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Security', 'jwppp')); ?></a>    
 		<?php } ?>		         
 		<a href="#" data-link="jwppp-ads" class="nav-tab" onclick="return false;"><?php esc_html_e( __('Ads', 'jwppp')); ?></a>
 	</h2>
@@ -758,6 +759,8 @@ function jwppp_options() {
 	<?php include(plugin_dir_path(__FILE__) . 'jwppp-admin-ads.php'); ?>
 
 	<?php include(plugin_dir_path(__FILE__) . 'jwppp-admin-playlist-carousel.php'); ?>
+
+	<?php include(plugin_dir_path(__FILE__) . 'jwppp-admin-security.php'); ?>
 
 	</div><!-- wrap-left -->
 	<div class="wrap-right" style="float:left; width:30%; text-align:center; padding-top:3rem;">
