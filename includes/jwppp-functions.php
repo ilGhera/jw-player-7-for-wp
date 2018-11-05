@@ -303,35 +303,59 @@ function jwppp_db_delete_video($post_id, $number) {
  * Licence key, JW Player library, custom skin and playlist carousel
  */
 function jwppp_add_header_code() {
-	$library = sanitize_text_field(get_option('jwppp-library'));
-	$licence = sanitize_text_field(get_option('jwppp-licence'));
-	$skin 	 = sanitize_text_field(get_option('jwppp-skin'));
+
+	$get_library = sanitize_text_field(get_option('jwppp-library'));
+
+	/*Is it a dashboard player?*/
+	$dashboard_player = is_dashboard_player();
+
+	/*Default dashboard player informations*/
+	if($dashboard_player) {
+		
+		$library_parts = explode('https://content.jwplatform.com/libraries/', $get_library);
+		$player_parts = explode('.js', $library_parts[1]);		
+
+		/*Check if the security option is activated*/
+		$security_embeds = sanitize_text_field(get_option('jwppp-secure-player-embeds'));
+
+		$library = $security_embeds ? jwppp_get_signed_url($player_parts[0], true) : $get_library;
+
+		/*JW Widget for Playlist Carousel*/
+		wp_enqueue_style('jwppp-widget-style', plugin_dir_url(__DIR__) . 'jw-widget/css/jw-widget-min.css');
+		wp_enqueue_script('jwppp-widget', plugin_dir_url(__DIR__) . 'jw-widget/js/jw-widget-min.js');
+		
 	
-	if($skin === 'custom-skin') {
-		$skin_url = sanitize_text_field(get_option('jwppp-custom-skin-url'));
-		if($skin_url) {
-			echo '<link rel="stylesheet" type="text/css" href="' . esc_url($skin_url) . '"> </link>';
+	} else {
+
+		$library = $get_library;
+
+		$licence = sanitize_text_field(get_option('jwppp-licence'));
+		$skin 	 = sanitize_text_field(get_option('jwppp-skin'));
+
+		if($licence !== null) {
+			wp_register_script('jwppp-licence', plugin_dir_url(__DIR__) . 'js/jwppp-licence.js');
+			
+			/*Useful for passing data*/
+			$data = array(
+				'licence' => sanitize_text_field(get_option('jwppp-licence'))
+			);
+			wp_localize_script('jwppp-licence', 'data', $data);
+			wp_enqueue_script('jwppp-licence');
 		}
+
+		if($skin === 'custom-skin') {
+			$skin_url = sanitize_text_field(get_option('jwppp-custom-skin-url'));
+			if($skin_url) {
+				echo '<link rel="stylesheet" type="text/css" href="' . esc_url($skin_url) . '"> </link>';
+			}
+		}
+
+
 	}
 
 	if($library !== null) {
 		wp_enqueue_script('jwppp-library', $library);
 	}
-
-	if($licence !== null) {
-		wp_register_script('jwppp-licence', plugin_dir_url(__DIR__) . 'js/jwppp-licence.js');
-		
-		/*Useful for passing data*/
-		$data = array(
-			'licence' => sanitize_text_field(get_option('jwppp-licence'))
-		);
-		wp_localize_script('jwppp-licence', 'data', $data);
-		wp_enqueue_script('jwppp-licence');
-	}
-
-	/*JW Widget for Playlist Carouseò*/
-	wp_enqueue_style('jwppp-widget-style', plugin_dir_url(__DIR__) . 'jw-widget/css/jw-widget-min.css');
-	wp_enqueue_script('jwppp-widget', plugin_dir_url(__DIR__) . 'jw-widget/js/jw-widget-min.js');
 	
 }
 add_action('wp_enqueue_scripts', 'jwppp_add_header_code');
@@ -545,10 +569,18 @@ function jwppp_simple_player_code($media_id) {
 		}
 		$output .= "</div>\n"; 
 
+		/*Check if the security option is activated*/
+		$security_urls = get_option('jwppp-secure-video-urls');
+
 		$output .= "<script type='text/javascript'>\n";
 			$output .= "var playerInstance_$media_id = jwplayer(\"jwppp-video-$media_id\");\n";
 			$output .= "playerInstance_$media_id.setup({\n";
-			$output .= "playlist: 'https://cdn.jwplayer.com/v2/media/$media_id',\n";		
+
+			if($security_urls) {
+					$output .= "playlist: '" . jwppp_get_signed_url(esc_html($media_id)) . "',\n";		
+				} else {
+					$output .= "playlist: 'https://cdn.jwplayer.com/v2/media/$media_id',\n";	
+				}	
 
 			/*Is it a dashboard player?*/
 			$dashboard_player = is_dashboard_player();
