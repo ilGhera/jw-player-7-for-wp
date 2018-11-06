@@ -318,7 +318,7 @@ function jwppp_add_header_code() {
 		/*Check if the security option is activated*/
 		$security_embeds = sanitize_text_field(get_option('jwppp-secure-player-embeds'));
 
-		$library = $security_embeds ? jwppp_get_signed_url($player_parts[0], true) : $get_library;
+		$library = $security_embeds ? jwppp_get_signed_embed($player_parts[0]) : $get_library;
 
 		/*JW Widget for Playlist Carousel*/
 		wp_enqueue_style('jwppp-widget-style', plugin_dir_url(__DIR__) . 'jw-widget/css/jw-widget-min.css');
@@ -490,32 +490,45 @@ function jwppp_ads_tag_exists($tags, $tag) {
 
 /**
  * Generate signed URLs 
- * @param  string $media_id the media id or player id
+ * @param  string $media_id the media id
  * @return string
  */
-function jwppp_get_signed_url($media_id, $embeds = false) {
+function jwppp_get_signed_url($media_id) {
 
 	$token_secret = get_option('jwppp-api-secret');
-
-	if($embeds) {
-		$resource = 'libraries/' . $media_id . '.js';
-		$base_url = 'https://content.jwplatform.com';
-	} else {
-		$resource = 'v2/media/' . $media_id;
-		$base_url = 'https://cdn.jwplayer.com';		
-	}
-
+	$resource = 'v2/media/' . $media_id;
 	$timeout = get_option('jwppp-secure-timeout') ? get_option('jwppp-secure-timeout') : 60;
 
-	$exp = ceil( (time() + ($timeout * 60) ) / 180) * 180; // Link is valid for 1hr but normalized to 3 minutes to promote better caching
+	$expires = ceil( (time() + ($timeout * 60) ) / 180) * 180;
+
 	$token_body = array(
 	    "resource" => $resource,
-	    "exp" => $exp
+	    "exp" => $expires
 	);
 
 	$jwt = JWT::encode($token_body, $token_secret);
 
-	return "$base_url/$resource?token=$jwt";
+	return "https://cdn.jwplayer.com/$resource?token=$jwt";
+}
+
+
+/**
+ * Generate signed embeds 
+ * @param  string $player_id the player id
+ * @return string
+ */
+function jwppp_get_signed_embed($player_id) {
+
+	$token_secret = get_option('jwppp-api-secret');
+	$path = 'libraries/' . $player_id . '.js';
+	$timeout = get_option('jwppp-secure-timeout') ? get_option('jwppp-secure-timeout') : 60;
+
+	$expires = ceil( (time() + ($timeout * 60) ) / 180) * 180;
+	
+	$signature = md5($path . ':' . $expires . ':' . $token_secret);
+	$url = 'https://content.jwplatform.com/' . $path . '?exp=' . $expires . '&sig=' . $signature;
+	
+	return $url;
 }
 
 

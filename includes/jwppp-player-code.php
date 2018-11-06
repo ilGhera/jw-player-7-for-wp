@@ -120,7 +120,7 @@ function jwppp_player_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute
 
 		/*Player choose - library*/
 		if($security_embeds) {
-			$output .= '<script type="text/javascript" src="' . jwppp_get_signed_url(esc_html($choose_player), true) . '"></script>';			
+			$output .= '<script type="text/javascript" src="' . jwppp_get_signed_embed(esc_html($choose_player)) . '"></script>';			
 		} else {
 			$output .= '<script type="text/javascript" src="https://content.jwplatform.com/libraries/' . esc_html($choose_player) . '.js"></script>';			
 		}
@@ -184,7 +184,7 @@ function jwppp_player_code($p, $n, $ar, $width, $height, $pl_autostart, $pl_mute
 		if($dashboard_player) {
 			/*Player choose - library*/
 			if($security_embeds) {
-				$output .= '<script type="text/javascript" src="' . jwppp_get_signed_url(esc_html($choose_player), true) . '"></script>';			
+				$output .= '<script type="text/javascript" src="' . jwppp_get_signed_embed(esc_html($choose_player)) . '"></script>';			
 			} else {
 				$output .= '<script type="text/javascript" src="https://content.jwplatform.com/libraries/' . esc_html($choose_player) . '.js"></script>';			
 			}
