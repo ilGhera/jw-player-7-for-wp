@@ -51,12 +51,9 @@
 	echo '<tr>';
 	echo '<th scope="row">' . esc_html(__('Secure Video URLs', 'jwppp')) . '</th>';
 	echo '<td>';
-	echo '<label>';
 	echo '<input type="checkbox" id="jwppp-secure-video-urls" name="jwppp-secure-video-urls" value="1"';
 	echo ($secure_video_urls === '1') ? ' checked="checked"' : '';
 	echo ' />';
-	echo wp_kses(__('Protect your contents with signed URLs.', 'jwppp'), $allowed_tags);
-	echo '</label>';
 	echo '<p class="description">' . wp_kses(__('Must match setting on JW Platform Account > Properties > (Choose Property) settings', 'jwppp'), $allowed_tags) . '</p>';
 	echo '<td>';
 	echo '</tr>';
@@ -65,12 +62,9 @@
 	echo '<tr>';
 	echo '<th scope="row">' . esc_html(__('Secure Player Embeds', 'jwppp')) . '</th>';
 	echo '<td>';
-	echo '<label>';
 	echo '<input type="checkbox" id="jwppp-secure-player-embeds" name="jwppp-secure-player-embeds" value="1"';
 	echo ($secure_player_embeds === '1') ? ' checked="checked"' : '';
 	echo ' />';
-	echo wp_kses(__('Lock down embedding of your players.', 'jwppp'), $allowed_tags);
-	echo '</label>';
 	echo '<p class="description">' . wp_kses(__('Must match setting on JW Platform Account > Properties > (Choose Property) settings', 'jwppp'), $allowed_tags) . '</p>';
 	echo '<td>';
 	echo '</tr>';

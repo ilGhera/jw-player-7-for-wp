@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JW Player for Wordpress - Premium 1.5.0\n"
-"POT-Creation-Date: 2018-11-12 09:28+0100\n"
+"POT-Creation-Date: 2018-11-12 16:36+0100\n"
 "PO-Revision-Date: 2015-12-31 00:25+0100\n"
 "Last-Translator: ilGhera <info@ilghera.com>\n"
 "Language-Team: ilGhera <info@ilghera.com>\n"
@@ -134,7 +134,7 @@ msgstr ""
 msgid "Set floor price"
 msgstr ""
 
-#: admin/jwppp-admin-ads.php:262 admin/jwppp-admin-security.php:90
+#: admin/jwppp-admin-ads.php:262 admin/jwppp-admin-security.php:84
 #: admin/jwppp-admin-sharing.php:78
 msgid "Save options"
 msgstr ""
@@ -185,29 +185,21 @@ msgstr ""
 msgid "Secure Video URLs"
 msgstr ""
 
-#: admin/jwppp-admin-security.php:58
-msgid "Protect your contents with signed URLs."
-msgstr ""
-
-#: admin/jwppp-admin-security.php:60 admin/jwppp-admin-security.php:74
+#: admin/jwppp-admin-security.php:57 admin/jwppp-admin-security.php:68
 msgid ""
 "Must match setting on JW Platform Account > Properties > (Choose Property) "
 "settings"
 msgstr ""
 
-#: admin/jwppp-admin-security.php:66
+#: admin/jwppp-admin-security.php:63
 msgid "Secure Player Embeds"
 msgstr ""
 
-#: admin/jwppp-admin-security.php:72
-msgid "Lock down embedding of your players."
-msgstr ""
-
-#: admin/jwppp-admin-security.php:80
+#: admin/jwppp-admin-security.php:74
 msgid "Set timeout"
 msgstr ""
 
-#: admin/jwppp-admin-security.php:83
+#: admin/jwppp-admin-security.php:77
 msgid "Timeout in minutes"
 msgstr ""
 
