@@ -394,14 +394,14 @@ function jwppp_options() {
 			echo '<td>';
 			echo '<input type="text" class="regular-text" id="jwppp-api-key" name="jwppp-api-key" placeholder="' . esc_html(__('Add your API Key', 'jwppp')) . '" value="' . esc_html($api_key) . '" /><br>';
 			echo '<input type="text" class="regular-text" id="jwppp-api-secret" name="jwppp-api-secret" placeholder="' . esc_html(__('Add your API Secret', 'jwppp')) . '" value="' . esc_html($api_secret) . '" />';
-			echo '<p class="description">' . esc_html(__('API Key and Secret.', 'jwppp')) . '</p>';
+			echo '<p class="description">' . esc_html(__('API Key and Secret', 'jwppp')) . '</p>';
 			
 			/*Api class instance*/
 			$api = new jwppp_dasboard_api();
 
 			/*Credentials validation*/
 			if($api->args_check() && !$api->account_validation()) {
-				echo '<span class="jwppp-alert api">' . esc_html('It seems like your API Credentials are not correct.', 'jwppp') . '</span>';
+				echo '<span class="jwppp-alert api">' . esc_html('It seems like your API Credentials are not correct', 'jwppp') . '</span>';
 			}
 				echo '</td>';
 				echo '</tr>';
@@ -434,7 +434,7 @@ function jwppp_options() {
 
 			}
 
-			echo '<p class="description">' . esc_html(__('Content types that use video.', 'jwppp')) . '<br>';
+			echo '<p class="description">' . esc_html(__('Content types that use video', 'jwppp')) . '<br>';
 			echo '</td>';
 			echo '</tr>';
 

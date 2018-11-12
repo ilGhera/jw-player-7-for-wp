@@ -37,14 +37,14 @@
 				echo '<th scope="row">' . esc_html(__('Title', 'jwppp')) . '</th>';
 				echo '<td>';
 					echo '<input type="text" class="regular-text" id="jwppp-playlist-carousel-title" name="jwppp-playlist-carousel-title" placeholder="' . esc_html(__('More videos', 'jwppp')) . '" value="' . $jwppp_playlist_carousel_title . '" />';
-					echo '<p class="description">' . esc_html(__('Add a title for the playlist widget.', 'jwppp')) . '</p>';
+					echo '<p class="description">' . esc_html(__('Add a title for the playlist widget', 'jwppp')) . '</p>';
 					echo '</td>';	
 			echo '</tr>';
 			echo '<tr>';
 				echo '<th scope="row">' . esc_html(__('Text color', 'jwppp')) . '</th>';
 				echo '<td>';
 					echo '<input type="text" class="jwppp-color-field" name="jwppp-playlist-carousel-text-color" value="' . esc_html($jwppp_playlist_carousel_text_color) . '">';
-					echo '<p class="description">' . esc_html(__('Set the text color for the playlist widget.', 'jwppp')) . '</p>';
+					echo '<p class="description">' . esc_html(__('Set the text color for the playlist widget', 'jwppp')) . '</p>';
 				echo '</td>';
 			echo '</tr>';
 

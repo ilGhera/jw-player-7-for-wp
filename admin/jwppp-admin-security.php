@@ -57,7 +57,7 @@
 	echo ' />';
 	echo wp_kses(__('Protect your contents with signed URLs.', 'jwppp'), $allowed_tags);
 	echo '</label>';
-	echo '<p class="description">' . wp_kses(__('Option must be activated in the dashboard. <a href="https://support.jwplayer.com/articles/how-to-enable-url-token-signing">Read more</a>.', 'jwppp'), $allowed_tags) . '</p>';
+	echo '<p class="description">' . wp_kses(__('Must match setting on JW Platform Account > Properties > (Choose Property) settings', 'jwppp'), $allowed_tags) . '</p>';
 	echo '<td>';
 	echo '</tr>';
 
@@ -71,7 +71,7 @@
 	echo ' />';
 	echo wp_kses(__('Lock down embedding of your players.', 'jwppp'), $allowed_tags);
 	echo '</label>';
-	echo '<p class="description">' . wp_kses(__('Option must be activated in the dashboard. <a href="https://support.jwplayer.com/articles/how-to-enable-url-token-signing" target="_blank">Read more</a>.', 'jwppp'), $allowed_tags) . '</p>';
+	echo '<p class="description">' . wp_kses(__('Must match setting on JW Platform Account > Properties > (Choose Property) settings', 'jwppp'), $allowed_tags) . '</p>';
 	echo '<td>';
 	echo '</tr>';
 
@@ -80,7 +80,7 @@
 	echo '<th scope="row">' . esc_html(__('Set timeout', 'jwppp')) . '</th>';
 	echo '<td>';
 	echo '<input type="number" id="jwppp-secure-timeout" name="jwppp-secure-timeout" step="5" min="5" value="' . $secure_timeout . '" />';
-	echo '<p class="description">' . wp_kses(__('The timeout in minutes.', 'jwppp'), $allowed_tags) . '</p>';
+	echo '<p class="description">' . wp_kses(__('Timeout in minutes', 'jwppp'), $allowed_tags) . '</p>';
 	echo '<td>';
 	echo '</tr>';
 

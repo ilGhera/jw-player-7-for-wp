@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JW Player for Wordpress - Premium 1.5.0\n"
-"POT-Creation-Date: 2018-10-08 22:10+0200\n"
+"POT-Creation-Date: 2018-11-12 09:28+0100\n"
 "PO-Revision-Date: 2015-12-31 00:25+0100\n"
 "Last-Translator: ilGhera <info@ilghera.com>\n"
 "Language-Team: ilGhera <info@ilghera.com>\n"
@@ -134,7 +134,8 @@ msgstr ""
 msgid "Set floor price"
 msgstr ""
 
-#: admin/jwppp-admin-ads.php:262 admin/jwppp-admin-sharing.php:78
+#: admin/jwppp-admin-ads.php:262 admin/jwppp-admin-security.php:90
+#: admin/jwppp-admin-sharing.php:78
 msgid "Save options"
 msgstr ""
 
@@ -147,7 +148,7 @@ msgid "More videos"
 msgstr ""
 
 #: admin/jwppp-admin-playlist-carousel.php:40
-msgid "Add a title for the playlist widget."
+msgid "Add a title for the playlist widget"
 msgstr ""
 
 #: admin/jwppp-admin-playlist-carousel.php:44
@@ -155,7 +156,7 @@ msgid "Text color"
 msgstr ""
 
 #: admin/jwppp-admin-playlist-carousel.php:47
-msgid "Set the text color for the playlist widget."
+msgid "Set the text color for the playlist widget"
 msgstr ""
 
 #: admin/jwppp-admin-playlist-carousel.php:52
@@ -180,6 +181,36 @@ msgstr ""
 msgid "Save chages"
 msgstr ""
 
+#: admin/jwppp-admin-security.php:52
+msgid "Secure Video URLs"
+msgstr ""
+
+#: admin/jwppp-admin-security.php:58
+msgid "Protect your contents with signed URLs."
+msgstr ""
+
+#: admin/jwppp-admin-security.php:60 admin/jwppp-admin-security.php:74
+msgid ""
+"Must match setting on JW Platform Account > Properties > (Choose Property) "
+"settings"
+msgstr ""
+
+#: admin/jwppp-admin-security.php:66
+msgid "Secure Player Embeds"
+msgstr ""
+
+#: admin/jwppp-admin-security.php:72
+msgid "Lock down embedding of your players."
+msgstr ""
+
+#: admin/jwppp-admin-security.php:80
+msgid "Set timeout"
+msgstr ""
+
+#: admin/jwppp-admin-security.php:83
+msgid "Timeout in minutes"
+msgstr ""
+
 #: admin/jwppp-admin-sharing.php:46
 msgid "Activate Sharing Option"
 msgstr ""
@@ -192,8 +223,8 @@ msgstr ""
 msgid "Heading"
 msgstr ""
 
-#: admin/jwppp-admin-sharing.php:59 includes/jwppp-player-code.php:312
-#: includes/jwppp-player-code.php:374
+#: admin/jwppp-admin-sharing.php:59 includes/jwppp-player-code.php:327
+#: includes/jwppp-player-code.php:389
 msgid "Share Video"
 msgstr ""
 
@@ -275,7 +306,7 @@ msgstr ""
 msgid "It looks like you do not have sufficient permissions to view this page."
 msgstr ""
 
-#: admin/jwppp-admin.php:308 includes/jwppp-functions.php:33
+#: admin/jwppp-admin.php:308 includes/jwppp-functions.php:35
 msgid "JW Player for Wordpress - VIP"
 msgstr ""
 
@@ -299,198 +330,202 @@ msgstr ""
 msgid "Playlist carousel"
 msgstr ""
 
-#: admin/jwppp-admin.php:323
+#: admin/jwppp-admin.php:322
+msgid "Security"
+msgstr ""
+
+#: admin/jwppp-admin.php:324
 msgid "Ads"
 msgstr ""
 
-#: admin/jwppp-admin.php:345
+#: admin/jwppp-admin.php:346
 msgid "Player library URL"
 msgstr ""
 
-#: admin/jwppp-admin.php:349
+#: admin/jwppp-admin.php:350
 msgid "Cloud-hosted or self-hosted player library URL"
 msgstr ""
 
-#: admin/jwppp-admin.php:366
+#: admin/jwppp-admin.php:367
 msgid "JWP Licence Key"
 msgstr ""
 
-#: admin/jwppp-admin.php:370
+#: admin/jwppp-admin.php:371
 msgid "Self hosted player? Please, add your JW Player license key."
 msgstr ""
 
-#: admin/jwppp-admin.php:392
+#: admin/jwppp-admin.php:393
 msgid "API Credentials"
 msgstr ""
 
-#: admin/jwppp-admin.php:394
+#: admin/jwppp-admin.php:395
 msgid "Add your API Key"
 msgstr ""
 
-#: admin/jwppp-admin.php:395
+#: admin/jwppp-admin.php:396
 msgid "Add your API Secret"
 msgstr ""
 
-#: admin/jwppp-admin.php:396
-msgid "API Key and Secret."
+#: admin/jwppp-admin.php:397
+msgid "API Key and Secret"
 msgstr ""
 
-#: admin/jwppp-admin.php:414
+#: admin/jwppp-admin.php:415
 msgid "Post types"
 msgstr ""
 
-#: admin/jwppp-admin.php:436
-msgid "Content types that use video."
+#: admin/jwppp-admin.php:437
+msgid "Content types that use video"
 msgstr ""
 
-#: admin/jwppp-admin.php:447
+#: admin/jwppp-admin.php:448
 msgid "Video Player position"
 msgstr ""
 
-#: admin/jwppp-admin.php:452
+#: admin/jwppp-admin.php:453
 msgid "Before the content"
 msgstr ""
 
-#: admin/jwppp-admin.php:455
+#: admin/jwppp-admin.php:456
 msgid "After the content"
 msgstr ""
 
-#: admin/jwppp-admin.php:458
+#: admin/jwppp-admin.php:459
 msgid "Custom"
 msgstr ""
 
-#: admin/jwppp-admin.php:462
+#: admin/jwppp-admin.php:463
 msgid ""
 "Position of the video embed. Custom position requires use of shortcode "
 "<b>[jwp-video]</b> provided by the plugin."
 msgstr ""
 
-#: admin/jwppp-admin.php:481
+#: admin/jwppp-admin.php:482
 msgid "Video Loading Message"
 msgstr ""
 
-#: admin/jwppp-admin.php:483 includes/jwppp-functions.php:511
-#: includes/jwppp-player-code.php:111 includes/jwppp-player-code.php:168
+#: admin/jwppp-admin.php:484 includes/jwppp-functions.php:581
+#: includes/jwppp-player-code.php:114 includes/jwppp-player-code.php:180
 msgid "Loading the player..."
 msgstr ""
 
-#: admin/jwppp-admin.php:484
+#: admin/jwppp-admin.php:485
 msgid "Video loading message."
 msgstr ""
 
-#: admin/jwppp-admin.php:497
+#: admin/jwppp-admin.php:498
 msgid "Default poster image"
 msgstr ""
 
-#: admin/jwppp-admin.php:500
+#: admin/jwppp-admin.php:501
 msgid "Default poster image URL."
 msgstr ""
 
-#: admin/jwppp-admin.php:513
+#: admin/jwppp-admin.php:514
 msgid "Post thumbnail"
 msgstr ""
 
-#: admin/jwppp-admin.php:517
+#: admin/jwppp-admin.php:518
 msgid "Use the post thumbnail"
 msgstr ""
 
-#: admin/jwppp-admin.php:518
+#: admin/jwppp-admin.php:519
 msgid "Use post thumbnail as poster image."
 msgstr ""
 
-#: admin/jwppp-admin.php:531
+#: admin/jwppp-admin.php:532
 msgid "Player Embed Type"
 msgstr ""
 
-#: admin/jwppp-admin.php:536
+#: admin/jwppp-admin.php:537
 msgid "Fixed"
 msgstr ""
 
-#: admin/jwppp-admin.php:539
+#: admin/jwppp-admin.php:540
 msgid "Responsive"
 msgstr ""
 
-#: admin/jwppp-admin.php:541
+#: admin/jwppp-admin.php:542
 msgid "Player embed type."
 msgstr ""
 
-#: admin/jwppp-admin.php:561
+#: admin/jwppp-admin.php:562
 msgid "Fixed measures"
 msgstr ""
 
-#: admin/jwppp-admin.php:583 admin/jwppp-admin.php:588
+#: admin/jwppp-admin.php:584 admin/jwppp-admin.php:589
 msgid "Player width"
 msgstr ""
 
-#: admin/jwppp-admin.php:601
+#: admin/jwppp-admin.php:602
 msgid "Player Aspect Ratio"
 msgstr ""
 
-#: admin/jwppp-admin.php:614
+#: admin/jwppp-admin.php:615
 msgid "Player aspect ratio"
 msgstr ""
 
-#: admin/jwppp-admin.php:627
+#: admin/jwppp-admin.php:628
 msgid "Logo Image"
 msgstr ""
 
-#: admin/jwppp-admin.php:630
+#: admin/jwppp-admin.php:631
 msgid "Image url"
 msgstr ""
 
-#: admin/jwppp-admin.php:631
+#: admin/jwppp-admin.php:632
 msgid "Custom logo image URL."
 msgstr ""
 
-#: admin/jwppp-admin.php:649
+#: admin/jwppp-admin.php:650
 msgid "Logo Position"
 msgstr ""
 
-#: admin/jwppp-admin.php:667
+#: admin/jwppp-admin.php:668
 msgid "Logo position."
 msgstr ""
 
-#: admin/jwppp-admin.php:680
+#: admin/jwppp-admin.php:681
 msgid "Logo Link"
 msgstr ""
 
-#: admin/jwppp-admin.php:683
+#: admin/jwppp-admin.php:684
 msgid "Link url"
 msgstr ""
 
-#: admin/jwppp-admin.php:684
+#: admin/jwppp-admin.php:685
 msgid "Logo click-through URL."
 msgstr ""
 
-#: admin/jwppp-admin.php:697
+#: admin/jwppp-admin.php:698
 msgid "User Prompt"
 msgstr ""
 
-#: admin/jwppp-admin.php:700
+#: admin/jwppp-admin.php:701
 msgid "Next Up"
 msgstr ""
 
-#: admin/jwppp-admin.php:701
+#: admin/jwppp-admin.php:702
 msgid "Text for user prompt"
 msgstr ""
 
-#: admin/jwppp-admin.php:714
+#: admin/jwppp-admin.php:715
 msgid "Playlist Tooltip"
 msgstr ""
 
-#: admin/jwppp-admin.php:717
+#: admin/jwppp-admin.php:718
 msgid "Playlist"
 msgstr ""
 
-#: admin/jwppp-admin.php:718
+#: admin/jwppp-admin.php:719
 msgid "Text for playlist tooltip."
 msgstr ""
 
-#: admin/jwppp-admin.php:731
+#: admin/jwppp-admin.php:732
 msgid "Save changes "
 msgstr ""
 
-#: admin/jwppp-admin.php:750
+#: admin/jwppp-admin.php:751
 msgid ""
 "Skin customization options depends from the JW Player version in use."
 "<br>Please add first the <b><i>Player library URL</i></b>"
@@ -638,49 +673,49 @@ msgstr ""
 msgid "Background color of tooltips."
 msgstr ""
 
-#: includes/jwppp-functions.php:103
+#: includes/jwppp-functions.php:105
 msgid ""
 "You need to set the VIDEO PLAYER POSITION option to CUSTOM in order to use "
 "this shortcode."
 msgstr ""
 
-#: includes/jwppp-functions.php:360 includes/jwppp-functions.php:370
+#: includes/jwppp-functions.php:386 includes/jwppp-functions.php:396
 msgid "Video categories"
 msgstr ""
 
-#: includes/jwppp-functions.php:361
+#: includes/jwppp-functions.php:387
 msgid "Video category"
 msgstr ""
 
-#: includes/jwppp-functions.php:362
+#: includes/jwppp-functions.php:388
 msgid "Search video categories"
 msgstr ""
 
-#: includes/jwppp-functions.php:363
+#: includes/jwppp-functions.php:389
 msgid "All video categories"
 msgstr ""
 
-#: includes/jwppp-functions.php:364
+#: includes/jwppp-functions.php:390
 msgid "Parent video category"
 msgstr ""
 
-#: includes/jwppp-functions.php:365
+#: includes/jwppp-functions.php:391
 msgid "Parent video category:"
 msgstr ""
 
-#: includes/jwppp-functions.php:366
+#: includes/jwppp-functions.php:392
 msgid "Edit video category"
 msgstr ""
 
-#: includes/jwppp-functions.php:367
+#: includes/jwppp-functions.php:393
 msgid "Update video category"
 msgstr ""
 
-#: includes/jwppp-functions.php:368
+#: includes/jwppp-functions.php:394
 msgid "Add New video category"
 msgstr ""
 
-#: includes/jwppp-functions.php:369
+#: includes/jwppp-functions.php:395
 msgid "New video category Name"
 msgstr ""
 
