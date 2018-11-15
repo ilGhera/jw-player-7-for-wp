@@ -33,10 +33,12 @@ class jwppp_dasboard_api {
 	}
 
 	public function call($url) {
+		global $wp_version;
 		$output = wp_remote_get(
 			$url, 
 			array(
-				'timeout' => 5
+				'timeout' => 5,
+			    'user-agent'  => 'WordPress/' . $wp_version . ' JWPlayerWordPressPlugin/' . JWPPP_VERSION . ' PHP/' . phpversion()
 			)
 		);
 

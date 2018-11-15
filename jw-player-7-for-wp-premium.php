@@ -17,6 +17,8 @@
 /*No direct access*/
 if ( !defined( 'ABSPATH' ) ) exit;
 
+/*Define the plugin version*/
+define('JWPPP_VERSION', '1.6.0');
 
 /**
  * Fired on the activation.
