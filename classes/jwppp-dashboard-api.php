@@ -38,7 +38,7 @@ class jwppp_dasboard_api {
 			$url, 
 			array(
 				'timeout' => 5,
-			    'user-agent'  => 'WordPress/' . $wp_version . ' JWPlayerWordPressPlugin/' . JWPPP_VERSION . ' PHP/' . phpversion()
+			    'user-agent'  => 'WordPress/' . $wp_version . ' JWPlayerForWordPressVIP/' . JWPPP_VERSION . ' PHP/' . phpversion()
 			)
 		);
 
