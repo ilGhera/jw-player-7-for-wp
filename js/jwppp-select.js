@@ -11,6 +11,7 @@ var jwppp_select_content = function(){
 	jQuery(function($){
 		$(document).on('click', 'ul.jwppp-video-list li', function(){
 		
+			var post_id = $('#post_ID').attr('value');
 			var number = $(this).closest('ul').data('number');
 			var reset = false;
 			
@@ -32,7 +33,17 @@ var jwppp_select_content = function(){
 
 			/*Video details*/
 			if(!reset) {
+
 				var description = $(this).data('description');
+
+				$('#_jwppp-video-description-' + number + '.choose').attr('value', description);
+				$('#_jwppp-video-description-' + number + '.jwppp-description').attr('value', description);
+
+
+				// var details = {
+				// 	'title': video_title,
+				// 	'description' : description
+				// }
 
 				if($(this).hasClass('playlist-element')) {
 					var items = $(this).data('videos') ? $(this).data('videos') : '0';
@@ -42,6 +53,9 @@ var jwppp_select_content = function(){
 						(description ? '<span>Description</span>: ' + description + '<br>' : '') +
 						'<span>Items</span>: ' + items + '<br>'
 					);
+
+					$('#_jwppp-playlist-items-' + number).attr('value', items);
+					// details['items'] = items;
 
 				} else {					
 					var duration = null; 
@@ -57,7 +71,23 @@ var jwppp_select_content = function(){
 						(duration ? '<span>Duration</span>: ' + duration + '<br>' : '') +
 						(tags ? '<span>Tags</span>: ' + tags + '<br>' : '')
 					);
+
+					$('#_jwppp-video-duration-' + number).attr('value', duration);
+					$('#_jwppp-video-tags-' + number).attr('value', tags);
+
 				}
+
+				var data = {
+					'action': 'save-video-details',
+					'post_id': post_id,
+					'number': number,
+					'media_id': media_id,
+					'media_details': JSON.stringify(details)				
+				}
+				// console.log(details);
+				// $.post(ajaxurl, data, function(response){
+				// 	console.log('DETAILS:' + response);
+				// })
 			}
 
 			/*Image preview*/

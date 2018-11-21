@@ -145,7 +145,7 @@ function jwppp_video_tools($post_id, $number, $sh_video) {
 		$output .= '<label for="_jwppp-video-description-' . esc_attr($number) . '">';
 		$output .= '<strong>' . esc_html(__( 'Video description', 'jwppp' )) . '</strong>';
 		$output .= '</label> ';
-		$output .= '<p><input type="text" id="_jwppp-video-description-' . esc_attr($number) . '" name="_jwppp-video-description-' . esc_attr($number) . '" placeholder="' . esc_html(__('Add a description to your video', 'jwppp')) . '" value="' . esc_attr( $video_description ) . '" size="60" /></p>';
+		$output .= '<p><input type="text" id="_jwppp-video-description-' . esc_attr($number) . '" name="_jwppp-video-description-' . esc_attr($number) . '" class="jwppp-description" placeholder="' . esc_html(__('Add a description to your video', 'jwppp')) . '" value="' . esc_attr( $video_description ) . '" size="60" /></p>';
 	$output .= '</div>';
 
 

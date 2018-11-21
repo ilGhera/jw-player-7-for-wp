@@ -30,14 +30,31 @@ $output .= '<table class="widefat jwppp-' . esc_attr($number) . '" style="margin
 				$video_url = get_post_meta($post_id, '_jwppp-video-url-' . $number, true );
 				$video_title = get_post_meta($post_id, '_jwppp-video-title-' . $number, true);
 
+				$video_description = get_post_meta($post_id, '_jwppp-video-description-' . $number, true);
+
+				$playlist_items = get_post_meta($post_id, '_jwppp-playlist-items-' . $number, true);
+				$video_duration = get_post_meta($post_id, '_jwppp-video-duration-' . $number, true);
+				$video_tags = get_post_meta($post_id, '_jwppp-video-tags-' . $number, true);
+
 				/*Is the video self hosted?*/
 				$sh_video = strrpos($video_url, 'http') === 0 ? true : false;
 
 				$sources_number = get_post_meta($post_id, '_jwppp-sources-number-' . $number, true);
 				$main_source_label = get_post_meta($post_id, '_jwppp-' . $number . '-main-source-label', true );
 
+				$media_details = json_decode(stripslashes(get_post_meta($post_id, '_jwppp-media-details', true)));
+
 				/*Video selected details*/
-				$output .= '<div class="jwppp-video-details jwppp-video-details-' . esc_attr($number) . '"></div>';	
+				$output .= '<div class="jwppp-video-details jwppp-video-details-' . esc_attr($number) . '">';
+					$output .= '';
+
+						$output .= isset($video_title) ? '<span>Title</span>: ' . esc_html($video_title) . '</br>' : '';
+						$output .= isset($video_description) ? '<span>Description</span>: ' . esc_html($video_description) . '</br>' : '';
+						$output .= isset($playlist_items) ? '<span>Items</span>: ' . esc_html($playlist_items) . '</br>' : '';
+						$output .= isset($video_duration) ? '<span>Duration</span>: ' . esc_html($video_duration) . '</br>' : '';
+						$output .= isset($video_tags) ? '<span>Tags</span>: ' . esc_html($video_tags) . '</br>' : '';
+
+				$output .= '</div>';	
 
 				/*Thumbnail*/
 				$video_image = null;
@@ -73,12 +90,19 @@ $output .= '<table class="widefat jwppp-' . esc_attr($number) . '" style="margin
 						$output .= '<p>';
 
 							$api = new jwppp_dasboard_api();
-
+							
 							if($api && $api->account_validation()) {
 
 								$output .= '<input type="text" autocomplete="off" id="_jwppp-video-title-' . esc_attr($number) . '" class="jwppp-search-content choose" data-number="' . esc_attr($number) . '" placeholder="' . esc_html(__('Select video/playlist or search by ID', 'jwppp')) . '" style="margin-right:1rem;" value="' . esc_html($video_title) . '"><br>';
 
 								$output .= '<input type="hidden" name="_jwppp-video-url-' . esc_attr($number) . '" id="_jwppp-video-url-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_url) . '">';
+
+
+								$output .= '<input type="hidden" name="_jwppp-video-title-' . esc_attr($number) . '" id="_jwppp-video-title-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_title) . '">';
+								$output .= '<input type="hidden" name="_jwppp-video-description-' . esc_attr($number) . '" id="_jwppp-video-description-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_description) . '">';
+								$output .= '<input type="hidden" name="_jwppp-playlist-items-' . esc_attr($number) . '" id="_jwppp-playlist-items-' . esc_attr($number) . '" class="choose" value="' . esc_html($playlist_items) . '">';
+								$output .= '<input type="hidden" name="_jwppp-video-duration-' . esc_attr($number) . '" id="_jwppp-video-duration-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_duration) . '">';
+								$output .= '<input type="hidden" name="_jwppp-video-tags-' . esc_attr($number) . '" id="_jwppp-video-tags-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_tags) . '">';
 
 								$output .= '<ul id="_jwppp-video-list-' . esc_attr($number) . '" data-number="' . esc_attr($number) . '" class="jwppp-video-list">';
 									$output .= '<span class="jwppp-list-container">';

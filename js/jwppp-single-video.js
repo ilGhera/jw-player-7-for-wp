@@ -142,7 +142,7 @@ var jwppp_single_video = function(number, post_id) {
 
             var $url = $(this).val();
             
-            /*Getting the extension for old type playlist*/
+            /*Get the extension for old type playlist*/
             var $ext = $url.split('.').pop();
             var $arr = ['xml', 'feed', 'php', 'rss'];
             if($.inArray($ext, $arr)>-1) {
