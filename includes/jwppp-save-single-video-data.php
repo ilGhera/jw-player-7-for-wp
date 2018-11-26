@@ -180,6 +180,24 @@ function jwppp_save_single_video_data($post_id) {
 					update_post_meta( $post_id, '_jwppp-playlist-carousel-' . $number, $jwppp_playlist_carousel );
 				}
 
+				/*Playlist items*/
+				if(isset($_POST['_jwppp-playlist-items' . $number])) {
+					$jwppp_playlist_items = isset($_POST['_jwppp-playlist-items-' . $number]) ? sanitize_text_field($_POST['_jwppp-playlist-items-' . $number]) : 0;
+					update_post_meta( $post_id, '_jwppp-playlist-items-' . $number, $jwppp_playlist_items );
+				}
+
+				/*Video duration*/
+				if(isset($_POST['_jwppp-video-duration-' . $number])) {
+					$jwppp_video_duration = isset($_POST['_jwppp-video-duration-' . $number]) ? sanitize_text_field($_POST['_jwppp-video-duration-' . $number]) : 0;
+					update_post_meta( $post_id, '_jwppp-video-duration-' . $number, $jwppp_video_duration );
+				}
+
+				/*Video tags*/
+				if(isset($_POST['_jwppp-video-tags-' . $number])) {
+					$jwppp_video_tags = isset($_POST['_jwppp-video-tags-' . $number]) ? sanitize_text_field($_POST['_jwppp-video-tags-' . $number]) : 0;
+					update_post_meta( $post_id, '_jwppp-video-tags-' . $number, $jwppp_video_tags );
+				}
+
 			} else {
 
 				/*Autoplay*/

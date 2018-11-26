@@ -48,11 +48,11 @@ $output .= '<table class="widefat jwppp-' . esc_attr($number) . '" style="margin
 				$output .= '<div class="jwppp-video-details jwppp-video-details-' . esc_attr($number) . '">';
 					$output .= '';
 
-						$output .= isset($video_title) ? '<span>Title</span>: ' . esc_html($video_title) . '</br>' : '';
-						$output .= isset($video_description) ? '<span>Description</span>: ' . esc_html($video_description) . '</br>' : '';
-						$output .= isset($playlist_items) ? '<span>Items</span>: ' . esc_html($playlist_items) . '</br>' : '';
-						$output .= isset($video_duration) ? '<span>Duration</span>: ' . esc_html($video_duration) . '</br>' : '';
-						$output .= isset($video_tags) ? '<span>Tags</span>: ' . esc_html($video_tags) . '</br>' : '';
+						$output .= $video_title ? '<span>Title</span>: ' . esc_html($video_title) . '</br>' : '';
+						$output .= $video_description ? '<span>Description</span>: ' . esc_html($video_description) . '</br>' : '';
+						$output .= $playlist_items ? '<span>Items</span>: ' . esc_html($playlist_items) . '</br>' : '';
+						$output .= $video_duration ? '<span>Duration</span>: ' . esc_html($video_duration) . '</br>' : '';
+						$output .= $video_tags ? '<span>Tags</span>: ' . esc_html($video_tags) . '</br>' : '';
 
 				$output .= '</div>';	
 
@@ -89,71 +89,20 @@ $output .= '<table class="widefat jwppp-' . esc_attr($number) . '" style="margin
 					$output .= '<div class="jwppp-toggle-content ' . esc_attr($number) . ' choose' . (!$sh_video ? ' active' : '') . '">';
 						$output .= '<p>';
 
-							$api = new jwppp_dasboard_api();
-							
-							if($api && $api->account_validation()) {
+							$output .= '<input type="text" autocomplete="off" id="_jwppp-video-title-' . esc_attr($number) . '" class="jwppp-search-content choose" data-number="' . esc_attr($number) . '" placeholder="' . esc_html(__('Select video/playlist or search by ID', 'jwppp')) . '" style="margin-right:1rem;" value="' . esc_html($video_title) . '"><br>';
 
-								$output .= '<input type="text" autocomplete="off" id="_jwppp-video-title-' . esc_attr($number) . '" class="jwppp-search-content choose" data-number="' . esc_attr($number) . '" placeholder="' . esc_html(__('Select video/playlist or search by ID', 'jwppp')) . '" style="margin-right:1rem;" value="' . esc_html($video_title) . '"><br>';
-
-								$output .= '<input type="hidden" name="_jwppp-video-url-' . esc_attr($number) . '" id="_jwppp-video-url-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_url) . '">';
+							$output .= '<input type="hidden" name="_jwppp-video-url-' . esc_attr($number) . '" id="_jwppp-video-url-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_url) . '">';
 
 
-								$output .= '<input type="hidden" name="_jwppp-video-title-' . esc_attr($number) . '" id="_jwppp-video-title-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_title) . '">';
-								$output .= '<input type="hidden" name="_jwppp-video-description-' . esc_attr($number) . '" id="_jwppp-video-description-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_description) . '">';
-								$output .= '<input type="hidden" name="_jwppp-playlist-items-' . esc_attr($number) . '" id="_jwppp-playlist-items-' . esc_attr($number) . '" class="choose" value="' . esc_html($playlist_items) . '">';
-								$output .= '<input type="hidden" name="_jwppp-video-duration-' . esc_attr($number) . '" id="_jwppp-video-duration-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_duration) . '">';
-								$output .= '<input type="hidden" name="_jwppp-video-tags-' . esc_attr($number) . '" id="_jwppp-video-tags-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_tags) . '">';
+							$output .= '<input type="hidden" name="_jwppp-video-title-' . esc_attr($number) . '" id="_jwppp-video-title-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_title) . '">';
+							$output .= '<input type="hidden" name="_jwppp-video-description-' . esc_attr($number) . '" id="_jwppp-video-description-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_description) . '">';
+							$output .= '<input type="hidden" name="_jwppp-playlist-items-' . esc_attr($number) . '" id="_jwppp-playlist-items-' . esc_attr($number) . '" class="choose" value="' . esc_html($playlist_items) . '">';
+							$output .= '<input type="hidden" name="_jwppp-video-duration-' . esc_attr($number) . '" id="_jwppp-video-duration-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_duration) . '">';
+							$output .= '<input type="hidden" name="_jwppp-video-tags-' . esc_attr($number) . '" id="_jwppp-video-tags-' . esc_attr($number) . '" class="choose" value="' . esc_html($video_tags) . '">';
 
-								$output .= '<ul id="_jwppp-video-list-' . esc_attr($number) . '" data-number="' . esc_attr($number) . '" class="jwppp-video-list">';
-									$output .= '<span class="jwppp-list-container">';
-
-										$videos = $api->get_videos();
-										$playlists = $api->get_playlists();
-
-										/*Videos*/
-										if(is_array($videos)) {
-											$output .= '<li class="reset">' . esc_html('Select a video', 'jwppp') . '<span>' . esc_html(__('Clear', 'jwppp')) . '</span></li>';						
-											for ($i=0; $i < min(15, count($videos)); $i++) { 
-												$output .= '<li ';
-													$output .= 'data-mediaid="' . (isset($videos[$i]['key']) ? esc_html($videos[$i]['key']) : '') . '" ';
-													$output .= 'data-duration="' . (isset($videos[$i]['duration']) ? esc_html($videos[$i]['duration']) : ''). '" ';
-													$output .= 'data-description="' . (isset($videos[$i]['description']) ? esc_html($videos[$i]['description']) : ''). '"';
-													$output .= 'data-tags="' . (isset($videos[$i]['tags']) ? esc_html($videos[$i]['tags']) : ''). '"';
-													$output .= ($video_url === $videos[$i]['key'] ? ' class="selected"' : '') . '>';
-													$output .= '<img class="video-img" src="https://cdn.jwplayer.com/thumbs/' . (isset($videos[$i]['key']) ? esc_html($videos[$i]['key']) : '') . '-60.jpg" />';
-													$output .= '<span>' . (isset($videos[$i]['title']) ? esc_html($videos[$i]['title']) : '') . '</span>';
-												$output .= '</li>';
-											}
-										}
-
-										/*Playlists*/
-										if(is_array($playlists)) {
-											$playlist_thumb = esc_url(plugin_dir_url(__DIR__) . 'images/playlist4.png');
-											$output .= '<li class="reset">' . esc_html('Select a playlist', 'jwppp') . '<span>' . esc_html(__('Clear', 'jwppp')) . '</span></li>';						
-											for ($i=0; $i < min(15, count($playlists)); $i++) { 
-												$output .= '<li class="playlist-element' . ($video_url === $playlists[$i]['key'] ? ' selected' : '') . '" '; 
-													$output .= 'data-mediaid="' . (isset($playlists[$i]['key']) ? esc_html($playlists[$i]['key']) : '') . '"';
-													$output .= 'data-description="' . (isset($playlists[$i]['description']) ? esc_html($playlists[$i]['description']) : ''). '"';
-													$output .= 'data-videos="' . (isset($playlists[$i]['videos']['total']) ? esc_html($playlists[$i]['videos']['total']) : '') . '"';
-													$output .= '>';
-													$output .= '<img class="video-img" src="' . esc_url($playlist_thumb) . '" />';
-													$output .= '<span>' . (isset($playlists[$i]['title']) ? esc_html($playlists[$i]['title']) : '') . '</span>';
-												$output .= '</li>';
-											}
-										}
-
-									$output .= '</span>';
-								$output .= '</ul>';
-
-							} elseif($api->args_check() && !$api->account_validation()) {
-
-								$output .= '<span class="jwppp-alert api">' . esc_html(__('It seems like your API Credentials are not correct.', 'jwppp')) . '</span>';
-
-							} elseif(!$api->args_check()) {
-
-								$output .= '<span class="jwppp-alert api">' . esc_html(__('API Credentials are required for using this tool.', 'jwppp')) . '</span>';
-
-							}
+							$output .= '<ul id="_jwppp-video-list-' . esc_attr($number) . '" data-number="' . esc_attr($number) . '" class="jwppp-video-list">';
+								$output .= '<span class="jwppp-list-container"></span>';
+							$output .= '</ul>';
 
 						$output .= '</p>';		
 					$output .= '</div>';	
