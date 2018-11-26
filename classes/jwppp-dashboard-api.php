@@ -50,14 +50,18 @@ class jwppp_dasboard_api {
 		return unserialize($output['body']);
 	}
 
-	public function video_list_url() {
-		if($this->api) {
-			$url = $this->api->call_url("videos/list", array('api_format' => 'json')); //videos					
-			return $url;
-		}
-	}
+	// public function video_list_url() {
+
+	// 	if($this->api) {
+	// 		$url = $this->api->call_url("videos/list", array('api_format' => 'json')); //videos					
+	// 		return $url;
+	// 	}
+	// }
 
 	public function search($term, $playlist = false) {
+
+		error_log('Search');
+
 		if($this->api) {
 			if($playlist) {
 				$url = $this->api->call_url("channels/list", array('search' => $term, 'result_limit' => 15));
@@ -75,7 +79,9 @@ class jwppp_dasboard_api {
 
 	public function get_videos($media_id = null) {
 		if($this->api) {
-			
+
+			error_log('Video List');
+
 			$parameters = array('result_limit' => 15, 'order_by' => 'date:desc');
 			if($media_id) {
 				$parameters['video_keys_filter'] = $media_id;
@@ -92,6 +98,8 @@ class jwppp_dasboard_api {
 	public function get_playlists($media_id = null) {
 		if($this->api) {
 
+			error_log('Channels');
+
 			$parameters = array('result_limit' => 5);
 			if($media_id) {
 				$parameters['search'] = $media_id;
@@ -106,6 +114,9 @@ class jwppp_dasboard_api {
 	}
 
 	public function account_validation() {
+
+		error_log('Validation');
+
 		if($this->api) {
 			$url = $this->api->call_url("accounts/show", array('account_key' => $this->api_key)); //videos
 			$output = $this->call($url);
@@ -117,6 +128,9 @@ class jwppp_dasboard_api {
 	}
 
 	public function get_players() {
+
+		error_log('Players');
+
 		if($this->api) {
 			$url = $this->api->call_url("players/list"); //videos			
 			$output = $this->call($url);

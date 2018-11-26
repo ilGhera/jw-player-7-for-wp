@@ -49,39 +49,16 @@ function jwppp_video_tools($post_id, $number, $sh_video) {
 	/*Ads var block*/
 	$active_ads_var = get_option('jwppp-active-ads-var');
 
-	/*Choose player*/
-	$choose_player = get_post_meta($post_id, '_jwppp-choose-player-' . $number, true);
-
 	$output  = '<div class="jwppp-more-options-' . esc_attr($number) . '" style="margin-top:2rem; display: none;">';
 
 	if($dashboard_player) {
 
-		/*API*/
-		$api = new jwppp_dasboard_api();
-
 		/*Choose player*/
 		$output .= '<div class="jwppp-single-option-' . esc_attr($number) . ' cloud-option">';
 			
-			$players = $api->get_players();
-			$library_parts = explode('https://content.jwplatform.com/libraries/', get_option('jwppp-library'));
-
 			$output .= '<label for="_jwppp-choose-player-' . esc_attr($number) . '"><strong>' . esc_html(__('Select Player', 'jwppp')) . '</strong></label>';
 			$output .= '<p>';
-			$output .= '<select class="jwppp-choose-player" name="_jwppp-choose-player-' . esc_attr($number) . '">';
-
-			if(is_array($players) && !empty($players)) {
-				foreach($players as $player) { 
-					$selected = false;
-					if($choose_player && $choose_player === $player['key']) {
-						$selected = true;
-					} elseif(!$choose_player && $library_parts[1] === $player['key'] . '.js') {
-						$selected = true;
-					}
-					$output .= '<option name="' . sanitize_text_field($player['key']) . '" value="' . sanitize_text_field($player['key']) . '"' . ($selected ? ' selected="selected"' : '') . '>' . sanitize_text_field($player['name']) . '</option>';
-				}
-			}
-
-			$output .= '</select>';
+			$output .= '<select class="jwppp-choose-player-' . esc_attr($number) . '" name="_jwppp-choose-player-' . esc_attr($number) . '" style="opacity: 0;"></select>';
 			$output .= '</p>';
 
 		$output .= '</div>';
@@ -145,7 +122,7 @@ function jwppp_video_tools($post_id, $number, $sh_video) {
 		$output .= '<label for="_jwppp-video-description-' . esc_attr($number) . '">';
 		$output .= '<strong>' . esc_html(__( 'Video description', 'jwppp' )) . '</strong>';
 		$output .= '</label> ';
-		$output .= '<p><input type="text" id="_jwppp-video-description-' . esc_attr($number) . '" name="_jwppp-video-description-' . esc_attr($number) . '" placeholder="' . esc_html(__('Add a description to your video', 'jwppp')) . '" value="' . esc_attr( $video_description ) . '" size="60" /></p>';
+		$output .= '<p><input type="text" id="_jwppp-video-description-' . esc_attr($number) . '" name="_jwppp-video-description-' . esc_attr($number) . '" class="jwppp-description" placeholder="' . esc_html(__('Add a description to your video', 'jwppp')) . '" value="' . esc_attr( $video_description ) . '" size="60" /></p>';
 	$output .= '</div>';
 
 

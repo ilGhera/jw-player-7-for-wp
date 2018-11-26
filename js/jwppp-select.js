@@ -11,6 +11,7 @@ var jwppp_select_content = function(){
 	jQuery(function($){
 		$(document).on('click', 'ul.jwppp-video-list li', function(){
 		
+			var post_id = $('#post_ID').attr('value');
 			var number = $(this).closest('ul').data('number');
 			var reset = false;
 			
@@ -32,7 +33,17 @@ var jwppp_select_content = function(){
 
 			/*Video details*/
 			if(!reset) {
+
 				var description = $(this).data('description');
+
+				$('#_jwppp-video-description-' + number + '.choose').attr('value', description);
+				$('#_jwppp-video-description-' + number + '.jwppp-description').attr('value', description);
+
+
+				// var details = {
+				// 	'title': video_title,
+				// 	'description' : description
+				// }
 
 				if($(this).hasClass('playlist-element')) {
 					var items = $(this).data('videos') ? $(this).data('videos') : '0';
@@ -42,6 +53,9 @@ var jwppp_select_content = function(){
 						(description ? '<span>Description</span>: ' + description + '<br>' : '') +
 						'<span>Items</span>: ' + items + '<br>'
 					);
+
+					$('#_jwppp-playlist-items-' + number).attr('value', items);
+					// details['items'] = items;
 
 				} else {					
 					var duration = null; 
@@ -57,7 +71,23 @@ var jwppp_select_content = function(){
 						(duration ? '<span>Duration</span>: ' + duration + '<br>' : '') +
 						(tags ? '<span>Tags</span>: ' + tags + '<br>' : '')
 					);
+
+					$('#_jwppp-video-duration-' + number).attr('value', duration);
+					$('#_jwppp-video-tags-' + number).attr('value', tags);
+
 				}
+
+				// var data = {
+				// 	'action': 'save-video-details',
+				// 	'post_id': post_id,
+				// 	'number': number,
+				// 	'media_id': media_id,
+				// 	'media_details': JSON.stringify(details)				
+				// }
+				// console.log(details);
+				// $.post(ajaxurl, data, function(response){
+				// 	console.log('DETAILS:' + response);
+				// })
 			}
 
 			/*Image preview*/
@@ -118,8 +148,31 @@ var delay = (function(){
 var jwppp_search_content = function(number){
 	jQuery(function($){
 
+		var post_id = $('#post_ID').attr('value');
+
 		$(document).on('focusin', '.jwppp-search-content', function(){
+
 			var number = $(this).data('number'); 
+			var list_container = $('ul#_jwppp-video-list-' + number + ' span.jwppp-list-container');
+
+			if(!$(this).hasClass('loaded')) {
+
+				$(this).addClass('loaded');
+				$(list_container).html('<li class="jwppp-loading"><img src="' + jwppp_select.pluginUrl + '/images/loading.gif"></li>');
+
+				var data = {
+					'action': 'init-api',
+					'post_id': post_id,
+					'number': number
+				}
+
+				$.post(ajaxurl, data, function(response){
+					$(list_container).html(response);
+				})
+
+			}
+
+
 			$('#_jwppp-video-list-' + number).slideDown();
 		})
 
@@ -129,8 +182,10 @@ var jwppp_search_content = function(number){
 		})
 
 		$(document).on('keyup', '.jwppp-search-content', function(){
+
 			var number = $(this).data('number'); 
 			var list_container = $('ul#_jwppp-video-list-' + number + ' span.jwppp-list-container');
+
 			$(list_container).html('<li class="jwppp-loading"><img src="' + jwppp_select.pluginUrl + '/images/loading.gif"></li>');
 
 			var value = $(this).val().trim();
