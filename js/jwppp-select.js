@@ -39,12 +39,6 @@ var jwppp_select_content = function(){
 				$('#_jwppp-video-description-' + number + '.choose').attr('value', description);
 				$('#_jwppp-video-description-' + number + '.jwppp-description').attr('value', description);
 
-
-				// var details = {
-				// 	'title': video_title,
-				// 	'description' : description
-				// }
-
 				if($(this).hasClass('playlist-element')) {
 					var items = $(this).data('videos') ? $(this).data('videos') : '0';
 
@@ -77,17 +71,6 @@ var jwppp_select_content = function(){
 
 				}
 
-				// var data = {
-				// 	'action': 'save-video-details',
-				// 	'post_id': post_id,
-				// 	'number': number,
-				// 	'media_id': media_id,
-				// 	'media_details': JSON.stringify(details)				
-				// }
-				// console.log(details);
-				// $.post(ajaxurl, data, function(response){
-				// 	console.log('DETAILS:' + response);
-				// })
 			}
 
 			/*Image preview*/

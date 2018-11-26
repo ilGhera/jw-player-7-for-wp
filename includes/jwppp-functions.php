@@ -737,9 +737,12 @@ function jwppp_search_content_callback() {
 add_action('wp_ajax_search-content', 'jwppp_search_content_callback');
 
 
+/**
+ * Returns videos and playlists
+ * Fired when the select element is clicked
+ */
 function jwppp_list_content_callback() {
 	
-
 	$post_id = isset($_POST['post_id']) ? sanitize_text_field($_POST['post_id']) : '';
 	$number = isset($_POST['number']) ? sanitize_text_field($_POST['number']) : '';
 
@@ -803,11 +806,14 @@ function jwppp_list_content_callback() {
 	}
 
 	exit;
-
 }
 add_action('wp_ajax_init-api', 'jwppp_list_content_callback');
 
 
+/**
+ * Returns the players available from the dashboard
+ * Fired when the "Show options" is clicked
+ */
 function jwppp_get_player_callback() {
 
 	$post_id = isset($_POST['post_id']) ? sanitize_text_field($_POST['post_id']) : '';
@@ -841,59 +847,3 @@ function jwppp_get_player_callback() {
 	exit;
 } 
 add_action('wp_ajax_get-players', 'jwppp_get_player_callback');
-
-/**
- * Callback - Save video details, used in single video meta box 
- * @return string a json encoded array of the results
- */
-function jwppp_save_current_video_details() {
-
-	$media_id = isset($_POST['media_id']) ? sanitize_text_field($_POST['media_id']) : '';
-
-	if(isset($_POST['media_id']) && $_POST['media_id'] !== '') {
-		
-		$media_id = sanitize_text_field($_POST['media_id']);
-		$post_id = isset($_POST['post_id']) ? sanitize_text_field($_POST['post_id']) : '';
-		$sh_video = strrpos($media_id, 'http') === 0 ? true : false;
-
-		$number = isset($_POST['number']) ? sanitize_text_field($_POST['number']) : '';
-		$media_id = isset($_POST['media_id']) ? sanitize_text_field($_POST['media_id']) : '';
-		$media_details = isset($_POST['media_details']) ? sanitize_text_field($_POST['media_details']) : '';
-		// $media_details = isset($_POST['media_details']) ? json_decode(stripslashes($_POST['media_details']) : '';
-
-		if($media_details) {
-			update_post_meta($post_id, '_jwppp-media-details', $media_details);
-		}
-	}
-
-	exit;
-}
-// add_action('wp_ajax_save-video-details', 'jwppp_save_current_video_details');
-
-/**
- * Get details about the current media, used in single video meta box 
- * @return string a json encoded array of the results
- */
-// function jwppp_get_current_video_details() {
-
-// 	if(isset($_POST['media_id']) && $_POST['media_id'] !== '') {
-// 		$media_id = sanitize_text_field($_POST['media_id']);
-// 		$sh_video = strrpos($media_id, 'http') === 0 ? true : false;
-
-// 		if(!$sh_video){
-// 			$api = new jwppp_dasboard_api();
-// 			$videos = $api->get_videos($media_id);
-// 			if(isset($videos[0])){
-// 				echo json_encode($videos[0]);				
-// 			} else {
-// 				$playlists = $api->get_playlists($media_id);
-// 				if(isset($playlists[0])) {
-// 					echo json_encode($playlists[0]);				
-// 				}
-// 			}
-// 		}
-// 	}
-
-// 	exit;
-// }
-// add_action('wp_ajax_current-video-details', 'jwppp_get_current_video_details');
