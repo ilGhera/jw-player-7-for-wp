@@ -120,7 +120,7 @@ $output .= '<table class="widefat jwppp-' . esc_attr($number) . '" style="margin
 					}
 
 					$output .= '<p>';
-						$output .= '<input type="text" id="_jwppp-video-url-' . esc_attr($number) . '" class="jwppp-url" name="_jwppp-video-url-' . esc_attr($number) . '" placeholder="' . esc_html(__('Add here your media url', 'jwppp')) . '" ';
+						$output .= '<input type="text" id="_jwppp-video-url-' . esc_attr($number) . '" class="jwppp-url" name="_jwppp-video-url-' . esc_attr($number) . '" placeholder="' . esc_html(__('Media URL', 'jwppp')) . '" ';
 						$output .= ($video_url !== '1') ? 'value="' . esc_attr( $video_url ) . '" ' : 'value="" ';
 						$output .= 'size="60" />';
 

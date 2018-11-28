@@ -88,7 +88,7 @@ function jwppp_video_tools($post_id, $number, $sh_video) {
 			$source_url  = get_post_meta($post_id, '_jwppp-' . $number . '-source-' . $n . '-url', true);
 			$source_label = get_post_meta($post_id, '_jwppp-' . $number . '-source-' . $n . '-label', true);
 			$output .= '<li id="video-' . esc_attr($number) . '-source" data-number="' . esc_attr($n) . '">';	
-			$output .= '<input type="text" style="margin-right:1rem;" name="_jwppp-' . esc_attr($number) . '-source-' . esc_attr($n) . '-url" id="_jwppp-' . esc_attr($number) . '-source-' . esc_attr($n) . '-url" value="' . esc_url($source_url) . '" placeholder="' . esc_html(__('Source url', 'jwppp')) . '" size="60" />';
+			$output .= '<input type="text" style="margin-right:1rem;" name="_jwppp-' . esc_attr($number) . '-source-' . esc_attr($n) . '-url" id="_jwppp-' . esc_attr($number) . '-source-' . esc_attr($n) . '-url" value="' . esc_url($source_url) . '" placeholder="' . esc_html(__('Source URL', 'jwppp')) . '" size="60" />';
 			$output .= '<input type="text" name="_jwppp-' . esc_attr($number) . '-source-' . esc_attr($n) . '-label" class="source-label-' . esc_attr($number) . '" style="margin-right:1rem;' . ($sources <= 1 ? ' display: none;' : '') . '" value="' . esc_attr($source_label) . '" placeholder="' . esc_html(__('Label (HD, 720p, 360p)', 'jwppp')) . '" size="30" />';
 			$output .= '</li>';
 		}
@@ -103,7 +103,7 @@ function jwppp_video_tools($post_id, $number, $sh_video) {
 		$output .= '<strong>' . esc_html(__( 'Video poster image', 'jwppp' )) . '</strong>';
 		$output .= '</label> ';
 		$output .= '<p class="poster-image-container-' . $number . '">';
-		$output .= '<input type="text" id="_jwppp-video-image-' . esc_attr($number) . '" name="_jwppp-video-image-' . esc_attr($number) .'" placeholder="' . esc_html(__('Add a different poster image for this video', 'jwppp')) . '" value="' . esc_attr( $video_image ) . '" size="60" />';
+		$output .= '<input type="text" id="_jwppp-video-image-' . esc_attr($number) . '" name="_jwppp-video-image-' . esc_attr($number) .'" placeholder="' . esc_html(__('Poster Image URL', 'jwppp')) . '" value="' . esc_attr( $video_image ) . '" size="60" />';
 		$output .= '</p>';
 	$output .= '</div>';
 
@@ -113,7 +113,7 @@ function jwppp_video_tools($post_id, $number, $sh_video) {
 		$output .= '<label for="_jwppp-video-title-' . esc_attr($number) . '">';
 		$output .= '<strong>' . esc_html(__( 'Video title', 'jwppp' )) . '</strong>';
 		$output .= '</label> ';
-		$output .= '<p><input type="text" id="_jwppp-video-title-' . esc_attr($number) . '" class="jwppp-title" name="_jwppp-video-title-' . esc_attr($number) . '" placeholder="' . esc_html(__('Add a title to your video', 'jwppp')) . '" value="' . esc_attr( $video_title ) . '" size="60" /></p>';
+		$output .= '<p><input type="text" id="_jwppp-video-title-' . esc_attr($number) . '" class="jwppp-title" name="_jwppp-video-title-' . esc_attr($number) . '" placeholder="' . esc_html(__('Video Title', 'jwppp')) . '" value="' . esc_attr( $video_title ) . '" size="60" /></p>';
 	$output .= '</div>';
 
 
@@ -122,14 +122,14 @@ function jwppp_video_tools($post_id, $number, $sh_video) {
 		$output .= '<label for="_jwppp-video-description-' . esc_attr($number) . '">';
 		$output .= '<strong>' . esc_html(__( 'Video description', 'jwppp' )) . '</strong>';
 		$output .= '</label> ';
-		$output .= '<p><input type="text" id="_jwppp-video-description-' . esc_attr($number) . '" name="_jwppp-video-description-' . esc_attr($number) . '" class="jwppp-description" placeholder="' . esc_html(__('Add a description to your video', 'jwppp')) . '" value="' . esc_attr( $video_description ) . '" size="60" /></p>';
+		$output .= '<p><input type="text" id="_jwppp-video-description-' . esc_attr($number) . '" name="_jwppp-video-description-' . esc_attr($number) . '" class="jwppp-description" placeholder="' . esc_html(__('Video Description', 'jwppp')) . '" value="' . esc_attr( $video_description ) . '" size="60" /></p>';
 	$output .= '</div>';
 
 
 	/*Ad tag*/
 	if($active_ads && !$active_ads_var) {
 		$output .= '<div class="jwppp-single-option-' . esc_attr($number) . ' cloud-option">';
-			$output .= '<label for="_jwppp-ads-tag-' . esc_attr($number) . '"><strong>' . esc_html(__('Select Ad tag', 'jwppp')) . '</strong></label>';
+			$output .= '<label for="_jwppp-ads-tag-' . esc_attr($number) . '"><strong>' . esc_html(__('Select Ad Tag', 'jwppp')) . '</strong></label>';
 			$output .= '<p>';
 			$output .= '<select class="jwppp-ads-tag" name="_jwppp-ads-tag-' . esc_attr($number) . '">';
 				if($ads_tags) {
@@ -142,7 +142,7 @@ function jwppp_video_tools($post_id, $number, $sh_video) {
 					}
 					
 					/*Advertise disabled*/
-					$output .= '<option name="" value="no-ads"' . ($jwppp_ads_tag === 'no-ads' ? ' selected="selected"' : '') . '>' . esc_html(__('No advertise for this video', 'jwppp')) . '</option>';		
+					$output .= '<option name="" value="no-ads"' . ($jwppp_ads_tag === 'no-ads' ? ' selected="selected"' : '') . '>' . esc_html(__('No ad tag', 'jwppp')) . '</option>';		
 
 				} else {
 					$output .= '<option name="" value="">' . esc_html(__('No ad tags available', 'jwppp')) . '</option>';		

@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JW Player for Wordpress - Premium 1.5.0\n"
-"POT-Creation-Date: 2018-11-12 16:36+0100\n"
+"POT-Creation-Date: 2018-11-28 23:32+0100\n"
 "PO-Revision-Date: 2015-12-31 00:25+0100\n"
 "Last-Translator: ilGhera <info@ilghera.com>\n"
 "Language-Team: ilGhera <info@ilghera.com>\n"
@@ -396,7 +396,7 @@ msgstr ""
 msgid "Video Loading Message"
 msgstr ""
 
-#: admin/jwppp-admin.php:484 includes/jwppp-functions.php:581
+#: admin/jwppp-admin.php:484 includes/jwppp-functions.php:584
 #: includes/jwppp-player-code.php:114 includes/jwppp-player-code.php:180
 msgid "Loading the player..."
 msgstr ""
@@ -671,223 +671,219 @@ msgid ""
 "this shortcode."
 msgstr ""
 
-#: includes/jwppp-functions.php:386 includes/jwppp-functions.php:396
+#: includes/jwppp-functions.php:389 includes/jwppp-functions.php:399
 msgid "Video categories"
 msgstr ""
 
-#: includes/jwppp-functions.php:387
+#: includes/jwppp-functions.php:390
 msgid "Video category"
 msgstr ""
 
-#: includes/jwppp-functions.php:388
+#: includes/jwppp-functions.php:391
 msgid "Search video categories"
 msgstr ""
 
-#: includes/jwppp-functions.php:389
+#: includes/jwppp-functions.php:392
 msgid "All video categories"
 msgstr ""
 
-#: includes/jwppp-functions.php:390
+#: includes/jwppp-functions.php:393
 msgid "Parent video category"
 msgstr ""
 
-#: includes/jwppp-functions.php:391
+#: includes/jwppp-functions.php:394
 msgid "Parent video category:"
 msgstr ""
 
-#: includes/jwppp-functions.php:392
+#: includes/jwppp-functions.php:395
 msgid "Edit video category"
 msgstr ""
 
-#: includes/jwppp-functions.php:393
+#: includes/jwppp-functions.php:396
 msgid "Update video category"
 msgstr ""
 
-#: includes/jwppp-functions.php:394
+#: includes/jwppp-functions.php:397
 msgid "Add New video category"
 msgstr ""
 
-#: includes/jwppp-functions.php:395
+#: includes/jwppp-functions.php:398
 msgid "New video category Name"
 msgstr ""
 
-#: includes/jwppp-single-video-box.php:66
-msgid "Choose"
-msgstr ""
-
-#: includes/jwppp-single-video-box.php:67
-msgid "Add url"
-msgstr ""
-
-#: includes/jwppp-single-video-box.php:79
-msgid "Select video/playlist or search by ID"
-msgstr ""
-
-#: includes/jwppp-single-video-box.php:91
-#: includes/jwppp-single-video-box.php:108
+#: includes/jwppp-functions.php:762 includes/jwppp-functions.php:779
 msgid "Clear"
 msgstr ""
 
-#: includes/jwppp-single-video-box.php:126
+#: includes/jwppp-functions.php:794
 msgid "It seems like your API Credentials are not correct."
 msgstr ""
 
-#: includes/jwppp-single-video-box.php:130
+#: includes/jwppp-functions.php:800
 msgid "API Credentials are required for using this tool."
 msgstr ""
 
-#: includes/jwppp-single-video-box.php:144
+#: includes/jwppp-single-video-box.php:83
+msgid "Choose"
+msgstr ""
+
+#: includes/jwppp-single-video-box.php:84
+msgid "Add url"
+msgstr ""
+
+#: includes/jwppp-single-video-box.php:92
+msgid "Select video/playlist or search by ID"
+msgstr ""
+
+#: includes/jwppp-single-video-box.php:117
+#: includes/jwppp-single-video-box.php:123
 msgid "Media URL"
 msgstr ""
 
-#: includes/jwppp-single-video-box.php:150
-msgid "Add here your media url"
-msgstr ""
-
-#: includes/jwppp-single-video-box.php:155 includes/jwppp-video-tools.php:115
+#: includes/jwppp-single-video-box.php:128 includes/jwppp-video-tools.php:92
 msgid "Label (HD, 720p, 360p)"
 msgstr ""
 
-#: includes/jwppp-single-video-box.php:166
+#: includes/jwppp-single-video-box.php:139
 msgid "Show options"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:68
+#: includes/jwppp-video-tools.php:59
 msgid "Select Player"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:94
+#: includes/jwppp-video-tools.php:71
 msgid "More sources"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:95
+#: includes/jwppp-video-tools.php:72
 msgid "Used for quality toggling and alternate sources."
 msgstr ""
 
-#: includes/jwppp-video-tools.php:114
-msgid "Source url"
+#: includes/jwppp-video-tools.php:91
+msgid "Source URL"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:126
+#: includes/jwppp-video-tools.php:103
 msgid "Video poster image"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:129
-msgid "Add a different poster image for this video"
+#: includes/jwppp-video-tools.php:106
+msgid "Poster Image URL"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:137
+#: includes/jwppp-video-tools.php:114
 msgid "Video title"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:139
-msgid "Add a title to your video"
+#: includes/jwppp-video-tools.php:116
+msgid "Video Title"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:146
+#: includes/jwppp-video-tools.php:123
 msgid "Video description"
 msgstr ""
 
+#: includes/jwppp-video-tools.php:125
+msgid "Video Description"
+msgstr ""
+
+#: includes/jwppp-video-tools.php:132
+msgid "Select Ad Tag"
+msgstr ""
+
+#: includes/jwppp-video-tools.php:145
+msgid "No ad tag"
+msgstr ""
+
 #: includes/jwppp-video-tools.php:148
-msgid "Add a description to your video"
-msgstr ""
-
-#: includes/jwppp-video-tools.php:155
-msgid "Select Ad tag"
-msgstr ""
-
-#: includes/jwppp-video-tools.php:168
-msgid "No advertise for this video"
-msgstr ""
-
-#: includes/jwppp-video-tools.php:171
 msgid "No ad tags available"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:188
+#: includes/jwppp-video-tools.php:165
 msgid "Show a carousel with the playlist's video thumbnails."
 msgstr ""
 
-#: includes/jwppp-video-tools.php:202
+#: includes/jwppp-video-tools.php:179
 msgid "Force a media type"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:203
+#: includes/jwppp-video-tools.php:180
 msgid "Only required when a file extension is missing or not recognized"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:231
+#: includes/jwppp-video-tools.php:208
 msgid "Autostart on page load"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:245
+#: includes/jwppp-video-tools.php:222
 msgid "Mute"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:259
+#: includes/jwppp-video-tools.php:236
 msgid "Repeat"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:282
+#: includes/jwppp-video-tools.php:259
 msgid "Allow to embed this video"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:296
+#: includes/jwppp-video-tools.php:273
 msgid "Allow download"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:297
+#: includes/jwppp-video-tools.php:274
 msgid "Only with self-hosted videos and not with playlists."
 msgstr ""
 
-#: includes/jwppp-video-tools.php:312
+#: includes/jwppp-video-tools.php:289
 msgid "Add"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:312
+#: includes/jwppp-video-tools.php:289
 msgid "Add Chapters, Subtitles or Preview Thumbnails"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:358
+#: includes/jwppp-video-tools.php:335
 msgid "Subtitle"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:360
+#: includes/jwppp-video-tools.php:337
 msgid "Thumbnail url"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:362
+#: includes/jwppp-video-tools.php:339
 msgid "Chapter title"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:366
+#: includes/jwppp-video-tools.php:343
 msgid "Start"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:367
+#: includes/jwppp-video-tools.php:344
 msgid "End"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:368
+#: includes/jwppp-video-tools.php:345
 msgid "in seconds"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:376 includes/jwppp-video-tools.php:400
+#: includes/jwppp-video-tools.php:353 includes/jwppp-video-tools.php:377
 msgid "Default"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:377
+#: includes/jwppp-video-tools.php:354
 msgid "These subtitles will be activated by default"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:392
+#: includes/jwppp-video-tools.php:369
 msgid "Subtitles file url (VTT, SRT, DFXP)"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:393
+#: includes/jwppp-video-tools.php:370
 msgid "Label (EN, IT, FR )"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:401
+#: includes/jwppp-video-tools.php:378
 msgid "These first subtitles will be activated by default"
 msgstr ""
