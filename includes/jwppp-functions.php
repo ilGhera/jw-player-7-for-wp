@@ -747,9 +747,8 @@ function jwppp_list_content_callback() {
 	$number = isset($_POST['number']) ? sanitize_text_field($_POST['number']) : '';
 
 	if($post_id && $number) {
+
 		$api = new jwppp_dasboard_api();
-		$videos = $api->get_videos();
-		$playlists = $api->get_playlists();
 
 		$video_url = get_post_meta($post_id, '_jwppp-video-url-' . $number, true );
 
@@ -757,6 +756,10 @@ function jwppp_list_content_callback() {
 
 		if($api->args_check()) {
 			if($api->account_validation()) {
+
+				$videos = $api->get_videos();
+				$playlists = $api->get_playlists();
+
 				/*Videos*/
 				if(is_array($videos)) {
 					$output .= '<li class="reset">' . esc_html('Select a video', 'jwppp') . '<span>' . esc_html(__('Clear', 'jwppp')) . '</span></li>';						
