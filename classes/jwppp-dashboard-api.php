@@ -47,7 +47,7 @@ class jwppp_dasboard_api {
 
 				$body = unserialize($output['body']);
 		
-				return array('error' => $body['title']);
+				return array('error' => $body['message']);
 		
 			} else {
 
