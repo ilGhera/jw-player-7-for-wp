@@ -42,25 +42,24 @@ class jwppp_dasboard_api {
 			)
 		);
 
-		if(is_wp_error($output)) {
-			error_log('Error: call to JW Player API failed.');
-			return;
-		}
+		if(is_array($output)) {
+			if($output['response']['code'] === 429) {
 
-		return unserialize($output['body']);
+				$body = unserialize($output['body']);
+		
+				return array('error' => $body['title']);
+		
+			} else {
+
+				return unserialize($output['body']);
+
+			}
+		}
 	}
 
-	// public function video_list_url() {
-
-	// 	if($this->api) {
-	// 		$url = $this->api->call_url("videos/list", array('api_format' => 'json')); //videos					
-	// 		return $url;
-	// 	}
-	// }
 
 	public function search($term, $playlist = false) {
 
-		error_log('Search');
 
 		if($this->api) {
 			if($playlist) {
@@ -73,6 +72,8 @@ class jwppp_dasboard_api {
 			$output = $this->call($url);
 			if(isset($output[$key])) {
 				return $output[$key];				
+			} else {
+				return $output;
 			}
 		}
 	}
@@ -80,7 +81,6 @@ class jwppp_dasboard_api {
 	public function get_videos($media_id = null) {
 		if($this->api) {
 
-			error_log('Video List');
 
 			$parameters = array('result_limit' => 15, 'order_by' => 'date:desc');
 			if($media_id) {
@@ -89,8 +89,11 @@ class jwppp_dasboard_api {
 
 			$url = $this->api->call_url("videos/list", $parameters); //videos					
 			$output = $this->call($url);
+
 			if(isset($output['videos'])) {
 				return $output['videos'];				
+			} else {
+				return $output;
 			}
 		}
 	}
@@ -98,7 +101,6 @@ class jwppp_dasboard_api {
 	public function get_playlists($media_id = null) {
 		if($this->api) {
 
-			error_log('Channels');
 
 			$parameters = array('result_limit' => 5);
 			if($media_id) {
@@ -107,35 +109,44 @@ class jwppp_dasboard_api {
 
 			$url = $this->api->call_url("channels/list", $parameters);
 			$output = $this->call($url);
+
 			if(isset($output['channels'])) {
 				return $output['channels'];
+			} else {
+				return $output;
 			}
 		}
 	}
 
 	public function account_validation() {
 
-		error_log('Validation');
 
 		if($this->api) {
 			$url = $this->api->call_url("accounts/show", array('account_key' => $this->api_key)); //videos
 			$output = $this->call($url);
+			
+
 			if(isset($output['status']) && $output['status'] === 'ok') {
 				return true;					
+			} else {
+				return $output;
 			}
+		} else {
+			return false;			
 		}
-		return false;
 	}
 
 	public function get_players() {
 
-		error_log('Players');
 
 		if($this->api) {
 			$url = $this->api->call_url("players/list"); //videos			
 			$output = $this->call($url);
+
 			if(isset($output['players'])) {
 				return $output['players'];					
+			} else {
+				return $output;
 			}
 		}
 	}

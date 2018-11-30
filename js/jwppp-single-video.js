@@ -134,7 +134,7 @@ var jwppp_single_video = function(number, post_id) {
                     }
 
                     $.post(ajaxurl, data, function(response){
-                        $('select.jwppp-choose-player-' + number).html(response).animate({
+                        $('.jwppp-single-option-' + number + '.choose-player').html(response).animate({
                             'opacity': 1
                         });
                         

@@ -762,33 +762,54 @@ function jwppp_list_content_callback() {
 
 				/*Videos*/
 				if(is_array($videos)) {
-					$output .= '<li class="reset">' . esc_html('Select a video', 'jwppp') . '<span>' . esc_html(__('Clear', 'jwppp')) . '</span></li>';						
-					for ($i=0; $i < min(15, count($videos)); $i++) { 
-						$output .= '<li ';
-							$output .= 'data-mediaid="' . (isset($videos[$i]['key']) ? esc_html($videos[$i]['key']) : '') . '" ';
-							$output .= 'data-duration="' . (isset($videos[$i]['duration']) ? esc_html($videos[$i]['duration']) : ''). '" ';
-							$output .= 'data-description="' . (isset($videos[$i]['description']) ? esc_html($videos[$i]['description']) : ''). '"';
-							$output .= 'data-tags="' . (isset($videos[$i]['tags']) ? esc_html($videos[$i]['tags']) : ''). '"';
-							$output .= ($video_url === $videos[$i]['key'] ? ' class="selected"' : '') . '>';
-							$output .= '<img class="video-img" src="https://cdn.jwplayer.com/thumbs/' . (isset($videos[$i]['key']) ? esc_html($videos[$i]['key']) : '') . '-60.jpg" />';
-							$output .= '<span>' . (isset($videos[$i]['title']) ? esc_html($videos[$i]['title']) : '') . '</span>';
-						$output .= '</li>';
+
+					if(isset($videos['error'])) {
+
+						$output .= '<span class="jwppp-alert api">' . $videos['error'] . '</span>';
+
+					} else {
+
+						$output .= '<li class="reset">' . esc_html('select a video', 'jwppp') . '<span>' . esc_html(__('clear', 'jwppp')) . '</span></li>';						
+						for ($i=0; $i < min(15, count($videos)); $i++) { 
+							$output .= '<li ';
+								$output .= 'data-mediaid="' . (isset($videos[$i]['key']) ? esc_html($videos[$i]['key']) : '') . '" ';
+								$output .= 'data-duration="' . (isset($videos[$i]['duration']) ? esc_html($videos[$i]['duration']) : ''). '" ';
+								$output .= 'data-description="' . (isset($videos[$i]['description']) ? esc_html($videos[$i]['description']) : ''). '"';
+								$output .= 'data-tags="' . (isset($videos[$i]['tags']) ? esc_html($videos[$i]['tags']) : ''). '"';
+								$output .= ($video_url === $videos[$i]['key'] ? ' class="selected"' : '') . '>';
+								$output .= '<img class="video-img" src="https://cdn.jwplayer.com/thumbs/' . (isset($videos[$i]['key']) ? esc_html($videos[$i]['key']) : '') . '-60.jpg" />';
+								$output .= '<span>' . (isset($videos[$i]['title']) ? esc_html($videos[$i]['title']) : '') . '</span>';
+							$output .= '</li>';
+						}
+
 					}
+
 				}
 
 				/*Playlists*/
 				if(is_array($playlists)) {
-					$playlist_thumb = esc_url(plugin_dir_url(__DIR__) . 'images/playlist4.png');
-					$output .= '<li class="reset">' . esc_html('Select a playlist', 'jwppp') . '<span>' . esc_html(__('Clear', 'jwppp')) . '</span></li>';						
-					for ($i=0; $i < min(15, count($playlists)); $i++) { 
-						$output .= '<li class="playlist-element' . ($video_url === $playlists[$i]['key'] ? ' selected' : '') . '" '; 
-							$output .= 'data-mediaid="' . (isset($playlists[$i]['key']) ? esc_html($playlists[$i]['key']) : '') . '"';
-							$output .= 'data-description="' . (isset($playlists[$i]['description']) ? esc_html($playlists[$i]['description']) : ''). '"';
-							$output .= 'data-videos="' . (isset($playlists[$i]['videos']['total']) ? esc_html($playlists[$i]['videos']['total']) : '') . '"';
-							$output .= '>';
-							$output .= '<img class="video-img" src="' . esc_url($playlist_thumb) . '" />';
-							$output .= '<span>' . (isset($playlists[$i]['title']) ? esc_html($playlists[$i]['title']) : '') . '</span>';
-						$output .= '</li>';
+
+					if(isset($playlists['error'])) {
+
+						if(!isset($videos['error'])) {
+							$output .= '<span class="jwppp-alert api">' . $playlists['error'] . '</span>';						
+						}
+
+					} else {
+
+						$playlist_thumb = esc_url(plugin_dir_url(__DIR__) . 'images/playlist4.png');
+						$output .= '<li class="reset">' . esc_html('Select a playlist', 'jwppp') . '<span>' . esc_html(__('Clear', 'jwppp')) . '</span></li>';						
+						for ($i=0; $i < min(15, count($playlists)); $i++) { 
+							$output .= '<li class="playlist-element' . ($video_url === $playlists[$i]['key'] ? ' selected' : '') . '" '; 
+								$output .= 'data-mediaid="' . (isset($playlists[$i]['key']) ? esc_html($playlists[$i]['key']) : '') . '"';
+								$output .= 'data-description="' . (isset($playlists[$i]['description']) ? esc_html($playlists[$i]['description']) : ''). '"';
+								$output .= 'data-videos="' . (isset($playlists[$i]['videos']['total']) ? esc_html($playlists[$i]['videos']['total']) : '') . '"';
+								$output .= '>';
+								$output .= '<img class="video-img" src="' . esc_url($playlist_thumb) . '" />';
+								$output .= '<span>' . (isset($playlists[$i]['title']) ? esc_html($playlists[$i]['title']) : '') . '</span>';
+							$output .= '</li>';
+						}
+
 					}
 				}
 
@@ -833,16 +854,25 @@ function jwppp_get_player_callback() {
 
 	$output = null;
 
-	if(is_array($players) && !empty($players)) {
-		foreach($players as $player) { 
-			$selected = false;
-			if($choose_player && $choose_player === $player['key']) {
-				$selected = true;
-			} elseif(!$choose_player && $library_parts[1] === $player['key'] . '.js') {
-				$selected = true;
-			}
-			$output .= '<option name="' . sanitize_text_field($player['key']) . '" value="' . sanitize_text_field($player['key']) . '"' . ($selected ? ' selected="selected"' : '') . '>' . sanitize_text_field($player['name']) . '</option>';
-		}
+	if(is_array($players) && !isset($players['error'])) {
+
+		$output .= '<label for="_jwppp-choose-player-' . esc_attr($number) . '"><strong>' . esc_html(__('Select Player', 'jwppp')) . '</strong></label>';
+		$output .= '<p>';
+			$output .= '<select class="jwppp-choose-player-' . esc_attr($number) . '" name="_jwppp-choose-player-' . esc_attr($number) . '">';
+	
+				foreach($players as $player) { 
+					$selected = false;
+					if($choose_player && $choose_player === $player['key']) {
+						$selected = true;
+					} elseif(!$choose_player && $library_parts[1] === $player['key'] . '.js') {
+						$selected = true;
+					}
+					$output .= '<option name="' . sanitize_text_field($player['key']) . '" value="' . sanitize_text_field($player['key']) . '"' . ($selected ? ' selected="selected"' : '') . '>' . sanitize_text_field($player['name']) . '</option>';
+				}			
+
+			$output .= '</select>';
+		$output .= '</p>';
+	
 	}
 
 	echo $output;

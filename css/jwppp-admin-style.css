@@ -14,6 +14,11 @@
 	color: #a94442;	
 }
 
+.jwppp-list-container .jwppp-alert {
+	width: 91%;
+	margin: 0.5rem;
+}
+
 .jwppp-alert.api {
 	display: inline-block;
 	padding-left: 0.6rem 2rem;

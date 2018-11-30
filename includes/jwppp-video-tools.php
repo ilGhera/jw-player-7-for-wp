@@ -54,14 +54,7 @@ function jwppp_video_tools($post_id, $number, $sh_video) {
 	if($dashboard_player) {
 
 		/*Choose player*/
-		$output .= '<div class="jwppp-single-option-' . esc_attr($number) . ' cloud-option">';
-			
-			$output .= '<label for="_jwppp-choose-player-' . esc_attr($number) . '"><strong>' . esc_html(__('Select Player', 'jwppp')) . '</strong></label>';
-			$output .= '<p>';
-			$output .= '<select class="jwppp-choose-player-' . esc_attr($number) . '" name="_jwppp-choose-player-' . esc_attr($number) . '" style="opacity: 0;"></select>';
-			$output .= '</p>';
-
-		$output .= '</div>';
+		$output .= '<div class="jwppp-single-option-' . esc_attr($number) . ' cloud-option choose-player" style="opacity: 0;"></div>';
 	}
 
 
