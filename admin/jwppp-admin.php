@@ -401,7 +401,7 @@ function jwppp_options() {
 
 			/*Credentials validation*/
 			if($api->args_check() && !$api->account_validation()) {
-				echo '<span class="jwppp-alert api">' . esc_html('It seems like your API Credentials are not correct', 'jwppp') . '</span>';
+				echo '<span class="jwppp-alert api">' . esc_html('Invalid API Credentials', 'jwppp') . '</span>';
 			}
 				echo '</td>';
 				echo '</tr>';
