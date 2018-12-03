@@ -43,7 +43,7 @@ class jwppp_dasboard_api {
 		);
 
 		if(is_array($output)) {
-			if($output['response']['code'] === 429) {
+			if($output['response']['code'] !== 200) {
 
 				$body = unserialize($output['body']);
 		
