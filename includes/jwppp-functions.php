@@ -815,7 +815,7 @@ function jwppp_list_content_callback() {
 
 			} else {
 
-				$output .= '<span class="jwppp-alert api">' . esc_html(__('It seems like your API Credentials are not correct.', 'jwppp')) . '</span>';
+				$output .= '<span class="jwppp-alert api">' . esc_html(__('Invalid API Credentials.', 'jwppp')) . '</span>';
 			
 			}
 
