@@ -22,8 +22,8 @@ $output .= '<table class="widefat jwppp-' . esc_attr($number) . '" style="margin
 		} 
 
 		$output .= '<tr class="row">';
-			$output .= '<td class="order">' . esc_attr($number) . '</td>';
-			$output .= '<td class="jwppp-input-wrap' . esc_html($image_class) . '" style="width: 100%; padding-bottom: 1rem; position: relative;">';
+			$output .= '<td class="order" style="width: 2.5%;">' . esc_attr($number) . '</td>';
+			$output .= '<td class="jwppp-input-wrap' . esc_html($image_class) . '" style="width: 95%; padding-bottom: 1rem; position: relative;">';
 				wp_nonce_field( 'jwppp_save_single_video_data', 'jwppp-meta-box-nonce-' . $number );
 
 				/*Single video details*/
@@ -154,9 +154,9 @@ $output .= '<table class="widefat jwppp-' . esc_attr($number) . '" style="margin
 			$output .= '</td>';
 
 			if($number < 2) {
-				$output .= '<td class="add-video"><a class="jwppp-add"><img src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/add-video.png" /></a></td>';
+				$output .= '<td class="add-video" style="width: 2.5%;"><a class="jwppp-add"><img src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/add-video.png" /></a></td>';
 			} else {
-				$output .= '<td class="remove-video"><a class="jwppp-remove" data-numb="' . esc_attr($number) . '"><img src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/remove-video.png" /></a></td>';
+				$output .= '<td class="remove-video" style="width: 2.5%;"><a class="jwppp-remove" data-numb="' . esc_attr($number) . '"><img src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/remove-video.png" /></a></td>';
 			}
 
 		$output .= '</tr>';
