@@ -4,7 +4,7 @@ Tags: jw player, jw player 7, jw player 8, jwplayer, jwplayer 7, jwplayer 8, vid
 Version: 1.5.2
 Requires at least: 4.0
 Tested up to: 5.0
-Stable tag: 1.5.2
+Stable tag: 1.5.3
 License: GPLv2
 
 **JW Player for Wordpress** gives you all what you need to publish videos on your posts and pages, using the most famous web player in the world.
@@ -47,6 +47,11 @@ More details <a href="https://www.ilghera.com/documentation/setup-the-player/" t
 
 
 == Changelog ==
+
+
+= 1.5.3 =
+Release Date: 8 Dec 2018
+* Bug Fix: 	   Add/ Delete video buttons not visible in Wordpress 5.0
 
 
 = 1.5.2 =

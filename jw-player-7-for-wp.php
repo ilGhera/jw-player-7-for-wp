@@ -6,7 +6,7 @@
 Change skin, position and dimensions of your player. Allow users share and embed your contents.
  * Do you want more? Please check out the premium version.
  * Author: ilGhera
- * Version: 1.5.2
+ * Version: 1.5.3
  * Author URI: https://ilghera.com 
  * Requires at least: 4.0
  * Tested up to: 5.0
