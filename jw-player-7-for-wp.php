@@ -9,7 +9,7 @@ Change skin, position and dimensions of your player. Allow users share and embed
  * Version: 1.5.2
  * Author URI: https://ilghera.com 
  * Requires at least: 4.0
- * Tested up to: 4.9
+ * Tested up to: 5.0
  * Text Domain: jwppp
  * Domain Path: /languages
  */
