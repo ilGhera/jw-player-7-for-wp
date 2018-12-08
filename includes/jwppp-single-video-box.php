@@ -9,8 +9,8 @@
 echo '<table class="widefat jwppp-1" style="margin: 0.4rem 0;">';
 echo '<tbody class="ui-sortable">';
 echo '<tr class="row">';
-echo '<td class="order">1</td>';
-echo '<td class="jwppp-input-wrap" style="width: 100%;">';
+echo '<td class="order" style="width: 2.5%;">1</td>';
+echo '<td class="jwppp-input-wrap" style="width: 90%;">';
 wp_nonce_field( 'jwppp_save_meta_box_data', 'jwppp_meta_box_nonce' );
 
 $video_url = get_post_meta( $post->ID, '_jwppp-video-url-1', true );
@@ -173,9 +173,9 @@ echo '</div>';
 echo '</td>';
 $number = 1;
 if($number<2) {
-	echo '<td class="add-video"><a class="jwppp-add"><img src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/add-video.png" /></a></td>';
+	echo '<td class="add-video" style="width: 2.5%;"><a class="jwppp-add"><img src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/add-video.png" /></a></td>';
 } else {
-	echo '<td class="remove-video"><a class="jwppp-remove" data-numb="1"><img src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/remove-video.png" /></a></td>';
+	echo '<td class="remove-video" style="width: 2.5%;"><a class="jwppp-remove" data-numb="1"><img src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/remove-video.png" /></a></td>';
 }
 echo '</tr>';
 echo '</tbody>';
