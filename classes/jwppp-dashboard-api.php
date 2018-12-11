@@ -2,7 +2,7 @@
 /**
  * The JW Player API for communicate  with the dashboard
  * @author ilGhera
- * @package jw-player-7-for-wp/classes
+ * @package jw-player-for-vip/classes
  * @version 1.6.0
  */
 class jwppp_dasboard_api {

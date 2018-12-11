@@ -2,7 +2,7 @@
 /**
  * Skin options 8
  * @author ilGhera
- * @package jw-player-7-for-wp/admin/skin
+ * @package jw-player-for-vip/admin/skin
  * @version 1.6.0
  */
 

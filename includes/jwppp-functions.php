@@ -2,7 +2,7 @@
 /**
  * Plugin functions
  * @author ilGhera
- * @package jw-player-7-for-wp/includes
+ * @package jw-player-for-vip/includes
  * @version 1.6.0
  */
 

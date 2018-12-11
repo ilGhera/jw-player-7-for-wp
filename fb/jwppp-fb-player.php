@@ -2,7 +2,7 @@
 /**
  * Facebook istant articles player
  * @author ilGhera
- * @package jw-player-7-for-wp/fb
+ * @package jw-player-for-vip/fb
  * @version 1.6.0
  */
 

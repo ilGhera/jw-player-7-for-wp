@@ -36,7 +36,7 @@ That's all, you're ready to go!
 
 == Installation ==
 * Download JW Player for Wordpress - VIP
-* Upload the 'jw-player-7-for-wp-vip’ directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
+* Upload the 'jw-player-for-vip’ directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
 * Activate JW Player for Wordpress - VIP from your Plugins page.
 * Once Activated, go to <strong>JW Player</strong> menu and set you preferences.
 

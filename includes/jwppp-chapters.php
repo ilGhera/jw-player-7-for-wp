@@ -2,7 +2,7 @@
 /**
  * Video chapters
  * @author ilGhera
- * @package jw-player-7-for-wp/includes
+ * @package jw-player-for-vip/includes
  * @version 1.6.0
  * @return string   the chapters set by the publisher in a WEBVTT file
  */

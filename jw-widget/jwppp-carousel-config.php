@@ -2,7 +2,7 @@
 /**
  * JW Player carousel widget configuration
  * @author ilGhera
- * @package jw-player-7-for-wp/jw-widget
+ * @package jw-player-for-vip/jw-widget
  * @version 1.6.0
  */
 

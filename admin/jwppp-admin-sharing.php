@@ -2,7 +2,7 @@
 /**
  * Share options
  * @author ilGhera
- * @package jw-player-7-for-wp/admin
+ * @package jw-player-for-vip/admin
  * @version 1.6.0
  */
 ?>

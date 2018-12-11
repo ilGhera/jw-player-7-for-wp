@@ -2,7 +2,7 @@
 /**
  * Single video tools
  * @author ilGhera
- * @package jw-player-7-for-wp/includes
+ * @package jw-player-for-vip/includes
  * @version 1.6.0
  * @param  int $post_id    the post id
  * @param  int $number     the video number
