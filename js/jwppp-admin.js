@@ -101,6 +101,11 @@ jQuery(document).ready(function($) {
     /*Ads options*/
     if($('#jwppp-active-ads').prop('checked') == false) {
         $('.ads-options').hide();
+    } else {
+        if($('#jwppp-active-ads-var').prop('checked')) {
+            $('.ads-options').hide();
+            $('.ads-options.ads-var-block').show('slow');
+        }
     }
 
     $('#jwppp-active-ads').on('change',function() {

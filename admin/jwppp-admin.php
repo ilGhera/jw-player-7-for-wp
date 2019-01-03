@@ -257,7 +257,7 @@ function jwppp_ads_tag($n, $tag='') {
 		}
 	$output .= '</li>';
 
-	return $output;
+	echo $output;
 }
 
 
@@ -267,7 +267,7 @@ function jwppp_ads_tag($n, $tag='') {
 function jwppp_ads_tag_callback() {
 	$n = isset($_POST['number']) ? sanitize_text_field($_POST['number']) : '';
 	if($n) {
-		echo jwppp_ads_tag($n);
+		jwppp_ads_tag($n);
 	}
 	exit;
 }
@@ -620,6 +620,7 @@ function jwppp_options() {
 				/*Logo*/
 				$jwppp_logo = sanitize_text_field(get_option('jwppp-logo'));
 				if(isset($_POST['jwppp-logo']) && wp_verify_nonce(sanitize_text_field($_POST['hidden-nonce-options']), 'jwppp-nonce-options')) {
+					error_log('POST: ' . print_r($_POST, true));
 					$jwppp_logo = sanitize_text_field($_POST['jwppp-logo']);
 					update_option('jwppp-logo', $jwppp_logo);
 				}
