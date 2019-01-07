@@ -47,7 +47,7 @@
 	if ( isset( $_POST['hidden-total-tags'] ) ) {
 		$ads_tags = array();
 		for ( $i = 0; $i < sanitize_text_field( wp_unslash( $_POST['hidden-total-tags'] ) ); $i++ ) {
-			if ( sanitize_text_field( wp_unslash( $_POST[ 'jwppp-ads-tag-' . ( $i + 1 ) ] ) ) !== '' ) {
+			if ( isset( $_POST[ 'jwppp-ads-tag-' . ( $i + 1 ) ], $_POST[ 'jwppp-ads-tag-label' . ( $i + 1 ) ] ) ) {
 				$ads_tags[] = array(
 					'label' => sanitize_text_field( wp_unslash( $_POST[ 'jwppp-ads-tag-label' . ( $i + 1 ) ] ) ),
 					'url'   => sanitize_text_field( wp_unslash( $_POST[ 'jwppp-ads-tag-' . ( $i + 1 ) ] ) ),

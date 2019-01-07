@@ -14,7 +14,7 @@ require(plugin_dir_path(__FILE__) . 'jwppp-save-single-video-data.php');
 require(plugin_dir_path(__FILE__) . 'jwppp-sh-player-options.php');
 require(plugin_dir_path(__FILE__) . 'jwppp-ads-code-block.php');
 require(plugin_dir_path(__FILE__) . 'jwppp-player-code.php');
-require(plugin_dir_path(__DIR__)  . 'classes/jwppp-dashboard-api.php');
+require(plugin_dir_path(__DIR__)  . 'classes/class-jwppp-dashboard-api.php');
 require(plugin_dir_path(__DIR__)  . 'botr/api.php');
 
 require_once(plugin_dir_path(__DIR__) .'libraries/JWT.php');
@@ -151,8 +151,10 @@ function jwppp_ajax_add_video() {
 		jQuery(document).ready(function($) {
 			$('.jwppp-add').on('click', function() {
 				var number = parseInt($('.order:visible').last().html())+1;
+				var first_nonce = $('#jwppp-meta-box-nonce-1').val();
 				var data = {
 					'action': 'jwppp_ajax_add',
+					'jwppp-meta-box-nonce-1': first_nonce,
 					'number': number,
 					'post_id': <?php echo get_the_ID(); ?>
 				};
@@ -718,7 +720,7 @@ function jwppp_playlist_carousel($player_id) {
  */
 function jwppp_search_content_callback() {
 
-	$api = new jwppp_dasboard_api();
+	$api = new JWPPP_Dashboard_Api();
 
 	if(isset($_POST['value'])) {
 		$term = sanitize_text_field($_POST['value']);
@@ -748,7 +750,7 @@ function jwppp_list_content_callback() {
 
 	if($post_id && $number) {
 
-		$api = new jwppp_dasboard_api();
+		$api = new JWPPP_Dashboard_Api();
 
 		$video_url = get_post_meta($post_id, '_jwppp-video-url-' . $number, true );
 
@@ -849,7 +851,7 @@ function jwppp_get_player_callback() {
 	/*Choose player*/
 	$choose_player = get_post_meta($post_id, '_jwppp-choose-player-' . $number, true);
 
-	$api = new jwppp_dasboard_api();
+	$api = new JWPPP_Dashboard_Api();
 	$players = $api->get_players();
 
 	$output = null;
