@@ -1,3 +1,6 @@
 /vendor/
 composer.json
 composer.lock
+package.json
+.eslintrc.js
+/node_modules/

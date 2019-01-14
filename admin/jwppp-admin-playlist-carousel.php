@@ -8,12 +8,11 @@
 ?>
 <div name="jwppp-playlist-carousel" id="jwppp-playlist-carousel" class="jwppp-admin" style="display: none;">
 	<?php
-	$jwppp_playlist_carousel_style = unserialize( base64_decode( sanitize_text_field( get_option( 'jwppp-playlist-carousel-style' ) ) ) );
-
-	$jwppp_playlist_carousel_title            = isset( $jwppp_playlist_carousel_style['title'] ) ? sanitize_text_field( $jwppp_playlist_carousel_style['title'] ) : 'More Videos';
-	$jwppp_playlist_carousel_text_color       = isset( $jwppp_playlist_carousel_style['text_color'] ) ? sanitize_text_field( $jwppp_playlist_carousel_style['text_color'] ) : '#fff';
-	$jwppp_playlist_carousel_background_color = isset( $jwppp_playlist_carousel_style['background_color'] ) ? sanitize_text_field( $jwppp_playlist_carousel_style['background_color'] ) : '#000';
-	$jwppp_playlist_carousel_icon_color       = isset( $jwppp_playlist_carousel_style['icon_color'] ) ? sanitize_text_field( $jwppp_playlist_carousel_style['icon_color'] ) : '#fff';
+	$jwppp_playlist_carousel_style = json_decode( base64_decode( sanitize_text_field( get_option( 'jwppp-playlist-carousel-style' ) ) ) );
+	$jwppp_playlist_carousel_title            = isset( $jwppp_playlist_carousel_style->title ) ? sanitize_text_field( $jwppp_playlist_carousel_style->title ) : 'More Videos';
+	$jwppp_playlist_carousel_text_color       = isset( $jwppp_playlist_carousel_style->text_color ) ? sanitize_text_field( $jwppp_playlist_carousel_style->text_color ) : '#fff';
+	$jwppp_playlist_carousel_background_color = isset( $jwppp_playlist_carousel_style->background_color ) ? sanitize_text_field( $jwppp_playlist_carousel_style->background_color ) : '#000';
+	$jwppp_playlist_carousel_icon_color       = isset( $jwppp_playlist_carousel_style->icon_color ) ? sanitize_text_field( $jwppp_playlist_carousel_style->icon_color ) : '#fff';
 
 	if ( isset( $_POST['jwppp-playlist-carousel-hidden'], $_POST['hidden-nonce-pl-carousel'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-pl-carousel'] ), 'jwppp-nonce-pl-carousel' ) ) {
 		$jwppp_playlist_carousel_title            = isset( $_POST['jwppp-playlist-carousel-title'] ) ? sanitize_text_field( wp_unslash( $_POST['jwppp-playlist-carousel-title'] ) ) : $jwppp_playlist_carousel_title;
@@ -28,7 +27,7 @@
 			'icon_color'       => $jwppp_playlist_carousel_icon_color,
 		);
 
-		update_option( 'jwppp-playlist-carousel-style', base64_encode( serialize( $jwppp_playlist_carousel_style ) ) );
+		update_option( 'jwppp-playlist-carousel-style', base64_encode( json_encode( $jwppp_playlist_carousel_style ) ) );
 	}
 
 	echo '<form id="jwppp-playlist-carousel" name="jwppp-playlist-carousel" method="post" action="">';

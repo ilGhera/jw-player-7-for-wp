@@ -31,9 +31,6 @@ function jwppp_premium_load() {
 		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 	}
 
-	/*Database update if required*/
-	global $wpdb;
-
 	/*Add database version*/
 	update_option( 'jwppp-database-version', '1.4.0' );
 

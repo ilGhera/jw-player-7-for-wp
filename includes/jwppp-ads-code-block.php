@@ -52,19 +52,19 @@ function jwppp_ads_code_block( $post_id, $number ) {
 				<?php
 				$ads_var = get_option( 'jwppp-ads-var' );
 
-				$output .= "advertising: {\n";
+				echo "advertising: {\n";
 				if ( is_array( $ads_var ) ) {
 					foreach ( $ads_var as $key => $value ) {
-						$output .= "'$key': '" . str_replace( '\\', '', $value ) . "',\n";
+						echo "'" . esc_html( $key ) . "': '" . esc_html( str_replace( '\\', '', $value ) ) . "',\n";
 					}
 				}
-				$output .= "},\n";
+				echo "},\n";
 
 				return $output;
 
 		} elseif ( 'no-ads' === $jwppp_ads_tag ) { //The single video ads option is not activated
 
-			$output .= "advertising: {},\n";
+			echo "advertising: {},\n";
 
 			return $output;
 
@@ -83,31 +83,31 @@ function jwppp_ads_code_block( $post_id, $number ) {
 				}
 			}
 
-			$output .= "advertising: {\n";
-			$output .= "client: '" . esc_html( $jwppp_ads_client ) . "',\n";
-			$output .= "tag: '" . $jwppp_ads_tag . "',\n";
+			echo "advertising: {\n";
+			echo "client: '" . esc_html( $jwppp_ads_client ) . "',\n";
+			echo "tag: '" . esc_html( $jwppp_ads_tag ) . "',\n";
 			if ( $jwppp_ads_skip ) {
-				$output .= 'skipoffset: ' . esc_html( $jwppp_ads_skip ) . ",\n";
+				echo 'skipoffset: ' . esc_html( $jwppp_ads_skip ) . ",\n";
 			}
 			if ( $jwppp_bidding ) {
-				$output .= "bids: {\n";
-					$output .= "settings: {\n";
-						$output .= "mediationLayerAdServer: '" . esc_html( $jwppp_mediation ) . "',\n";
+				echo "bids: {\n";
+					echo "settings: {\n";
+						echo "mediationLayerAdServer: '" . esc_html( $jwppp_mediation ) . "',\n";
 				if ( in_array( $jwppp_mediation, array( 'jwp', 'jwpdfp' ) ) && $jwppp_floor_price ) {
-					$output .= 'floorPriceCents: ' . esc_html( $jwppp_floor_price ) * 100 . "\n";
+					echo 'floorPriceCents: ' . esc_html( $jwppp_floor_price ) * 100 . "\n";
 				}
-					$output .= "},\n";
-					$output .= "bidders: [\n";
-						$output .= "{\n";
-						$output .= "name: 'SpotX',\n";
-						$output .= "id: '" . esc_html( $jwppp_channel_id ) . "'\n";
-						$output .= "}\n";
-					$output .= "]\n";
-					// $output .= "";
+					echo "},\n";
+					echo "bidders: [\n";
+						echo "{\n";
+						echo "name: 'SpotX',\n";
+						echo "id: '" . esc_html( $jwppp_channel_id ) . "'\n";
+						echo "}\n";
+					echo "]\n";
+					// echo "";
 
-				$output .= "}\n";
+				echo "}\n";
 			}
-			$output .= "},\n";
+			echo "},\n";
 		}
 	}
 

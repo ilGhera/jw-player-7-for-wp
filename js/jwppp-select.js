@@ -7,236 +7,276 @@
  *
  * Fired when a media content in the list is clicked
  */
-var jwppp_select_content = function(){
-	jQuery(function($){
-		$(document).on('click', 'ul.jwppp-video-list li', function(){
-		
-			var post_id = $('#post_ID').attr('value');
-			var number = $(this).closest('ul').data('number');
+var JWPPPSelectContent = function() {
+	jQuery( function( $ ) {
+		$( document ).on( 'click', 'ul.jwppp-video-list li', function() {
+
+			var postId = $( '#post_ID' ).attr( 'value' );
+			var number = $( this ).closest( 'ul' ).data( 'number' );
 			var reset = false;
-			
-			if($(this).hasClass('reset')) {
-				var media_id = null;
-				var video_title = null;
-				$('.jwppp-video-details-' + number).html('');
-				var reset = true;
+			var mediaId;
+			var videoTitle;
+			var description;
+			var items;
+			var duration;
+			var tags;
+			var width;
+			var imageUrl;
+
+			if ( $( this ).hasClass( 'reset' ) ) {
+				$( '.jwppp-video-details-' + number ).empty();
+				reset = true;
 			} else {
-				var media_id = $(this).data('mediaid');
-				var video_title = $('span', this).text();
+				mediaId = $( this ).data( 'mediaid' );
+				videoTitle = $( 'span', this ).text();
 
 			}
-			
-			$('#_jwppp-video-url-' + number + '.choose').attr('value', media_id);
-			$('#_jwppp-video-url-' + number + '.jwppp-url').attr('value', media_id);
-			$('#_jwppp-video-title-' + number).attr('value', video_title);
-			$('#_jwppp-video-title-' + number + '.jwppp-title').attr('value', video_title);
+
+			$( '#_jwppp-video-url-' + number + '.choose' ).attr( 'value', mediaId );
+			$( '#_jwppp-video-url-' + number + '.jwppp-url' ).attr( 'value', mediaId );
+			$( '#_jwppp-video-title-' + number ).attr( 'value', videoTitle );
+			$( '#_jwppp-video-title-' + number + '.jwppp-title' ).attr( 'value', videoTitle );
 
 			/*Video details*/
-			if(!reset) {
+			if ( ! reset ) {
 
-				var description = $(this).data('description');
+				description = $( this ).data( 'description' );
 
-				$('#_jwppp-video-description-' + number + '.choose').attr('value', description);
-				$('#_jwppp-video-description-' + number + '.jwppp-description').attr('value', description);
+				$( '#_jwppp-video-description-' + number + '.choose' ).attr( 'value', description );
+				$( '#_jwppp-video-description-' + number + '.jwppp-description' ).attr( 'value', description );
 
-				if($(this).hasClass('playlist-element')) {
-					var items = $(this).data('videos') ? $(this).data('videos') : '0';
+				if ( $( this ).hasClass( 'playlist-element' ) ) {
+					items = $( this ).data( 'videos' ) ? $( this ).data( 'videos' ) : '0';
 
-					$('.jwppp-video-details-' + number).html(
-						(video_title ? '<span>Title</span>: ' + video_title + '<br>' : '') +
-						(description ? '<span>Description</span>: ' + description + '<br>' : '') +
-						'<span>Items</span>: ' + items + '<br>'
-					);
+					$( '.jwppp-video-details-' + number ).empty();
 
-					$('#_jwppp-playlist-items-' + number).attr('value', items);
-					// details['items'] = items;
-
-				} else {					
-					var duration = null; 
-					if($(this).data('duration') > 0) {
-						duration = new Date($(this).data('duration') * 1000).toISOString().substr(11, 8);
+					if ( videoTitle ) {
+						$( '.jwppp-video-details-' + number ).append( '<span>Title</span>: ' + videoTitle + '<br>' );
 					}
-					
-					var tags = $(this).data('tags');
 
-					$('.jwppp-video-details-' + number).html(
-						(video_title ? '<span>Title</span>: ' + video_title + '<br>' : '') +
-						(description ? '<span>Description</span>: ' + description + '<br>' : '') +
-						(duration ? '<span>Duration</span>: ' + duration + '<br>' : '') +
-						(tags ? '<span>Tags</span>: ' + tags + '<br>' : '')
-					);
+					if ( description ) {
+						$( '.jwppp-video-details-' + number ).append( '<span>Description</span>: ' + description + '<br>' );
+					}
 
-					$('#_jwppp-video-duration-' + number).attr('value', duration);
-					$('#_jwppp-video-tags-' + number).attr('value', tags);
+					$( '.jwppp-video-details-' + number ).append( '<span>Items</span>: ' + items + '<br>' );
+
+
+					$( '#_jwppp-playlist-items-' + number ).attr( 'value', items );
+
+				} else {
+
+					if ( 0 < $( this ).data( 'duration' ) ) {
+						duration = new Date( $( this ).data( 'duration' ) * 1000 ).toISOString().substr( 11, 8 );
+					}
+
+					tags = $( this ).data( 'tags' );
+
+					$( '.jwppp-video-details-' + number ).empty();
+
+					if ( videoTitle ) {
+						$( '.jwppp-video-details-' + number ).append( '<span>Title</span>: ' + videoTitle + '<br>' );
+					}
+
+					if ( description ) {
+						$( '.jwppp-video-details-' + number ).append( '<span>Description</span>: ' + description + '<br>' );
+					}
+
+					if ( duration ) {
+						$( '.jwppp-video-details-' + number ).append( '<span>Duration</span>: ' + duration + '<br>' );
+					}
+
+					if ( tags ) {
+						$( '.jwppp-video-details-' + number ).append( '<span>Tags</span>: ' + tags + '<br>' );
+					}
+
+					$( '#_jwppp-video-duration-' + number ).attr( 'value', duration );
+					$( '#_jwppp-video-tags-' + number ).attr( 'value', tags );
 
 				}
 
 			}
 
 			/*Image preview*/
-			var width = $(document).width();
+			width = $( document ).width();
 
-            if(media_id && width > 1112) {
-            	var image_url = null;
-            	if($(this).hasClass('playlist-element')) {
-	            	
-	            	image_url = jwppp_select.pluginUrl + '/images/playlist4.png';
+			if ( mediaId && 1112 < width ) {
 
-	            	$('.playlist-carousel-container.' + number).css({
-	            		'display': 'inline-block'
-	            	})
+				if ( $( this ).hasClass( 'playlist-element' ) ) {
 
-            	} else {
-	            
-	            	image_url = 'https://cdn.jwplayer.com/thumbs/' + media_id + '-720.jpg'
-					$('.playlist-carousel-container.' + number).hide();
-					$('#_jwppp-playlist-carousel-' + number).removeAttr('checked');
+					imageUrl = jwpppSelect.pluginUrl + '/images/playlist4.png';
 
-            	}
+					$( '.playlist-carousel-container.' + number ).css({
+						'display': 'inline-block'
+					});
 
-                $('.poster-image-preview.' + number).remove();
-                $('.jwppp-' + number + ' .jwppp-input-wrap').prepend('<img class="poster-image-preview ' + number + '" src="' + image_url + '" style="display: none;">');
-                $('.poster-image-preview.' + number).fadeIn(300);
-          
-            } else {
+				} else {
 
-                $('.poster-image-preview.' + number).fadeOut(300, function(){
-                    $(this).remove();
-                });
-            }
+					imageUrl = 'https://cdn.jwplayer.com/thumbs/' + mediaId + '-720.jpg';
+					$( '.playlist-carousel-container.' + number ).hide();
+					$( '#_jwppp-playlist-carousel-' + number ).removeAttr( 'checked' );
 
-		})
-	})
-}
-jwppp_select_content();
+				}
+
+				$( '.poster-image-preview.' + number ).remove();
+				$( '.jwppp-' + number + ' .jwppp-input-wrap' ).prepend( '<img class="poster-image-preview ' + number + '" style="display: none;">' );
+				$( '.jwppp-' + number + ' .jwppp-input-wrap .poster-image-preview.' + number ).attr( 'src', imageUrl );
+				$( '.poster-image-preview.' + number ).fadeIn( 300 );
+
+			} else {
+
+				$( '.poster-image-preview.' + number ).fadeOut( 300, function() {
+					$( this ).remove();
+				});
+			}
+
+		});
+	});
+};
+JWPPPSelectContent();
 
 
 /**
  * Delay used after keyup on searching media contents
  */
-var delay = (function(){
+var delay = ( function() {
 	var timer = 0;
-	return function(callback, ms){
-		clearTimeout (timer);
-		timer = setTimeout(callback, ms);
+	return function( callback, ms ) {
+		clearTimeout( timer );
+		timer = setTimeout( callback, ms );
 	};
-})();
+}() );
 
 
 /**
- * Search contents in the dashboard based on the text typed by the user		
+ * Search contents in the dashboard based on the text typed by the user
  * @param  {id} number the video number of the post/ page
  * @return {mixed}     the videos and playlists returned by the api call
  */
-var jwppp_search_content = function(number){
-	jQuery(function($){
+var JWPPPSearchContent = function( number ) {
+	jQuery( function( $ ) {
 
-		var post_id = $('#post_ID').attr('value');
+		var postId = $( '#post_ID' ).attr( 'value' );
 
-		$(document).on('focusin', '.jwppp-search-content', function(){
+		$( document ).on( 'focusin', '.jwppp-search-content', function() {
 
-			var number = $(this).data('number'); 
-			var list_container = $('ul#_jwppp-video-list-' + number + ' span.jwppp-list-container');
+			var number = $( this ).data( 'number' );
+			var listContainer = $( 'ul#_jwppp-video-list-' + number + ' span.jwppp-list-container' );
+			var nonce = $( '#hidden-meta-box-nonce-' + number ).val();
+			var data;
 
-			if(!$(this).hasClass('loaded')) {
+			if ( ! $( this ).hasClass( 'loaded' ) ) {
 
-				$(this).addClass('loaded');
-				$(list_container).html('<li class="jwppp-loading"><img src="' + jwppp_select.pluginUrl + '/images/loading.gif"></li>');
+				$( this ).addClass( 'loaded' );
+				$( listContainer ).html( '<li class="jwppp-loading"><img /></li>' );
+				$( '.jwppp-loading img', listContainer ).attr( 'src', jwpppSelect.pluginUrl + '/images/loading.gif' );
 
-				var data = {
+				data = {
 					'action': 'init-api',
-					'post_id': post_id,
+					'post_id': postId,
 					'number': number
-				}
+				};
 
-				$.post(ajaxurl, data, function(response){
-					$(list_container).html(response);
-				})
+				data['hidden-meta-box-nonce-' + number] = nonce;
+
+				$.post( ajaxurl, data, function( response ) {
+					$( listContainer ).html( response );
+				});
 
 			}
 
 
-			$('#_jwppp-video-list-' + number).slideDown();
-		})
+			$( '#_jwppp-video-list-' + number ).slideDown();
+		});
 
-		$(document).on('focusout', '.jwppp-search-content', function(){
-			var number = $(this).data('number'); 
-			$('#_jwppp-video-list-' + number).delay(500).slideUp();
-		})
+		$( document ).on( 'focusout', '.jwppp-search-content', function() {
+			var number = $( this ).data( 'number' );
+			$( '#_jwppp-video-list-' + number ).delay( 500 ).slideUp();
+		});
 
-		$(document).on('keyup', '.jwppp-search-content', function(){
+		$( document ).on( 'keyup', '.jwppp-search-content', function() {
 
-			var number = $(this).data('number'); 
-			var list_container = $('ul#_jwppp-video-list-' + number + ' span.jwppp-list-container');
+			var number = $( this ).data( 'number' );
+			var listContainer = $( 'ul#_jwppp-video-list-' + number + ' span.jwppp-list-container' );
+			var nonce = $( '#hidden-meta-box-nonce-' + number ).val();
+			var value;
+			var data;
 
-			$(list_container).html('<li class="jwppp-loading"><img src="' + jwppp_select.pluginUrl + '/images/loading.gif"></li>');
+			$( listContainer ).html( '<li class="jwppp-loading"><img /></li>' );
+			$( '.jwppp-loading img', listContainer ).attr( 'src', jwpppSelect.pluginUrl + '/images/loading.gif' );
 
-			var value = $(this).val().trim();
-			var data = {
+			value = $( this ).val().trim();
+			data = {
 				'action': 'search-content',
+				'number': number,
 				'value': value
-			}
+			};
 
-			delay(function() {
+			data['hidden-meta-box-nonce-' + number] = nonce;
 
-				$.post(ajaxurl, data, function(response){
+			delay( function() {
 
-					var baseUrl = "https://cdn.jwplayer.com/thumbs/";
-					var contents = JSON.parse(response);
+				$.post( ajaxurl, data, function( response ) {
+
+					var baseUrl = 'https://cdn.jwplayer.com/thumbs/';
+					var contents = JSON.parse( response );
 					var videos = contents.videos;
 					var playlists = contents.playlists;
+					var i;
+					var n;
+					var plReset;
 
 					/*Single videos*/
-					if(videos.length > 0) {
-						$(list_container).html('<li class="results reset">Videos found</li>');
-						for (var i = 0; i < videos.length; i++) {
-							// console.log(videos[i]);
-							$(list_container).append(
-								'<li ' +
-								'data-mediaid="' + (videos[i].key ? videos[i].key : '-') + '" ' + 
-								'data-description="' + (videos[i].description ? videos[i].description : '-') + '" ' + 
-								'data-duration="' + (videos[i].duration ? videos[i].duration : '-') + '" ' + 
-								'data-tags="' + (videos[i].tags ? videos[i].tags : '-') + '" ' + 
-								'>' + 
-								'<img class="video-img" src="' + baseUrl + videos[i].key + '-60.jpg">' + 
-								'<span>' + videos[i].title + '</span>' +
-								'</li>'
-							);
-						}						
-					} 
+					if ( 0 < videos.length ) {
+						$( listContainer ).html( '<li class="results reset">Videos found</li>' );
+						for ( i = 0; i < videos.length; i++ ) {
+							$( listContainer ).append( '<li class="' + i + '"></li>' );
+							$( 'li.' + i, listContainer ).data( 'mediaid', ( videos[i].key ? videos[i].key : '-' ) );
+							$( 'li.' + i, listContainer ).data( 'description', ( videos[i].description ? videos[i].description : '-' ) );
+							$( 'li.' + i, listContainer ).data( 'duration', ( videos[i].duration ? videos[i].duration : '-' ) );
+							$( 'li.' + i, listContainer ).data( 'tags', ( videos[i].tags ? videos[i].tags : '-' ) );
+
+							/*Preview image*/
+							$( 'li.' + i, listContainer ).append( '<img class="video-img" />' );
+							$( 'li.' + i + ' .video-img', listContainer ).attr( 'src', baseUrl + videos[i].key + '-60.jpg' );
+
+							$( 'li.' + i, listContainer ).append( '<span>' + videos[i].title + '</span>' );
+
+						}
+					}
 
 					/*Playlists*/
-					if(playlists.length > 0) {
-						var pl_reset = $('ul#_jwppp-video-list-' + number + ' span.jwppp-list-container:contains("Playlists found")');
-						if($(pl_reset).length == 0) {
-							$(list_container).append('<li class="results reset">Playlists found</li>');						
+					if ( 0 < playlists.length ) {
+						plReset = $( 'ul#_jwppp-video-list-' + number + ' span.jwppp-list-container:contains("Playlists found")' );
+						if ( 0 == $( plReset ).length ) {
+							$( listContainer ).append( '<li class="results reset">Playlists found</li>' );
 						}
-						$('.jwppp-loading').remove();
-						$('.playlist-element').remove();
-						for (var i = 0; i < playlists.length; i++) {
-							$(list_container).append(					
-								'<li class="playlist-element" ' +
-								'data-mediaid="' + (playlists[i].key ? playlists[i].key : '-') + '" ' + 
-								'data-description="' + (playlists[i].description ? playlists[i].description : '-') + '" ' + 
-								// 'data-duration="' + (playlists[i].duration ? playlists[i].duration : '-') + '" ' + 
-								'data-videos="' + (playlists[i].videos.total ? playlists[i].videos.total : '-') + '" ' + 
-								'data-tags="' + (playlists[i].tags ? playlists[i].tags : '-') + '" ' + 
-								'>' + 
-								'<img class="video-img" src="' + jwppp_select.pluginUrl + '/images/playlist4.png">' + 
-								'<span>' + playlists[i].title + '</span>' +
-								'</li>'
-							);
-						}						
-					} 
+						$( '.jwppp-loading' ).remove();
+						$( '.playlist-element' ).remove();
+						for ( n = 0; n < playlists.length; n++ ) {
+							$( listContainer ).append( '<li class="playlist-element ' + n + '"></li>' );
+
+							$( 'li.playlist-element.' + n, listContainer ).data( 'mediaid', ( playlists[n].key ? playlists[n].key : '-' ) );
+							$( 'li.playlist-element.' + n, listContainer ).data( 'description', ( playlists[n].description ? playlists[n].description : '-' ) );
+							$( 'li.playlist-element.' + n, listContainer ).data( 'videos', ( playlists[n].videos.total ? playlists[n].videos.total : '-' ) );
+							$( 'li.playlist-element.' + n, listContainer ).data( 'tags', ( playlists[n].tags ? playlists[n].tags : '-' ) );
+
+							/*Preview image*/
+							$( 'li.playlist-element.' + n, listContainer ).append( '<img class="video-img" />' );
+							$( 'li.playlist-element.' + n + ' .video-img', listContainer ).attr( 'src', jwpppSelect.pluginUrl + '/images/playlist4.png' );
+
+							$( 'li.playlist-element.' + n, listContainer ).append( '<span>' + playlists[n].title + '</span>' );
+
+						}
+					}
 
 					/*No results*/
-					if(videos.length == 0 && playlists.length == 0) {
-						$(list_container).html('<li class="jwppp-no-results">Sorry, no videos found.</li>');					
+					if ( 0 == videos.length && 0 == playlists.length ) {
+						$( listContainer ).html( '<li class="jwppp-no-results">Sorry, no videos found.</li>' );
 					}
-				})
+				});
 
-			}, 1000)
-		})
-	})
-}
-jwppp_search_content();
+			}, 1000 );
+		});
+	});
+};
+JWPPPSearchContent();

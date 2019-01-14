@@ -36,14 +36,47 @@ function jwppp_enqueue_scripts() {
 		wp_enqueue_script( 'wp-color-picker', array( 'jquery' ), '', true );
 		wp_enqueue_script( 'jwppp-single-video', plugin_dir_url( __DIR__ ) . 'js/jwppp-single-video.js' );
 
+		/*Select contents from the JWP Dashboard*/
 		wp_enqueue_script( 'jwppp-select', plugin_dir_url( __DIR__ ) . 'js/jwppp-select.js', array( 'jquery' ) );
 		wp_localize_script(
 			'jwppp-select',
-			'jwppp_select',
+			'jwpppSelect',
 			array(
 				'pluginUrl' => plugin_dir_url( __DIR__ ),
 			)
 		);
+
+		$admin_page = get_current_screen();
+		if ( 'toplevel_page_jw-player-for-wp' === $admin_page->base ) {
+
+			/*Ajax - Check the player version for skin customization*/
+			wp_enqueue_script( 'jwppp-skin-customization', plugin_dir_url( __DIR__ ) . 'js/jwppp-skin-customization.js', array( 'jquery' ) );
+
+			$jwplayer = get_option( 'jwppp-library' );
+			$nonce_skin = wp_create_nonce( 'jwppp-nonce-skin' );
+
+			wp_localize_script(
+				'jwppp-skin-customization',
+				'jwpppSkin',
+				array(
+					'player' => $jwplayer,
+					'nonce'  => $nonce_skin,
+				)
+			);
+
+			/*Ajax - Update the options page on player library change*/
+			wp_enqueue_script( 'jwppp-player-check', plugin_dir_url( __DIR__ ) . 'js/jwppp-player-check.js', array( 'jquery' ) );
+
+			$nonce_player_check = wp_create_nonce( 'jwppp-nonce-player-check' );
+
+			wp_localize_script(
+				'jwppp-player-check',
+				'jwpppPlayerCheck',
+				array(
+					'nonce'  => $nonce_player_check,
+				)
+			);
+		}
 	}
 }
 add_action( 'admin_enqueue_scripts', 'jwppp_enqueue_scripts' );
@@ -73,59 +106,6 @@ function jwppp_add_menu() {
 	return $jwppp_page;
 }
 add_action( 'admin_menu', 'jwppp_add_menu' );
-
-
-/**
- * Ajax - Check the player version for skin customization
- */
-function skin_customization_per_version() {
-	$admin_page = get_current_screen();
-	if ( 'toplevel_page_jw-player-for-wp' === $admin_page->base ) {
-		$ajaxurl = admin_url( 'admin-ajax.php' );
-		$jwplayer = get_option( 'jwppp-library' );
-		$nonce = wp_create_nonce( 'jwppp-nonce-skin' );
-		?>
-		<script>
-			jQuery(document).ready(function($){
-				
-				var ajaxurl = '<?php echo esc_url( $ajaxurl ); ?>';
-				var player = '<?php echo esc_url( $jwplayer ); ?>';
-				var nonce = '<?php echo esc_html( $nonce ); ?>';
-
-				$.getScript(player, function(){
-					var version  = jwplayer.version;
-					var data = {
-						'action': 'skin-customization',
-						'version': version.split('+')[0],
-						'hidden-nonce-skin' : nonce
-					}				
-					$.post(ajaxurl, data, function(response) {
-						$('#jwppp-skin').html(response);
-						$('.jwppp-color-field').wpColorPicker();
-
-						/*Custom skin*/
-						if( $('#jwppp-skin option:selected').attr('value') == 'custom-skin' ) {
-								$('.custom-skin-url, .custom-skin-name').show();
-						} else {
-							$('.custom-skin-url, .custom-skin-name').hide();
-						}
-						
-						$('#jwppp-skin').on('change', function(){
-							if( $('option:selected', this).attr('value') == 'custom-skin' ) {
-								$('.custom-skin-url, .custom-skin-name').show();
-							} else {
-								$('.custom-skin-url, .custom-skin-name').hide();
-							}
-						})
-
-					})
-				});
-			})
-		</script>
-		<?php
-	}
-}
-add_action( 'admin_footer', 'skin_customization_per_version' );
 
 
 /**
@@ -191,59 +171,24 @@ function is_dashboard_player( $player = null ) {
 
 
 /**
- * Ajax - Update the options page on player library change
- */
-function jwppp_player_check() {
-	$screen = get_current_screen();
-	$nonce = wp_create_nonce( 'jwppp-nonce-player-check' );
-
-	if ( 'toplevel_page_jw-player-for-wp' === $screen->id ) {
-		?>
-		<script>
-			jQuery(document).ready(function($){
-				$('#jwppp-library').on('change', function() {
-					var player = $('#jwppp-library').val();
-					var nonce = '<?php echo esc_url( $nonce ); ?>';
-					var data = {
-						'action': 'player_check',
-						'player': player,
-						'hidden-nonce-player-check': nonce
-					}
-					$.post(ajaxurl, data, function(response){
-						// console.log(response)
-						if(response === 'done') {
-							location.reload();
-						}
-					})					
-				})
-			})
-		</script>
-		<?php
-	}
-}
-add_action( 'admin_footer', 'jwppp_player_check' );
-
-
-/**
  * Callback - Update options page
  * Save the new player into db
  */
 function jwppp_player_check_callback() {
-	// if ( isset( $_POST['hidden-nonce-player-check'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-player-check'] ), 'jwppp-nonce-player-check' ) ) {
-	$player = isset( $_POST['player'] ) ? sanitize_text_field( wp_unslash( $_POST['player'] ) ) : '';
-		// error_log('player: ' . $player);
-	if ( $player ) {
-		update_option( 'jwppp-library', $player );
-		echo 'done';
+	if ( isset( $_POST['hidden-nonce-player-check'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-player-check'] ), 'jwppp-nonce-player-check' ) ) {
+		$player = isset( $_POST['player'] ) ? sanitize_text_field( wp_unslash( $_POST['player'] ) ) : '';
+		if ( $player ) {
+			update_option( 'jwppp-library', $player );
+			echo 'done';
+		}
 	}
-	// }
 	exit;
 }
 add_action( 'wp_ajax_player_check', 'jwppp_player_check_callback' );
 
 
 /**
- * Single ads tag used in ajax callback funztion
+ * Single ads tag used in ajax callback function
  * @param  int    $n   the video number
  * @param  string $tag the ads tag
  * @return mixed  the html element with url and label
@@ -291,7 +236,7 @@ function jwppp_ads_tag( $n, $tag = '' ) {
  */
 function jwppp_ads_tag_callback() {
 
-	if ( isset( $_POST['hidden-nonce-ads'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-ads'] ), 'jwppp-nonce-ads' ) ) {
+	if ( isset( $_POST['hidden-nonce-add-tag'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-add-tag'] ), 'jwppp-nonce-add-tag' ) ) {
 		$n = isset( $_POST['number'] ) ? sanitize_text_field( wp_unslash( $_POST['number'] ) ) : '';
 		if ( $n ) {
 			jwppp_ads_tag( $n );

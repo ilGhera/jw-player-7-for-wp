@@ -6,4 +6,4 @@
  */
 
 var licence = data.licence;
-jwplayer.key=licence;
+jwplayer.key = licence;

@@ -155,6 +155,11 @@
 	echo '</tr>';
 
 	/*Ads tag*/
+
+	/*Nonce*/
+	$add_tag_nonce = wp_create_nonce( 'jwppp-nonce-add-tag' );
+	wp_localize_script( 'jwppp-admin', 'addTag', array( 'nonce' => $add_tag_nonce ) );
+
 	echo '<tr class="ads-options tag"' . esc_html( $hide ) . '>';
 	echo '<th scope="row">' . esc_html( __( 'Ad Tags', 'jwppp' ) ) . '</th>';
 	echo '<td>';

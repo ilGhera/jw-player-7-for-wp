@@ -45,13 +45,13 @@ class JWPPP_Dashboard_Api {
 		if ( is_array( $output ) ) {
 			if ( 200 !== $output['response']['code'] ) {
 
-				$body = unserialize( $output['body'] );
+				$body = json_decode( $output['body'] );
 
 				return array( 'error' => $body['message'] );
 
 			} else {
 
-				return unserialize( $output['body'] );
+				return json_decode( $output['body'] );
 
 			}
 		}
@@ -65,6 +65,7 @@ class JWPPP_Dashboard_Api {
 				$url = $this->api->call_url(
 					'channels/list',
 					array(
+						'api_format' => 'json',
 						'search' => $term,
 						'result_limit' => 15,
 					)
@@ -74,6 +75,7 @@ class JWPPP_Dashboard_Api {
 				$url = $this->api->call_url(
 					'videos/list',
 					array(
+						'api_format' => 'json',
 						'search' => $term,
 						'result_limit' => 15,
 						'order_by' => 'date:desc',
@@ -82,8 +84,8 @@ class JWPPP_Dashboard_Api {
 				$key = 'videos';
 			}
 			$output = $this->call( $url );
-			if ( isset( $output[ $key ] ) ) {
-				return $output[ $key ];
+			if ( isset( $output->$key ) ) {
+				return $output->$key;
 			} else {
 				return $output;
 			}
@@ -94,6 +96,7 @@ class JWPPP_Dashboard_Api {
 		if ( $this->api ) {
 
 			$parameters = array(
+				'api_format' => 'json',
 				'result_limit' => 15,
 				'order_by' => 'date:desc',
 			);
@@ -104,8 +107,8 @@ class JWPPP_Dashboard_Api {
 			$url = $this->api->call_url( 'videos/list', $parameters ); //videos
 			$output = $this->call( $url );
 
-			if ( isset( $output['videos'] ) ) {
-				return $output['videos'];
+			if ( isset( $output->videos ) ) {
+				return $output->videos;
 			} else {
 				return $output;
 			}
@@ -115,7 +118,10 @@ class JWPPP_Dashboard_Api {
 	public function get_playlists( $media_id = null ) {
 		if ( $this->api ) {
 
-			$parameters = array( 'result_limit' => 5 );
+			$parameters = array(
+				'api_format'   => 'json',
+				'result_limit' => 5,
+			);
 			if ( $media_id ) {
 				$parameters['search'] = $media_id;
 			}
@@ -123,8 +129,8 @@ class JWPPP_Dashboard_Api {
 			$url = $this->api->call_url( 'channels/list', $parameters );
 			$output = $this->call( $url );
 
-			if ( isset( $output['channels'] ) ) {
-				return $output['channels'];
+			if ( isset( $output->channels ) ) {
+				return $output->channels;
 			} else {
 				return $output;
 			}
@@ -134,10 +140,16 @@ class JWPPP_Dashboard_Api {
 	public function account_validation() {
 
 		if ( $this->api ) {
-			$url = $this->api->call_url( 'accounts/show', array( 'account_key' => $this->api_key ) ); //videos
+			$url = $this->api->call_url(
+				'accounts/show',
+				array(
+					'api_format' => 'json',
+					'account_key' => $this->api_key,
+				)
+			); //videos
 			$output = $this->call( $url );
 
-			if ( isset( $output['status'] ) && 'ok' === $output['status'] ) {
+			if ( isset( $output->status ) && 'ok' === $output->status ) {
 				return true;
 			} else {
 				return $output;
@@ -150,11 +162,11 @@ class JWPPP_Dashboard_Api {
 	public function get_players() {
 
 		if ( $this->api ) {
-			$url = $this->api->call_url( 'players/list' ); //videos
+			$url = $this->api->call_url( 'players/list', array( 'api_format' => 'json' ) ); //videos
 			$output = $this->call( $url );
 
-			if ( isset( $output['players'] ) ) {
-				return $output['players'];
+			if ( isset( $output->players ) ) {
+				return $output->players;
 			} else {
 				return $output;
 			}

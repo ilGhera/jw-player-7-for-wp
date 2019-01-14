@@ -8,7 +8,7 @@
  */
 function jwppp_ajax_add_video_callback() {
 
-	if ( isset( $_POST['jwppp-meta-box-nonce-1'] ) && wp_verify_nonce( sanitize_key( $_POST['jwppp-meta-box-nonce-1'] ), 'jwppp_save_single_video_data' ) ) {
+	if ( isset( $_POST['hidden-nonce-add-video'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-add-video'] ), 'jwppp-nonce-add-video' ) ) {
 		$number = isset( $_POST['number'] ) ? sanitize_text_field( wp_unslash( $_POST['number'] ) ) : '';
 		$post_id = isset( $_POST['post_id'] ) ? sanitize_text_field( wp_unslash( $_POST['post_id'] ) ) : '';
 

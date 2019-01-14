@@ -9,13 +9,13 @@
 /*Get data*/
 $playlist_id = isset( $_GET['playlist-id'] ) ? $_GET['playlist-id'] : '';
 $player_id = isset( $_GET['player-id'] ) ? $_GET['player-id'] : '';
-$carousel_style = isset( $_GET['carousel-style'] ) ? unserialize( base64_decode( $_GET['carousel-style'] ) ) : '';
+$carousel_style = isset( $_GET['carousel-style'] ) ? json_decode( base64_decode( $_GET['carousel-style'] ) ) : '';
 
 /*Style*/
-$title = isset( $carousel_style['title'] ) ? $carousel_style['title'] : 'More Videos';
-$text_color = isset( $carousel_style['text_color'] ) ? $carousel_style['text_color'] : '#fff';
-$background_color = isset( $carousel_style['background_color'] ) ? $carousel_style['background_color'] : '#000';
-$icon_color = isset( $carousel_style['icon_color'] ) ? $carousel_style['icon_color'] : '#fff';
+$title = isset( $carousel_style->title ) ? $carousel_style->title : 'More Videos';
+$text_color = isset( $carousel_style->text_color ) ? $carousel_style->text_color : '#fff';
+$background_color = isset( $carousel_style->background_color ) ? $carousel_style->background_color : '#000';
+$icon_color = isset( $carousel_style->icon_color ) ? $carousel_style->icon_color : '#fff';
 
 if ( $playlist_id && $player_id ) {
 	echo '{';
