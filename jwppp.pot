@@ -397,7 +397,7 @@ msgstr ""
 
 #: /home/ilghera/Scrivania/jw-player-7-for-wp/includes/jwppp-admin.php:658
 msgid ""
-"If you like <strong>JW Player 7 for Wordpress</strong>, please give it a <a "
+"If you like <strong>JW Player 7 for WordPress</strong>, please give it a <a "
 "href=\"https://wordpress.org/support/view/plugin-reviews/jw-player-7-for-wp?"
 "filter=5#postform\" target=\"_blank\">★★★★★</a> rating. Thanks in advance! "
 msgstr ""

@@ -1,4 +1,4 @@
-=== JW Player 7 for Wordpress ===
+=== JW Player 7 for WordPress ===
 Contributors: ghera74
 Tags: jw player, jwplayer, jwp, jwp 7, video, embed video, youtube, related video, video preroll 
 Requires at least: 4.0
@@ -6,11 +6,11 @@ Tested up to: 4.7.4
 Stable tag: 1.4.1
 License: GPLv2
 
-JW Player 7 for Wordpress gives you all what you need to publish videos on your posts and pages, with the new JW7.
+JW Player 7 for WordPress gives you all what you need to publish videos on your posts and pages, with the new JW7.
 Skins, position, share.
 
 == Description ==
-**JW Player 7 for Wordpress** works with the self-hosted version of JW Player 7, that means that you have to:<br>
+**JW Player 7 for WordPress** works with the self-hosted version of JW Player 7, that means that you have to:<br>
 
 * Register a JW Player account at http://www.jwplayer.com/sign-up/
 * Once you're logged in, download the player and copy your Licence key from https://dashboard.jwplayer.com/#/players/downloads
@@ -33,15 +33,15 @@ That's all, you're ready to go!
 <strong>From your WordPress dashboard</strong>
 <ul>
 <li>Visit 'Plugins > Add New'</li>
-<li>Search for 'JW Player 7 for Wordpress' and download it.</li>
-<li>Activate JW Player 7 for Wordpress from your Plugins page.</li>
+<li>Search for 'JW Player 7 for WordPress' and download it.</li>
+<li>Activate JW Player 7 for WordPress from your Plugins page.</li>
 <li>Once Activated, go to <strong>JW Player</strong> menu and set you preferences.</li>
 </ul>
 <strong>From WordPress.org or ilghera.com</strong>
 <ul>
-<li>Download JW Player 7 for Wordpress</li>
+<li>Download JW Player 7 for WordPress</li>
 <li>Upload the 'jw-player-7-for-wp’ directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)</li>
-<li>Activate JW Player 7 for Wordpress from your Plugins page.</li>
+<li>Activate JW Player 7 for WordPress from your Plugins page.</li>
 <li>Once Activated, go to <strong>JW Player</strong> menu and set you preferences.</li>
 </ul>
 

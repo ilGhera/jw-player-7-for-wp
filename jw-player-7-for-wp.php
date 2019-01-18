@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name: JW Player 7 for Wordpress
+ * Plugin Name: JW Player 7 for WordPress
  * Plugin URI: http://www.ilghera.com/product/jw-player-7-for-wordpress/
- * Description:  JW Player 7 for Wordpress gives you all what you need to publish videos on your Wordpress posts and pages, with the new JW7. Change skin, position and dimensions of your player. Allow users share and embed your contents.
+ * Description:  JW Player 7 for WordPress gives you all what you need to publish videos on your WordPress posts and pages, with the new JW7. Change skin, position and dimensions of your player. Allow users share and embed your contents.
  * Do you want more? Please check out the premium version.
  * Author: ilGhera
  * Version: 1.4.1
- * Author URI: http://ilghera.com 
+ * Author URI: http://ilghera.com
  * Requires at least: 4.0
  * Tested up to: 4.7.4
  */
@@ -15,7 +15,7 @@
 //HEY, WHAT ARE UOU DOING?
 if ( !defined( 'ABSPATH' ) ) exit;
 
-add_action( 'plugins_loaded', 'jwppp_load', 100 );	
+add_action( 'plugins_loaded', 'jwppp_load', 100 );
 
 function jwppp_load() {
 
@@ -60,14 +60,14 @@ function jwppp_load() {
 				$get_n = explode('_jwppp-video-mobile-url-', $result['meta_key']);
 				add_post_meta($result['post_id'], '_jwppp-sources-number-' . $get_n[1], true);
 				add_post_meta($result['post_id'], '_jwppp-' . $get_n[1] . '-source-1-url', $result['meta_value'] );
-			}			
+			}
 		}
-		
+
 		//UPDATE DATABASE VERSION
 		update_option('jwppp-database-version', '1.4.0');
-	
+
 	}
-	
+
 	//INTERNATIONALIZATION
 	load_plugin_textdomain('jwppp', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
