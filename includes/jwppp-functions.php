@@ -230,8 +230,11 @@ function jwppp_add_header_code() {
 
 	/*Default dashboard player informations*/
 	if ( $dashboard_player ) {
-
-		$library_parts = explode( 'https://content.jwplatform.com/libraries/', $get_library );
+		if ( strpos( $get_library, 'jwplatform.com' ) !== false ) {
+			$library_parts = explode( 'https://content.jwplatform.com/libraries/', $get_library );
+		} else {
+			$library_parts = explode( 'https://cdn.jwplayer.com/libraries/', $get_library );
+		}
 		$player_parts = explode( '.js', $library_parts[1] );
 
 		/*Check if the security option is activated*/
@@ -822,44 +825,48 @@ add_action( 'wp_ajax_init-api', 'jwppp_list_content_callback' );
  */
 function jwppp_get_player_callback() {
 
-	if ( isset( $_POST['hidden-meta-box-nonce'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-meta-box-nonce'] ), 'jwppp-meta-box-nonce' ) ) {
+	if ( isset( $_POST['number'], $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ) ) {
 
-		$post_id = isset( $_POST['post_id'] ) ? sanitize_text_field( wp_unslash( $_POST['post_id'] ) ) : '';
-		$number = isset( $_POST['number'] ) ? sanitize_text_field( wp_unslash( $_POST['number'] ) ) : '';
+		if ( wp_verify_nonce(
+			sanitize_key( $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ),
+			'jwppp-meta-box-nonce-' . sanitize_text_field( wp_unslash( $_POST['number'] ) )
+		) ) {
 
-		/*Player library*/
-		$library_parts = explode( 'https://content.jwplatform.com/libraries/', get_option( 'jwppp-library' ) );
+			$post_id = isset( $_POST['post_id'] ) ? sanitize_text_field( wp_unslash( $_POST['post_id'] ) ) : '';
+			$number = sanitize_text_field( wp_unslash( $_POST['number'] ) );
 
-		/*Choose player*/
-		$choose_player = get_post_meta( $post_id, '_jwppp-choose-player-' . $number, true );
+			/*Player library*/
+			$library_parts = explode( 'https://content.jwplatform.com/libraries/', get_option( 'jwppp-library' ) );
 
-		$api = new JWPPP_Dashboard_Api();
-		$players = $api->get_players();
+			/*Choose player*/
+			$choose_player = get_post_meta( $post_id, '_jwppp-choose-player-' . $number, true );
 
-		// $output = null;
+			$api = new JWPPP_Dashboard_Api();
+			$players = $api->get_players();
 
-		if ( is_array( $players ) && ! isset( $players['error'] ) ) {
+			// $output = null;
 
-			echo '<label for="_jwppp-choose-player-' . esc_attr( $number ) . '"><strong>' . esc_html( __( 'Select Player', 'jwppp' ) ) . '</strong></label>';
-			echo '<p>';
-				echo '<select class="jwppp-choose-player-' . esc_attr( $number ) . '" name="_jwppp-choose-player-' . esc_attr( $number ) . '">';
+			if ( is_array( $players ) && ! isset( $players['error'] ) ) {
 
-			foreach ( $players as $player ) {
-				$selected = false;
-				if ( $choose_player && $choose_player === $player['key'] ) {
-					$selected = true;
-				} elseif ( ! $choose_player && $library_parts[1] === $player['key'] . '.js' ) {
-					$selected = true;
+				echo '<label for="_jwppp-choose-player-' . esc_attr( $number ) . '"><strong>' . esc_html( __( 'Select Player', 'jwppp' ) ) . '</strong></label>';
+				echo '<p>';
+					echo '<select class="jwppp-choose-player-' . esc_attr( $number ) . '" name="_jwppp-choose-player-' . esc_attr( $number ) . '">';
+
+				foreach ( $players as $player ) {
+					$selected = false;
+					if ( $choose_player && $choose_player === $player->key ) {
+						$selected = true;
+					} elseif ( ! $choose_player && $library_parts[1] === $player->key . '.js' ) {
+						$selected = true;
+					}
+					echo '<option name="' . esc_html( $player->key ) . '" value="' . esc_html( $player->key ) . '"' . ( $selected ? ' selected="selected"' : '' ) . '>' . esc_html( $player->name ) . '</option>';
 				}
-				echo '<option name="' . esc_html( $player['key'] ) . '" value="' . esc_html( $player['key'] ) . '"' . ( $selected ? ' selected="selected"' : '' ) . '>' . esc_html( $player['name'] ) . '</option>';
+
+					echo '</select>';
+				echo '</p>';
+
 			}
-
-				echo '</select>';
-			echo '</p>';
-
 		}
-
-		// echo $output;
 	}
 
 	exit;

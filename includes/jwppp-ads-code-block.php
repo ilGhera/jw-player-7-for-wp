@@ -85,7 +85,7 @@ function jwppp_ads_code_block( $post_id, $number ) {
 
 			echo "advertising: {\n";
 			echo "client: '" . esc_html( $jwppp_ads_client ) . "',\n";
-			echo "tag: '" . esc_html( $jwppp_ads_tag ) . "',\n";
+			echo "tag: '" . esc_url_raw( $jwppp_ads_tag ) . "',\n";
 			if ( $jwppp_ads_skip ) {
 				echo 'skipoffset: ' . esc_html( $jwppp_ads_skip ) . ",\n";
 			}

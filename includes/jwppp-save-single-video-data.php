@@ -150,7 +150,7 @@ function jwppp_save_single_video_data( $post_id ) {
 
 			/*Ads tag*/
 			if ( isset( $_POST[ '_jwppp-ads-tag-' . $number ] ) ) {
-				$jwppp_ads_tag = sanitize_text_field( wp_unslash( $_POST[ '_jwppp-ads-tag-' . $number ] ) );
+				$jwppp_ads_tag = esc_url_raw( wp_unslash( $_POST[ '_jwppp-ads-tag-' . $number ] ) );
 				update_post_meta( $post_id, '_jwppp-ads-tag-' . $number, $jwppp_ads_tag );
 			}
 

@@ -21,7 +21,12 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 	/*Default dashboard player informations*/
 	if ( $dashboard_player ) {
-		$library_parts = explode( 'https://content.jwplatform.com/libraries/', get_option( 'jwppp-library' ) );
+		$get_library = get_option( 'jwppp-library' );
+		if ( strpos( $get_library, 'jwplatform.com' ) !== false ) {
+			$library_parts = explode( 'https://content.jwplatform.com/libraries/', $get_library );
+		} else {
+			$library_parts = explode( 'https://cdn.jwplayer.com/libraries/', $get_library );
+		}
 		$player_parts = explode( '.js', $library_parts[1] );
 	}
 

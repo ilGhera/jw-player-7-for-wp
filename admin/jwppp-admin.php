@@ -161,7 +161,7 @@ function is_dashboard_player( $player = null ) {
 	$output = false;
 
 	if ( $jwplayer ) {
-		if ( strpos( $jwplayer, 'jwplatform.com' ) !== false ) {
+		if ( strpos( $jwplayer, 'jwplatform.com' ) !== false || strpos( $jwplayer, 'cdn.jwplayer.com' ) !== false ) {
 			$output = true;
 		}
 	}
@@ -344,7 +344,7 @@ function jwppp_options() {
 			echo '<a href="https://www.ilghera.com/support/topic/jw-player-self-hosted-setup/" title="More informations" target="_blank"><img class="question-mark" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a></th>';
 			echo '<td>';
 			echo '<input type="text" class="regular-text" id="jwppp-licence" name="jwppp-licence" placeholder="Only for self-hosted players" value="' . esc_html( $licence ) . '" />';
-			echo '<p class="description">' . esc_html( __( 'Self hosted player? Please, add your JW Player license key.', 'jwppp' ) ) . '</p>';
+			echo '<p class="description">' . esc_html( __( 'For Self hosted player, add your JW Player license key.', 'jwppp' ) ) . '</p>';
 			echo '</td>';
 			echo '</tr>';
 

@@ -120,6 +120,7 @@ var JWPPPSingleVideo = function( number, postId ) {
 
 			var data;
 			var method = $( '.jwppp-video-toggles.' + number + ' li.active' );
+			var nonce = $( '#hidden-meta-box-nonce-' + number ).val();
 
 			$( '.jwppp-more-options-' + number ).toggle( 'fast' );
 
@@ -138,6 +139,8 @@ var JWPPPSingleVideo = function( number, postId ) {
 						'post_id': postId,
 						'number': number
 					};
+
+					data['hidden-meta-box-nonce-' + number] = nonce;
 
 					$.post( ajaxurl, data, function( response ) {
 						$( '.jwppp-single-option-' + number + '.choose-player' ).html( response ).animate({

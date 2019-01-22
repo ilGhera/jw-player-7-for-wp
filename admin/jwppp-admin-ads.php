@@ -50,7 +50,7 @@
 			if ( isset( $_POST[ 'jwppp-ads-tag-' . ( $i + 1 ) ], $_POST[ 'jwppp-ads-tag-label' . ( $i + 1 ) ] ) ) {
 				$ads_tags[] = array(
 					'label' => sanitize_text_field( wp_unslash( $_POST[ 'jwppp-ads-tag-label' . ( $i + 1 ) ] ) ),
-					'url'   => sanitize_text_field( wp_unslash( $_POST[ 'jwppp-ads-tag-' . ( $i + 1 ) ] ) ),
+					'url'   => esc_url_raw( wp_unslash( $_POST[ 'jwppp-ads-tag-' . ( $i + 1 ) ] ) ),
 				);
 			}
 		}

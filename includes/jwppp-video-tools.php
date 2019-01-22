@@ -124,7 +124,7 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 			if ( is_array( $ads_tags ) && ! empty( $ads_tags ) ) {
 				for ( $i = 0; $i < count( $ads_tags ); $i++ ) {
 					echo '<option name="' . esc_html( $ads_tags[ $i ]['label'] ) . '" ';
-					echo 'value="' . esc_html( $ads_tags[ $i ]['url'] ) . '"';
+					echo 'value="' . esc_url( $ads_tags[ $i ]['url'] ) . '"';
 					echo ( $jwppp_ads_tag === $ads_tags[ $i ]['url'] ? ' selected="selected"' : '' ) . '>';
 					if ( $ads_tags[ $i ]['label'] ) {
 						echo esc_html( $ads_tags[ $i ]['label'] );
