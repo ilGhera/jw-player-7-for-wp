@@ -37,14 +37,14 @@ function jwppp_fb_player() {
 					}
 					echo "<div id=\"" . esc_attr( $div ) . "\"></div>";
 					echo '<script type="text/JavaScript">';
-						echo "playerInstance = jwplayer('$div');";
+						echo "playerInstance = jwplayer(" . wp_json_encode( $div ) . ");";
 						echo 'playerInstance.setup({ ';
 						if ( $mediaID ) {
-							echo "playlist: '" . esc_url( $file ) . "',\n";
-							echo "image: '" . esc_url( $image ) . "'\n";
+							echo "playlist: " . wp_json_encode( $file ) . ",\n";
+							echo "image: " . wp_json_encode( $image ) . "\n";
 						} else {
-							echo "file: '" . esc_url( $file ) . "',\n";
-							echo "image: '" . esc_url( $image ) . "'\n";
+							echo "file: " . wp_json_encode( $file ) . ",\n";
+							echo "image: " . wp_json_encode( $image ) . "\n";
 						}
 						echo '});';
 					echo '</script>';
