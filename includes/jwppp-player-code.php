@@ -108,7 +108,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 		echo "<div id='jwppp-video-box-" . esc_attr( $this_video ) . "' class='jwppp-video-box' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
 
 			/*FB Instant Articles*/
-			echo '<span class="jwppp-instant" style="display: none;" data-video="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'fb/jwppp-fb-player.php?player=' . esc_html( $choose_player ) . '&mediaID=' . esc_html( $jwppp_video_url ) . '" data-width="480" data-height="270"></span>';
+			echo '<span class="jwppp-instant" style="display: none;" data-video="' . home_url() . '/?jwp-instant-articles=1&player=' . esc_html( $choose_player ) . '&mediaID=' . esc_html( $jwppp_video_url ) . '" data-width="480" data-height="270"></span>';
 
 			echo "<div id='jwppp-video-" . esc_attr( $this_video ) . "' class='jwplayer'>";
 
@@ -174,7 +174,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 		/*FB Instant Articles*/
 		$instant_image = $video_image ? $video_image : get_option( 'jwppp-poster-image' );
-		echo '<span class="jwppp-instant" style="display: none;" data-video="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'fb/jwppp-fb-player.php?' . esc_html( $instant_player ) . '&mediaURL=' . esc_html( $jwppp_video_url ) . '&image=' . esc_html( $instant_image ) . '" data-width="480" data-height="270"></span>';
+		echo '<span class="jwppp-instant" style="display: none;" data-video="' . home_url() . '/?jwp-instant-articles=1&' . esc_html( $instant_player ) . '&mediaURL=' . esc_html( $jwppp_video_url ) . '&image=' . esc_html( $instant_image ) . '" data-width="480" data-height="270"></span>';
 
 		echo "<div id='jwppp-video-" . esc_attr( $this_video ) . "' class='jwplayer'>";
 
@@ -458,9 +458,5 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 		echo '</div>'; //jwppp-video-box
 
 	}
-
-	// if ( get_post_meta( $p_id, '_jwppp-video-url-' . $number, true ) ) {
-		// return $output;
-	// }
 
 }

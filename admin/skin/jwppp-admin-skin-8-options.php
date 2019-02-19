@@ -7,7 +7,7 @@
  */
 
 $jwppp_skin_color_controlbar_text = sanitize_text_field( get_option( 'jwppp-skin-color-controlbar-text' ) );
-if ( isset( $_POST['jwppp-skin-color-controlbar-text'], $_POST['hidden-nonce-skin'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-skin'] ), 'jwppp-nonce-skin' ) ) {
+if ( isset( $_POST['jwppp-skin-color-controlbar-text'], $_POST['hidden-nonce-skin'] ) && wp_verify_nonce( $_POST['hidden-nonce-skin'], 'jwppp-nonce-skin' ) ) {
 	$jwppp_skin_color_controlbar_text = sanitize_text_field( wp_unslash( $_POST['jwppp-skin-color-controlbar-text'] ) );
 	update_option( 'jwppp-skin-color-controlbar-text', $jwppp_skin_color_controlbar_text );
 }

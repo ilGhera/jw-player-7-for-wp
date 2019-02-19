@@ -691,7 +691,7 @@ function jwppp_search_content_callback() {
 	if ( isset( $_POST['number'], $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ) ) {
 
 		if ( wp_verify_nonce(
-			sanitize_key( $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ),
+			$_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ],
 			'jwppp-meta-box-nonce-' . sanitize_text_field( wp_unslash( $_POST['number'] ) )
 		) ) {
 
@@ -729,7 +729,7 @@ function jwppp_list_content_callback() {
 	if ( isset( $_POST['number'], $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ) ) {
 
 		if ( wp_verify_nonce(
-			sanitize_key( $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ),
+			$_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ],
 			'jwppp-meta-box-nonce-' . sanitize_text_field( wp_unslash( $_POST['number'] ) )
 		) ) {
 
@@ -741,8 +741,6 @@ function jwppp_list_content_callback() {
 				$api = new JWPPP_Dashboard_Api();
 
 				$video_url = get_post_meta( $post_id, '_jwppp-video-url-' . $number, true );
-
-				// $output = null;
 
 				if ( $api->args_check() ) {
 					if ( $api->account_validation() ) {
@@ -808,8 +806,6 @@ function jwppp_list_content_callback() {
 					echo '<span class="jwppp-alert api">' . esc_html( __( 'API Credentials are required for using this tool.', 'jwppp' ) ) . '</span>';
 
 				}
-
-				// echo $output;
 			}
 		}
 	}
@@ -828,7 +824,7 @@ function jwppp_get_player_callback() {
 	if ( isset( $_POST['number'], $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ) ) {
 
 		if ( wp_verify_nonce(
-			sanitize_key( $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ),
+			$_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ],
 			'jwppp-meta-box-nonce-' . sanitize_text_field( wp_unslash( $_POST['number'] ) )
 		) ) {
 
@@ -843,8 +839,6 @@ function jwppp_get_player_callback() {
 
 			$api = new JWPPP_Dashboard_Api();
 			$players = $api->get_players();
-
-			// $output = null;
 
 			if ( is_array( $players ) && ! isset( $players['error'] ) ) {
 

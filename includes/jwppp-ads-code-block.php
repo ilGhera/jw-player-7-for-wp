@@ -103,8 +103,6 @@ function jwppp_ads_code_block( $post_id, $number ) {
 						echo "id: '" . esc_html( $jwppp_channel_id ) . "'\n";
 						echo "}\n";
 					echo "]\n";
-					// echo "";
-
 				echo "}\n";
 			}
 			echo "},\n";

@@ -35,7 +35,7 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 	$jwppp_embed_video             = get_option( 'jwppp-embed-video' );
 
 	$jwppp_single_embed = null;
-	if ( isset( $_POST[ '_jwppp-single-embed-' . $number ], $_POST[ 'hidden-meta-box-nonce-' . $number ] ) && wp_verify_nonce( sanitize_key( $_POST[ 'hidden-meta-box-nonce-' . $number ] ), 'jwppp-meta-box-nonce-' . $number ) ) {
+	if ( isset( $_POST[ '_jwppp-single-embed-' . $number ], $_POST[ 'hidden-meta-box-nonce-' . $number ] ) && wp_verify_nonce( $_POST[ 'hidden-meta-box-nonce-' . $number ], 'jwppp-meta-box-nonce-' . $number ) ) {
 		$jwppp_single_embed = sanitize_text_field( wp_unslash( $_POST[ '_jwppp-single-embed-' . $number ] ) );
 	} else {
 		$jwppp_single_embed = get_post_meta( $post_id, '_jwppp-single-embed-' . $number, true );

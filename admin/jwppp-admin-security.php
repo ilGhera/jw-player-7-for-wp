@@ -11,8 +11,7 @@
 
 	/*Secure video URLs*/
 	$secure_video_urls = sanitize_text_field( get_option( 'jwppp-secure-video-urls' ) );
-	if ( isset( $_POST['security-sent'], $_POST['hidden-nonce-security'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-security'] ), 'jwppp-nonce-security' ) ) {
-		// $hide = isset($_POST['jwppp-secure-video-urls']) ? ' style="display: none;"' : '';
+	if ( isset( $_POST['security-sent'], $_POST['hidden-nonce-security'] ) && wp_verify_nonce( $_POST['hidden-nonce-security'], 'jwppp-nonce-security' ) ) {
 		$secure_video_urls = isset( $_POST['jwppp-secure-video-urls'] ) ? sanitize_text_field( wp_unslash( $_POST['jwppp-secure-video-urls'] ) ) : 0;
 		update_option( 'jwppp-secure-video-urls', $secure_video_urls );
 	}
@@ -20,7 +19,6 @@
 	/*Secure player embeds*/
 	$secure_player_embeds = sanitize_text_field( get_option( 'jwppp-secure-player-embeds' ) );
 	if ( isset( $_POST['security-sent'] ) ) {
-		// $hide = isset($_POST['jwppp-secure-player-embeds']) ? ' style="display: none;"' : '';
 		$secure_player_embeds = isset( $_POST['jwppp-secure-player-embeds'] ) ? sanitize_text_field( wp_unslash( $_POST['jwppp-secure-player-embeds'] ) ) : 0;
 		update_option( 'jwppp-secure-player-embeds', $secure_player_embeds );
 	}
@@ -28,7 +26,6 @@
 	/*Timeout*/
 	$secure_timeout = get_option( 'jwppp-secure-timeout' ) ? sanitize_text_field( get_option( 'jwppp-secure-timeout' ) ) : 60;
 	if ( isset( $_POST['security-sent'] ) ) {
-		// $hide = isset($_POST['jwppp-secure-timeout']) ? ' style="display: none;"' : '';
 		$secure_timeout = isset( $_POST['jwppp-secure-timeout'] ) ? sanitize_text_field( wp_unslash( $_POST['jwppp-secure-timeout'] ) ) : 0;
 		update_option( 'jwppp-secure-timeout', $secure_timeout );
 	}

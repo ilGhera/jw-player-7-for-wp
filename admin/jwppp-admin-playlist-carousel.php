@@ -14,7 +14,7 @@
 	$jwppp_playlist_carousel_background_color = isset( $jwppp_playlist_carousel_style->background_color ) ? sanitize_text_field( $jwppp_playlist_carousel_style->background_color ) : '#000';
 	$jwppp_playlist_carousel_icon_color       = isset( $jwppp_playlist_carousel_style->icon_color ) ? sanitize_text_field( $jwppp_playlist_carousel_style->icon_color ) : '#fff';
 
-	if ( isset( $_POST['jwppp-playlist-carousel-hidden'], $_POST['hidden-nonce-pl-carousel'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-pl-carousel'] ), 'jwppp-nonce-pl-carousel' ) ) {
+	if ( isset( $_POST['jwppp-playlist-carousel-hidden'], $_POST['hidden-nonce-pl-carousel'] ) && wp_verify_nonce( $_POST['hidden-nonce-pl-carousel'], 'jwppp-nonce-pl-carousel' ) ) {
 		$jwppp_playlist_carousel_title            = isset( $_POST['jwppp-playlist-carousel-title'] ) ? sanitize_text_field( wp_unslash( $_POST['jwppp-playlist-carousel-title'] ) ) : $jwppp_playlist_carousel_title;
 		$jwppp_playlist_carousel_text_color       = isset( $_POST['jwppp-playlist-carousel-text-color'] ) ? sanitize_text_field( wp_unslash( $_POST['jwppp-playlist-carousel-text-color'] ) ) : $jwppp_playlist_carousel_text_color;
 		$jwppp_playlist_carousel_background_color = isset( $_POST['jwppp-playlist-carousel-background-color'] ) ? sanitize_text_field( wp_unslash( $_POST['jwppp-playlist-carousel-background-color'] ) ) : $jwppp_playlist_carousel_background_color;

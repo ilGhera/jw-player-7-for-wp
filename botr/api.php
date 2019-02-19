@@ -17,7 +17,6 @@
 
     class BotrAPI {
         private $_version = '1.4';
-        // private $_url = 'http://api.bitsontherun.com/v1';
         private $_url = 'https://api.jwplatform.com/';
         private $_library;
 
@@ -81,7 +80,7 @@
             if (!array_key_exists('api_format', $args)) {
                 // Use the serialised PHP format,
                 // otherwise use format specified in the call() args.
-                $args['api_format'] = 'php';
+                $args['api_format'] = 'json';
             }
 
             // Add API kit version

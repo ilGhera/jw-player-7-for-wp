@@ -35,7 +35,7 @@ function jwppp_save_single_video_data( $post_id ) {
 			return;
 		}
 
-		if ( ! wp_verify_nonce( sanitize_key( $_POST[ 'hidden-meta-box-nonce-' . $number ] ), 'jwppp-meta-box-nonce-' . $number ) ) {
+		if ( ! wp_verify_nonce( $_POST[ 'hidden-meta-box-nonce-' . $number ], 'jwppp-meta-box-nonce-' . $number ) ) {
 			return;
 		}
 

@@ -11,7 +11,7 @@
 
 	/*Active ads?*/
 	$active_ads = sanitize_text_field( get_option( 'jwppp-active-ads' ) );
-	if ( isset( $_POST['ads-sent'], $_POST['hidden-nonce-ads'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-ads'] ), 'jwppp-nonce-ads' ) ) {
+	if ( isset( $_POST['ads-sent'], $_POST['hidden-nonce-ads'] ) && wp_verify_nonce( $_POST['hidden-nonce-ads'], 'jwppp-nonce-ads' ) ) {
 		$active_ads = isset( $_POST['jwppp-active-ads'] ) ? sanitize_text_field( wp_unslash( $_POST['jwppp-active-ads'] ) ) : 0;
 		update_option( 'jwppp-active-ads', $active_ads );
 	}

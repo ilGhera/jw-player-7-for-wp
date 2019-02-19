@@ -11,7 +11,7 @@
 
 	/*Active share?*/
 	$active_share = sanitize_text_field( get_option( 'jwppp-active-share' ) );
-	if ( isset( $_POST['share-sent'], $_POST['hidden-nonce-share'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-share'] ), 'jwppp-nonce-share' ) ) {
+	if ( isset( $_POST['share-sent'], $_POST['hidden-nonce-share'] ) && wp_verify_nonce( $_POST['hidden-nonce-share'], 'jwppp-nonce-share' ) ) {
 		$active_share = isset( $_POST['jwppp-active-share'] ) ? sanitize_text_field( wp_unslash( $_POST['jwppp-active-share'] ) ) : 0;
 		update_option( 'jwppp-active-share', $active_share );
 	}

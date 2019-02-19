@@ -65,7 +65,6 @@ function jwppp_sh_player_option( $ar = '', $width = '', $height = '' ) {
 	$jwppp_sub_back_opacity = sanitize_text_field( get_option( 'jwppp-subtitles-back-opacity' ) );
 
 	/*Player code*/
-	// $output = null;
 
 	/*Player dimensions*/
 	if ( $width && $height ) {
@@ -168,7 +167,5 @@ function jwppp_sh_player_option( $ar = '', $width = '', $height = '' ) {
 		echo "playlist: '" . esc_html( $jwppp_playlist_tooltip ) . "',\n";
 	}
 	echo "},\n";
-
-	// return $output;
 
 }

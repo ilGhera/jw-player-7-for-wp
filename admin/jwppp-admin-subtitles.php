@@ -11,7 +11,7 @@
 
 	/*Color*/
 	$sub_color = sanitize_text_field( get_option( 'jwppp-subtitles-color' ) );
-	if ( isset( $_POST['jwppp-subtitles-color'], $_POST['hidden-nonce-subtitles'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-subtitles'] ), 'jwppp-nonce-subtitles' ) ) {
+	if ( isset( $_POST['jwppp-subtitles-color'], $_POST['hidden-nonce-subtitles'] ) && wp_verify_nonce( $_POST['hidden-nonce-subtitles'], 'jwppp-nonce-subtitles' ) ) {
 		if ( jwppp_check_color( sanitize_text_field( wp_unslash( $_POST['jwppp-subtitles-color'] ) ) ) ) {
 			$sub_color = sanitize_text_field( wp_unslash( $_POST['jwppp-subtitles-color'] ) );
 			update_option( 'jwppp-subtitles-color', $sub_color );

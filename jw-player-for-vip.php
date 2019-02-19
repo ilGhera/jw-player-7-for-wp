@@ -40,5 +40,6 @@ function jwppp_premium_load() {
 	/*Files required*/
 	include( plugin_dir_path( __FILE__ ) . 'admin/jwppp-admin.php' );
 	include( plugin_dir_path( __FILE__ ) . 'includes/jwppp-functions.php' );
+	include( plugin_dir_path( __FILE__ ) . 'fb/jwppp-fb-player.php' );
 }
 add_action( 'plugins_loaded', 'jwppp_premium_load', 1 );

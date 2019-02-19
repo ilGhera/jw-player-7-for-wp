@@ -10,7 +10,11 @@
 /*Load the wp core functionalities*/
 if ( ! defined( ABSPATH ) ) {
 	$path = explode( '/wp-content/', dirname( __FILE__ ) );
-	include_once( $path[0] . '/wp-load.php' );
+	if ( validate_file( $path ) === 0 ) {
+		include_once( $path[0] . '/wp-load.php' );		
+	} else {
+		return;
+	}
 }
 
 

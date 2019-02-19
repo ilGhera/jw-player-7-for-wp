@@ -112,7 +112,7 @@ add_action( 'admin_menu', 'jwppp_add_menu' );
  * Callback - Skin customization by player version
  */
 function skin_customization_by_version_callback() {
-	if ( isset( $_POST['hidden-nonce-skin'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-skin'] ), 'jwppp-nonce-skin' ) ) {
+	if ( isset( $_POST['hidden-nonce-skin'] ) && wp_verify_nonce( $_POST['hidden-nonce-skin'], 'jwppp-nonce-skin' ) ) {
 		$version = isset( $_POST['version'] ) ? sanitize_text_field( wp_unslash( $_POST['version'] ) ) : '';
 		if ( $version ) {
 			if ( $version < 8 ) {
@@ -175,7 +175,7 @@ function is_dashboard_player( $player = null ) {
  * Save the new player into db
  */
 function jwppp_player_check_callback() {
-	if ( isset( $_POST['hidden-nonce-player-check'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-player-check'] ), 'jwppp-nonce-player-check' ) ) {
+	if ( isset( $_POST['hidden-nonce-player-check'] ) && wp_verify_nonce( $_POST['hidden-nonce-player-check'], 'jwppp-nonce-player-check' ) ) {
 		$player = isset( $_POST['player'] ) ? sanitize_text_field( wp_unslash( $_POST['player'] ) ) : '';
 		if ( $player ) {
 			update_option( 'jwppp-library', $player );
@@ -236,7 +236,7 @@ function jwppp_ads_tag( $n, $tag = '' ) {
  */
 function jwppp_ads_tag_callback() {
 
-	if ( isset( $_POST['hidden-nonce-add-tag'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-add-tag'] ), 'jwppp-nonce-add-tag' ) ) {
+	if ( isset( $_POST['hidden-nonce-add-tag'] ) && wp_verify_nonce( $_POST['hidden-nonce-add-tag'], 'jwppp-nonce-add-tag' ) ) {
 		$n = isset( $_POST['number'] ) ? sanitize_text_field( wp_unslash( $_POST['number'] ) ) : '';
 		if ( $n ) {
 			jwppp_ads_tag( $n );
@@ -253,7 +253,7 @@ add_action( 'wp_ajax_add_ads_tag', 'jwppp_ads_tag_callback' );
  */
 function jwppp_ads_var_callback() {
 
-	if ( isset( $_POST['hidden-nonce-ads'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-ads'] ), 'jwppp-nonce-ads' ) ) {
+	if ( isset( $_POST['hidden-nonce-ads'] ) && wp_verify_nonce( $_POST['hidden-nonce-ads'], 'jwppp-nonce-ads' ) ) {
 		$tag = isset( $_POST['tag'] ) ? sanitize_text_field( wp_unslash( $_POST['tag'] ) ) : '';
 		update_option( 'jwppp-ads-var', $tag );
 	}
@@ -308,7 +308,7 @@ function jwppp_options() {
 
 		/*JW Player library url*/
 		$library = sanitize_text_field( get_option( 'jwppp-library' ) );
-		if ( isset( $_POST['jwppp-library'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+		if ( isset( $_POST['jwppp-library'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 			$library = sanitize_text_field( wp_unslash( $_POST['jwppp-library'] ) );
 			update_option( 'jwppp-library', $library );
 		}
@@ -334,7 +334,7 @@ function jwppp_options() {
 			 * JW Player licence key
 			 */
 			$licence = sanitize_text_field( get_option( 'jwppp-licence' ) );
-			if ( isset( $_POST['jwppp-licence'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['jwppp-licence'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$licence = sanitize_text_field( wp_unslash( $_POST['jwppp-licence'] ) );
 				update_option( 'jwppp-licence', $licence );
 			}
@@ -355,12 +355,12 @@ function jwppp_options() {
 			 * Api credentials
 			 */
 			$api_key = sanitize_text_field( get_option( 'jwppp-api-key' ) );
-			if ( isset( $_POST['jwppp-api-key'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['jwppp-api-key'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$api_key = sanitize_text_field( wp_unslash( $_POST['jwppp-api-key'] ) );
 				update_option( 'jwppp-api-key', $api_key );
 			}
 			$api_secret = sanitize_text_field( get_option( 'jwppp-api-secret' ) );
-			if ( isset( $_POST['jwppp-api-secret'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['jwppp-api-secret'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$api_secret = sanitize_text_field( wp_unslash( $_POST['jwppp-api-secret'] ) );
 				update_option( 'jwppp-api-secret', $api_secret );
 			}
@@ -397,7 +397,7 @@ function jwppp_options() {
 
 				$var_type = sanitize_text_field( get_option( 'jwppp-type-' . $type ) );
 
-				if ( isset( $_POST['done'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+				if ( isset( $_POST['done'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 
 					$var_type = isset( $_POST[ $type ] ) ? sanitize_text_field( wp_unslash( $_POST[ $type ] ) ) : 0;
 					update_option( 'jwppp-type-' . $type, $var_type );
@@ -415,7 +415,7 @@ function jwppp_options() {
 
 			/*Player position*/
 			$position = sanitize_text_field( get_option( 'jwppp-position' ) );
-		if ( isset( $_POST['position'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+		if ( isset( $_POST['position'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 			$position = sanitize_text_field( wp_unslash( $_POST['position'] ) );
 			update_option( 'jwppp-position', $position );
 		}
@@ -448,7 +448,7 @@ function jwppp_options() {
 
 			/*The message shown to the user before the player is been embed*/
 			$jwppp_text = sanitize_text_field( get_option( 'jwppp-text' ) );
-			if ( isset( $_POST['jwppp-text'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['jwppp-text'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$jwppp_text = sanitize_text_field( wp_unslash( $_POST['jwppp-text'] ) );
 				update_option( 'jwppp-text', $jwppp_text );
 			}
@@ -463,7 +463,7 @@ function jwppp_options() {
 
 			/*Poster image*/
 			$poster_image = sanitize_text_field( get_option( 'jwppp-poster-image' ) );
-			if ( isset( $_POST['poster-image'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['poster-image'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$poster_image = sanitize_text_field( wp_unslash( $_POST['poster-image'] ) );
 				update_option( 'jwppp-poster-image', $poster_image );
 			}
@@ -478,7 +478,7 @@ function jwppp_options() {
 
 			/*Post thumbnail as poster image*/
 			$thumbnail = sanitize_text_field( get_option( 'jwppp-post-thumbnail' ) );
-			if ( isset( $_POST['done'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['done'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$thumbnail = isset( $_POST['post-thumbnail'] ) ? sanitize_text_field( wp_unslash( $_POST['post-thumbnail'] ) ) : 0;
 				update_option( 'jwppp-post-thumbnail', $thumbnail );
 			}
@@ -495,7 +495,7 @@ function jwppp_options() {
 
 			/*Fixed dimensions or responsive?*/
 			$jwppp_method_dimensions = sanitize_text_field( get_option( 'jwppp-method-dimensions' ) );
-			if ( isset( $_POST['jwppp-method-dimensions'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['jwppp-method-dimensions'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$jwppp_method_dimensions = sanitize_text_field( wp_unslash( $_POST['jwppp-method-dimensions'] ) );
 				update_option( 'jwppp-method-dimensions', $jwppp_method_dimensions );
 			}
@@ -517,14 +517,14 @@ function jwppp_options() {
 
 			/*Player fixed width*/
 			$jwppp_player_width = sanitize_text_field( get_option( 'jwppp-player-width' ) );
-			if ( isset( $_POST['jwppp-player-width'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['jwppp-player-width'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$jwppp_player_width = sanitize_text_field( wp_unslash( $_POST['jwppp-player-width'] ) );
 				update_option( 'jwppp-player-width', $jwppp_player_width );
 			}
 
 			/*Player fixed height*/
 			$jwppp_player_height = sanitize_text_field( get_option( 'jwppp-player-height' ) );
-			if ( isset( $_POST['jwppp-player-height'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['jwppp-player-height'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$jwppp_player_height = sanitize_text_field( wp_unslash( $_POST['jwppp-player-height'] ) );
 				update_option( 'jwppp-player-height', $jwppp_player_height );
 			}
@@ -545,7 +545,7 @@ function jwppp_options() {
 
 			/*Player %*/
 			$jwppp_responsive_width = sanitize_text_field( get_option( 'jwppp-responsive-width' ) );
-			if ( isset( $_POST['jwppp-responsive-width'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['jwppp-responsive-width'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$jwppp_responsive_width = sanitize_text_field( wp_unslash( $_POST['jwppp-responsive-width'] ) );
 				update_option( 'jwppp-responsive-width', $jwppp_responsive_width );
 			}
@@ -562,7 +562,7 @@ function jwppp_options() {
 
 			/*Player aspect ratio*/
 			$jwppp_aspectratio = sanitize_text_field( get_option( 'jwppp-aspectratio' ) );
-			if ( isset( $_POST['jwppp-aspectratio'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['jwppp-aspectratio'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$jwppp_aspectratio = sanitize_text_field( wp_unslash( $_POST['jwppp-aspectratio'] ) );
 				update_option( 'jwppp-aspectratio', $jwppp_aspectratio );
 			}
@@ -587,7 +587,7 @@ function jwppp_options() {
 
 			/*Logo*/
 			$jwppp_logo = sanitize_text_field( get_option( 'jwppp-logo' ) );
-			if ( isset( $_POST['jwppp-logo'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['jwppp-logo'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$jwppp_logo = sanitize_text_field( wp_unslash( $_POST['jwppp-logo'] ) );
 				update_option( 'jwppp-logo', $jwppp_logo );
 			}
@@ -603,12 +603,12 @@ function jwppp_options() {
 
 			/*Logo position*/
 			$jwppp_logo_vertical = sanitize_text_field( get_option( 'jwppp-logo-vertical' ) );
-			if ( isset( $_POST['jwppp-logo-vertical'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['jwppp-logo-vertical'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$jwppp_logo_vertical = sanitize_text_field( wp_unslash( $_POST['jwppp-logo-vertical'] ) );
 				update_option( 'jwppp-logo-vertical', $jwppp_logo_vertical );
 			}
 			$jwppp_logo_horizontal = sanitize_text_field( get_option( 'jwppp-logo-horizontal' ) );
-			if ( isset( $_POST['jwppp-logo-horizontal'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['jwppp-logo-horizontal'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$jwppp_logo_horizontal = sanitize_text_field( wp_unslash( $_POST['jwppp-logo-horizontal'] ) );
 				update_option( 'jwppp-logo-horizontal', $jwppp_logo_horizontal );
 			}
@@ -638,7 +638,7 @@ function jwppp_options() {
 
 			/*Logo link*/
 			$jwppp_logo_link = sanitize_text_field( get_option( 'jwppp-logo-link' ) );
-			if ( isset( $_POST['jwppp-logo-link'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['jwppp-logo-link'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$jwppp_logo_link = sanitize_text_field( wp_unslash( $_POST['jwppp-logo-link'] ) );
 				update_option( 'jwppp-logo-link', $jwppp_logo_link );
 			}
@@ -654,7 +654,7 @@ function jwppp_options() {
 
 			/*Next up*/
 			$jwppp_next_up = sanitize_text_field( get_option( 'jwppp-next-up' ) );
-			if ( isset( $_POST['jwppp-next-up'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['jwppp-next-up'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$jwppp_next_up = sanitize_text_field( wp_unslash( $_POST['jwppp-next-up'] ) );
 				update_option( 'jwppp-next-up', $jwppp_next_up );
 			}
@@ -670,7 +670,7 @@ function jwppp_options() {
 
 			/*Playlist tooltip*/
 			$jwppp_playlist_tooltip = sanitize_text_field( get_option( 'jwppp-playlist-tooltip' ) );
-			if ( isset( $_POST['jwppp-playlist-tooltip'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_key( $_POST['hidden-nonce-options'] ), 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['jwppp-playlist-tooltip'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 				$jwppp_playlist_tooltip = sanitize_text_field( wp_unslash( $_POST['jwppp-playlist-tooltip'] ) );
 				update_option( 'jwppp-playlist-tooltip', $jwppp_playlist_tooltip );
 			}
