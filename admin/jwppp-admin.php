@@ -249,18 +249,19 @@ add_action( 'wp_ajax_add_ads_tag', 'jwppp_ads_tag_callback' );
 
 
 /**
- * Save the ads var name in the db
+ * Save the ads var in the db
  */
 function jwppp_ads_var_callback() {
 
-	if ( isset( $_POST['hidden-nonce-ads'] ) && wp_verify_nonce( $_POST['hidden-nonce-ads'], 'jwppp-nonce-ads' ) ) {
-		$tag = isset( $_POST['tag'] ) ? sanitize_text_field( wp_unslash( $_POST['tag'] ) ) : '';
+	$tag = isset( $_POST['tag'] ) ? sanitize_text_field( wp_unslash( $_POST['tag'] ) ) : '';
+	if ( $tag ) {
 		update_option( 'jwppp-ads-var', $tag );
 	}
 
 	exit;
 }
-add_action( 'wp_ajax_ads-var-name', 'jwppp_ads_var_callback' );
+add_action( 'wp_ajax_ads-var', 'jwppp_ads_var_callback' );
+add_action( 'wp_ajax_nopriv_ads-var', 'jwppp_ads_var_callback' );
 
 
 /**

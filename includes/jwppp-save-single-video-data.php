@@ -19,7 +19,7 @@ function jwppp_save_single_video_data( $post_id ) {
 
 	if ( empty( $jwppp_videos ) ) {
 		$jwppp_videos = array(
-				'_jwppp-video-url-1' => 1,
+			'_jwppp-video-url-1' => 1,
 		);
 	}
 

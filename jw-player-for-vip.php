@@ -43,14 +43,13 @@ function jwppp_premium_load() {
 	define( 'JWPPP_INCLUDES', JWPPP_DIR . 'includes/' );
 	define( 'JWPPP_ADMIN', JWPPP_DIR . 'admin/' );
 
-
 	/*Files required*/
-	include( JWPPP_ADMIN 	. 'jwppp-admin.php' );
+	include( JWPPP_ADMIN . 'jwppp-admin.php' );
 	include( JWPPP_INCLUDES . 'jwppp-functions.php' );
 	include( JWPPP_INCLUDES . 'jwppp-video-download.php' );
 	include( JWPPP_INCLUDES . 'jwppp-video-chapters.php' );
-	include( JWPPP_DIR	    . 'fb/jwppp-fb-player.php' );
-	include( JWPPP_DIR	    . 'jw-widget/jwppp-carousel-config.php' );
-	
+	include( JWPPP_DIR . 'fb/jwppp-fb-player.php' );
+	include( JWPPP_DIR . 'jw-widget/jwppp-carousel-config.php' );
+
 }
 add_action( 'plugins_loaded', 'jwppp_premium_load', 1 );

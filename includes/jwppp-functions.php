@@ -14,8 +14,8 @@ require( JWPPP_INCLUDES . 'jwppp-save-single-video-data.php' );
 require( JWPPP_INCLUDES . 'jwppp-sh-player-options.php' );
 require( JWPPP_INCLUDES . 'jwppp-ads-code-block.php' );
 require( JWPPP_INCLUDES . 'jwppp-player-code.php' );
-require( JWPPP_DIR      . 'classes/class-jwppp-dashboard-api.php' );
-require( JWPPP_DIR      . 'botr/api.php' );
+require( JWPPP_DIR . 'classes/class-jwppp-dashboard-api.php' );
+require( JWPPP_DIR . 'botr/api.php' );
 
 require_once( JWPPP_DIR . 'libraries/JWT.php' );
 use \Firebase\JWT\JWT;
@@ -46,13 +46,14 @@ add_action( 'add_meta_boxes', 'jwppp_add_meta_box' );
 function jwppp_get_post_videos( $post_id ) {
 
 	$videos = get_post_meta( $post_id );
-	$videos = array_filter( 
-	    $videos,
-	    function( $key ) { 
-	        if ( false !== strpos( $key, '_jwppp-video-url-' ) ) { 
-	            return $key; 
-	        }
-	    }, ARRAY_FILTER_USE_KEY 
+	$videos = array_filter(
+		$videos,
+		function( $key ) {
+			if ( false !== strpos( $key, '_jwppp-video-url-' ) ) {
+				return $key;
+			}
+		},
+		ARRAY_FILTER_USE_KEY
 	);
 
 	if ( count( $videos ) >= 1 && ! get_post_meta( $post_id, '_jwppp-video-url-1', true ) ) {
@@ -467,9 +468,9 @@ function jwppp_get_signed_url( $media_id, $short = false ) {
 	$jwt = JWT::encode( $token_body, $token_secret );
 
 	if ( $short ) {
-		return "$resource?token=$jwt";		
+		return "$resource?token=$jwt";
 	} else {
-		return "https://cdn.jwplayer.com/$resource?token=$jwt";		
+		return "https://cdn.jwplayer.com/$resource?token=$jwt";
 	}
 }
 
@@ -551,7 +552,7 @@ function jwppp_simple_player_code( $media_id ) {
 		$security_urls = get_option( 'jwppp-secure-video-urls' );
 
 		echo "<script type='text/javascript'>\n";
-			echo "var playerInstance_" . esc_html( $media_id ) . " = jwplayer(" . wp_json_encode( 'jwppp-video-' .  $media_id ) . ");\n";
+			echo "var playerInstance_" . esc_html( $media_id ) . " = jwplayer(" . wp_json_encode( 'jwppp-video-' . $media_id ) . ");\n";
 			echo "playerInstance_" . esc_html( $media_id ) . ".setup({\n";
 
 			if ( $security_urls ) {

@@ -19,7 +19,7 @@ function jwppp_ads_code_block( $post_id, $number ) {
 	$jwppp_channel_id = sanitize_text_field( get_option( 'jwppp-channel-id' ) );
 	$jwppp_mediation = sanitize_text_field( get_option( 'jwppp-mediation' ) );
 	$jwppp_floor_price = sanitize_text_field( get_option( 'jwppp-floor-price' ) );
-
+	$ajaxurl = admin_url( 'admin-ajax.php' );
 	$output = null;
 
 	/*Is the main ads option activated?*/
@@ -32,35 +32,15 @@ function jwppp_ads_code_block( $post_id, $number ) {
 		$active_ads_var = sanitize_text_field( get_option( 'jwppp-active-ads-var' ) );
 
 		if ( $active_ads_var ) {
-			$ads_var_name = sanitize_text_field( get_option( 'jwppp-ads-var-name' ) );
-			?>
-				<script>
-					jQuery(document).ready(function($){
-						var tag = null;
-						if(typeof <?php echo wp_json_encode( $ads_var_name ); ?> !== 'undefined') {
-							tag = <?php echo wp_json_encode( $ads_var_name ); ?>;
-						}
-						var data = {
-							'action': 'ads-var-name',
-							'tag': tag
-						}
-						$.post(ajaxurl, data, function(response){
-						})
-					})
 
-				</script>
-				<?php
-				$ads_var = get_option( 'jwppp-ads-var' );
-
-				echo "advertising: {\n";
-				if ( is_array( $ads_var ) ) {
+			$ads_var = json_decode( get_option( 'jwppp-ads-var' ), true );
+			echo "advertising: {\n";
+				if ( $ads_var ) {
 					foreach ( $ads_var as $key => $value ) {
-						echo "'" . esc_html( $key ) . "': '" . esc_html( str_replace( '\\', '', $value ) ) . "',\n";
+						echo wp_json_encode( $key ) . ': ' . str_replace( '\\', '', wp_json_encode( $value ) ) . ', ';
 					}
 				}
-				echo "},\n";
-
-				return $output;
+			echo "},\n";
 
 		} elseif ( 'no-ads' === $jwppp_ads_tag ) { //The single video ads option is not activated
 

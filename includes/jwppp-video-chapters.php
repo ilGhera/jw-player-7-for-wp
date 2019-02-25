@@ -30,9 +30,9 @@ function jwppp_video_chapters() {
 				echo esc_html( get_post_meta( $id, '_jwppp-' . $number . '-chapter-' . $i . '-title', true ) ) . "\n";
 				echo "\n";
 			}
-		}	
+		}
 
-		exit;		
+		exit;
 	}
 }
 add_action( 'init', 'jwppp_video_chapters' );
