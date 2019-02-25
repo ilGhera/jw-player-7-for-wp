@@ -9,7 +9,7 @@
 $dashboard_player = is_dashboard_player();
 $player_position = get_option( 'jwppp-position' );
 
-echo '<!-- jwppp video number ' . esc_attr( $number ) . ' -->';
+echo '<!-- jwppp video number ' . esc_html( $number ) . ' -->';
 echo '<table class="widefat jwppp-' . esc_attr( $number ) . '" style="margin: 0.4rem 0; width: 100%;">';
 	echo '<tbody class="ui-sortable">';
 
@@ -22,8 +22,8 @@ echo '<table class="widefat jwppp-' . esc_attr( $number ) . '" style="margin: 0.
 		}
 
 		echo '<tr class="row">';
-			echo '<td class="order" style="width: 2.5%;">' . esc_attr( $number ) . '</td>';
-			echo '<td class="jwppp-input-wrap' . esc_html( $image_class ) . '" style="width: 95%; padding-bottom: 1rem; position: relative;">';
+			echo '<td class="order" style="width: 2.5%;">' . esc_html( $number ) . '</td>';
+			echo '<td class="jwppp-input-wrap' . esc_attr( $image_class ) . '" style="width: 95%; padding-bottom: 1rem; position: relative;">';
 
 				/*Nonce*/
 				wp_nonce_field( 'jwppp-meta-box-nonce-' . $number, 'hidden-meta-box-nonce-' . $number );
@@ -91,16 +91,16 @@ echo '<table class="widefat jwppp-' . esc_attr( $number ) . '" style="margin: 0.
 					echo '<div class="jwppp-toggle-content ' . esc_attr( $number ) . ' choose' . ( ! $sh_video ? ' active' : '' ) . '">';
 						echo '<p>';
 
-							echo '<input type="text" autocomplete="off" id="_jwppp-video-title-' . esc_attr( $number ) . '" class="jwppp-search-content choose" data-number="' . esc_attr( $number ) . '" placeholder="' . esc_html( __( 'Select video/playlist or search by ID', 'jwppp' ) ) . '" style="margin-right:1rem;" value="' . esc_html( $video_title ) . '"><br>';
+							echo '<input type="text" autocomplete="off" id="_jwppp-video-title-' . esc_attr( $number ) . '" class="jwppp-search-content choose" data-number="' . esc_attr( $number ) . '" placeholder="' . esc_attr( __( 'Select video/playlist or search by ID', 'jwppp' ) ) . '" style="margin-right:1rem;" value="' . esc_attr( $video_title ) . '"><br>';
 
 							echo '<input type="hidden" name="_jwppp-video-url-' . esc_attr( $number ) . '" id="_jwppp-video-url-' . esc_attr( $number ) . '" class="choose" value="' . esc_html( $video_url ) . '">';
 
 
-							echo '<input type="hidden" name="_jwppp-video-title-' . esc_attr( $number ) . '" id="_jwppp-video-title-' . esc_attr( $number ) . '" class="choose" value="' . esc_html( $video_title ) . '">';
-							echo '<input type="hidden" name="_jwppp-video-description-' . esc_attr( $number ) . '" id="_jwppp-video-description-' . esc_attr( $number ) . '" class="choose" value="' . esc_html( $video_description ) . '">';
-							echo '<input type="hidden" name="_jwppp-playlist-items-' . esc_attr( $number ) . '" id="_jwppp-playlist-items-' . esc_attr( $number ) . '" class="choose" value="' . esc_html( $playlist_items ) . '">';
-							echo '<input type="hidden" name="_jwppp-video-duration-' . esc_attr( $number ) . '" id="_jwppp-video-duration-' . esc_attr( $number ) . '" class="choose" value="' . esc_html( $video_duration ) . '">';
-							echo '<input type="hidden" name="_jwppp-video-tags-' . esc_attr( $number ) . '" id="_jwppp-video-tags-' . esc_attr( $number ) . '" class="choose" value="' . esc_html( $video_tags ) . '">';
+							echo '<input type="hidden" name="_jwppp-video-title-' . esc_attr( $number ) . '" id="_jwppp-video-title-' . esc_attr( $number ) . '" class="choose" value="' . esc_attr( $video_title ) . '">';
+							echo '<input type="hidden" name="_jwppp-video-description-' . esc_attr( $number ) . '" id="_jwppp-video-description-' . esc_attr( $number ) . '" class="choose" value="' . esc_attr( $video_description ) . '">';
+							echo '<input type="hidden" name="_jwppp-playlist-items-' . esc_attr( $number ) . '" id="_jwppp-playlist-items-' . esc_attr( $number ) . '" class="choose" value="' . esc_attr( $playlist_items ) . '">';
+							echo '<input type="hidden" name="_jwppp-video-duration-' . esc_attr( $number ) . '" id="_jwppp-video-duration-' . esc_attr( $number ) . '" class="choose" value="' . esc_attr( $video_duration ) . '">';
+							echo '<input type="hidden" name="_jwppp-video-tags-' . esc_attr( $number ) . '" id="_jwppp-video-tags-' . esc_attr( $number ) . '" class="choose" value="' . esc_attr( $video_tags ) . '">';
 
 							echo '<ul id="_jwppp-video-list-' . esc_attr( $number ) . '" data-number="' . esc_attr( $number ) . '" class="jwppp-video-list">';
 								echo '<span class="jwppp-list-container"></span>';
@@ -122,12 +122,12 @@ echo '<table class="widefat jwppp-' . esc_attr( $number ) . '" style="margin: 0.
 				}
 
 				echo '<p>';
-					echo '<input type="text" id="_jwppp-video-url-' . esc_attr( $number ) . '" class="jwppp-url" name="_jwppp-video-url-' . esc_attr( $number ) . '" placeholder="' . esc_html( __( 'Media URL', 'jwppp' ) ) . '" ';
+					echo '<input type="text" id="_jwppp-video-url-' . esc_attr( $number ) . '" class="jwppp-url" name="_jwppp-video-url-' . esc_attr( $number ) . '" placeholder="' . esc_attr( __( 'Media URL', 'jwppp' ) ) . '" ';
 					echo ( '1' !== $video_url ) ? 'value="' . esc_attr( $video_url ) . '" ' : 'value="" ';
 					echo 'size="60" />';
 
 					echo '<input type="text" name="_jwppp-' . esc_attr( $number ) . '-main-source-label" id ="_jwppp-' . esc_attr( $number ) . '-main-source-label" class="source-label-' . esc_attr( $number ) . '" style="margin-right:1rem; display: none;';
-					echo '" value="' . esc_html( $main_source_label ) . '" placeholder="' . esc_html( __( 'Label (HD, 720p, 360p)', 'jwppp' ) ) . '" size="30" />';
+					echo '" value="' . esc_attr( $main_source_label ) . '" placeholder="' . esc_attr( __( 'Label (HD, 720p, 360p)', 'jwppp' ) ) . '" size="30" />';
 
 				echo '</p>';
 
@@ -145,8 +145,8 @@ echo '<table class="widefat jwppp-' . esc_attr( $number ) . '" style="margin: 0.
 				?>
 				<script>
 					jQuery(document).ready(function($){
-						var number = <?php echo esc_html( $number ); ?>;
-						var post_id = <?php echo esc_html( $post_id ); ?>;
+						var number = <?php echo wp_json_encode( $number ); ?>;
+						var post_id = <?php echo wp_json_encode( $post_id ); ?>;
 						JWPPPSingleVideo(number, post_id);
 					})
 				</script>

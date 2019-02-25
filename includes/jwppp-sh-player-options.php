@@ -69,32 +69,32 @@ function jwppp_sh_player_option( $ar = '', $width = '', $height = '' ) {
 	/*Player dimensions*/
 	if ( $width && $height ) {
 
-		echo "width: '" . esc_html( $width ) . "',\n";
-		echo "height: '" . esc_html( $height ) . "',\n";
+		echo "width: " . wp_json_encode( $width ) . ",\n";
+		echo "height: " . wp_json_encode( $height ) . ",\n";
 
 	} else {
 
 		if ( 'fixed' === $jwppp_method_dimensions ) {
-			echo "width: '";
-			echo ( null !== $jwppp_player_width ) ? esc_html( $jwppp_player_width ) : '640';
-			echo "',\n";
-			echo "height: '";
-			echo ( null !== $jwppp_player_height ) ? esc_html( $jwppp_player_height ) : '360';
-			echo "',\n";
+			echo "width: ";
+			echo ( null !== $jwppp_player_width ) ? wp_json_encode( $jwppp_player_width ) : '640';
+			echo ",\n";
+			echo "height: ";
+			echo ( null !== $jwppp_player_height ) ? wp_json_encode( $jwppp_player_height ) : '360';
+			echo ",\n";
 
 		} else {
-			echo "width: '";
-			echo ( null !== $jwppp_responsive_width ) ? esc_html( $jwppp_responsive_width ) . '%' : '100%';
-			echo "',\n";
-			echo "aspectratio: '";
+			echo "width: ";
+			echo ( null !== $jwppp_responsive_width ) ? wp_json_encode( $jwppp_responsive_width . '%' ) : '100%';
+			echo ",\n";
+			echo "aspectratio: ";
 			if ( $ar ) {
-				echo esc_html( $ar );
+				echo wp_json_encode( $ar );
 			} elseif ( $jwppp_aspectratio ) {
-				echo esc_html( $jwppp_aspectratio );
+				echo wp_json_encode( $jwppp_aspectratio );
 			} else {
 				echo '16:9';
 			}
-			echo "',\n";
+			echo ",\n";
 		}
 	}
 
@@ -102,34 +102,34 @@ function jwppp_sh_player_option( $ar = '', $width = '', $height = '' ) {
 	echo "skin: {\n";
 	if ( '7' === $player_version ) {
 
-		echo 'none' !== $jwppp_skin_name ? "name: '" . esc_html( $jwppp_skin_name ) . "',\n" : '';
-		echo $jwppp_skin_color_active ? "active: '" . esc_html( $jwppp_skin_color_active ) . "',\n" : '';
-		echo $jwppp_skin_color_inactive ? "inactive: '" . esc_html( $jwppp_skin_color_inactive ) . "',\n" : '';
-		echo $jwppp_skin_color_background ? "background: '" . esc_html( $jwppp_skin_color_background ) . "',\n" : '';
+		echo 'none' !== $jwppp_skin_name ? "name: " . wp_json_encode( $jwppp_skin_name ) . ",\n" : '';
+		echo $jwppp_skin_color_active ? "active: " . wp_json_encode( $jwppp_skin_color_active ) . ",\n" : '';
+		echo $jwppp_skin_color_inactive ? "inactive: " . wp_json_encode( $jwppp_skin_color_inactive ) . ",\n" : '';
+		echo $jwppp_skin_color_background ? "background: " . wp_json_encode( $jwppp_skin_color_background ) . ",\n" : '';
 
 	} elseif ( '8' === $player_version ) {
 
 		echo "controlbar: {\n";
-			echo $jwppp_skin_color_controlbar_text ? "text: '" . esc_html( $jwppp_skin_color_controlbar_text ) . "',\n" : '';
-			echo $jwppp_skin_color_controlbar_icons ? "icons: '" . esc_html( $jwppp_skin_color_controlbar_icons ) . "',\n" : '';
-			echo $jwppp_skin_color_controlbar_active_icons ? "iconsActive: '" . esc_html( $jwppp_skin_color_controlbar_active_icons ) . "',\n" : '';
-			echo $jwppp_skin_color_controlbar_background ? "background: '" . esc_html( $jwppp_skin_color_controlbar_background ) . "',\n" : '';
+			echo $jwppp_skin_color_controlbar_text ? "text: " . wp_json_encode( $jwppp_skin_color_controlbar_text ) . ",\n" : '';
+			echo $jwppp_skin_color_controlbar_icons ? "icons: " . wp_json_encode( $jwppp_skin_color_controlbar_icons ) . ",\n" : '';
+			echo $jwppp_skin_color_controlbar_active_icons ? "iconsActive: " . wp_json_encode( $jwppp_skin_color_controlbar_active_icons ) . ",\n" : '';
+			echo $jwppp_skin_color_controlbar_background ? "background: " . wp_json_encode( $jwppp_skin_color_controlbar_background ) . ",\n" : '';
 		echo "},\n";
 
 		echo "timeslider: {\n";
-			echo $jwppp_skin_color_timeslider_progress ? "progress: '" . esc_html( $jwppp_skin_color_timeslider_progress ) . "',\n" : '';
-			echo $jwppp_skin_color_timeslider_rail ? "rail: '" . esc_html( $jwppp_skin_color_timeslider_rail ) . "',\n" : '';
+			echo $jwppp_skin_color_timeslider_progress ? "progress: " . wp_json_encode( $jwppp_skin_color_timeslider_progress ) . ",\n" : '';
+			echo $jwppp_skin_color_timeslider_rail ? "rail: " . wp_json_encode( $jwppp_skin_color_timeslider_rail ) . ",\n" : '';
 		echo "},\n";
 
 		echo "menus: {\n";
-			echo $jwppp_skin_color_menus_text ? "text: '" . esc_html( $jwppp_skin_color_menus_text ) . "',\n" : '';
-			echo $jwppp_skin_color_menus_active_text ? "textActive: '" . esc_html( $jwppp_skin_color_menus_active_text ) . "',\n" : '';
-			echo $jwppp_skin_color_menus_background ? "background: '" . esc_html( $jwppp_skin_color_menus_background ) . "',\n" : '';
+			echo $jwppp_skin_color_menus_text ? "text: " . wp_json_encode( $jwppp_skin_color_menus_text ) . ",\n" : '';
+			echo $jwppp_skin_color_menus_active_text ? "textActive: " . wp_json_encode( $jwppp_skin_color_menus_active_text ) . ",\n" : '';
+			echo $jwppp_skin_color_menus_background ? "background: " . wp_json_encode( $jwppp_skin_color_menus_background ) . ",\n" : '';
 		echo "},\n";
 
 		echo "tooltips: {\n";
-			echo $jwppp_skin_color_tooltips_text ? "text: '" . esc_html( $jwppp_skin_color_tooltips_text ) . "',\n" : '';
-			echo $jwppp_skin_color_tooltips_background ? "background: '" . esc_html( $jwppp_skin_color_tooltips_background ) . "',\n" : '';
+			echo $jwppp_skin_color_tooltips_text ? "text: " . wp_json_encode( $jwppp_skin_color_tooltips_text ) . ",\n" : '';
+			echo $jwppp_skin_color_tooltips_background ? "background: " . wp_json_encode( $jwppp_skin_color_tooltips_background ) . ",\n" : '';
 		echo "}\n";
 
 	}
@@ -138,10 +138,10 @@ function jwppp_sh_player_option( $ar = '', $width = '', $height = '' ) {
 	/*Logo*/
 	if ( null !== $jwppp_logo ) {
 		echo "logo: {\n";
-		echo "file: '" . esc_url( $jwppp_logo ) . "',\n";
-		echo "position: '" . esc_html( $jwppp_logo_vertical ) . '-' . esc_html( $jwppp_logo_horizontal ) . "',\n";
+		echo "file: " . wp_json_encode( $jwppp_logo ) . ",\n";
+		echo "position: " . wp_json_encode( $jwppp_logo_vertical ) . '-' . wp_json_encode( $jwppp_logo_horizontal ) . ",\n";
 		if ( null !== $jwppp_logo_link ) {
-			echo "link: '" . esc_html( $jwppp_logo_link ) . "'\n";
+			echo "link: " . wp_json_encode( $jwppp_logo_link ) . "\n";
 		}
 		echo "},\n";
 	}
@@ -149,22 +149,22 @@ function jwppp_sh_player_option( $ar = '', $width = '', $height = '' ) {
 	/*Subtitles style*/
 	if ( jwppp_caption_style() ) {
 		echo "captions: {\n";
-		echo $jwppp_sub_color ? "color: '" . esc_html( ( $jwppp_sub_color ) ) . "',\n" : '';
-		echo $jwppp_sub_font_size ? "fontSize: '" . esc_html( ( $jwppp_sub_font_size ) ) . "',\n" : '';
-		echo $jwppp_sub_font_family ? "fontFamily: '" . esc_html( ( $jwppp_sub_font_family ) ) . "',\n" : '';
-		echo $jwppp_sub_opacity ? "fontOpacity: '" . esc_html( ( $jwppp_sub_opacity ) ) . "',\n" : '';
-		echo $jwppp_sub_back_color ? "backgroundColor: '" . esc_html( ( $jwppp_sub_back_color ) ) . "',\n" : '';
-		echo $jwppp_sub_back_opacity ? "backgroundOpacity: '" . esc_html( ( $jwppp_sub_back_opacity ) ) . "',\n" : '';
+		echo $jwppp_sub_color ? "color: " . wp_json_encode( ( $jwppp_sub_color ) ) . ",\n" : '';
+		echo $jwppp_sub_font_size ? "fontSize: " . wp_json_encode( ( $jwppp_sub_font_size ) ) . ",\n" : '';
+		echo $jwppp_sub_font_family ? "fontFamily: " . wp_json_encode( ( $jwppp_sub_font_family ) ) . ",\n" : '';
+		echo $jwppp_sub_opacity ? "fontOpacity: " . wp_json_encode( ( $jwppp_sub_opacity ) ) . ",\n" : '';
+		echo $jwppp_sub_back_color ? "backgroundColor: " . wp_json_encode( ( $jwppp_sub_back_color ) ) . ",\n" : '';
+		echo $jwppp_sub_back_opacity ? "backgroundOpacity: " . wp_json_encode( ( $jwppp_sub_back_opacity ) ) . ",\n" : '';
 		echo "},\n";
 	}
 
 	/*Localization*/
 	echo "localization: {\n";
 	if ( $jwppp_next_up ) {
-		echo "nextUp: '" . esc_html( $jwppp_next_up ) . "',\n";
+		echo "nextUp: " . wp_json_encode( $jwppp_next_up ) . ",\n";
 	}
 	if ( $jwppp_playlist_tooltip ) {
-		echo "playlist: '" . esc_html( $jwppp_playlist_tooltip ) . "',\n";
+		echo "playlist: " . wp_json_encode( $jwppp_playlist_tooltip ) . ",\n";
 	}
 	echo "},\n";
 

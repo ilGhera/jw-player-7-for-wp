@@ -74,7 +74,7 @@ class JWT
             throw new InvalidArgumentException('Key may not be empty');
         }
         $tks = explode('.', $jwt);
-        if (count($tks) != 3) {
+        if (count($tks) !== 3) {
             throw new UnexpectedValueException('Wrong number of segments');
         }
         list($headb64, $bodyb64, $cryptob64) = $tks;
@@ -93,7 +93,7 @@ class JWT
         if (empty(static::$supported_algs[$header->alg])) {
             throw new UnexpectedValueException('Algorithm not supported');
         }
-        if (!in_array($header->alg, $allowed_algs)) {
+        if (!in_array($header->alg, $allowed_algs, true)) {
             throw new UnexpectedValueException('Algorithm not allowed');
         }
         if (is_array($key) || $key instanceof \ArrayAccess) {

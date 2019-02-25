@@ -7,17 +7,17 @@
  */
 
 /*Files required*/
-require( plugin_dir_path( __FILE__ ) . 'jwppp-ajax-add-video-callback.php' );
-require( plugin_dir_path( __FILE__ ) . 'jwppp-ajax-remove-video-callback.php' );
-require( plugin_dir_path( __FILE__ ) . 'jwppp-video-tools.php' );
-require( plugin_dir_path( __FILE__ ) . 'jwppp-save-single-video-data.php' );
-require( plugin_dir_path( __FILE__ ) . 'jwppp-sh-player-options.php' );
-require( plugin_dir_path( __FILE__ ) . 'jwppp-ads-code-block.php' );
-require( plugin_dir_path( __FILE__ ) . 'jwppp-player-code.php' );
-require( plugin_dir_path( __DIR__ ) . 'classes/class-jwppp-dashboard-api.php' );
-require( plugin_dir_path( __DIR__ ) . 'botr/api.php' );
+require( JWPPP_INCLUDES . 'jwppp-ajax-add-video-callback.php' );
+require( JWPPP_INCLUDES . 'jwppp-ajax-remove-video-callback.php' );
+require( JWPPP_INCLUDES . 'jwppp-video-tools.php' );
+require( JWPPP_INCLUDES . 'jwppp-save-single-video-data.php' );
+require( JWPPP_INCLUDES . 'jwppp-sh-player-options.php' );
+require( JWPPP_INCLUDES . 'jwppp-ads-code-block.php' );
+require( JWPPP_INCLUDES . 'jwppp-player-code.php' );
+require( JWPPP_DIR      . 'classes/class-jwppp-dashboard-api.php' );
+require( JWPPP_DIR      . 'botr/api.php' );
 
-require_once( plugin_dir_path( __DIR__ ) . 'libraries/JWT.php' );
+require_once( JWPPP_DIR . 'libraries/JWT.php' );
 use \Firebase\JWT\JWT;
 
 /**
@@ -44,29 +44,22 @@ add_action( 'add_meta_boxes', 'jwppp_add_meta_box' );
  * @return array  post/ page videos with meta_key as key and url as value
  */
 function jwppp_get_post_videos( $post_id ) {
-	global $wpdb;
-	$query = "
-		SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id = $post_id AND meta_key LIKE \"_jwppp-video-url-%\"
-	";
-	$videos = $wpdb->get_results(
-		$wpdb->prepare(
-			"
-		SELECT meta_key, meta_value
-		FROM $wpdb->postmeta
-		WHERE post_id = %s
-		AND meta_key LIKE \"_jwppp-video-url-%%\"
-		",
-			$post_id
-		),
-		ARRAY_A
-	); //db call ok; no-cache ok
+
+	$videos = get_post_meta( $post_id );
+	$videos = array_filter( 
+	    $videos,
+	    function( $key ) { 
+	        if ( false !== strpos( $key, '_jwppp-video-url-' ) ) { 
+	            return $key; 
+	        }
+	    }, ARRAY_FILTER_USE_KEY 
+	);
 
 	if ( count( $videos ) >= 1 && ! get_post_meta( $post_id, '_jwppp-video-url-1', true ) ) {
 		array_unshift(
 			$videos,
 			array(
-				'meta_key' => '_jwppp-video-url-1',
-				'meta_value' => 1,
+				'_jwppp-video-url-1' => 1,
 			)
 		);
 	}
@@ -118,7 +111,7 @@ function jwppp_single_video_box( $post_id, $number ) {
 	if ( '1' === $number && ! $dashboard_player ) {
 		$output  = '<div class="playlist-how-to" style="position:relative;background:#2FBFB0;color:#fff;padding:0.5rem 1rem;';
 		$output .= ( $plist_hide ) ? 'display:none;">' : 'display:block">';
-		$output .= 'Add a playlist of your videos using this code: <code style="display:inline-block;color:#fff;background:none;">[jwp-video n="' . esc_html( jwppp_videos_string( $post_id ) ) . '"]</code>';
+		$output .= 'Add a playlist of your videos using this code: <code style="display:inline-block;color:#fff;background:none;">[jwp-video n="' . jwppp_videos_string( $post_id ) . '"]</code>';
 		if ( get_option( 'jwppp-position' ) !== 'custom' ) {
 			$output .= '<a class="attention-mark" title="' . __( 'You need to set the VIDEO PLAYER POSITION option to CUSTOM in order to use this shortcode.', 'jwppp' ) . '"><img class="attention-mark" src="' . plugin_dir_url( __DIR__ ) . 'images/attention-mark.png" /></a></th>';
 		}
@@ -458,7 +451,7 @@ function jwppp_ads_tag_exists( $tags, $tag ) {
  * @param  string $media_id the media id
  * @return string
  */
-function jwppp_get_signed_url( $media_id ) {
+function jwppp_get_signed_url( $media_id, $short = false ) {
 
 	$token_secret = get_option( 'jwppp-api-secret' );
 	$resource = 'v2/media/' . $media_id;
@@ -473,7 +466,11 @@ function jwppp_get_signed_url( $media_id ) {
 
 	$jwt = JWT::encode( $token_body, $token_secret );
 
-	return "https://cdn.jwplayer.com/$resource?token=$jwt";
+	if ( $short ) {
+		return "$resource?token=$jwt";		
+	} else {
+		return "https://cdn.jwplayer.com/$resource?token=$jwt";		
+	}
 }
 
 
@@ -543,40 +540,33 @@ function jwppp_simple_player_code( $media_id ) {
 	/*Output the player*/
 	echo "<div id='jwppp-video-box-" . esc_attr( $media_id ) . "' class='jwppp-video-box' data-video='" . esc_attr( $media_id ) . "' style=\"margin: 1rem 0;\">\n";
 		echo  "<div id='jwppp-video-" . esc_attr( $media_id ) . "'>";
-	if ( sanitize_text_field( get_option( 'jwppp-text' ) ) != null ) {
-		echo esc_html( get_option( 'jwppp-text' ) );
-	} else {
-		echo esc_html( __( 'Loading the player...', 'jwppp' ) );
-	}
+		if ( sanitize_text_field( get_option( 'jwppp-text' ) ) !== null ) {
+			echo esc_html( get_option( 'jwppp-text' ) );
+		} else {
+			echo esc_html( __( 'Loading the player...', 'jwppp' ) );
+		}
 		echo "</div>\n";
 
 		/*Check if the security option is activated*/
 		$security_urls = get_option( 'jwppp-secure-video-urls' );
 
 		echo "<script type='text/javascript'>\n";
-			echo 'var playerInstance_' . esc_attr( $media_id ) . ' = jwplayer("jwppp-video-' . esc_attr( $media_id ) . "\");\n";
-			echo 'playerInstance_' . esc_attr( $media_id ) . ".setup({\n";
+			echo "var playerInstance_" . esc_html( $media_id ) . " = jwplayer(" . wp_json_encode( 'jwppp-video-' .  $media_id ) . ");\n";
+			echo "playerInstance_" . esc_html( $media_id ) . ".setup({\n";
 
-	if ( $security_urls ) {
-			echo "playlist: '" . esc_url( jwppp_get_signed_url( esc_html( $media_id ) ) ) . "',\n";
-	} else {
-		echo "playlist: 'https://cdn.jwplayer.com/v2/media/" . esc_attr( $media_id ) . "',\n";
-	}
+			if ( $security_urls ) {
+					echo "playlist: '" . esc_url( jwppp_get_signed_url( $media_id ) ) . "',\n";
+			} else {
+				echo "playlist: '" . esc_url( "https://cdn.jwplayer.com/v2/media/" . $media_id ) . "',\n";
+			}
 
 			/*Is it a dashboard player?*/
 			$dashboard_player = is_dashboard_player();
 
-			/*Vars*/
-			$jwppp_method_dimensions = sanitize_text_field( get_option( 'jwppp-method-dimensions' ) );
-			$jwppp_player_width = sanitize_text_field( get_option( 'jwppp-player-width' ) );
-			$jwppp_player_height = sanitize_text_field( get_option( 'jwppp-player-height' ) );
-			$jwppp_responsive_width = sanitize_text_field( get_option( 'jwppp-responsive-width' ) );
-			$jwppp_aspectratio = sanitize_text_field( get_option( 'jwppp-aspectratio' ) );
-
 			/*Options available only with self-hosted player*/
-	if ( ! $dashboard_player ) {
-		jwppp_sh_player_option();
-	}
+			if ( ! $dashboard_player ) {
+				jwppp_sh_player_option();
+			}
 
 			echo "})\n";
 		echo '</script>';
@@ -660,7 +650,7 @@ add_filter( 'the_content', 'jwppp_add_player' );
  */
 function jwppp_playlist_carousel( $player_id ) {
 
-	echo '<div id="jwppp-playlist-carousel-' . esc_html( $player_id ) . '" class="jw-widget">';
+	echo '<div id="jwppp-playlist-carousel-' . esc_attr( $player_id ) . '" class="jw-widget">';
 		echo '<div class="jw-widget-title"></div>';
 		echo '<div class="jw-widget-content"></div>';
 		echo '<div class="jw-widget-arrows">';
@@ -705,7 +695,7 @@ function jwppp_search_content_callback() {
 				$playlists = $api->get_playlists();
 			}
 
-			echo json_encode(
+			echo wp_json_encode(
 				array(
 					'videos' => $videos,
 					'playlists' => $playlists,
@@ -733,8 +723,8 @@ function jwppp_list_content_callback() {
 			'jwppp-meta-box-nonce-' . sanitize_text_field( wp_unslash( $_POST['number'] ) )
 		) ) {
 
-			$post_id = isset( $_POST['post_id'] ) ? sanitize_text_field( wp_unslash( $_POST['post_id'] ) ) : '';
-			$number = sanitize_text_field( wp_unslash( $_POST['number'] ) );
+			$post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : '';
+			$number = intval( $_POST['number'] );
 
 			if ( $post_id && $number ) {
 
@@ -760,10 +750,10 @@ function jwppp_list_content_callback() {
 								echo '<li class="reset">' . esc_html( 'select a video', 'jwppp' ) . '<span>' . esc_html( __( 'clear', 'jwppp' ) ) . '</span></li>';
 								for ( $i = 0; $i < min( 15, count( $videos ) ); $i++ ) {
 									echo '<li ';
-										echo 'data-mediaid="' . ( isset( $videos[ $i ]->key ) ? esc_html( $videos[ $i ]->key ) : '' ) . '" ';
-										echo 'data-duration="' . ( isset( $videos[ $i ]->duration ) ? esc_html( $videos[ $i ]->duration ) : '' ) . '" ';
-										echo 'data-description="' . ( isset( $videos[ $i ]->description ) ? esc_html( $videos[ $i ]->description ) : '' ) . '"';
-										echo 'data-tags="' . ( isset( $videos[ $i ]->tags ) ? esc_html( $videos[ $i ]->tags ) : '' ) . '"';
+										echo 'data-mediaid="' . ( isset( $videos[ $i ]->key ) ? esc_attr( $videos[ $i ]->key ) : '' ) . '" ';
+										echo 'data-duration="' . ( isset( $videos[ $i ]->duration ) ? esc_attr( $videos[ $i ]->duration ) : '' ) . '" ';
+										echo 'data-description="' . ( isset( $videos[ $i ]->description ) ? esc_attr( $videos[ $i ]->description ) : '' ) . '"';
+										echo 'data-tags="' . ( isset( $videos[ $i ]->tags ) ? esc_attr( $videos[ $i ]->tags ) : '' ) . '"';
 										echo ( $video_url === $videos[ $i ]->key ? ' class="selected"' : '' ) . '>';
 										echo '<img class="video-img" src="https://cdn.jwplayer.com/thumbs/' . ( isset( $videos[ $i ]->key ) ? esc_html( $videos[ $i ]->key ) : '' ) . '-60.jpg" />';
 										echo '<span>' . ( isset( $videos[ $i ]->title ) ? esc_html( $videos[ $i ]->title ) : '' ) . '</span>';
@@ -782,13 +772,13 @@ function jwppp_list_content_callback() {
 								}
 							} else {
 
-								$playlist_thumb = esc_url( plugin_dir_url( __DIR__ ) . 'images/playlist4.png' );
+								$playlist_thumb = plugin_dir_url( __DIR__ ) . 'images/playlist4.png';
 								echo '<li class="reset">' . esc_html( 'Select a playlist', 'jwppp' ) . '<span>' . esc_html( __( 'Clear', 'jwppp' ) ) . '</span></li>';
 								for ( $i = 0; $i < min( 15, count( $playlists ) ); $i++ ) {
 									echo '<li class="playlist-element' . ( $video_url === $playlists[ $i ]->key ? ' selected' : '' ) . '" ';
-										echo 'data-mediaid="' . ( isset( $playlists[ $i ]->key ) ? esc_html( $playlists[ $i ]->key ) : '' ) . '"';
-										echo 'data-description="' . ( isset( $playlists[ $i ]->description ) ? esc_html( $playlists[ $i ]->description ) : '' ) . '"';
-										echo 'data-videos="' . ( isset( $playlists[ $i ]->videos->total ) ? esc_html( $playlists[ $i ]->videos->total ) : '' ) . '"';
+										echo 'data-mediaid="' . ( isset( $playlists[ $i ]->key ) ? esc_attr( $playlists[ $i ]->key ) : '' ) . '"';
+										echo 'data-description="' . ( isset( $playlists[ $i ]->description ) ? esc_attr( $playlists[ $i ]->description ) : '' ) . '"';
+										echo 'data-videos="' . ( isset( $playlists[ $i ]->videos->total ) ? esc_attr( $playlists[ $i ]->videos->total ) : '' ) . '"';
 										echo '>';
 										echo '<img class="video-img" src="' . esc_url( $playlist_thumb ) . '" />';
 										echo '<span>' . ( isset( $playlists[ $i ]->title ) ? esc_html( $playlists[ $i ]->title ) : '' ) . '</span>';
@@ -828,8 +818,8 @@ function jwppp_get_player_callback() {
 			'jwppp-meta-box-nonce-' . sanitize_text_field( wp_unslash( $_POST['number'] ) )
 		) ) {
 
-			$post_id = isset( $_POST['post_id'] ) ? sanitize_text_field( wp_unslash( $_POST['post_id'] ) ) : '';
-			$number = sanitize_text_field( wp_unslash( $_POST['number'] ) );
+			$post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : '';
+			$number = intval( $_POST['number'] );
 
 			/*Player library*/
 			$library_parts = explode( 'https://content.jwplatform.com/libraries/', get_option( 'jwppp-library' ) );
@@ -853,7 +843,7 @@ function jwppp_get_player_callback() {
 					} elseif ( ! $choose_player && $library_parts[1] === $player->key . '.js' ) {
 						$selected = true;
 					}
-					echo '<option name="' . esc_html( $player->key ) . '" value="' . esc_html( $player->key ) . '"' . ( $selected ? ' selected="selected"' : '' ) . '>' . esc_html( $player->name ) . '</option>';
+					echo '<option name="' . esc_attr( $player->key ) . '" value="' . esc_attr( $player->key ) . '"' . ( $selected ? ' selected="selected"' : '' ) . '>' . esc_html( $player->name ) . '</option>';
 				}
 
 					echo '</select>';

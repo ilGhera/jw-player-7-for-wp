@@ -70,7 +70,7 @@
 	echo '<tr>';
 	echo '<th scope="row">' . esc_html( __( 'Set timeout', 'jwppp' ) ) . '</th>';
 	echo '<td>';
-	echo '<input type="number" id="jwppp-secure-timeout" name="jwppp-secure-timeout" step="5" min="5" value="' . esc_html( $secure_timeout ) . '" />';
+	echo '<input type="number" id="jwppp-secure-timeout" name="jwppp-secure-timeout" step="5" min="5" value="' . esc_attr( $secure_timeout ) . '" />';
 	echo '<p class="description">' . wp_kses( __( 'Timeout in minutes', 'jwppp' ), $allowed_tags ) . '</p>';
 	echo '<td>';
 	echo '</tr>';
@@ -81,7 +81,7 @@
 	wp_nonce_field( 'jwppp-nonce-security', 'hidden-nonce-security' );
 
 	echo '<input type="hidden" name="security-sent" value="1" />';
-	echo '<input class="button button-primary" type="submit" id="submit" value="' . esc_html( __( 'Save options', 'jwppp' ) ) . '" />';
+	echo '<input class="button button-primary" type="submit" id="submit" value="' . esc_attr( __( 'Save options', 'jwppp' ) ) . '" />';
 	echo '</form>';
 	?>
 </div>

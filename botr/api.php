@@ -57,7 +57,7 @@
             ksort($args);
             $sbs = "";
             foreach ($args as $key => $value) {
-                if ($sbs != "") {
+                if ($sbs !== "") {
                     $sbs .= "&";
                 }
                 // Construct Signature Base String
@@ -72,7 +72,7 @@
 
         // Add required api_* arguments
         private function _args($args) {
-            $args['api_nonce'] = str_pad(mt_rand(0, 99999999), 8, STR_PAD_LEFT);
+            $args['api_nonce'] = str_pad(wp_rand(0, 99999999), 8, STR_PAD_LEFT);
             $args['api_timestamp'] = time();
 
             $args['api_key'] = $this->_key;
@@ -112,7 +112,7 @@
                     curl_close($curl);
                     break;
                 default:
-                    $response = file_get_contents($url);
+                    $response = wpcom_vip_file_get_contents($url);
             }
 
             $unserialized_response = @unserialize($response);
@@ -152,11 +152,10 @@
                     $response = "Error: No cURL library";
             }
 
-            if ($err_no == 0) {
+            if ($err_no === 0) {
                 return unserialize($response);
             } else {
                 return "Error #" . $err_no . ": " . $err_msg;
             }
         }
     }
-?>

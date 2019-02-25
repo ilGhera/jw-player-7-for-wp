@@ -133,13 +133,13 @@
 	echo '<tr class="ads-options ads-var-block"' . ( ! $active_ads_var ? ' style="display: none;"' : '' ) . '>';
 	echo '<th scope="row">' . esc_html( __( 'Ads variable name', 'jwppp' ) ) . '</th>';
 	echo '<td>';
-	echo '<input type="text" class="regular-text" id="jwppp-ads-var-name" name="jwppp-ads-var-name" value="' . esc_html( $ads_var_name ) . '" />';
+	echo '<input type="text" class="regular-text" id="jwppp-ads-var-name" name="jwppp-ads-var-name" value="' . esc_attr( $ads_var_name ) . '" />';
 	echo '<p class="description">' . esc_html( __( 'Add the name of the advertising variable.', 'jwppp' ) ) . '</p>';
 	echo '<td>';
 	echo '</tr>';
 
 	/*Ads client*/
-	echo '<tr class="ads-options"' . esc_html( $hide ) . '>';
+	echo '<tr class="ads-options"' . esc_attr( $hide ) . '>';
 	echo '<th scope="row">' . esc_html( __( 'Ads Client' ) ) . '</th>';
 	echo '<td>';
 	echo '<select id="jwppp-ads-client" name="jwppp-ads-client" />';
@@ -160,7 +160,7 @@
 	$add_tag_nonce = wp_create_nonce( 'jwppp-nonce-add-tag' );
 	wp_localize_script( 'jwppp-admin', 'addTag', array( 'nonce' => $add_tag_nonce ) );
 
-	echo '<tr class="ads-options tag"' . esc_html( $hide ) . '>';
+	echo '<tr class="ads-options tag"' . esc_attr( $hide ) . '>';
 	echo '<th scope="row">' . esc_html( __( 'Ad Tags', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<ul style="margin: 0;">';
@@ -178,22 +178,22 @@
 	}
 
 	echo '</ul>';
-	echo '<input type="hidden" name="hidden-total-tags" class="hidden-total-tags" value="' . esc_html( $total_tags ) . '" />';
+	echo '<input type="hidden" name="hidden-total-tags" class="hidden-total-tags" value="' . esc_attr( $total_tags ) . '" />';
 	echo '<p class="description">' . esc_html( __( 'Ad tag URL | Ad Tag Name', 'jwppp' ) ) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 
 	/*Skipoffset*/
-	echo '<tr class="ads-options"' . esc_html( $hide ) . '>';
+	echo '<tr class="ads-options"' . esc_attr( $hide ) . '>';
 	echo '<th scope="row">' . esc_html( __( 'Ad Skipping', 'jwppp' ) ) . '</th>';
 	echo '<td>';
-	echo '<input type="number" min="0" step="1" class="small-text" id="jwppp-ads-skip" name="jwppp-ads-skip" value="' . esc_html( $ads_skip ) . '" />';
+	echo '<input type="number" min="0" step="1" class="small-text" id="jwppp-ads-skip" name="jwppp-ads-skip" value="' . esc_attr( $ads_skip ) . '" />';
 	echo '<p class="description">' . esc_html( __( 'Total seconds viewers must watch an ad before being allowed to skip', 'jwppp' ) ) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 
 	/*Bidding*/
-	echo '<tr class="ads-options"' . esc_html( $hide ) . '>';
+	echo '<tr class="ads-options"' . esc_attr( $hide ) . '>';
 	echo '<th scope="row">' . esc_html( __( 'Player Bidding', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<label>';
@@ -209,16 +209,16 @@
 	echo '</tr>';
 
 	/*Spotx channel id*/
-	echo '<tr class="ads-options bidding"' . esc_html( $hide ) . '>';
+	echo '<tr class="ads-options bidding"' . esc_attr( $hide ) . '>';
 	echo '<th scope="row"><img src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/spotx-70.png"></th>';
 	echo '<td>';
-	echo '<input type="text" class="regular-text" id="jwppp-channel-id" name="jwppp-channel-id" placeholder="' . esc_html( __( 'Add a Channel ID', 'jwppp' ) ) . '" value="' . esc_html( $channel_id ) . '" />';
+	echo '<input type="text" class="regular-text" id="jwppp-channel-id" name="jwppp-channel-id" placeholder="' . esc_attr( __( 'Add a Channel ID', 'jwppp' ) ) . '" value="' . esc_attr( $channel_id ) . '" />';
 	echo '<p class="description">' . wp_kses( __( 'Channel ID', 'jwppp' ), $allowed_tags ) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 
 	/*Mediation*/
-	echo '<tr class="ads-options bidding"' . esc_html( $hide ) . '>';
+	echo '<tr class="ads-options bidding"' . esc_attr( $hide ) . '>';
 	echo '<th scope="row">' . esc_html( __( 'Mediation', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<select id="jwppp-mediation" name="jwppp-mediation" />';
@@ -247,11 +247,11 @@
 	echo '</tr>';
 
 	/*Floor price*/
-	echo '<tr class="ads-options bidding floor-price"' . esc_html( $hide ) . '>';
+	echo '<tr class="ads-options bidding floor-price"' . esc_attr( $hide ) . '>';
 	echo '<th scope="row">' . esc_html( __( 'Floor Price', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<span class="currency">$</span>';
-	echo '<input type="number" min="0" step="0.01" class="small-text" id="jwppp-floor-price" name="jwppp-floor-price" value="' . esc_html( $floor_price ) . '" />';
+	echo '<input type="number" min="0" step="0.01" class="small-text" id="jwppp-floor-price" name="jwppp-floor-price" value="' . esc_attr( $floor_price ) . '" />';
 	echo '<p class="description">' . esc_html( __( 'Set floor price', 'jwppp' ) ) . '</p>';
 	echo '</td>';
 	echo '</tr>';
@@ -262,7 +262,7 @@
 	wp_nonce_field( 'jwppp-nonce-ads', 'hidden-nonce-ads' );
 
 	echo '<input type="hidden" name="ads-sent" value="1" />';
-	echo '<input class="button button-primary" type="submit" id="submit" value="' . esc_html( __( 'Save options', 'jwppp' ) ) . '" />';
+	echo '<input class="button button-primary" type="submit" id="submit" value="' . esc_attr( __( 'Save options', 'jwppp' ) ) . '" />';
 	echo '</form>';
 	?>
 </div>

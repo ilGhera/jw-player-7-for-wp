@@ -32,14 +32,25 @@ function jwppp_premium_load() {
 	}
 
 	/*Add database version*/
-	update_option( 'jwppp-database-version', '1.4.0' );
+	update_option( 'jwppp-database-version', JWPPP_VERSION );
 
 	/*Internationalization*/
 	load_plugin_textdomain( 'jwppp', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
+	/*Constants definition*/
+	define( 'JWPPP_DIR', plugin_dir_path( __FILE__ ) );
+	define( 'JWPPP_URI', plugin_dir_url( __FILE__ ) );
+	define( 'JWPPP_INCLUDES', JWPPP_DIR . 'includes/' );
+	define( 'JWPPP_ADMIN', JWPPP_DIR . 'admin/' );
+
+
 	/*Files required*/
-	include( plugin_dir_path( __FILE__ ) . 'admin/jwppp-admin.php' );
-	include( plugin_dir_path( __FILE__ ) . 'includes/jwppp-functions.php' );
-	include( plugin_dir_path( __FILE__ ) . 'fb/jwppp-fb-player.php' );
+	include( JWPPP_ADMIN 	. 'jwppp-admin.php' );
+	include( JWPPP_INCLUDES . 'jwppp-functions.php' );
+	include( JWPPP_INCLUDES . 'jwppp-video-download.php' );
+	include( JWPPP_INCLUDES . 'jwppp-video-chapters.php' );
+	include( JWPPP_DIR	    . 'fb/jwppp-fb-player.php' );
+	include( JWPPP_DIR	    . 'jw-widget/jwppp-carousel-config.php' );
+	
 }
 add_action( 'plugins_loaded', 'jwppp_premium_load', 1 );

@@ -27,7 +27,7 @@
 			'icon_color'       => $jwppp_playlist_carousel_icon_color,
 		);
 
-		update_option( 'jwppp-playlist-carousel-style', base64_encode( json_encode( $jwppp_playlist_carousel_style ) ) );
+		update_option( 'jwppp-playlist-carousel-style', base64_encode( wp_json_encode( $jwppp_playlist_carousel_style ) ) );
 	}
 
 	echo '<form id="jwppp-playlist-carousel" name="jwppp-playlist-carousel" method="post" action="">';
@@ -35,14 +35,14 @@
 			echo '<tr>';
 				echo '<th scope="row">' . esc_html( __( 'Title', 'jwppp' ) ) . '</th>';
 				echo '<td>';
-					echo '<input type="text" class="regular-text" id="jwppp-playlist-carousel-title" name="jwppp-playlist-carousel-title" placeholder="' . esc_html( __( 'More videos', 'jwppp' ) ) . '" value="' . esc_html( $jwppp_playlist_carousel_title ) . '" />';
+					echo '<input type="text" class="regular-text" id="jwppp-playlist-carousel-title" name="jwppp-playlist-carousel-title" placeholder="' . esc_attr( __( 'More videos', 'jwppp' ) ) . '" value="' . esc_html( $jwppp_playlist_carousel_title ) . '" />';
 					echo '<p class="description">' . esc_html( __( 'Add a title for the playlist widget', 'jwppp' ) ) . '</p>';
 					echo '</td>';
 			echo '</tr>';
 			echo '<tr>';
 				echo '<th scope="row">' . esc_html( __( 'Text color', 'jwppp' ) ) . '</th>';
 				echo '<td>';
-					echo '<input type="text" class="jwppp-color-field" name="jwppp-playlist-carousel-text-color" value="' . esc_html( $jwppp_playlist_carousel_text_color ) . '">';
+					echo '<input type="text" class="jwppp-color-field" name="jwppp-playlist-carousel-text-color" value="' . esc_attr( $jwppp_playlist_carousel_text_color ) . '">';
 					echo '<p class="description">' . esc_html( __( 'Set the text color for the playlist widget', 'jwppp' ) ) . '</p>';
 				echo '</td>';
 			echo '</tr>';
@@ -50,7 +50,7 @@
 			echo '<tr>';
 				echo '<th scope="row">' . esc_html( __( 'Background color', 'jwppp' ) ) . '</th>';
 				echo '<td>';
-					echo '<input type="text" class="jwppp-color-field" name="jwppp-playlist-carousel-background-color" value="' . esc_html( $jwppp_playlist_carousel_background_color ) . '">';
+					echo '<input type="text" class="jwppp-color-field" name="jwppp-playlist-carousel-background-color" value="' . esc_attr( $jwppp_playlist_carousel_background_color ) . '">';
 					echo '<p class="description">' . esc_html( __( 'Set the background color for the playlist widget', 'jwppp' ) ) . '</p>';
 				echo '</td>';
 			echo '</tr>';
@@ -58,7 +58,7 @@
 			echo '<tr>';
 				echo '<th scope="row">' . esc_html( __( 'Icon color', 'jwppp' ) ) . '</th>';
 				echo '<td>';
-					echo '<input type="text" class="jwppp-color-field" name="jwppp-playlist-carousel-icon-color" value="' . esc_html( $jwppp_playlist_carousel_icon_color ) . '">';
+					echo '<input type="text" class="jwppp-color-field" name="jwppp-playlist-carousel-icon-color" value="' . esc_attr( $jwppp_playlist_carousel_icon_color ) . '">';
 					echo '<p class="description">' . esc_html( __( 'Set the icon color for the playlist widget', 'jwppp' ) ) . '</p>';
 				echo '</td>';
 			echo '</tr>';
@@ -68,7 +68,7 @@
 		wp_nonce_field( 'jwppp-nonce-pl-carousel', 'hidden-nonce-pl-carousel' );
 
 		echo '<input type="hidden" name="jwppp-playlist-carousel-hidden" value="1" />';
-		echo '<input class="button button-primary" type="submit" id="submit" value="' . esc_html( __( 'Save chages', 'jwppp' ) ) . '">';
+		echo '<input class="button button-primary" type="submit" id="submit" value="' . esc_attr( __( 'Save chages', 'jwppp' ) ) . '">';
 	echo '</form>';
 	?>
 </div>

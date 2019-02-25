@@ -37,8 +37,8 @@ function jwppp_ads_code_block( $post_id, $number ) {
 				<script>
 					jQuery(document).ready(function($){
 						var tag = null;
-						if(typeof <?php echo esc_html( $ads_var_name ); ?> !== 'undefined') {
-							tag = <?php echo esc_html( $ads_var_name ); ?>;
+						if(typeof <?php echo wp_json_encode( $ads_var_name ); ?> !== 'undefined') {
+							tag = <?php echo wp_json_encode( $ads_var_name ); ?>;
 						}
 						var data = {
 							'action': 'ads-var-name',
@@ -93,7 +93,7 @@ function jwppp_ads_code_block( $post_id, $number ) {
 				echo "bids: {\n";
 					echo "settings: {\n";
 						echo "mediationLayerAdServer: '" . esc_html( $jwppp_mediation ) . "',\n";
-				if ( in_array( $jwppp_mediation, array( 'jwp', 'jwpdfp' ) ) && $jwppp_floor_price ) {
+				if ( in_array( $jwppp_mediation, array( 'jwp', 'jwpdfp' ), true ) && $jwppp_floor_price ) {
 					echo 'floorPriceCents: ' . esc_html( $jwppp_floor_price ) * 100 . "\n";
 				}
 					echo "},\n";

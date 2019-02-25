@@ -85,7 +85,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 	$file_info = pathinfo( $jwppp_video_url );
 	$jwppp_playlist = false;
 	if ( array_key_exists( 'extension', $file_info ) ) {
-		if ( in_array( $file_info['extension'], array( 'xml', 'feed', 'php', 'rss' ) ) ) {
+		if ( in_array( $file_info['extension'], array( 'xml', 'feed', 'php', 'rss' ), true ) ) {
 			$jwppp_playlist = true;
 		}
 	}
@@ -105,12 +105,12 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 		$choose_player = get_post_meta( $p_id, '_jwppp-choose-player-' . $number, true ) ? esc_html( get_post_meta( $p_id, '_jwppp-choose-player-' . $number, true ) ) : esc_html( $player_parts[0] );
 
 		/*Output the player*/
-		echo "<div id='jwppp-video-box-" . esc_attr( $this_video ) . "' class='jwppp-video-box' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
+		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
 
 			/*FB Instant Articles*/
 			echo '<span class="jwppp-instant" style="display: none;" data-video="' . home_url() . '/?jwp-instant-articles=1&player=' . esc_html( $choose_player ) . '&mediaID=' . esc_html( $jwppp_video_url ) . '" data-width="480" data-height="270"></span>';
 
-			echo "<div id='jwppp-video-" . esc_attr( $this_video ) . "' class='jwplayer'>";
+			echo "<div id='jwppp-video-" . intval( $this_video ) . "' class='jwplayer'>";
 
 			/*Loading the player text*/
 		if ( get_option( 'jwppp-text' ) ) {
@@ -131,16 +131,17 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 		}
 
 		echo "<script type='text/javascript'>\n";
-			echo 'var playerInstance_' . esc_html( $this_video ) . " = jwplayer('jwppp-video-" . esc_html( $this_video ) . "');\n";
-			echo 'playerInstance_' . esc_html( $this_video ) . ".setup({\n";
+			echo "var playerInstance_" . intval( $this_video ) . " = jwplayer( " . wp_json_encode( "jwppp-video-" . $this_video ) . " );\n";
+			echo "playerInstance_" . intval( $this_video ) . ".setup({\n";
 
 				/*Check if the security option is activated*/
 				$security_urls = get_option( 'jwppp-secure-video-urls' );
 
+
 		if ( $security_urls ) {
-			echo "playlist: '" . esc_html( jwppp_get_signed_url( esc_html( $jwppp_video_url ) ) ) . "',\n";
+			echo "playlist: '" . esc_url( jwppp_get_signed_url( $jwppp_video_url ) ) . "',\n";
 		} else {
-			echo "playlist: 'https://cdn.jwplayer.com/v2/media/" . esc_html( $jwppp_video_url ) . "',\n";
+			echo "playlist: '" . esc_url( "https://cdn.jwplayer.com/v2/media/" . $jwppp_video_url ) . "',\n";
 		}
 
 				/*Ads block*/
@@ -150,8 +151,10 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 		if ( $jwppp_playlist_carousel ) {
 			$carousel_style = sanitize_text_field( get_option( 'jwppp-playlist-carousel-style' ) );
+			$playlist_id = $security_urls ? jwppp_get_signed_url( $jwppp_video_url, true ) : $jwppp_video_url;
+
 			echo "var e = new XMLHttpRequest;\n";
-			echo "e.onreadystatechange = function() { 4 === e.readyState && (e.status >= 200 && JSON.parse(e.responseText).widgets.forEach(function(e) { outPlayerWidget(e) })) }, e.open('GET', '" . esc_html( plugin_dir_url( __DIR__ ) ) . 'jw-widget/jwppp-carousel-config.php?playlist-id=' . esc_html( $jwppp_video_url ) . '&player-id=' . esc_html( $this_video ) . '&carousel-style=' . esc_html( $carousel_style ) . "', !0), e.send()\n";
+			echo "e.onreadystatechange = function() { 4 === e.readyState && (e.status >= 200 && JSON.parse(e.responseText).widgets.forEach(function(e) { outPlayerWidget(e) })) }, e.open('GET', '" . home_url() . '?jwp-carousel-config=1&playlist-id=' . esc_html( $playlist_id ) . '&player-id=' . intval( $this_video ) . '&carousel-style=' . esc_html( $carousel_style ) . "', !0), e.send()\n";
 		}
 
 		echo '</script>';
@@ -159,7 +162,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 	} elseif ( $jwppp_video_url && $sh_video ) {
 
-		echo "<div id='jwppp-video-box-" . esc_attr( $this_video ) . "' class='jwppp-video-box' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
+		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
 
 		/*Player definition*/
 		if ( $dashboard_player ) {
@@ -176,7 +179,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 		$instant_image = $video_image ? $video_image : get_option( 'jwppp-poster-image' );
 		echo '<span class="jwppp-instant" style="display: none;" data-video="' . home_url() . '/?jwp-instant-articles=1&' . esc_html( $instant_player ) . '&mediaURL=' . esc_html( $jwppp_video_url ) . '&image=' . esc_html( $instant_image ) . '" data-width="480" data-height="270"></span>';
 
-		echo "<div id='jwppp-video-" . esc_attr( $this_video ) . "' class='jwplayer'>";
+		echo "<div id='jwppp-video-" . intval( $this_video ) . "' class='jwplayer'>";
 
 		/*Loading the player text*/
 		if ( get_option( 'jwppp-text' ) ) {
@@ -196,10 +199,10 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 		}
 
 		echo "<script type='text/javascript'>\n";
-			echo 'var playerInstance_' . esc_html( $this_video ) . " = jwplayer('jwppp-video-" . esc_html( $this_video ) . "');\n";
-			echo 'playerInstance_' . esc_html( $this_video ) . ".setup({\n";
+			echo "var playerInstance_" . intval( $this_video ) . " = jwplayer(" . wp_json_encode( "jwppp-video-" . $this_video ) . " );\n";
+			echo 'playerInstance_' . intval( $this_video ) . ".setup({\n";
 		if ( $jwppp_playlist ) {
-			echo "playlist: '" . esc_html( get_post_meta( $p_id, '_jwppp-video-url-' . $number, true ) ) . "',\n";
+			echo "playlist: '" . esc_url( get_post_meta( $p_id, '_jwppp-video-url-' . $number, true ) ) . "',\n";
 		} else {
 			if ( $jwppp_new_playlist ) {
 				$n = 0;
@@ -246,7 +249,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 				echo "file: '" . esc_url( $jwppp_video_url ) . "',\n";
 				if ( $jwppp_sources_number && $jwppp_sources_number[0] > 1 ) {
 					$main_source_label = get_post_meta( $p_id, '_jwppp-' . $number . '-main-source-label', true );
-					echo ( $main_source_label ) ? "label: '" . esc_html( $main_source_label ) . "'\n" : '';
+					echo ( $main_source_label ) ? "label: '" . wp_json_encode( $main_source_label ) . "'\n" : '';
 				}
 
 				if ( $jwppp_source_1 ) {
@@ -260,7 +263,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 						if ( $source_url ) {
 							echo "{\n";
 							echo "file: '" . esc_url( $source_url ) . "',\n";
-							echo ( $source_label ) ? "label: '" . esc_html( $source_label ) . "'\n" : '';
+							echo ( $source_label ) ? "label: '" . wp_json_encode( $source_label ) . "'\n" : '';
 							echo "},\n";
 						}
 					}
@@ -272,12 +275,12 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 				/*Video title*/
 				if ( $video_title ) {
-					echo "title: '" . esc_html( $video_title ) . "',\n";
+					echo "title: '" . wp_json_encode( $video_title ) . "',\n";
 				}
 
 				/*Video description*/
 				if ( $video_description ) {
-					echo "description: '" . esc_html( $video_description ) . "',\n";
+					echo "description: '" . wp_json_encode( $video_description ) . "',\n";
 				}
 
 				/*Poster image*/
@@ -292,7 +295,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 				}
 
 				if ( $jwppp_new_playlist ) {
-					echo "mediaid: '" . esc_attr( $this_video ) . esc_attr( $n++ ) . "',\n";
+					echo "mediaid: '" . wp_json_encode( $this_video . $n++ ) . "',\n";
 				}
 
 				/*Ads code block*/
@@ -300,7 +303,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 				/*Media type*/
 				if ( $jwppp_media_type ) {
-					echo "type: '" . esc_html( $jwppp_media_type ) . "',\n";
+					echo "type: '" . wp_json_encode( $jwppp_media_type ) . "',\n";
 				}
 
 				/*Autoplay*/
@@ -327,7 +330,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 					echo "sharing: {\n";
 						$jwppp_share_heading = sanitize_text_field( get_option( 'jwppp-share-heading' ) );
 					if ( null !== $jwppp_share_heading ) {
-							echo "heading: '" . esc_html( $jwppp_share_heading ) . "',\n";
+							echo "heading: '" . wp_json_encode( $jwppp_share_heading ) . "',\n";
 					} else {
 								echo "heading: '" . esc_html( __( 'Share Video', 'jwppp' ) ) . "',\n";
 					}
@@ -345,9 +348,9 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 					if ( 'subtitles' === $jwppp_chapters_subtitles && 'load' === $jwppp_subtitles_method ) {
 						for ( $i = 1; $i < $jwppp_chapters_number + 1; $i++ ) {
 							echo "{\n";
-							echo "file:'" . esc_html( get_post_meta( $p_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url', true ) ) . "',\n";
+							echo "file:'" . esc_url( get_post_meta( $p_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url', true ) ) . "',\n";
 							echo "kind:'captions',\n";
-							echo "label:'" . esc_html( get_post_meta( $p_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label', true ) ) . "',\n";
+							echo "label:'" . wp_json_encode( get_post_meta( $p_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label', true ) ) . "',\n";
 							if ( '1' === $i && '1' === $jwppp_subtitles_load_default ) {
 								echo "'default': 'true'\n";
 							}
@@ -355,7 +358,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 						}
 					} else {
 						echo "{\n";
-						echo "file:'" . esc_url( plugin_dir_url( __DIR__ ) ) . 'includes/jwppp-chapters.php?id=' . esc_attr( $p_id ) . '&number=' . esc_attr( $number ) . "',\n";
+						echo "file:'" . esc_url( home_url() . '?jwp-chapters=1&id=' .  $p_id . '&number=' . $number ) . "',\n";
 						if ( 'chapters' === $jwppp_chapters_subtitles ) {
 							echo "kind:'chapters'\n";
 						} else if ( 'subtitles' === $jwppp_chapters_subtitles ) {
@@ -388,7 +391,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 			echo "sharing: {\n";
 				$jwppp_share_heading = sanitize_text_field( get_option( 'jwppp-share-heading' ) );
 			if ( null !== $jwppp_share_heading ) {
-					echo "heading: '" . esc_html( $jwppp_share_heading ) . "',\n";
+					echo "heading: '" . wp_json_encode( $jwppp_share_heading ) . "',\n";
 			} else {
 						echo "heading: '" . esc_html( __( 'Share Video', 'jwppp' ) ) . "',\n";
 			}
@@ -429,12 +432,12 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 		/*Download button*/
 		if ( $jwppp_download_video && ! $jwppp_new_playlist && ! $is_yt['yes'] ) {
-			echo 'playerInstance_' . esc_attr( $this_video ) . ".addButton(\n";
+			echo 'playerInstance_' . intval( $this_video ) . ".addButton(\n";
 				echo "'" . esc_url( plugin_dir_url( __DIR__ ) ) . "images/download-icon.svg',\n";
 				echo "'Download Video',\n";
 				echo "function() {\n";
-					echo 'var file = playerInstance_' . esc_attr( $this_video ) . ".getPlaylistItem()['file'];\n";
-					echo "var file_download = '" . esc_url( plugin_dir_url( __DIR__ ) ) . "includes/jwppp-video-download.php?file=' + file;\n";
+					echo 'var file = playerInstance_' . intval( $this_video ) . ".getPlaylistItem()['file'];\n";
+					echo "var file_download = '" . home_url() . "?jwp-video-download=1&file=' + file;\n";
 					echo "window.location.href = file_download;\n";
 				echo "},\n";
 				echo "'download',\n";
@@ -444,10 +447,10 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 		if ( $is_yt['yes'] || '1' === $pl_mute ) {
 
 			/*Volume off*/
-			echo 'playerInstance_' . esc_attr( $this_video ) . ".on('play', function(){\n";
-				echo 'var sound_off = playerInstance_' . esc_attr( $this_video ) . ".getMute();\n";
+			echo 'playerInstance_' . intval( $this_video ) . ".on('play', function(){\n";
+				echo 'var sound_off = playerInstance_' . intval( $this_video ) . ".getMute();\n";
 				echo "if(sound_off) {\n";
-					echo 'playerInstance_' . esc_attr( $this_video ) . ".setVolume(0);\n";
+					echo 'playerInstance_' . intval( $this_video ) . ".setVolume(0);\n";
 				echo "}\n";
 			echo "})\n";
 

@@ -56,7 +56,7 @@
 	echo '<tr class="share-options">';
 	echo '<th scope="row">' . esc_html( __( 'Heading', 'jwppp' ) ) . '</th>';
 	echo '<td>';
-	echo '<input type="text" class="regular-text" id="share-heading" name="share-heading" placeholder="' . esc_html( __( 'Share Video', 'jwppp' ) ) . '" value="' . esc_html( $share_heading ) . '" />';
+	echo '<input type="text" class="regular-text" id="share-heading" name="share-heading" placeholder="' . esc_attr( __( 'Share Video', 'jwppp' ) ) . '" value="' . esc_html( $share_heading ) . '" />';
 	echo '<p class="description">' . wp_kses( __( 'Add a custom heading, default is <strong>Share Video</strong>', 'jwppp' ), $allowed_tags ) . '</p>';
 	echo '</td>';
 	echo '</tr>';
@@ -78,7 +78,7 @@
 	wp_nonce_field( 'jwppp-nonce-share', 'hidden-nonce-share' );
 
 	echo '<input type="hidden" name="share-sent" value="1" />';
-	echo '<input class="button button-primary" type="submit" id="submit" value="' . esc_html( __( 'Save options', 'jwppp' ) ) . '" />';
+	echo '<input class="button button-primary" type="submit" id="submit" value="' . esc_attr( __( 'Save options', 'jwppp' ) ) . '" />';
 	echo '</form>';
 	?>
 </div>

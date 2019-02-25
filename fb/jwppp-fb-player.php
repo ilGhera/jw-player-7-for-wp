@@ -14,17 +14,22 @@ function jwppp_fb_player() {
 		$player_url = isset( $_GET['player_url'] ) ? esc_url_raw( $_GET['player_url'] ) : '';
 		$mediaID = isset( $_GET['mediaID'] ) 	   ? sanitize_text_field( $_GET['mediaID'] ) : '';
 		$mediaURL = isset( $_GET['mediaURL'] ) 	   ? esc_url_raw( $_GET['mediaURL'] ) : '';
-
+		$license = null;
 		$file = null;
+		
 		if ( $mediaID ) {
+
 			$file = 'https://cdn.jwplayer.com/v2/media/' . $mediaID;
 			$image = 'https://content.jwplatform.com/thumbs/' . $mediaID . '-1920.jpg';
+
 		} elseif ( $mediaURL ) {
+			
 			$file = $mediaURL;
 			$image = isset( $_GET['image'] ) ? esc_url_raw( $_GET['image'] ) : '';
+		
 		}
 
-		$unique = Rand( 0, 1000000 );
+		$unique = wp_rand( 0, 1000000 );
 		$div = 'jwplayer_unilad_' . $unique;
 
 		if ( $file && ( $player || $player_url ) ) {
@@ -33,10 +38,12 @@ function jwppp_fb_player() {
 					if ( $player ) {
 						echo "<script src=\"https://content.jwplatform.com/libraries/" . esc_html( $player ) . ".js\"></script>";
 					} else {
+						$license = get_option( 'jwppp-licence' );
 						echo "<script src=\"" . esc_url( $player_url ) . "\"></script>";
 					}
 					echo "<div id=\"" . esc_attr( $div ) . "\"></div>";
 					echo '<script type="text/JavaScript">';
+						echo $license ? "jwplayer.key = " . wp_json_encode( $license ) . "\n," : "";
 						echo "playerInstance = jwplayer(" . wp_json_encode( $div ) . ");";
 						echo 'playerInstance.setup({ ';
 						if ( $mediaID ) {

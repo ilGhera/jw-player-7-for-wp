@@ -19,16 +19,13 @@ function jwppp_save_single_video_data( $post_id ) {
 
 	if ( empty( $jwppp_videos ) ) {
 		$jwppp_videos = array(
-			array(
-				'meta_key' => '_jwppp-video-url-1',
-				'meta_value' => 1,
-			),
+				'_jwppp-video-url-1' => 1,
 		);
 	}
 
-	foreach ( $jwppp_videos as $jwppp_video ) {
+	foreach ( $jwppp_videos as $key => $value ) {
 
-		$jwppp_number = explode( '_jwppp-video-url-', $jwppp_video['meta_key'] );
+		$jwppp_number = explode( '_jwppp-video-url-', $key );
 		$number = $jwppp_number[1];
 
 		if ( ! isset( $_POST[ 'hidden-meta-box-nonce-' . $number ] ) ) {

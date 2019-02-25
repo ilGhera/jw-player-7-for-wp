@@ -116,10 +116,10 @@ function skin_customization_by_version_callback() {
 		$version = isset( $_POST['version'] ) ? sanitize_text_field( wp_unslash( $_POST['version'] ) ) : '';
 		if ( $version ) {
 			if ( $version < 8 ) {
-				include( plugin_dir_path( __FILE__ ) . 'skin/jwppp-admin-skin-7.php' );
+				include( JWPPP_ADMIN . 'skin/jwppp-admin-skin-7.php' );
 				update_option( 'jwppp-player-version', 7 );
 			} else {
-				include( plugin_dir_path( __FILE__ ) . 'skin/jwppp-admin-skin-8.php' );
+				include( JWPPP_ADMIN . 'skin/jwppp-admin-skin-8.php' );
 				update_option( 'jwppp-player-version', 8 );
 			}
 		}
@@ -205,14 +205,14 @@ function jwppp_ads_tag( $n, $tag = '' ) {
 		class="regular-text" 
 		id="jwppp-ads-tag" 
 		name="jwppp-ads-tag-<?php echo esc_attr( $n ); ?>" 
-		placeholder="<?php echo esc_html_e( 'Add the url of your XML file.', 'jwppp' ); ?>" 
+		placeholder="<?php echo esc_attr_e( 'Add the url of your XML file.', 'jwppp' ); ?>" 
 		value="<?php echo esc_url( $ad_url ); ?>" />
 
 		<input type="text" 
 		id="jwppp-ads-tag-label" 
 		name="jwppp-ads-tag-label<?php echo esc_attr( $n ); ?>" 
-		placeholder="<?php echo esc_html_e( 'Add a label for this tag', 'jwppp' ); ?>" 
-		value="<?php echo esc_html( $ad_label ); ?>" />
+		placeholder="<?php echo esc_attr_e( 'Add a label for this tag', 'jwppp' ); ?>" 
+		value="<?php echo esc_attr( $ad_label ); ?>" />
 
 		<?php if ( 1 === $n ) { ?>
 			<div class="add-tag-container">
@@ -343,7 +343,7 @@ function jwppp_options() {
 			echo '<th scope="row">' . esc_html( __( 'JWP Licence Key', 'jwppp' ) );
 			echo '<a href="https://www.ilghera.com/support/topic/jw-player-self-hosted-setup/" title="More informations" target="_blank"><img class="question-mark" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a></th>';
 			echo '<td>';
-			echo '<input type="text" class="regular-text" id="jwppp-licence" name="jwppp-licence" placeholder="Only for self-hosted players" value="' . esc_html( $licence ) . '" />';
+			echo '<input type="text" class="regular-text" id="jwppp-licence" name="jwppp-licence" placeholder="Only for self-hosted players" value="' . esc_attr( $licence ) . '" />';
 			echo '<p class="description">' . esc_html( __( 'For Self hosted player, add your JW Player license key.', 'jwppp' ) ) . '</p>';
 			echo '</td>';
 			echo '</tr>';
@@ -368,8 +368,8 @@ function jwppp_options() {
 			echo '<tr>';
 			echo '<th scope="row">' . esc_html( __( 'API Credentials', 'jwppp' ) );
 			echo '<td>';
-			echo '<input type="text" class="regular-text" id="jwppp-api-key" name="jwppp-api-key" placeholder="' . esc_html( __( 'Add your API Key', 'jwppp' ) ) . '" value="' . esc_html( $api_key ) . '" /><br>';
-			echo '<input type="text" class="regular-text" id="jwppp-api-secret" name="jwppp-api-secret" placeholder="' . esc_html( __( 'Add your API Secret', 'jwppp' ) ) . '" value="' . esc_html( $api_secret ) . '" />';
+			echo '<input type="text" class="regular-text" id="jwppp-api-key" name="jwppp-api-key" placeholder="' . esc_attr( __( 'Add your API Key', 'jwppp' ) ) . '" value="' . esc_attr( $api_key ) . '" /><br>';
+			echo '<input type="text" class="regular-text" id="jwppp-api-secret" name="jwppp-api-secret" placeholder="' . esc_attr( __( 'Add your API Secret', 'jwppp' ) ) . '" value="' . esc_attr( $api_secret ) . '" />';
 			echo '<p class="description">' . esc_html( __( 'API Key and Secret', 'jwppp' ) ) . '</p>';
 
 			/*Api class instance*/
@@ -393,7 +393,7 @@ function jwppp_options() {
 
 		foreach ( $jwppp_get_types as $type ) {
 
-			if ( ! in_array( $type, $exclude ) ) {
+			if ( ! in_array( $type, $exclude, true ) ) {
 
 				$var_type = sanitize_text_field( get_option( 'jwppp-type-' . $type ) );
 
@@ -403,7 +403,7 @@ function jwppp_options() {
 					update_option( 'jwppp-type-' . $type, $var_type );
 
 				}
-				echo '<input type="checkbox" name="' . esc_html( $type ) . '" id="' . esc_html( $type ) . '" value="1"';
+				echo '<input type="checkbox" name="' . esc_attr( $type ) . '" id="' . esc_attr( $type ) . '" value="1"';
 				echo ( '1' === $var_type ) ? 'checked="checked"' : '';
 				echo ' /><span class="jwppp-type">' . esc_html( ucfirst( $type ) ) . '</span><br>';
 			}
@@ -456,7 +456,7 @@ function jwppp_options() {
 			echo '<tr>';
 			echo '<th scope="row">' . esc_html( __( 'Video Loading Message', 'jwppp' ) ) . '</th>';
 			echo '<td>';
-			echo '<textarea cols="40" rows="2" id="jwppp-text" name="jwppp-text" placeholder="' . esc_html( __( 'Loading the player...', 'jwppp' ) ) . '">' . esc_html( $jwppp_text ) . '</textarea>';
+			echo '<textarea cols="40" rows="2" id="jwppp-text" name="jwppp-text" placeholder="' . esc_attr( __( 'Loading the player...', 'jwppp' ) ) . '">' . esc_html( $jwppp_text ) . '</textarea>';
 			echo '<p class="description">' . esc_html( __( 'Video loading message.', 'jwppp' ) ) . '<br>';
 			echo '</td>';
 			echo '</tr>';
@@ -533,11 +533,11 @@ function jwppp_options() {
 			echo '<th scope="row">' . esc_html( __( 'Fixed measures', 'jwppp' ) ) . '</th>';
 			echo '<td>';
 			echo '<input type="number" min="1" step="1" class="small-text" id="jwppp-player-width" name="jwppp-player-width" value="';
-			echo ( null !== $jwppp_player_width ) ? esc_html( wp_unslash( $jwppp_player_width ) ) : '640';
+			echo ( null != $jwppp_player_width ) ? esc_attr( wp_unslash( $jwppp_player_width ) ) : '640';
 			echo '" />';
 			echo ' x ';
 			echo '<input type="number" min="1" step="1" class="small-text" id="jwppp-player-height" name="jwppp-player-height" value="';
-			echo ( null !== $jwppp_player_height ) ? esc_html( wp_unslash( $jwppp_player_height ) ) : '360';
+			echo ( null != $jwppp_player_height ) ? esc_attr( wp_unslash( $jwppp_player_height ) ) : '360';
 			echo '" />';
 			echo '<p class="description"></p>';
 			echo '</td>';
@@ -554,7 +554,7 @@ function jwppp_options() {
 			echo '<th scope="row">' . esc_html( __( 'Player width', 'jwppp' ) ) . '</th>';
 			echo '<td>';
 			echo '<input type="number" min="10" step="5" class="small-text" id="jwppp-responsive-width" name="jwppp-responsive-width" value="';
-			echo ( null !== $jwppp_responsive_width ) ? esc_html( wp_unslash( $jwppp_responsive_width ) ) : '100';
+			echo ( null != $jwppp_responsive_width ) ? esc_attr( wp_unslash( $jwppp_responsive_width ) ) : '100';
 			echo '" /> %';
 			echo '<p class="description">' . esc_html( __( 'Player width', 'jwppp' ) ) . '</p>';
 			echo '</td>';
@@ -596,7 +596,7 @@ function jwppp_options() {
 			echo '<th scope="row">' . esc_html( __( 'Logo Image', 'jwppp' ) ) . '</th>';
 			echo '<td>';
 			echo '<input type="text" class="regular-text" id="jwppp-logo" name="jwppp-logo" ';
-			echo 'placeholder="' . esc_html( __( 'Image url', 'jwppp' ) ) . '" value="' . esc_html( $jwppp_logo ) . '" />';
+			echo 'placeholder="' . esc_attr( __( 'Image url', 'jwppp' ) ) . '" value="' . esc_attr( $jwppp_logo ) . '" />';
 			echo '<p class="description">' . esc_html( __( 'Custom logo image URL.', 'jwppp' ) ) . '<br>';
 			echo '</td>';
 			echo '</tr>';
@@ -647,7 +647,7 @@ function jwppp_options() {
 			echo '<th scope="row">' . esc_html( __( 'Logo Link', 'jwppp' ) ) . '</th>';
 			echo '<td>';
 			echo '<input type="text" class="regular-text" id="jwppp-logo-link" name="jwppp-logo-link" ';
-			echo 'placeholder="' . esc_html( __( 'Link url', 'jwppp' ) ) . '" value="' . esc_url( $jwppp_logo_link ) . '" />';
+			echo 'placeholder="' . esc_attr( __( 'Link url', 'jwppp' ) ) . '" value="' . esc_attr( $jwppp_logo_link ) . '" />';
 			echo '<p class="description">' . esc_html( __( 'Logo click-through URL.', 'jwppp' ) ) . '<br>';
 			echo '</td>';
 			echo '</tr>';
@@ -663,7 +663,7 @@ function jwppp_options() {
 			echo '<th scope="row">' . esc_html( __( 'User Prompt', 'jwppp' ) ) . '</th>';
 			echo '<td>';
 			echo '<input type="text" class="regular-text" id="jwppp-next-up" name="jwppp-next-up" ';
-			echo 'placeholder="' . esc_html( __( 'Next Up', 'jwppp' ) ) . '" value="' . esc_html( $jwppp_next_up ) . '" />';
+			echo 'placeholder="' . esc_attr( __( 'Next Up', 'jwppp' ) ) . '" value="' . esc_attr( $jwppp_next_up ) . '" />';
 			echo '<p class="description">' . esc_html( __( 'Text for user prompt', 'jwppp' ) ) . '</p>';
 			echo '</td>';
 			echo '</tr>';
@@ -679,7 +679,7 @@ function jwppp_options() {
 			echo '<th scope="row">' . esc_html( __( 'Playlist Tooltip', 'jwppp' ) ) . '</th>';
 			echo '<td>';
 			echo '<input type="text" class="regular-text" id="jwppp-playlist-tooltip" name="jwppp-playlist-tooltip" ';
-			echo 'placeholder="' . esc_html( __( 'Playlist', 'jwppp' ) ) . '" value="' . esc_html( $jwppp_playlist_tooltip ) . '" />';
+			echo 'placeholder="' . esc_attr( __( 'Playlist', 'jwppp' ) ) . '" value="' . esc_attr( $jwppp_playlist_tooltip ) . '" />';
 			echo '<p class="description">' . esc_html( __( 'Text for playlist tooltip.', 'jwppp' ) ) . '</p>';
 			echo '</td>';
 			echo '</tr>';
@@ -693,7 +693,7 @@ function jwppp_options() {
 			/*Add nonce to the form*/
 			wp_nonce_field( 'jwppp-nonce-options', 'hidden-nonce-options' );
 
-			echo '<input type="submit" class="button button-primary" value="' . esc_html( __( 'Save changes ', 'jwppp' ) ) . '" />';
+			echo '<input type="submit" class="button button-primary" value="' . esc_attr( __( 'Save changes ', 'jwppp' ) ) . '" />';
 			echo '</form>';
 		?>
 	 </div>
@@ -702,11 +702,11 @@ function jwppp_options() {
 	/*Skin customization based on the player in use*/
 	if ( get_option( 'jwppp-player-version' ) === '7' ) {
 
-		require( plugin_dir_path( __FILE__ ) . 'skin/jwppp-admin-skin-7-options.php' );
+		require( JWPPP_ADMIN . 'skin/jwppp-admin-skin-7-options.php' );
 
 	} elseif ( get_option( 'jwppp-player-version' ) === '8' ) {
 
-		require( plugin_dir_path( __FILE__ ) . 'skin/jwppp-admin-skin-8-options.php' );
+		require( JWPPP_ADMIN . 'skin/jwppp-admin-skin-8-options.php' );
 
 	}
 	?>
@@ -716,15 +716,15 @@ function jwppp_options() {
 	</div>
 	
 
-	<?php include( plugin_dir_path( __FILE__ ) . 'jwppp-admin-subtitles.php' ); ?>
+	<?php include( JWPPP_ADMIN . 'jwppp-admin-subtitles.php' ); ?>
 
-	<?php include( plugin_dir_path( __FILE__ ) . 'jwppp-admin-sharing.php' ); ?>
+	<?php include( JWPPP_ADMIN . 'jwppp-admin-sharing.php' ); ?>
 
-	<?php include( plugin_dir_path( __FILE__ ) . 'jwppp-admin-ads.php' ); ?>
+	<?php include( JWPPP_ADMIN . 'jwppp-admin-ads.php' ); ?>
 
-	<?php include( plugin_dir_path( __FILE__ ) . 'jwppp-admin-playlist-carousel.php' ); ?>
+	<?php include( JWPPP_ADMIN . 'jwppp-admin-playlist-carousel.php' ); ?>
 
-	<?php include( plugin_dir_path( __FILE__ ) . 'jwppp-admin-security.php' ); ?>
+	<?php include( JWPPP_ADMIN . 'jwppp-admin-security.php' ); ?>
 
 	</div><!-- wrap-left -->
 	<div class="wrap-right" style="float:left; width:30%; text-align:center; padding-top:3rem;">

@@ -34,13 +34,33 @@ class JWPPP_Dashboard_Api {
 
 	public function call( $url ) {
 		global $wp_version;
-		$output = wp_remote_get(
-			$url,
-			array(
-				'timeout' => 5,
-				'user-agent'  => 'WordPress/' . $wp_version . ' JWPlayerForWordPressVIP/' . JWPPP_VERSION . ' PHP/' . phpversion(),
-			)
-		);
+
+		$user_agent = 'WordPress/' . $wp_version . ' JWPlayerForWordPressVIP/' . JWPPP_VERSION . ' PHP/' . phpversion();
+
+		if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
+			
+			$output = vip_safe_wp_remote_get(
+				$url,
+				'',
+				3,
+				3,
+				20,
+				array(
+					'user-agent'  => $user_agent,
+				)
+			);
+
+		} else {
+	
+			$output = wp_remote_get( // @codingStandardsIgnoreLine -- for non-VIP environments
+				$url,
+				array(
+					'timeout' => 3,
+					'user-agent'  => $user_agent,
+				)
+			);
+
+		}
 
 		if ( is_array( $output ) ) {
 			if ( 200 !== $output['response']['code'] ) {
