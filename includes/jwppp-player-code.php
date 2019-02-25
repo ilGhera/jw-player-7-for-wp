@@ -95,7 +95,6 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 				$jwppp_single_embed = $jwppp_embed_video;
 			}
 
-			$jwppp_download_video = get_post_meta( $p_id, '_jwppp-download-video-' . $number, true );
 			$jwppp_add_chapters = get_post_meta( $p_id, '_jwppp-add-chapters-' . $number, true );
 			$jwppp_chapters_subtitles = get_post_meta( $p_id, '_jwppp-chapters-subtitles-' . $number, true );
 			$jwppp_chapters_number = get_post_meta( $p_id, '_jwppp-chapters-number-' . $number, true );
@@ -247,7 +246,6 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 						$jwppp_repeat = get_post_meta( $p_id, '_jwppp-repeat-' . $number, true );
 						$jwppp_single_embed = get_post_meta( $p_id, '_jwppp-single-embed-' . $number, true );
 						$jwppp_single_embed = $jwppp_single_embed ? $jwppp_single_embed : $jwppp_embed_video;
-						$jwppp_download_video = get_post_meta( $p_id, '_jwppp-download-video-' . $number, true );
 						$jwppp_add_chapters = get_post_meta( $p_id, '_jwppp-add-chapters-' . $number, true );
 						$jwppp_chapters_number = get_post_meta( $p_id, '_jwppp-chapters-number-' . $number, true );
 						$jwppp_chapters_subtitles = get_post_meta( $p_id, '_jwppp-chapters-subtitles-' . $number, true );
@@ -453,20 +451,6 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 			/*Check for a YouTube video*/
 			$is_yt = jwppp_search_yt( '', $number );
-
-			/*Download button*/
-			if ( $jwppp_download_video && ! $jwppp_new_playlist && ! $is_yt['yes'] ) {
-				echo 'playerInstance_' . intval( $this_video ) . ".addButton(\n";
-					echo "'" . esc_url( plugin_dir_url( __DIR__ ) ) . "images/download-icon.svg',\n";
-					echo "'Download Video',\n";
-					echo "function() {\n";
-						echo 'var file = playerInstance_' . intval( $this_video ) . ".getPlaylistItem()['file'];\n";
-						echo "var file_download = '" . home_url() . "?jwp-video-download=1&file=' + file;\n";
-						echo "window.location.href = file_download;\n";
-					echo "},\n";
-					echo "'download',\n";
-				echo ")\n";
-			}
 
 			if ( $is_yt['yes'] || '1' === $pl_mute ) {
 

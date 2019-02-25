@@ -210,12 +210,6 @@ function jwppp_save_single_video_data( $post_id ) {
 					update_post_meta( $post_id, '_jwppp-single-embed-' . $number, $jwppp_single_embed );
 				}
 
-				/*Download*/
-				if ( isset( $_POST[ 'download-video-hidden-' . $number ] ) ) {
-					$jwppp_download_video = isset( $_POST[ '_jwppp-download-video-' . $number ] ) ? sanitize_text_field( wp_unslash( $_POST[ '_jwppp-download-video-' . $number ] ) ) : 0;
-					update_post_meta( $post_id, '_jwppp-download-video-' . $number, $jwppp_download_video );
-				}
-
 				/*Chapters/ Subtitles option*/
 				$jwppp_add_chapters = null;
 				if ( isset( $_POST[ 'add-chapters-hidden-' . $number ] ) ) {

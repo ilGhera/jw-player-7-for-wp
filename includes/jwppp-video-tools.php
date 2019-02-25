@@ -31,7 +31,6 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 	$jwppp_mute                    = get_post_meta( $post_id, '_jwppp-mute-' . $number, true );
 	$jwppp_repeat                  = get_post_meta( $post_id, '_jwppp-repeat-' . $number, true );
 	$jwppp_share_video             = get_option( 'jwppp-active-share' );
-	$jwppp_download_video          = get_post_meta( $post_id, '_jwppp-download-video-' . $number, true );
 	$jwppp_embed_video             = get_option( 'jwppp-embed-video' );
 
 	$jwppp_single_embed = null;
@@ -254,20 +253,6 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 				echo '</p>';
 			echo '</div>';
 		}
-
-		/*Download video*/
-		echo '<div class="jwppp-single-option-' . esc_attr( $number ) . '">';
-			echo '<p>';
-			echo '<label for="_jwppp-download-video-' . esc_attr( $number ) . '">';
-			echo '<input type="checkbox" id="_jwppp-download-video-' . esc_attr( $number ) . '" name="_jwppp-download-video-' . esc_attr( $number ) . '" value="1"';
-			echo ( '1' === $jwppp_download_video ) ? ' checked="checked"' : '';
-			echo ' />';
-			echo '<strong>' . esc_html( __( 'Allow download', 'jwppp' ) ) . '</strong>';
-			echo '<a class="question-mark" title="' . esc_attr( __( 'Only with self-hosted videos and not with playlists.', 'jwppp' ) ) . '"><img class="question-mark" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a></th>';
-			echo '</label>';
-			echo '<input type="hidden" name="download-video-hidden-' . esc_attr( $number ) . '" value="1" />';
-			echo '</p>';
-		echo '</div>';
 
 		/*Chapters & subtitles*/
 		echo '<div class="jwppp-single-option-' . esc_attr( $number ) . '">';

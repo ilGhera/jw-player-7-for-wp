@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JW Player for Wordpress - Premium 1.5.0\n"
-"POT-Creation-Date: 2018-12-05 09:46+0100\n"
+"POT-Creation-Date: 2019-02-25 18:09+0100\n"
 "PO-Revision-Date: 2015-12-31 00:25+0100\n"
 "Last-Translator: ilGhera <info@ilghera.com>\n"
 "Language-Team: ilGhera <info@ilghera.com>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.1.1\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;__\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -59,39 +59,38 @@ msgid ""
 "\">here</a>"
 msgstr ""
 
-#: admin/jwppp-admin-ads.php:159
+#: admin/jwppp-admin-ads.php:164
 msgid "Ad Tags"
 msgstr ""
 
-#: admin/jwppp-admin-ads.php:177
+#: admin/jwppp-admin-ads.php:182
 msgid "Ad tag URL | Ad Tag Name"
 msgstr ""
 
-#: admin/jwppp-admin-ads.php:183
+#: admin/jwppp-admin-ads.php:188
 msgid "Ad Skipping"
 msgstr ""
 
-#: admin/jwppp-admin-ads.php:186
+#: admin/jwppp-admin-ads.php:191
 msgid "Total seconds viewers must watch an ad before being allowed to skip"
 msgstr ""
 
-#: admin/jwppp-admin-ads.php:192
+#: admin/jwppp-admin-ads.php:197
 msgid "Player Bidding"
 msgstr ""
 
-#: admin/jwppp-admin-ads.php:198
+#: admin/jwppp-admin-ads.php:203
 msgid "Enable Video Player Bidding"
 msgstr ""
 
-#: admin/jwppp-admin-ads.php:201
+#: admin/jwppp-admin-ads.php:205
 msgid ""
 "All the benefits of Header Bidding are now built directly into your JW "
 "Player. With a simple one-click integration, you get access to quality "
-"demand at scale with reduced latency. \n"
-"\t\tSpotX is the leading video ad serving platform and gives publishers "
-"control, transparency and insights to maximize revenue.<br>\n"
-"<a href=\"https://support.jwplayer.com/articles/how-to-setup-video-player-"
-"bidding\" target=\"_blank\">Contact SpotX to get started</a>"
+"demand at scale with reduced latency. SpotX is the leading video ad serving "
+"platform and gives publishers control, transparency and insights to maximize "
+"revenue.<br><a href=\"https://support.jwplayer.com/articles/how-to-setup-"
+"video-player-bidding\" target=\"_blank\">Contact SpotX to get started</a>"
 msgstr ""
 
 #: admin/jwppp-admin-ads.php:215
@@ -134,72 +133,72 @@ msgstr ""
 msgid "Set floor price"
 msgstr ""
 
-#: admin/jwppp-admin-ads.php:262 admin/jwppp-admin-security.php:84
-#: admin/jwppp-admin-sharing.php:78
+#: admin/jwppp-admin-ads.php:265 admin/jwppp-admin-security.php:84
+#: admin/jwppp-admin-sharing.php:81
 msgid "Save options"
 msgstr ""
 
-#: admin/jwppp-admin-playlist-carousel.php:37
+#: admin/jwppp-admin-playlist-carousel.php:36
 msgid "Title"
 msgstr ""
 
-#: admin/jwppp-admin-playlist-carousel.php:39
+#: admin/jwppp-admin-playlist-carousel.php:38
 msgid "More videos"
 msgstr ""
 
-#: admin/jwppp-admin-playlist-carousel.php:40
+#: admin/jwppp-admin-playlist-carousel.php:39
 msgid "Add a title for the playlist widget"
 msgstr ""
 
-#: admin/jwppp-admin-playlist-carousel.php:44
+#: admin/jwppp-admin-playlist-carousel.php:43
 msgid "Text color"
 msgstr ""
 
-#: admin/jwppp-admin-playlist-carousel.php:47
+#: admin/jwppp-admin-playlist-carousel.php:46
 msgid "Set the text color for the playlist widget"
 msgstr ""
 
-#: admin/jwppp-admin-playlist-carousel.php:52
+#: admin/jwppp-admin-playlist-carousel.php:51
 msgid "Background color"
 msgstr ""
 
-#: admin/jwppp-admin-playlist-carousel.php:55
+#: admin/jwppp-admin-playlist-carousel.php:54
 msgid "Set the background color for the playlist widget"
 msgstr ""
 
-#: admin/jwppp-admin-playlist-carousel.php:60
+#: admin/jwppp-admin-playlist-carousel.php:59
 msgid "Icon color"
 msgstr ""
 
-#: admin/jwppp-admin-playlist-carousel.php:63
+#: admin/jwppp-admin-playlist-carousel.php:62
 msgid "Set the icon color for the playlist widget"
 msgstr ""
 
-#: admin/jwppp-admin-playlist-carousel.php:68
-#: admin/jwppp-admin-subtitles.php:116 admin/skin/jwppp-admin-skin-7.php:103
-#: admin/skin/jwppp-admin-skin-8.php:107
+#: admin/jwppp-admin-playlist-carousel.php:71
+#: admin/jwppp-admin-subtitles.php:120 admin/skin/jwppp-admin-skin-7.php:107
+#: admin/skin/jwppp-admin-skin-8.php:111
 msgid "Save chages"
 msgstr ""
 
-#: admin/jwppp-admin-security.php:52
+#: admin/jwppp-admin-security.php:49
 msgid "Secure Video URLs"
 msgstr ""
 
-#: admin/jwppp-admin-security.php:57 admin/jwppp-admin-security.php:68
+#: admin/jwppp-admin-security.php:54 admin/jwppp-admin-security.php:65
 msgid ""
 "Must match setting on JW Platform Account > Properties > (Choose Property) "
 "settings"
 msgstr ""
 
-#: admin/jwppp-admin-security.php:63
+#: admin/jwppp-admin-security.php:60
 msgid "Secure Player Embeds"
 msgstr ""
 
-#: admin/jwppp-admin-security.php:74
+#: admin/jwppp-admin-security.php:71
 msgid "Set timeout"
 msgstr ""
 
-#: admin/jwppp-admin-security.php:77
+#: admin/jwppp-admin-security.php:74
 msgid "Timeout in minutes"
 msgstr ""
 
@@ -215,8 +214,8 @@ msgstr ""
 msgid "Heading"
 msgstr ""
 
-#: admin/jwppp-admin-sharing.php:59 includes/jwppp-player-code.php:327
-#: includes/jwppp-player-code.php:389
+#: admin/jwppp-admin-sharing.php:59 includes/jwppp-player-code.php:357
+#: includes/jwppp-player-code.php:418
 msgid "Share Video"
 msgstr ""
 
@@ -286,241 +285,203 @@ msgstr ""
 msgid "Background Opacity"
 msgstr ""
 
-#: admin/jwppp-admin.php:240
-msgid "Add the url of your XML file."
-msgstr ""
-
-#: admin/jwppp-admin.php:241
-msgid "Add a label for this tag"
-msgstr ""
-
-#: admin/jwppp-admin.php:297
+#: admin/jwppp-admin.php:274
 msgid "It looks like you do not have sufficient permissions to view this page."
 msgstr ""
 
-#: admin/jwppp-admin.php:308 includes/jwppp-functions.php:35
+#: admin/jwppp-admin.php:285 includes/jwppp-functions.php:35
 msgid "JW Player for Wordpress - VIP"
 msgstr ""
 
-#: admin/jwppp-admin.php:315
-msgid "Settings"
-msgstr ""
-
-#: admin/jwppp-admin.php:317 admin/skin/jwppp-admin-skin-7.php:18
-msgid "Skin"
-msgstr ""
-
-#: admin/jwppp-admin.php:318
-msgid "Subtitles"
-msgstr ""
-
-#: admin/jwppp-admin.php:319
-msgid "Sharing"
-msgstr ""
-
-#: admin/jwppp-admin.php:321
-msgid "Playlist carousel"
-msgstr ""
-
-#: admin/jwppp-admin.php:322
-msgid "Security"
-msgstr ""
-
-#: admin/jwppp-admin.php:324
-msgid "Ads"
-msgstr ""
-
-#: admin/jwppp-admin.php:346
+#: admin/jwppp-admin.php:323
 msgid "Player library URL"
 msgstr ""
 
-#: admin/jwppp-admin.php:350
+#: admin/jwppp-admin.php:327
 msgid "Cloud-hosted or self-hosted player library URL"
 msgstr ""
 
-#: admin/jwppp-admin.php:367
+#: admin/jwppp-admin.php:344
 msgid "JWP Licence Key"
 msgstr ""
 
-#: admin/jwppp-admin.php:371
-msgid "Self hosted player? Please, add your JW Player license key."
+#: admin/jwppp-admin.php:348
+msgid "For Self hosted player, add your JW Player license key."
 msgstr ""
 
-#: admin/jwppp-admin.php:393
+#: admin/jwppp-admin.php:370
 msgid "API Credentials"
 msgstr ""
 
-#: admin/jwppp-admin.php:395
+#: admin/jwppp-admin.php:372
 msgid "Add your API Key"
 msgstr ""
 
-#: admin/jwppp-admin.php:396
+#: admin/jwppp-admin.php:373
 msgid "Add your API Secret"
 msgstr ""
 
-#: admin/jwppp-admin.php:397
+#: admin/jwppp-admin.php:374
 msgid "API Key and Secret"
 msgstr ""
 
-#: admin/jwppp-admin.php:415
+#: admin/jwppp-admin.php:392
 msgid "Post types"
 msgstr ""
 
-#: admin/jwppp-admin.php:437
+#: admin/jwppp-admin.php:413
 msgid "Content types that use video"
 msgstr ""
 
-#: admin/jwppp-admin.php:448
+#: admin/jwppp-admin.php:424
 msgid "Video Player position"
 msgstr ""
 
-#: admin/jwppp-admin.php:453
+#: admin/jwppp-admin.php:429
 msgid "Before the content"
 msgstr ""
 
-#: admin/jwppp-admin.php:456
+#: admin/jwppp-admin.php:432
 msgid "After the content"
 msgstr ""
 
-#: admin/jwppp-admin.php:459
+#: admin/jwppp-admin.php:435
 msgid "Custom"
 msgstr ""
 
-#: admin/jwppp-admin.php:463
+#: admin/jwppp-admin.php:439
 msgid ""
 "Position of the video embed. Custom position requires use of shortcode "
 "<b>[jwp-video]</b> provided by the plugin."
 msgstr ""
 
-#: admin/jwppp-admin.php:482
+#: admin/jwppp-admin.php:458
 msgid "Video Loading Message"
 msgstr ""
 
-#: admin/jwppp-admin.php:484 includes/jwppp-functions.php:584
-#: includes/jwppp-player-code.php:114 includes/jwppp-player-code.php:180
+#: admin/jwppp-admin.php:460 includes/jwppp-functions.php:546
+#: includes/jwppp-player-code.php:143 includes/jwppp-player-code.php:210
 msgid "Loading the player..."
 msgstr ""
 
-#: admin/jwppp-admin.php:485
+#: admin/jwppp-admin.php:461
 msgid "Video loading message."
 msgstr ""
 
-#: admin/jwppp-admin.php:498
+#: admin/jwppp-admin.php:473
 msgid "Default poster image"
 msgstr ""
 
-#: admin/jwppp-admin.php:501
+#: admin/jwppp-admin.php:476
 msgid "Default poster image URL."
 msgstr ""
 
-#: admin/jwppp-admin.php:514
+#: admin/jwppp-admin.php:488
 msgid "Post thumbnail"
 msgstr ""
 
-#: admin/jwppp-admin.php:518
+#: admin/jwppp-admin.php:492
 msgid "Use the post thumbnail"
 msgstr ""
 
-#: admin/jwppp-admin.php:519
+#: admin/jwppp-admin.php:493
 msgid "Use post thumbnail as poster image."
 msgstr ""
 
-#: admin/jwppp-admin.php:532
+#: admin/jwppp-admin.php:505
 msgid "Player Embed Type"
 msgstr ""
 
-#: admin/jwppp-admin.php:537
+#: admin/jwppp-admin.php:510
 msgid "Fixed"
 msgstr ""
 
-#: admin/jwppp-admin.php:540
+#: admin/jwppp-admin.php:513
 msgid "Responsive"
 msgstr ""
 
-#: admin/jwppp-admin.php:542
+#: admin/jwppp-admin.php:515
 msgid "Player embed type."
 msgstr ""
 
-#: admin/jwppp-admin.php:562
+#: admin/jwppp-admin.php:534
 msgid "Fixed measures"
 msgstr ""
 
-#: admin/jwppp-admin.php:584 admin/jwppp-admin.php:589
+#: admin/jwppp-admin.php:555 admin/jwppp-admin.php:560
 msgid "Player width"
 msgstr ""
 
-#: admin/jwppp-admin.php:602
+#: admin/jwppp-admin.php:572
 msgid "Player Aspect Ratio"
 msgstr ""
 
-#: admin/jwppp-admin.php:615
+#: admin/jwppp-admin.php:585
 msgid "Player aspect ratio"
 msgstr ""
 
-#: admin/jwppp-admin.php:628
+#: admin/jwppp-admin.php:597
 msgid "Logo Image"
 msgstr ""
 
-#: admin/jwppp-admin.php:631
+#: admin/jwppp-admin.php:600
 msgid "Image url"
 msgstr ""
 
-#: admin/jwppp-admin.php:632
+#: admin/jwppp-admin.php:601
 msgid "Custom logo image URL."
 msgstr ""
 
-#: admin/jwppp-admin.php:650
+#: admin/jwppp-admin.php:618
 msgid "Logo Position"
 msgstr ""
 
-#: admin/jwppp-admin.php:668
+#: admin/jwppp-admin.php:636
 msgid "Logo position."
 msgstr ""
 
-#: admin/jwppp-admin.php:681
+#: admin/jwppp-admin.php:648
 msgid "Logo Link"
 msgstr ""
 
-#: admin/jwppp-admin.php:684
+#: admin/jwppp-admin.php:651
 msgid "Link url"
 msgstr ""
 
-#: admin/jwppp-admin.php:685
+#: admin/jwppp-admin.php:652
 msgid "Logo click-through URL."
 msgstr ""
 
-#: admin/jwppp-admin.php:698
+#: admin/jwppp-admin.php:664
 msgid "User Prompt"
 msgstr ""
 
-#: admin/jwppp-admin.php:701
+#: admin/jwppp-admin.php:667
 msgid "Next Up"
 msgstr ""
 
-#: admin/jwppp-admin.php:702
+#: admin/jwppp-admin.php:668
 msgid "Text for user prompt"
 msgstr ""
 
-#: admin/jwppp-admin.php:715
+#: admin/jwppp-admin.php:680
 msgid "Playlist Tooltip"
 msgstr ""
 
-#: admin/jwppp-admin.php:718
+#: admin/jwppp-admin.php:683
 msgid "Playlist"
 msgstr ""
 
-#: admin/jwppp-admin.php:719
+#: admin/jwppp-admin.php:684
 msgid "Text for playlist tooltip."
 msgstr ""
 
-#: admin/jwppp-admin.php:732
+#: admin/jwppp-admin.php:697
 msgid "Save changes "
 msgstr ""
 
-#: admin/jwppp-admin.php:751
-msgid ""
-"Skin customization options depends from the JW Player version in use."
-"<br>Please add first the <b><i>Player library URL</i></b>"
+#: admin/skin/jwppp-admin-skin-7.php:18
+msgid "Skin"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-7.php:53
@@ -665,158 +626,158 @@ msgstr ""
 msgid "Background color of tooltips."
 msgstr ""
 
-#: includes/jwppp-functions.php:105
+#: includes/jwppp-functions.php:117
 msgid ""
 "You need to set the VIDEO PLAYER POSITION option to CUSTOM in order to use "
 "this shortcode."
 msgstr ""
 
-#: includes/jwppp-functions.php:389 includes/jwppp-functions.php:399
+#: includes/jwppp-functions.php:340 includes/jwppp-functions.php:350
 msgid "Video categories"
 msgstr ""
 
-#: includes/jwppp-functions.php:390
+#: includes/jwppp-functions.php:341
 msgid "Video category"
 msgstr ""
 
-#: includes/jwppp-functions.php:391
+#: includes/jwppp-functions.php:342
 msgid "Search video categories"
 msgstr ""
 
-#: includes/jwppp-functions.php:392
+#: includes/jwppp-functions.php:343
 msgid "All video categories"
 msgstr ""
 
-#: includes/jwppp-functions.php:393
+#: includes/jwppp-functions.php:344
 msgid "Parent video category"
 msgstr ""
 
-#: includes/jwppp-functions.php:394
+#: includes/jwppp-functions.php:345
 msgid "Parent video category:"
 msgstr ""
 
-#: includes/jwppp-functions.php:395
+#: includes/jwppp-functions.php:346
 msgid "Edit video category"
 msgstr ""
 
-#: includes/jwppp-functions.php:396
+#: includes/jwppp-functions.php:347
 msgid "Update video category"
 msgstr ""
 
-#: includes/jwppp-functions.php:397
+#: includes/jwppp-functions.php:348
 msgid "Add New video category"
 msgstr ""
 
-#: includes/jwppp-functions.php:398
+#: includes/jwppp-functions.php:349
 msgid "New video category Name"
 msgstr ""
 
-#: includes/jwppp-functions.php:772
+#: includes/jwppp-functions.php:750
 msgid "clear"
 msgstr ""
 
-#: includes/jwppp-functions.php:801
+#: includes/jwppp-functions.php:776
 msgid "Clear"
 msgstr ""
 
-#: includes/jwppp-functions.php:818
+#: includes/jwppp-functions.php:791
 msgid "Invalid API Credentials."
 msgstr ""
 
-#: includes/jwppp-functions.php:824
+#: includes/jwppp-functions.php:796
 msgid "API Credentials are required for using this tool."
 msgstr ""
 
-#: includes/jwppp-functions.php:859
+#: includes/jwppp-functions.php:835
 msgid "Select Player"
 msgstr ""
 
-#: includes/jwppp-single-video-box.php:83
+#: includes/jwppp-single-video-box.php:85
 msgid "Choose"
 msgstr ""
 
-#: includes/jwppp-single-video-box.php:84
+#: includes/jwppp-single-video-box.php:86
 msgid "Add url"
 msgstr ""
 
-#: includes/jwppp-single-video-box.php:92
+#: includes/jwppp-single-video-box.php:94
 msgid "Select video/playlist or search by ID"
 msgstr ""
 
-#: includes/jwppp-single-video-box.php:117
-#: includes/jwppp-single-video-box.php:123
+#: includes/jwppp-single-video-box.php:119
+#: includes/jwppp-single-video-box.php:125
 msgid "Media URL"
 msgstr ""
 
-#: includes/jwppp-single-video-box.php:128 includes/jwppp-video-tools.php:85
+#: includes/jwppp-single-video-box.php:130 includes/jwppp-video-tools.php:83
 msgid "Label (HD, 720p, 360p)"
 msgstr ""
 
-#: includes/jwppp-single-video-box.php:139
+#: includes/jwppp-single-video-box.php:141
 msgid "Show options"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:64
+#: includes/jwppp-video-tools.php:62
 msgid "More sources"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:65
+#: includes/jwppp-video-tools.php:63
 msgid "Used for quality toggling and alternate sources."
 msgstr ""
 
-#: includes/jwppp-video-tools.php:84
+#: includes/jwppp-video-tools.php:82
 msgid "Source URL"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:96
+#: includes/jwppp-video-tools.php:93
 msgid "Video poster image"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:99
+#: includes/jwppp-video-tools.php:96
 msgid "Poster Image URL"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:107
+#: includes/jwppp-video-tools.php:103
 msgid "Video title"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:109
+#: includes/jwppp-video-tools.php:105
 msgid "Video Title"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:116
+#: includes/jwppp-video-tools.php:111
 msgid "Video description"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:118
+#: includes/jwppp-video-tools.php:113
 msgid "Video Description"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:125
+#: includes/jwppp-video-tools.php:119
 msgid "Select Ad Tag"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:138
+#: includes/jwppp-video-tools.php:141
 msgid "No ad tag"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:141
+#: includes/jwppp-video-tools.php:144
 msgid "No ad tags available"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:158
+#: includes/jwppp-video-tools.php:160
 msgid "Show a carousel with the playlist's video thumbnails."
 msgstr ""
 
-#: includes/jwppp-video-tools.php:172
+#: includes/jwppp-video-tools.php:173
 msgid "Force a media type"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:173
+#: includes/jwppp-video-tools.php:174
 msgid "Only required when a file extension is missing or not recognized"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:201
+#: includes/jwppp-video-tools.php:202
 msgid "Autostart on page load"
 msgstr ""
 
@@ -824,70 +785,62 @@ msgstr ""
 msgid "Mute"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:229
+#: includes/jwppp-video-tools.php:228
 msgid "Repeat"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:252
+#: includes/jwppp-video-tools.php:250
 msgid "Allow to embed this video"
 msgstr ""
 
 #: includes/jwppp-video-tools.php:266
-msgid "Allow download"
-msgstr ""
-
-#: includes/jwppp-video-tools.php:267
-msgid "Only with self-hosted videos and not with playlists."
-msgstr ""
-
-#: includes/jwppp-video-tools.php:282
 msgid "Add"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:282
+#: includes/jwppp-video-tools.php:268
 msgid "Add Chapters, Subtitles or Preview Thumbnails"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:328
+#: includes/jwppp-video-tools.php:315
 msgid "Subtitle"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:330
+#: includes/jwppp-video-tools.php:317
 msgid "Thumbnail url"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:332
+#: includes/jwppp-video-tools.php:319
 msgid "Chapter title"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:336
+#: includes/jwppp-video-tools.php:323
 msgid "Start"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:337
+#: includes/jwppp-video-tools.php:324
 msgid "End"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:338
+#: includes/jwppp-video-tools.php:325
 msgid "in seconds"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:346 includes/jwppp-video-tools.php:370
+#: includes/jwppp-video-tools.php:333 includes/jwppp-video-tools.php:357
 msgid "Default"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:347
+#: includes/jwppp-video-tools.php:334
 msgid "These subtitles will be activated by default"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:362
+#: includes/jwppp-video-tools.php:349
 msgid "Subtitles file url (VTT, SRT, DFXP)"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:363
+#: includes/jwppp-video-tools.php:350
 msgid "Label (EN, IT, FR )"
 msgstr ""
 
-#: includes/jwppp-video-tools.php:371
+#: includes/jwppp-video-tools.php:358
 msgid "These first subtitles will be activated by default"
 msgstr ""

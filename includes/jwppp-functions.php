@@ -178,7 +178,6 @@ function jwppp_db_delete_video( $post_id, $number ) {
 	delete_post_meta( $post_id, '_jwppp-playlist-carousel-' . $number );
 	delete_post_meta( $post_id, '_jwppp-mute-' . $number );
 	delete_post_meta( $post_id, '_jwppp-repeat-' . $number );
-	delete_post_meta( $post_id, '_jwppp-download-video-' . $number );
 	delete_post_meta( $post_id, '_jwppp-ads-tag-' . $number );
 	delete_post_meta( $post_id, '_jwppp-add-chapters-' . $number );
 	delete_post_meta( $post_id, '_jwppp-chapters-subtitles-' . $number );
