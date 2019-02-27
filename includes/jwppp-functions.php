@@ -101,7 +101,7 @@ function jwppp_single_video_box( $post_id, $number ) {
 
 	/*How to add the playlist*/
 	$plist_hide = true;
-	if ( '1' === $number && 'custom' === get_option( 'jwppp-position' ) && count( jwppp_get_post_videos( $post_id ) ) > 1 ) {
+	if ( 1 === $number && 'custom' === get_option( 'jwppp-position' ) && count( jwppp_get_post_videos( $post_id ) ) > 1 ) {
 		$plist_hide = false;
 	}
 
@@ -109,9 +109,9 @@ function jwppp_single_video_box( $post_id, $number ) {
 	$dashboard_player = is_dashboard_player();
 
 	/*Available only with self-hosted players*/
-	if ( '1' === $number && ! $dashboard_player ) {
+	if ( 1 === $number && ! $dashboard_player ) {
 		$output  = '<div class="playlist-how-to" style="position:relative;background:#2FBFB0;color:#fff;padding:0.5rem 1rem;';
-		$output .= ( $plist_hide ) ? 'display:none;">' : 'display:block">';
+		$output .= ( $plist_hide ) ? 'display:none;">' : 'display:block;">';
 		$output .= 'Add a playlist of your videos using this code: <code style="display:inline-block;color:#fff;background:none;">[jwp-video n="' . jwppp_videos_string( $post_id ) . '"]</code>';
 		if ( get_option( 'jwppp-position' ) !== 'custom' ) {
 			$output .= '<a class="attention-mark" title="' . __( 'You need to set the VIDEO PLAYER POSITION option to CUSTOM in order to use this shortcode.', 'jwppp' ) . '"><img class="attention-mark" src="' . plugin_dir_url( __DIR__ ) . 'images/attention-mark.png" /></a></th>';

@@ -14,7 +14,8 @@ var JWPPPSingleVideo = function( number, postId ) {
 		var ext = url.split( '.' ).pop();
 		var arr = [ 'xml', 'feed', 'php', 'rss' ];
 		var wrap = $( '.jwppp-' + number + ' .jwppp-input-wrap' );
-		var tot = $( '.jwppp-input-wrap:visible' ).length;
+		var tot = $( '.jwppp-input-wrap' ).length;
+
 		var plString;
 
 		/*Video toggles*/
