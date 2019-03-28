@@ -138,10 +138,10 @@ function jwppp_sh_player_option( $ar = '', $width = '', $height = '' ) {
 	/*Logo*/
 	if ( null !== $jwppp_logo ) {
 		echo "logo: {\n";
-		echo "file: " . wp_json_encode( $jwppp_logo ) . ",\n";
-		echo "position: " . wp_json_encode( $jwppp_logo_vertical ) . '-' . wp_json_encode( $jwppp_logo_horizontal ) . ",\n";
+		echo "file: " . wp_json_encode( $jwppp_logo, JSON_UNESCAPED_SLASHES ) . ",\n";
+		echo "position: '" . trim( wp_json_encode( $jwppp_logo_vertical ), '"' ) . '-' . trim( wp_json_encode( $jwppp_logo_horizontal ), '"' ) . "',\n";
 		if ( null !== $jwppp_logo_link ) {
-			echo "link: " . wp_json_encode( $jwppp_logo_link ) . "\n";
+			echo "link: " . wp_json_encode( $jwppp_logo_link, JSON_UNESCAPED_SLASHES ) . "\n";
 		}
 		echo "},\n";
 	}

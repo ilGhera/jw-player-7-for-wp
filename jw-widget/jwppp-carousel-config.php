@@ -25,7 +25,7 @@ function jwppp_carousel_config() {
 			echo '"widgets": [';
 			  echo '{';
 				echo '"widgetDivId": ' . wp_json_encode( 'jwppp-playlist-carousel-' . $player_id ) . ',';
-				echo '"playlist": "' . esc_url( $playlist_url ) . '",';
+				echo '"playlist": ' . wp_json_encode( $playlist_url, JSON_UNESCAPED_SLASHES ) . ',';
 				echo '"videoPlayerId": ' . wp_json_encode( 'jwppp-video-' . $player_id ) . ',';
 				echo '"header": ' . wp_json_encode( $title ) . ',';
 				echo '"textColor": ' . wp_json_encode( $text_color ) . ',';

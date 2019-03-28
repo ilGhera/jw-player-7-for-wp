@@ -551,13 +551,13 @@ function jwppp_simple_player_code( $media_id ) {
 		$security_urls = get_option( 'jwppp-secure-video-urls' );
 
 		echo "<script type='text/javascript'>\n";
-			echo "var playerInstance_" . esc_html( $media_id ) . " = jwplayer(" . wp_json_encode( 'jwppp-video-' . $media_id ) . ");\n";
-			echo "playerInstance_" . esc_html( $media_id ) . ".setup({\n";
+			echo "var playerInstance_" . trim( wp_json_encode( $media_id ), '"' ) . " = jwplayer(" . wp_json_encode( 'jwppp-video-' . $media_id ) . ");\n";
+			echo "playerInstance_" . trim( wp_json_encode( $media_id ), '"' ) . ".setup({\n";
 
 			if ( $security_urls ) {
-					echo "playlist: '" . esc_url( jwppp_get_signed_url( $media_id ) ) . "',\n";
+					echo "playlist: " . wp_json_encode( jwppp_get_signed_url( $media_id ), JSON_UNESCAPED_SLASHES ) . ",\n";
 			} else {
-				echo "playlist: '" . esc_url( "https://cdn.jwplayer.com/v2/media/" . $media_id ) . "',\n";
+				echo "playlist: " . wp_json_encode( "https://cdn.jwplayer.com/v2/media/" . $media_id, JSON_UNESCAPED_SLASHES ) . ",\n";
 			}
 
 			/*Is it a dashboard player?*/

@@ -347,7 +347,7 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 			$label = get_post_meta( $post_id, '_jwppp-' . $number . '-subtitle-' . $n . '-label', true );
 			echo '<li id="video-' . esc_attr( $number ) . '-subtitle" data-number="' . esc_attr( $n ) . '">';
 			echo '<input type="text" style="margin-right:1rem;" name="_jwppp-' . esc_attr( $number ) . '-subtitle-' . esc_attr( $n ) . '-url" value="' . esc_url( $url ) . '" placeholder="' . esc_attr( __( 'Subtitles file url (VTT, SRT, DFXP)', 'jwppp' ) ) . '" size="60" />';
-			echo '<input type="text" name="_jwppp-' . esc_attr( $number ) . '-subtitle-' . esc_attr( $n ) . '-label" style="margin-right:1rem;" value="' . esc_html( $label ) . '" placeholder="' . esc_attr( __( 'Label (EN, IT, FR )', 'jwppp' ) ) . '" size="30" />';
+			echo '<input type="text" name="_jwppp-' . esc_attr( $number ) . '-subtitle-' . esc_attr( $n ) . '-label" style="margin-right:1rem;" value="' . esc_attr( $label ) . '" placeholder="' . esc_attr( __( 'Label (EN, IT, FR )', 'jwppp' ) ) . '" size="30" />';
 
 			if ( '1' === $n ) {
 				echo '<label for="_jwppp-subtitles-load-default-' . esc_attr( $number ) . '">';

@@ -56,7 +56,7 @@
 	echo '<tr class="share-options">';
 	echo '<th scope="row">' . esc_html( __( 'Heading', 'jwppp' ) ) . '</th>';
 	echo '<td>';
-	echo '<input type="text" class="regular-text" id="share-heading" name="share-heading" placeholder="' . esc_attr( __( 'Share Video', 'jwppp' ) ) . '" value="' . esc_html( $share_heading ) . '" />';
+	echo '<input type="text" class="regular-text" id="share-heading" name="share-heading" placeholder="' . esc_attr( __( 'Share Video', 'jwppp' ) ) . '" value="' . esc_attr( $share_heading ) . '" />';
 	echo '<p class="description">' . wp_kses( __( 'Add a custom heading, default is <strong>Share Video</strong>', 'jwppp' ), $allowed_tags ) . '</p>';
 	echo '</td>';
 	echo '</tr>';

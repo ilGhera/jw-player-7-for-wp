@@ -24,9 +24,14 @@ var JWPPPSelectContent = function() {
 			var imageUrl;
 
 			if ( $( this ).hasClass( 'reset' ) ) {
-				$( '.jwppp-video-details-' + number ).empty();
+
 				reset = true;
+				mediaId = null;
+				videoTitle = null;
+				$( '.jwppp-video-details-' + number ).empty();
+
 			} else {
+
 				mediaId = $( this ).data( 'mediaid' );
 				videoTitle = $( 'span', this ).text();
 

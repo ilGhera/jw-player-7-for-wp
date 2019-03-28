@@ -52,17 +52,20 @@ function jwppp_enqueue_scripts() {
 			/*Ajax - Check the player version for skin customization*/
 			wp_enqueue_script( 'jwppp-skin-customization', plugin_dir_url( __DIR__ ) . 'js/jwppp-skin-customization.js', array( 'jquery' ) );
 
-			$jwplayer = get_option( 'jwppp-library' );
+			$jwplayer = sanitize_text_field( get_option( 'jwppp-library' ) );
 			$nonce_skin = wp_create_nonce( 'jwppp-nonce-skin' );
 
-			wp_localize_script(
-				'jwppp-skin-customization',
-				'jwpppSkin',
-				array(
-					'player' => $jwplayer,
-					'nonce'  => $nonce_skin,
-				)
-			);
+			/*Load the script only with the local jwplayer.js file*/
+			if( 0 === substr_compare( $jwplayer, 'jwplayer.js', strlen( $jwplayer ) - strlen( 'jwplayer.js' ), strlen( 'jwplayer.js' ) ) ) {
+				wp_localize_script(
+					'jwppp-skin-customization',
+					'jwpppSkin',
+					array(
+						'player' => $jwplayer,
+						'nonce'  => $nonce_skin,
+					)
+				);
+			}
 
 			/*Ajax - Update the options page on player library change*/
 			wp_enqueue_script( 'jwppp-player-check', plugin_dir_url( __DIR__ ) . 'js/jwppp-player-check.js', array( 'jquery' ) );
@@ -713,7 +716,7 @@ function jwppp_options() {
 	?>
 
 	<div name="jwppp-skin" id="jwppp-skin" class="jwppp-admin" style="display: none;">
-		<div class="jwppp-alert"><?php esc_html_e( 'Skin customization options depends from the JW Player version in use.<br>Please add first the <b><i>Player library URL</i></b>', 'jwppp' ); ?></div>		
+		<div class="jwppp-alert"><?php esc_html_e( 'Skin customization options depends from the JW Player version in use. Please add first the Player library URL.', 'jwppp' ); ?></div>		
 	</div>
 	
 

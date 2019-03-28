@@ -36,7 +36,7 @@ function jwppp_fb_player() {
 			echo '<html>';
 				echo '<body>';
 					if ( $player ) {
-						echo "<script src=\"https://content.jwplatform.com/libraries/" . esc_html( $player ) . ".js\"></script>";
+						echo "<script src=\"" . esc_url( "https://content.jwplatform.com/libraries/$player.js" ) . "\"></script>";
 					} else {
 						$license = get_option( 'jwppp-licence' );
 						echo "<script src=\"" . esc_url( $player_url ) . "\"></script>";

@@ -35,7 +35,7 @@
 			echo '<tr>';
 				echo '<th scope="row">' . esc_html( __( 'Title', 'jwppp' ) ) . '</th>';
 				echo '<td>';
-					echo '<input type="text" class="regular-text" id="jwppp-playlist-carousel-title" name="jwppp-playlist-carousel-title" placeholder="' . esc_attr( __( 'More videos', 'jwppp' ) ) . '" value="' . esc_html( $jwppp_playlist_carousel_title ) . '" />';
+					echo '<input type="text" class="regular-text" id="jwppp-playlist-carousel-title" name="jwppp-playlist-carousel-title" placeholder="' . esc_attr( __( 'More videos', 'jwppp' ) ) . '" value="' . esc_attr( $jwppp_playlist_carousel_title ) . '" />';
 					echo '<p class="description">' . esc_html( __( 'Add a title for the playlist widget', 'jwppp' ) ) . '</p>';
 					echo '</td>';
 			echo '</tr>';
