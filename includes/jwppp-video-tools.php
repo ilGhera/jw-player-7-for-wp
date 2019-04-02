@@ -150,7 +150,7 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 	}
 
 	/*Playlist carousel*/
-	if ( $dashboard_player && ! $sh_video ) {
+	if ( $dashboard_player ) {
 		$jwppp_playlist_carousel = get_post_meta( $post_id, '_jwppp-playlist-carousel-' . $number, true );
 		echo '<div class="jwppp-single-option-' . esc_attr( $number ) . ' cloud-option playlist-carousel-container ' . esc_attr( $number ) . '"' . ( $jwppp_playlist_carousel ? ' style="display: inline-block;"' : '' ) . '>';
 			echo '<label for="_jwppp-playlist-carousel-' . esc_attr( $number ) . '">';
