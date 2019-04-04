@@ -49,14 +49,15 @@ function jwppp_enqueue_scripts() {
 		$admin_page = get_current_screen();
 		if ( 'toplevel_page_jw-player-for-wp' === $admin_page->base ) {
 
-			/*Ajax - Check the player version for skin customization*/
-			wp_enqueue_script( 'jwppp-skin-customization', plugin_dir_url( __DIR__ ) . 'js/jwppp-skin-customization.js', array( 'jquery' ) );
-
 			$jwplayer = sanitize_text_field( get_option( 'jwppp-library' ) );
 			$nonce_skin = wp_create_nonce( 'jwppp-nonce-skin' );
 
 			/*Load the script only with the local jwplayer.js file*/
 			if( 0 === substr_compare( $jwplayer, 'jwplayer.js', strlen( $jwplayer ) - strlen( 'jwplayer.js' ), strlen( 'jwplayer.js' ) ) ) {
+
+				/*Ajax - Check the player version for skin customization*/
+				wp_enqueue_script( 'jwppp-skin-customization', plugin_dir_url( __DIR__ ) . 'js/jwppp-skin-customization.js', array( 'jquery' ) );
+
 				wp_localize_script(
 					'jwppp-skin-customization',
 					'jwpppSkin',
