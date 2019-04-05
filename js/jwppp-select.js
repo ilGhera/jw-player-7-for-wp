@@ -22,6 +22,7 @@ var JWPPPSelectContent = function() {
 			var tags;
 			var width;
 			var imageUrl;
+			var articleMatching;
 
 			if ( $( this ).hasClass( 'reset' ) ) {
 
@@ -260,7 +261,10 @@ var JWPPPSearchContent = function( number ) {
 						for ( n = 0; n < playlists.length; n++ ) {
 							$( listContainer ).append( '<li class="playlist-element ' + n + '"></li>' );
 
-							$( 'li.playlist-element.' + n, listContainer ).data( 'mediaid', ( playlists[n].key ? playlists[n].key : '-' ) );
+							/*Check if the playlist is type = article_matching*/
+							articleMatching = 'article_matching' === playlists[n].type ? '?search=__CONTEXTUAL__' : '';
+
+							$( 'li.playlist-element.' + n, listContainer ).data( 'mediaid', ( playlists[n].key ? playlists[n].key : '-' ) + articleMatching );
 							$( 'li.playlist-element.' + n, listContainer ).data( 'description', ( playlists[n].description ? playlists[n].description : '-' ) );
 							$( 'li.playlist-element.' + n, listContainer ).data( 'videos', ( playlists[n].videos.total ? playlists[n].videos.total : '-' ) );
 							$( 'li.playlist-element.' + n, listContainer ).data( 'tags', ( playlists[n].tags ? playlists[n].tags : '-' ) );

@@ -449,27 +449,39 @@ function jwppp_ads_tag_exists( $tags, $tag ) {
 /**
  * Generate signed URLs
  * @param  string $media_id the media id
+ * @param  bool   $short return only the last part of the url
+ * @param  bool   $matching define if the media is a Article Matching plylist
  * @return string
  */
-function jwppp_get_signed_url( $media_id, $short = false ) {
+function jwppp_get_signed_url( $media_id, $short = false, $matching = false ) {
 
 	$token_secret = get_option( 'jwppp-api-secret' );
-	$resource = 'v2/media/' . $media_id;
+	$resource = "v2/media/$media_id";
+	$resource4token = $resource;
+	$plus = '?';
+
+	/*Different url for Article Matching playlists*/
+	if ( $matching ) {
+		$resource = "v2/playlists/$media_id";
+		$resource4token = explode('?search', $resource)[0];
+		$plus = '&';
+	}
+
 	$timeout = get_option( 'jwppp-secure-timeout' ) ? get_option( 'jwppp-secure-timeout' ) : 60;
 
 	$expires = ceil( ( time() + ( $timeout * 60 ) ) / 180 ) * 180;
 
 	$token_body = array(
-		'resource' => $resource,
-		'exp' => $expires,
+		'resource' => $resource4token,
+		'exp' 	   => $expires,
 	);
 
 	$jwt = JWT::encode( $token_body, $token_secret );
 
 	if ( $short ) {
-		return "$resource?token=$jwt";
+		return $resource . $plus . "token=$jwt";
 	} else {
-		return "https://cdn.jwplayer.com/$resource?token=$jwt";
+		return "https://cdn.jwplayer.com/" . $resource . $plus . "token=$jwt";
 	}
 }
 

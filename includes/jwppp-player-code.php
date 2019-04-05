@@ -70,6 +70,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 		/*Video url or media id*/
 		$jwppp_video_url = get_post_meta( $p_id, '_jwppp-video-url-' . $number, true );
+		$contextual = false !== strpos( $jwppp_video_url, '__CONTEXTUAL__' ) ? true : false;
 
 		/*Is the video self hosted?*/
 		$sh_video = strrpos( $jwppp_video_url, 'http' ) === 0 ? true : false;
@@ -162,9 +163,13 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 					$security_urls = get_option( 'jwppp-secure-video-urls' );
 
 				if ( $security_urls ) {
-					echo "playlist: " . wp_json_encode( jwppp_get_signed_url( $jwppp_video_url ), JSON_UNESCAPED_SLASHES ) . ",\n";
+					echo "playlist: " . wp_json_encode( jwppp_get_signed_url( $jwppp_video_url, false, $contextual ), JSON_UNESCAPED_SLASHES ) . ",\n";
 				} else {
-					echo "playlist: " . wp_json_encode( "https://cdn.jwplayer.com/v2/media/" . $jwppp_video_url, JSON_UNESCAPED_SLASHES ) . ",\n";
+					if ( $contextual ) {
+						echo "playlist: " . wp_json_encode( "https://cdn.jwplayer.com/v2/playlists/" . $jwppp_video_url, JSON_UNESCAPED_SLASHES ) . ",\n";
+					} else {
+						echo "playlist: " . wp_json_encode( "https://cdn.jwplayer.com/v2/media/" . $jwppp_video_url, JSON_UNESCAPED_SLASHES ) . ",\n";
+					}
 				}
 	
 				/*Ads block  TEMP*/
@@ -174,11 +179,10 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 				if ( $jwppp_playlist_carousel ) {
 					$carousel_style = sanitize_text_field( get_option( 'jwppp-playlist-carousel-style' ) );
-					$playlist_id = $security_urls ? jwppp_get_signed_url( $jwppp_video_url, true ) : $jwppp_video_url;
+					$playlist_id = $security_urls ? jwppp_get_signed_url( $jwppp_video_url, true, $contextual ) : $jwppp_video_url;
 
 					echo "var e = new XMLHttpRequest;\n";
 					echo "e.onreadystatechange = function() { 4 === e.readyState && (e.status >= 200 && JSON.parse(e.responseText).widgets.forEach(function(e) { outPlayerWidget(e) })) }, e.open('GET', '" . home_url() . "?jwp-carousel-config=1&playlist-id=' + encodeURIComponent('$playlist_id') + '&player-id=" . intval( $this_video ) . "&carousel-style=' + encodeURIComponent( '$carousel_style' ), !0), e.send()\n";
-					echo "console.log('encodeURIComponent($playlist_id): ' + encodeURIComponent('$playlist_id'))";
 				}
 			echo '</script>';
 		echo '</div>';
