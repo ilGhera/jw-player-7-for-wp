@@ -67,7 +67,7 @@ class JWPPP_Dashboard_Api {
 
 				$body = json_decode( $output['body'] );
 
-				return array( 'error' => $body['message'] );
+				return array( 'error' => $body->message );
 
 			} else {
 
