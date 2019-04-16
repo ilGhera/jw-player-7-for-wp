@@ -53,19 +53,23 @@ function jwppp_enqueue_scripts() {
 			$nonce_skin = wp_create_nonce( 'jwppp-nonce-skin' );
 
 			/*Load the script only with the local jwplayer.js file*/
-			if( 0 === substr_compare( $jwplayer, 'jwplayer.js', strlen( $jwplayer ) - strlen( 'jwplayer.js' ), strlen( 'jwplayer.js' ) ) ) {
+			if ( $jwplayer ) {
 
-				/*Ajax - Check the player version for skin customization*/
-				wp_enqueue_script( 'jwppp-skin-customization', plugin_dir_url( __DIR__ ) . 'js/jwppp-skin-customization.js', array( 'jquery' ) );
+				if ( 0 === substr_compare( $jwplayer, 'jwplayer.js', strlen( $jwplayer ) - strlen( 'jwplayer.js' ), strlen( 'jwplayer.js' ) ) ) {
 
-				wp_localize_script(
-					'jwppp-skin-customization',
-					'jwpppSkin',
-					array(
-						'player' => $jwplayer,
-						'nonce'  => $nonce_skin,
-					)
-				);
+					/*Ajax - Check the player version for skin customization*/
+					wp_enqueue_script( 'jwppp-skin-customization', plugin_dir_url( __DIR__ ) . 'js/jwppp-skin-customization.js', array( 'jquery' ) );
+
+					wp_localize_script(
+						'jwppp-skin-customization',
+						'jwpppSkin',
+						array(
+							'player' => $jwplayer,
+							'nonce'  => $nonce_skin,
+						)
+					);
+				}
+
 			}
 
 			/*Ajax - Update the options page on player library change*/
@@ -103,7 +107,7 @@ function jwppp_check_color( $value ) {
  * Register menu page
  */
 function jwppp_add_menu() {
-	$jwppp_page = add_menu_page( 'JW Player for Wordpress - VIP', 'JW Player', 'manage_options', 'jw-player-for-wp', 'jwppp_options', 'dashicons-format-video' );
+	$jwppp_page = add_menu_page( 'JW Player for Wordpress - VIP', 'JW Player for VIP', 'manage_options', 'jw-player-for-wp', 'jwppp_options', 'dashicons-format-video' );
 
 	add_action( 'admin_print_scripts-' . $jwppp_page, 'jwppp_js_menu' );
 

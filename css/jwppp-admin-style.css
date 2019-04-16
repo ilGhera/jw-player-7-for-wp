@@ -310,6 +310,13 @@ li .video-img {
     margin: 0;
 }
 
+.jwppp-add img,
+.jwppp-remove img {
+	width: 16px;
+	max-width: 16px;
+	height: 16px;
+}
+
 @media screen and (max-width: 1720px) {
 	.jwppp-video-details {
 		width: 300px;
