@@ -35,7 +35,7 @@ class JWPPP_Dashboard_Api {
 	public function call( $url ) {
 		global $wp_version;
 
-		$user_agent = 'WordPress/' . $wp_version . ' JWPlayerForWordPressVIP/' . JWPPP_VERSION . ' PHP/' . phpversion();
+		$user_agent = 'WordPress/' . $wp_version . ' JWPlayerForWordPress/' . JWPPP_VERSION . ' PHP/' . phpversion();
 
 		if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
 
