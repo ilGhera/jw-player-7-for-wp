@@ -2,7 +2,7 @@
 /**
  * The player code block
  * @author ilGhera
- * @package jw-player-for-vip/includes
+ * @package jw-player-7-for-wp/includes
  * @version 1.6.0
  * @param  int    $p            the post id
  * @param  int    $n            the number of video

@@ -2,7 +2,7 @@
 /**
  * Subtitles options
  * @author ilGhera
- * @package jw-player-for-vip/admin
+ * @package jw-player-7-for-wp/admin
  * @version 1.6.0
  */
 ?>

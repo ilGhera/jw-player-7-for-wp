@@ -2,7 +2,7 @@
 /**
  * Add video callback
  * @author ilGhera
- * @package jw-player-for-vip/includes
+ * @package jw-player-7-for-wp/includes
  * @version 1.6.0
  * @return mixed   a new video box
  */

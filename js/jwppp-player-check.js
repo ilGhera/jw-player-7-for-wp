@@ -1,7 +1,7 @@
 /**
  * Player check, used for changing the admin options available
  * @author ilGhera
- * @package jw-player-for-vip/js
+ * @package jw-player-7-for-wp/js
  * @version 1.6.0
  */
 jQuery( document ).ready( function( $ ) {

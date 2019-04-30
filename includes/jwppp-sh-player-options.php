@@ -2,7 +2,7 @@
 /**
  * Self hosted player options
  * @author ilGhera
- * @package jw-player-for-vip/includes
+ * @package jw-player-7-for-wp/includes
  * @version 1.6.0
  * @param  string $ar     aspect ratio
  * @param  string $width  the player width

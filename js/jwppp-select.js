@@ -1,7 +1,7 @@
 /**
  * Used with player and media contents from the cloud
  * @author ilGhera
- * @package jw-player-for-vip/js
+ * @package jw-player-7-for-wp/js
  * @version 1.6.0
  *
  *
