@@ -302,12 +302,12 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 						/*Video title*/
 						if ( $video_title ) {
-							echo "title: '" . wp_json_encode( $video_title ) . "',\n";
+							echo "title: " . wp_json_encode( $video_title ) . ",\n";
 						}
 
 						/*Video description*/
 						if ( $video_description ) {
-							echo "description: '" . wp_json_encode( $video_description ) . "',\n";
+							echo "description: " . wp_json_encode( $video_description ) . ",\n";
 						}
 
 						/*Poster image*/
