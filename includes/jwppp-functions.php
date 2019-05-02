@@ -834,7 +834,7 @@ function jwppp_get_player_callback() {
 			$number = intval( $_POST['number'] );
 
 			/*Player library*/
-			$library_parts = explode( 'https://content.jwplatform.com/libraries/', get_option( 'jwppp-library' ) );
+			$library_parts = explode( 'libraries/', get_option( 'jwppp-library' ) );
 
 			/*Choose player*/
 			$choose_player = get_post_meta( $post_id, '_jwppp-choose-player-' . $number, true );
