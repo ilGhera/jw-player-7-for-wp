@@ -47,6 +47,7 @@ function jwppp_premium_load() {
 	include( JWPPP_ADMIN . 'jwppp-admin.php' );
 	include( JWPPP_INCLUDES . 'jwppp-functions.php' );
 	include( JWPPP_INCLUDES . 'jwppp-video-chapters.php' );
+	include( JWPPP_INCLUDES . 'jwppp-related-posts.php' );
 	include( JWPPP_DIR . 'fb/jwppp-fb-player.php' );
 	include( JWPPP_DIR . 'jw-widget/jwppp-carousel-config.php' );
 

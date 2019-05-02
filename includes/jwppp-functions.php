@@ -389,7 +389,7 @@ function jwppp_get_feed_url() {
 	$taxonomy = sanitize_text_field( get_option( 'jwppp-taxonomy-select' ) );
 	$terms = wp_get_post_terms( $id, $taxonomy );
 
-	if ( null !== $terms ) {
+	if ( isset( $terms[0]->term_id ) ) {
 		$feed = get_term_link( $terms[0]->term_id, $taxonomy ); 
 		if( get_option( 'permalink_structure' ) ) {
 			$feed .= 'related-videos';
