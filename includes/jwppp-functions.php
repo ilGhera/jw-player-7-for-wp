@@ -382,6 +382,27 @@ add_action( 'admin_init', 'jwppp_add_taxonomy' );
 
 
 /**
+ * The feed for related posts
+ */
+function jwppp_get_feed_url() {
+	$id = get_the_ID();
+	$taxonomy = sanitize_text_field( get_option( 'jwppp-taxonomy-select' ) );
+	$terms = wp_get_post_terms( $id, $taxonomy );
+
+	if ( null !== $terms ) {
+		$feed = get_term_link( $terms[0]->term_id, $taxonomy ); 
+		if( get_option( 'permalink_structure' ) ) {
+			$feed .= 'related-videos';
+		} else {
+			$feed .= '&feed=related-videos';
+		}
+
+		return $feed;
+	}	
+}
+
+
+/**
  * Check if a source is a YouTube video
  * @param  string $jwppp_video_url a full url to check
  * @param  int $number             the video number of the current post

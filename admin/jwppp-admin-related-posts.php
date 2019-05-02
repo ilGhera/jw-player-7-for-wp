@@ -54,12 +54,12 @@
 
     /*Show related?*/
     echo '<tr>';
-    echo '<th scope="row">' . esc_html( __( 'Active Related Videos option', 'jwppp' ) ) . '</th>';
+    echo '<th scope="row">' . esc_html( __( 'Active Related Posts option', 'jwppp' ) ) . '</th>';
     echo '<td>';
     echo '<input type="checkbox" id="jwppp-show-related" name="jwppp-show-related" value="1"';
     echo ( 1 == $jwppp_show_related ) ? ' checked="checked"' : '';
     echo '/>';
-    echo '<p class="description">' . esc_html( __( 'Show Related Videos overlay as default option.', 'jwppp' ) ) . '</p>';
+    echo '<p class="description">' . esc_html( __( 'Show Related Posts overlay as default option.', 'jwppp' ) ) . '</p>';
     echo '</td>';
     echo '</tr>';
 
@@ -68,8 +68,8 @@
     echo '<th scope="row">' . esc_html( __( 'Next Up tooltip', 'jwppp' ) ) . '</th>';
     echo '<td>';
     echo '<input type="text" class="regular-text" id="jwppp-related-heading" name="jwppp-related-heading" ';
-    echo 'placeholder="' . esc_attr( __( 'Related Videos', 'jwppp' ) ) . '" value="' . esc_attr( $jwppp_related_heading ) . '" />';
-    echo '<p class="description">' . esc_html( __( 'Title of the Next Up tooltip in Related mode, default is <strong>Related</strong>.', 'jwppp' ) ) . '</p>';
+    echo 'placeholder="' . esc_attr( __( 'Related Posts', 'jwppp' ) ) . '" value="' . esc_attr( $jwppp_related_heading ) . '" />';
+    echo '<p class="description">' . esc_html( __( 'Title of the Next Up tooltip in Related mode, default is Related.', 'jwppp' ) ) . '</p>';
     echo '</td>';
     echo '</tr>';
 
@@ -126,8 +126,7 @@
     echo '>' . esc_html( $video_cat ) . '</option>';
 
     echo '</select>';
-    echo '<p class="description">' . esc_html( __( 'Use a taxonomy to get more specific related videos. It will be add to all post types you choosed.', 'jwppp' ) ) . '<br>';
-    echo esc_html( __( 'You can even use <strong>Video categories</strong> provided by this plugin.', 'jwppp' ) ) . '</p>';
+    echo '<p class="description">' . esc_html( __( 'Select an existing taxonomy or create the new "Video categories" to get more specific related posts.', 'jwppp' ) ) . '<br>';
     echo '</td>';
 
     echo '</table>';

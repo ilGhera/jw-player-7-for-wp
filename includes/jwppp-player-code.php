@@ -426,6 +426,21 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 					echo "},\n";
 				}
 
+				/*Related posts*/
+				$jwppp_show_related = sanitize_text_field( get_option( 'jwppp-show-related' ) );
+				$jwppp_related_heading = sanitize_text_field(get_option('jwppp-related-heading' ) );
+			    if ( '1' === $jwppp_show_related && null !== jwppp_get_feed_url() ) {
+					echo "related: {\n";
+					echo "file: '" . jwppp_get_feed_url() . "',\n";
+					if ( null !== $jwppp_related_heading ) {
+						echo "heading: '" . wp_json_encode( $jwppp_related_heading ) . "',\n";
+					} else {
+						echo "heading: '" . esc_html( __( 'Related Videos', 'jwppp' ) ) . "',\n";
+					}
+					echo "onclick: 'link'\n";				
+					echo "},\n";
+				}
+
 				/*Shortcode options for playlists*/
 				if ( $jwppp_new_playlist ) {
 
