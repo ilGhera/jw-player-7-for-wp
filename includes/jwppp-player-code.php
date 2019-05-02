@@ -172,7 +172,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 					}
 				}
 	
-				/*Ads block  TEMP*/
+				/*Ads block*/
 				jwppp_ads_code_block( $p_id, $number );
 
 				echo "})\n";
@@ -357,7 +357,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 							echo "sharing: {\n";
 								$jwppp_share_heading = sanitize_text_field( get_option( 'jwppp-share-heading' ) );
 								if ( null !== $jwppp_share_heading ) {
-									echo "heading: '" . wp_json_encode( $jwppp_share_heading ) . "',\n";
+									echo "heading: " . wp_json_encode( $jwppp_share_heading ) . ",\n";
 								} else {
 									echo "heading: '" . esc_html( __( 'Share Video', 'jwppp' ) ) . "',\n";
 								}
