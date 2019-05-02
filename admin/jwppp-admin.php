@@ -302,6 +302,7 @@ function jwppp_options() {
 			<a href="#" data-link="jwppp-skin" class="nav-tab" onclick="return false;"><?php esc_html_e( 'Skin', 'jwppp' ); ?></a>
 			<a href="#" data-link="jwppp-subtitles" class="nav-tab" onclick="return false;"><?php esc_html_e( 'Subtitles', 'jwppp' ); ?></a>
 			<a href="#" data-link="jwppp-social" class="nav-tab" onclick="return false;"><?php esc_html_e( 'Sharing', 'jwppp' ); ?></a>    
+			<a href="#" data-link="jwppp-related" class="nav-tab" onclick="return false;"><?php esc_html_e( 'Related posts', 'jwppp' ); ?></a>
 		<?php } else { ?>
 			<a href="#" data-link="jwppp-playlist-carousel" class="nav-tab" onclick="return false;"><?php esc_html_e( 'Playlist carousel', 'jwppp' ); ?></a>    
 			<a href="#" data-link="jwppp-security" class="nav-tab" onclick="return false;"><?php esc_html_e( 'Security', 'jwppp' ); ?></a>    
@@ -730,6 +731,8 @@ function jwppp_options() {
 	<?php include( JWPPP_ADMIN . 'jwppp-admin-sharing.php' ); ?>
 
 	<?php include( JWPPP_ADMIN . 'jwppp-admin-ads.php' ); ?>
+
+	<?php include( JWPPP_ADMIN . 'jwppp-admin-related-posts.php' ); ?>
 
 	<?php include( JWPPP_ADMIN . 'jwppp-admin-playlist-carousel.php' ); ?>
 
