@@ -737,14 +737,7 @@ function jwppp_options() {
 
 	</div><!-- wrap-left -->
 	<div class="wrap-right" style="float:left; width:30%; text-align:center; padding-top:3rem;">
-		<div class="jwppp-banner">
-		<h3>Resources</h3>
-			<ul>
-				<li><a href="https://vip.wordpress.com/plugins/jwplayer/" target="_blank">WP VIP Plugin Info</a></li>
-				<li><a href="https://support.jwplayer.com/articles/jw-player-wordpress-plugin-reference" target="_blank">Plugin Reference</a></li>
-				<li><a href="https://support.jwplayer.com/submit-support-case" target="_blank">Support</li></a>
-			</ul>
-		</div>
+		<!-- Banners here -->
 	</div>
 	<div class="clear"></div>
 
