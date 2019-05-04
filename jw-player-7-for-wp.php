@@ -13,7 +13,6 @@
  * Text Domain: jwppp
  */
 
-
 /*No direct access*/
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
