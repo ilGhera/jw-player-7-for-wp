@@ -1,15 +1,15 @@
 <?php
 /**
  * Plugin Name: JW Player for Wordpress - VIP
- * Plugin URI: https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/
+ * Plugin URI: https://wpvip.com/plugins/jwplayer/
  * Description:  The complete solution for using JW Player into Wordpress.
  * It works with the latest version of the famous video player and it gives you full control of all the options available.
  * Player customization, social sharing and advertising are just an example.
- * Author: ilGhera
+ * Author: JW Player
  * Version: 1.6.0
- * Author URI: https://www.ilghera.com
+ * Author URI: https://www.jwplayer.com/
  * Requires at least: 4.0
- * Tested up to: 5.0
+ * Tested up to: 5
  * Text Domain: jwppp
  */
 

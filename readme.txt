@@ -1,9 +1,9 @@
 === JW Player for Wordpress - VIP ===
-Contributors: ghera74
+Contributors: jwplayer, ghera74
 Tags: jw player, jw player 7, jw player 8, jwplayer, jwplayer 7, jwplayer 8, video, embed video, youtube, video preroll, video chapters, video subtitles
 Version: 1.6.0
 Requires at least: 4.0
-Tested up to: 5.0
+Tested up to: 5
 License: GPLv2
 
 JW Player for Wordpress - VIP is the complete solution for using JW Player into Wordpress.
