@@ -7,9 +7,9 @@
  * Player customization, social sharing and advertising are just an example.
  * Author: ilGhera
  * Version: 1.6.0
- * Author URI: https://www.ilghera.com
+ * Author URI: https://www.ilghera.com/
  * Requires at least: 4.0
- * Tested up to: 5.0
+ * Tested up to: 5
  * Text Domain: jwppp
  */
 
