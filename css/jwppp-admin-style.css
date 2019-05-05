@@ -1,5 +1,8 @@
 /**
- * JWPPP Style
+ * Admin options and tools style
+ * @author ilGhera
+ * @package jw-player-7-for-wp/css
+ * @version 1.6.0
  */
 
 .jwppp-alert {
@@ -9,6 +12,16 @@
 	background: #F2DEDE;
 	border-radius: 0.2rem;
 	color: #a94442;	
+}
+
+.jwppp-list-container .jwppp-alert {
+	width: 91%;
+	margin: 0.5rem;
+}
+
+.jwppp-alert.api {
+	display: inline-block;
+	padding-left: 0.6rem 2rem;
 }
 
 .jwppp-alert a {
@@ -30,7 +43,302 @@ a.question-mark {
 	left:1rem;
 }
 
-img.question-mark {
+a.attention-mark {
+	position:absolute; right:1rem;
+}
+
+img.question-mark, img.attention-mark {
 	position:relative; 
 	top:0.2rem;
+}
+
+.jwppp-video-toggles {
+	margin-bottom: 0.3rem;
+	padding: 0;
+}
+
+.jwppp-video-toggles li {
+	float: left;
+	padding: 0.1rem 0.5rem;
+	margin: 0 0 0 0.2rem;
+	cursor: pointer;
+	border-radius: 0.2rem;
+	font-size: 90%;
+	background: #ddd;
+}
+
+.jwppp-video-toggles li.active {
+	color: #fff;
+	background: red;
+}
+
+.jwppp-toggle-content {
+	display: none;
+}
+
+.jwppp-toggle-content.active {
+	display: block;
+}
+
+.poster-image-preview {
+	position: absolute;
+	display: inline-block;
+	max-width: 208px;
+	max-height: 115px;
+	margin-left: 1rem;
+	right: 0rem;
+}
+
+.jwppp-input-wrap.medium .poster-image-preview {
+	max-height: 98px;
+}
+
+.jwppp-input-wrap.small .poster-image-preview {
+	max-height: 88px;
+}
+
+.jwppp-url {
+	width: 256px;
+}
+
+.jwppp-url,
+.jwppp-search-content {
+	width: 256px;
+	margin-right:1rem;
+	background-color: #f7f7f7;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	outline: 0;
+	background-image: -webkit-linear-gradient(top, #fff 50%, #eee 100%);
+	background-image: -o-linear-gradient(top, #fff 50%, #eee 100%);
+	background-image: linear-gradient(to bottom, #fff 50%, #eee 100%);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFFFF', endColorstr='#FFEEEEEE', GradientType=0);
+}
+
+#jwppp-ads input[type="number"],
+#jwppp-ads select {
+	width: 192px;
+}
+
+input#jwppp-floor-price {
+	padding-left: 0.9rem;
+}
+
+span.currency {
+	position: absolute;
+	margin: 0.3rem 0.5rem 0 0.4rem;
+}
+
+.playlist-carousel-container {
+	display: none;
+}
+
+.add-tag-container,
+.remove-tag-container {
+	display: inline;
+	position: relative;
+	top: 0.2rem;
+	margin-left: 0.3rem;
+	cursor: pointer;
+}
+
+.add-tag-hover,
+.remove-tag-hover {
+	display: none;
+}
+
+.add-tag-container:hover .add-tag,
+.remove-tag-container:hover .remove-tag {
+	display: none;
+}
+
+.add-tag-container:hover .add-tag-hover,
+.remove-tag-container:hover .remove-tag-hover {
+	display: inline;
+}
+
+select.jwppp-choose-player,
+select.jwppp-ads-tag {
+	width: 507px;
+	max-width: 100%;
+}
+
+.jwppp-video-list {
+	display: none;
+	position: absolute;
+	background: #fff;
+	margin-top: -0.5rem;
+	border: 1px solid #e5e5e5;
+	z-index: 9999;
+	border-radius: 0 0 10px 10px;
+	box-shadow: 5px 5px 10px #ccc;
+	width: 400px;
+	max-width: 100%;
+	max-height: 300px;
+	overflow: hidden;
+}
+
+span.jwppp-list-container {
+	display: block;
+	position: relative; 
+	width: 400px;
+	max-width: 100%;
+	max-height: 300px;
+	overflow: auto;
+	border-radius: 0 0 8px 8px;
+}
+
+.jwppp-video-list li,
+.jwppp-loading {
+	padding: 1.2rem 1rem;
+	margin: 0;
+	background: #fff;
+	cursor: pointer;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.jwppp-video-list li.reset,
+.jwppp-video-list li.results {
+	display: block;
+	padding: 0.8rem 1rem;
+	color: #313131;
+	font-size: 80%;
+	font-weight: bold; 
+	text-transform: uppercase;
+}
+
+.jwppp-video-list li span {
+	padding-left: 5rem;
+	display: inline-block;
+}
+
+.jwppp-video-list li.reset span {
+    position: absolute;
+    right: 1rem;
+    color: #fff;
+    background: #dadada;
+    padding: 0 0.5rem;
+    border-radius: 0.2rem;
+    display: none;
+}
+
+.jwppp-video-list li.reset:hover span {
+	display: inline-block;
+}
+
+.jwppp-video-list li.reset:hover,
+.jwppp-video-list li.results:hover {
+	box-shadow: none;
+}
+
+.jwppp-video-list li:last-child {
+	border-radius: 0 0 10px 10px;
+	border-bottom: 0;
+}
+
+.jwppp-video-list li:first-child {
+	border-radius: 0;
+}
+
+.jwppp-video-list li:hover {
+	box-shadow: inset 0 0 10px #e5e5e5;
+}
+
+li .video-img {
+	width: 60px; 
+	max-height: 35px;
+	margin-top: -0.5rem;
+	position: absolute;
+}
+
+.jwppp-no-results {
+	color: red;
+	font-weight: bold;
+}
+
+.jwppp-video-details {
+	position: absolute;
+	right: 40%;
+	top: 0.7rem;
+	display: inline-block;
+	width: 400px;
+	height: 100px;
+	overflow: auto;
+}
+
+.jwppp-video-details span {
+	text-transform: uppercase;
+	font-size: 80%;
+	color: #333;
+	font-weight: bold;
+}
+
+.jwppp-banner {
+	display: inline-block;
+	width:300px;
+	padding:0;
+	font-size:12px;
+	font-family: "Open Sans", sans-serif;
+	text-align: left;
+	color:#2FBFB0;    
+    background: #fff;
+    border: 1px solid #2EBFB0;
+    margin: 0.5rem 0;
+}
+
+.jwppp-banner ul,
+.jwppp-banner p {
+    margin: 0;
+    padding: 5%;
+    list-style: none;
+}
+.jwppp-banner li {
+    padding: 0.3rem 0;
+    margin: 0;
+}
+
+.jwppp-banner a {
+    color: #2EBFB0;
+}
+
+.jwppp-banner h3 {
+    display: block;
+    background: #2FBFB0;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    margin: 0;
+}
+
+.jwppp-add img,
+.jwppp-remove img {
+	width: 16px;
+	max-width: 16px;
+	height: 16px;
+}
+
+@media screen and (max-width: 1720px) {
+	.jwppp-video-details {
+		width: 300px;
+		right: 38%;
+	}
+}
+
+@media screen and (max-width: 1515px) {
+	.jwppp-video-details {
+		width: 250px;
+		right: 33%;
+	}
+}
+
+@media screen and (max-width: 1390px) {
+	.jwppp-video-details {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 1112px) {
+	.poster-image-preview {
+		display: none;
+	}
 }

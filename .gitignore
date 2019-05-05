@@ -1,0 +1,10 @@
+# Folders
+/vendor/
+/node_modules/
+/plugin-update-checker/
+
+# Files
+composer.json
+composer.lock
+package.json
+.eslintrc.js

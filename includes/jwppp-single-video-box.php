@@ -1,182 +1,166 @@
 <?php
-/*
-*
-* SINGLE VIDEO BOX FOR JW PLAYER FOR WORDPRESS
-*
-*/
+/**
+ * Single video box
+ * @author ilGhera
+ * @package jw-player-7-for-wp/includes
+ * @version 1.6.0
+ */
 
+$dashboard_player = is_dashboard_player();
+$player_position = get_option( 'jwppp-position' );
 
-echo '<table class="widefat jwppp-1" style="margin: 0.4rem 0;">';
-echo '<tbody class="ui-sortable">';
-echo '<tr class="row">';
-echo '<td class="order" style="width: 2.5%;">1</td>';
-echo '<td class="jwppp-input-wrap" style="width: 90%;">';
-wp_nonce_field( 'jwppp_save_meta_box_data', 'jwppp_meta_box_nonce' );
+echo '<!-- jwppp video number ' . esc_html( $number ) . ' -->';
+echo '<table class="widefat jwppp-' . esc_attr( $number ) . '" style="margin: 0.4rem 0; width: 100%;">';
+	echo '<tbody class="ui-sortable">';
 
-$video_url = get_post_meta( $post->ID, '_jwppp-video-url-1', true );
-$source_url  = get_post_meta($post->ID, '_jwppp-1-source-1-url', true);
-$video_title = get_post_meta($post->ID, '_jwppp-video-title-1', true);
-$video_description = get_post_meta($post->ID, '_jwppp-video-description-1', true);
-$jwppp_embed_video = sanitize_text_field(get_option('jwppp-embed-video'));
-$jwppp_activate_media_type = get_post_meta($post->ID, '_jwppp-activate-media-type-1', true);
-$jwppp_media_type = get_post_meta($post->ID, '_jwppp-media-type-1', true);
-
-
-echo '<label for="_jwppp-video-url-1">';
-echo '<strong>' . esc_html(__( 'Media URL', 'jwppp' )) . '</strong>';
-echo '<a class="question-mark" href="https://www.ilghera.com/support/topic/media-formats-supported/" title="More informations" target="_blank"><img class="question-mark" src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/question-mark.png" /></a></th>';
-echo '</label> ';
-echo '<p><input type="text" id="_jwppp-video-url-1" name="_jwppp-video-url-1" placeholder="' . esc_html(__('Add here your media url', 'jwppp')) . '" value="' . esc_attr( $video_url ) . '" size="60" /></p>';
-
-echo '<a class="button more-options-1">' . esc_html(__('More options', 'jwppp')) . '</a>';
-if(get_option('jwppp-position') === 'custom') {
-	echo '<code style="display:inline-block;margin:0.1rem 0.5rem 0;color:#888;">[jwp-video n="1"]</code>';
-}
-
-?>
-
-<script>
-jQuery(document).ready(function($) {
-	$('.jwppp-more-options-1').hide();
-	$('.more-options-1').click(function() {
-		$('.jwppp-more-options-1').toggle('fast');
-		// $('.more-options').text('Less options');
-		$(this).text(function(i, text) {
-			return text == 'More options' ? 'Less options' : 'More options';
-		});
-	});
-	if($('#_jwppp-activate-media-type-1').prop('checked') == false) {
-		$('#_jwppp-media-type-1').hide();
-	} else {
-		$('#_jwppp-media-type-1').show();
-	}
-	$('#_jwppp-activate-media-type-1').on('change', function(){
-		if($(this).prop('checked') == true) {
-			$('#_jwppp-media-type-1').show();
-		} else {
-			$('#_jwppp-media-type-1').hide();
+		/*Class for preview image dimensions*/
+		$image_class = null;
+		if ( 'custom' !== $player_position ) {
+			$image_class = ' small';
+		} elseif ( ! $dashboard_player ) {
+			$image_class = ' medium';
 		}
-	})
-});
-</script>
 
-<?php
-echo '<div class="jwppp-more-options-1" style="margin-top:2rem;">';
+		echo '<tr class="row">';
+			echo '<td class="order" style="width: 2.5%;">' . esc_html( $number ) . '</td>';
+			echo '<td class="jwppp-input-wrap' . esc_attr( $image_class ) . '" style="width: 95%; padding-bottom: 1rem; position: relative;">';
 
-echo '<label for="_jwppp-add-sources-1">';
-echo '<strong>' . esc_html(__( 'More sources', 'jwppp' )) . '</strong>';
-echo '<a class="question-mark" title="' . esc_html(__('Used for quality toggling and alternate sources.', 'jwppp')) . '"><img class="question-mark" src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/question-mark.png" /></a></th>';
-echo '</label> ';
+				/*Nonce*/
+				wp_nonce_field( 'jwppp-meta-box-nonce-' . $number, 'hidden-meta-box-nonce-' . $number );
 
-echo '<input type="number" class="small-text" style="margin-left:1.8rem; display:inline; position: relative; top:2px;" id="_jwppp-sources-number-1" name="_jwppp-sources-number-1" value="1" disabled="disabled">';
-echo '<a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank" style="margin-left:0.5rem;">Upgrade</a>';
-echo '</p>';
-echo '<ul class="sources-1">';
-echo '<li id="video-1-source" data-number="1">';	
-echo '<input type="text" style="margin-right:1rem;" name="_jwppp-1-source-1-url" id="_jwppp-1-source-1-url" value="' . esc_attr($source_url) . '" placeholder="' . esc_html(__('Source url', 'jwppp')) . '" size="60" />';
-echo '</li>';
-echo '</ul>';
+				/*Single video details*/
+				$video_url = get_post_meta( $post_id, '_jwppp-video-url-' . $number, true );
+				$video_title = get_post_meta( $post_id, '_jwppp-video-title-' . $number, true );
 
-echo '<label for="_jwppp-video-image-1">';
-echo '<strong>' . esc_html(__( 'Video poster image', 'jwppp' )) . ' | </strong><a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a>';
-echo '</label> ';
-echo '<p><input type="text" id="_jwppp-video-image-1" name="_jwppp-video-image-1" placeholder="' . esc_html(__('Add a different poster image for this video', 'jwppp')) . '" size="60" disabled="disabled" /></p>';
+				$video_description = get_post_meta( $post_id, '_jwppp-video-description-' . $number, true );
 
-echo '<label for="_jwppp-video-title-1">';
-echo '<strong>' . esc_html(__( 'Video title', 'jwppp' )) . '</strong>';
-echo '</label> ';
-echo '<p><input type="text" id="_jwppp-video-title-1" name="_jwppp-video-title-1" placeholder="' . esc_html(__('Add a title to your video', 'jwppp')) . '" value="' . esc_attr( $video_title ) . '" size="60" /></p>';
+				$playlist_items = get_post_meta( $post_id, '_jwppp-playlist-items-' . $number, true );
+				$video_duration = get_post_meta( $post_id, '_jwppp-video-duration-' . $number, true );
+				$video_tags = get_post_meta( $post_id, '_jwppp-video-tags-' . $number, true );
 
-echo '<label for="_jwppp-video-description-1">';
-echo '<strong>' . esc_html(__( 'Video description', 'jwppp' )) . '</strong>';
-echo '</label> ';
-echo '<p><input type="text" id="_jwppp-video-description-1" name="_jwppp-video-description-1" placeholder="' . esc_html(__('Add a description to your video', 'jwppp')) . '" value="' . esc_attr( $video_description ) . '" size="60" /></p>';
+				/*Is the video self hosted?*/
+				$sh_video = strrpos( $video_url, 'http' ) === 0 ? true : false;
 
-echo '<p>';
-echo '<label for="_jwppp-activate-media-type-1">';
-echo '<input type="checkbox" id="_jwppp-activate-media-type-1" name="_jwppp-activate-media-type-1" value="1"';
-echo ($jwppp_activate_media_type === '1') ? ' checked="checked"' : '';
-echo ' />';
-echo '<strong>' . esc_html(__('Force a media type', 'jwppp')) . '</strong>';
-echo '<a class="question-mark" title="' . esc_html(__('Only required when a file extension is missing or not recognized', 'jwppp')) . '"><img class="question-mark" src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/question-mark.png" /></a></th>';
-echo '</label>';
-echo '<input type="hidden" name="activate-media-type-hidden-1" value="1" />';
+				$sources_number = get_post_meta( $post_id, '_jwppp-sources-number-' . $number, true );
+				$main_source_label = get_post_meta( $post_id, '_jwppp-' . $number . '-main-source-label', true );
 
-echo '<select style="position: relative; left:2rem; display:inline;" id="_jwppp-media-type-1" name="_jwppp-media-type-1">';
-echo '<option name="mp4" value="mp4"';
-echo ($jwppp_media_type === 'mp4') ? ' selected="selected"' : '';
-echo '>mp4</option>';
-echo '<option name="flv" value="flv"';
-echo ($jwppp_media_type === 'flv') ? ' selected="selected"' : '';
-echo '>flv</option>';
-echo '<option name="mp3" value="mp3"';
-echo ($jwppp_media_type === 'mp3') ? ' selected="selected"' : '';
-echo '>mp3</option>';
-echo '</select>';
-echo '</p>';
+				$media_details = json_decode( stripslashes( get_post_meta( $post_id, '_jwppp-media-details', true ) ) );
 
-echo '<p>';
-echo '<label for="_jwppp-autoplay-1">';
-echo '<input type="checkbox" id="_jwppp-autoplay-1" name="_jwppp-autoplay-1" value="1" disabled="disabled"';
-echo ' />';
-echo '<strong>' . esc_html(__('Autostarting on page load.', 'jwppp')) . '</strong> | <a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a>';
-echo '</label>';
-echo '<input type="hidden" name="autoplay-hidden-1" value="1" />';
-echo '</p>';
+				/*Video selected details*/
+				echo '<div class="jwppp-video-details jwppp-video-details-' . esc_attr( $number ) . '">';
+					echo '';
 
-echo '<p>';
-echo '<label for="_jwppp-mute-1">';
-echo '<input type="checkbox" id="_jwppp-mute-1" name="_jwppp-mute-1" value="1" disabled="disabled"';
-echo ' />';
-echo '<strong>' . esc_html(__('Mute the video during playback.', 'jwppp')) . '</strong> | <a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a>';
-echo '</label>';
-echo '<input type="hidden" name="mute-hidden-1" value="1" />';
-echo '</p>';
+						echo $video_title ? '<span>Title</span>: ' . esc_html( $video_title ) . '</br>' : '';
+						echo $video_description ? '<span>Description</span>: ' . esc_html( $video_description ) . '</br>' : '';
+						echo $playlist_items ? '<span>Items</span>: ' . esc_html( $playlist_items ) . '</br>' : '';
+						echo $video_duration ? '<span>Duration</span>: ' . esc_html( $video_duration ) . '</br>' : '';
+						echo $video_tags ? '<span>Tags</span>: ' . esc_html( $video_tags ) . '</br>' : '';
 
-echo '<p>';
-echo '<label for="_jwppp-repeat-1">';
-echo '<input type="checkbox" id="_jwppp-repeat-1" name="_jwppp-repeat-1" value="1" disabled="disabled"';
-echo ' />';
-echo '<strong>' . esc_html(__('Repeat the video during playback.', 'jwppp')) . '</strong> | <a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a>';
-echo '</label>';
-echo '<input type="hidden" name="repeat-hidden-1" value="1" />';
-echo '</p>';
+				echo '</div>';
 
-echo '<p>';
-echo '<label for="_jwppp-single-embed-1">';
-echo '<input type="checkbox" id="_jwppp-single-embed-1" name="_jwppp-single-embed-1" value="1" disabled="disabled"';
-echo ($jwppp_embed_video === '1') ? ' checked="checked"' : '';
-echo ' />';
-echo '<strong>' . esc_html(__('Allow to embed this video', 'jwppp')) . '</strong> | <a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a>';
-echo '</label>';
-echo '<input type="hidden" name="single-embed-hidden-1" value="1" />';
-echo '</p>';
+				/*Thumbnail*/
+				$video_image = null;
+				if ( $video_url && '1' !== $video_url ) {
+					if ( $sh_video ) {
+						$video_image = get_post_meta( $post_id, '_jwppp-video-image-' . $number, true );
+					} else {
+						$single_video_image = 'https://cdn.jwplayer.com/thumbs/' . $video_url . '-720.jpg';
+						if ( @getimagesize( $single_video_image ) ) {
+							$video_image = $single_video_image;
+						} else {
+							$video_image = plugin_dir_url( __DIR__ ) . 'images/playlist4.png';
+						}
+					}
+				}
 
-echo '<p>';
-echo '<label for="_jwppp-download-video-1">';
-echo '<input type="checkbox" id="_jwppp-download-video-1" name="_jwppp-download-video-1" value="1" disabled="disabled"';
-echo ' />';
-echo '<strong>' . esc_html(__('Allow to download this video', 'jwppp')) . '</strong> | <a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a>';
-echo '</label>';
-echo '<input type="hidden" name="download-video-hidden-1" value="1" />';
-echo '</p>';
+				/*Poster image preview*/
+				if ( $video_image ) {
+					echo '<img class="poster-image-preview ' . esc_attr( $number ) . ( ! $dashboard_player ? ' small' : '' ) . '" src="' . esc_url( $video_image ) . '">';
+				}
 
-echo '<p>';
-echo '<label for="_jwppp-add-chapters-1">';
-echo '<input type="checkbox" id="_jwppp-add-chapters-1" name="_jwppp-add-chapters-1" value="1" disabled="disabled"';
-echo ' />';
-echo '<strong>' . esc_html(__('Add Chapters, Subtitles or Preview Thumbnails', 'jwppp')) . '</strong> | <a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank">Upgrade</a>';
-echo '</label>';
-echo '<input type="hidden"function name="add-chapters-hidden-1" value="1" />';
+				/*A cloud palyer allows to get contents from the JW Dasboard */
+				if ( $dashboard_player ) {
 
-echo '</div>';
-echo '</td>';
-$number = 1;
-if($number<2) {
-	echo '<td class="add-video" style="width: 2.5%;"><a class="jwppp-add"><img src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/add-video.png" /></a></td>';
-} else {
-	echo '<td class="remove-video" style="width: 2.5%;"><a class="jwppp-remove" data-numb="1"><img src="' . esc_url(plugin_dir_url(__DIR__)) . 'images/remove-video.png" /></a></td>';
-}
-echo '</tr>';
-echo '</tbody>';
+					echo '<ul class="jwppp-video-toggles ' . esc_attr( $number ) . '">';
+						echo '<li data-video-type="choose"' . ( ! $sh_video ? ' class="active"' : '' ) . '>' . esc_html( __( 'Choose', 'jwppp' ) ) . '</li>';
+						echo '<li data-video-type="add-url"' . ( $sh_video ? ' class="active"' : '' ) . '>' . esc_html( __( 'Add url', 'jwppp' ) ) . '</li>';
+						echo '<div class="clear"></div>';
+					echo '</ul>';
+
+					/*Select media content*/
+					echo '<div class="jwppp-toggle-content ' . esc_attr( $number ) . ' choose' . ( ! $sh_video ? ' active' : '' ) . '">';
+						echo '<p>';
+
+							echo '<input type="text" autocomplete="off" id="_jwppp-video-title-' . esc_attr( $number ) . '" class="jwppp-search-content choose" data-number="' . esc_attr( $number ) . '" placeholder="' . esc_attr( __( 'Select video/playlist or search by ID', 'jwppp' ) ) . '" style="margin-right:1rem;" value="' . esc_attr( $video_title ) . '"><br>';
+
+							echo '<input type="hidden" name="_jwppp-video-url-' . esc_attr( $number ) . '" id="_jwppp-video-url-' . esc_attr( $number ) . '" class="choose" value="' . esc_attr( $video_url ) . '">';
+
+
+							echo '<input type="hidden" name="_jwppp-video-title-' . esc_attr( $number ) . '" id="_jwppp-video-title-' . esc_attr( $number ) . '" class="choose" value="' . esc_attr( $video_title ) . '">';
+							echo '<input type="hidden" name="_jwppp-video-description-' . esc_attr( $number ) . '" id="_jwppp-video-description-' . esc_attr( $number ) . '" class="choose" value="' . esc_attr( $video_description ) . '">';
+							echo '<input type="hidden" name="_jwppp-playlist-items-' . esc_attr( $number ) . '" id="_jwppp-playlist-items-' . esc_attr( $number ) . '" class="choose" value="' . esc_attr( $playlist_items ) . '">';
+							echo '<input type="hidden" name="_jwppp-video-duration-' . esc_attr( $number ) . '" id="_jwppp-video-duration-' . esc_attr( $number ) . '" class="choose" value="' . esc_attr( $video_duration ) . '">';
+							echo '<input type="hidden" name="_jwppp-video-tags-' . esc_attr( $number ) . '" id="_jwppp-video-tags-' . esc_attr( $number ) . '" class="choose" value="' . esc_attr( $video_tags ) . '">';
+
+							echo '<ul id="_jwppp-video-list-' . esc_attr( $number ) . '" data-number="' . esc_attr( $number ) . '" class="jwppp-video-list">';
+								echo '<span class="jwppp-list-container"></span>';
+							echo '</ul>';
+
+						echo '</p>';
+					echo '</div>';
+
+				}
+
+				/*Input url, both with cloud and self-hosted players*/
+				echo $dashboard_player ? '<div class="jwppp-toggle-content ' . esc_attr( $number ) . ' add-url' . ( $sh_video ? ' active' : '' ) . '">' : '';
+
+				if ( ! $dashboard_player ) {
+					echo '<label for="_jwppp-video-url-' . esc_attr( $number ) . '">';
+						echo '<strong>' . esc_html( __( 'Media URL', 'jwppp' ) ) . '</strong>';
+						echo '<a class="question-mark" href="https://www.ilghera.com/support/topic/media-formats-supported/" title="More informations" target="_blank"><img class="question-mark" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a></th>';
+					echo '</label> ';
+				}
+
+				echo '<p>';
+					echo '<input type="text" id="_jwppp-video-url-' . esc_attr( $number ) . '" class="jwppp-url" name="_jwppp-video-url-' . esc_attr( $number ) . '" placeholder="' . esc_attr( __( 'Media URL', 'jwppp' ) ) . '" ';
+					echo ( '1' !== $video_url ) ? 'value="' . esc_attr( $video_url ) . '" ' : 'value="" ';
+					echo 'size="60" />';
+
+					echo '<input type="text" name="_jwppp-' . esc_attr( $number ) . '-main-source-label" id ="_jwppp-' . esc_attr( $number ) . '-main-source-label" class="source-label-' . esc_attr( $number ) . '" style="margin-right:1rem; display: none;';
+					echo '" value="' . esc_attr( $main_source_label ) . '" placeholder="' . esc_attr( __( 'Label (HD, 720p, 360p)', 'jwppp' ) ) . '" size="30" />';
+
+				echo '</p>';
+
+				echo $dashboard_player ? '</div>' : '';
+
+				/*Display shortcode*/
+				if ( get_option( 'jwppp-position' ) === 'custom' ) {
+					echo '<code style="display:inline-block;margin:0.1rem 0.5rem 0 0.2rem;color:#888;">[jwp-video n="' . esc_attr( $number ) . '"]</code>';
+				}
+
+				echo '<a class="button more-options-' . esc_attr( $number ) . '">' . esc_html( __( 'Show options', 'jwppp' ) ) . '</a>';
+
+				/*Single video tools*/
+				jwppp_video_tools( $post_id, $number, $sh_video );
+				?>
+				<script>
+					jQuery(document).ready(function($){
+						var number = <?php echo wp_json_encode( $number ); ?>;
+						var post_id = <?php echo wp_json_encode( $post_id ); ?>;
+						JWPPPSingleVideo(number, post_id);
+					})
+				</script>
+				<?php
+
+				echo '</div>';
+			echo '</td>';
+
+			if ( $number < 2 ) {
+				echo '<td class="add-video" style="width: 2.5%;"><a class="jwppp-add"><img src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/add-video.png" /></a></td>';
+			} else {
+				echo '<td class="remove-video" style="width: 2.5%;"><a class="jwppp-remove" data-numb="' . esc_attr( $number ) . '"><img src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/remove-video.png" /></a></td>';
+			}
+
+		echo '</tr>';
+	echo '</tbody>';
 echo '</table>';
