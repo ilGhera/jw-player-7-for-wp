@@ -29,6 +29,25 @@
 	text-decoration: underline;
 }
 
+.label.premium {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.15rem 0.4rem;
+    background: #f0ad4e;
+    border-radius: 5px;
+}
+
+.label.premium a {
+	color: #fff;
+	font-size: 10px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.label.premium a:hover {
+  color: #0073aa;
+}
+
 .custom-skin-url,
 .custom-skin-name {
 	display: none; 

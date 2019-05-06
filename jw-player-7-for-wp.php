@@ -24,7 +24,7 @@ define( 'JWPPP_VERSION', '1.6.0' );
 /**
  * Fired on the activation.
  */
-function jwppp_premium_load() {
+function jwppp_load() {
 
 	if ( ! function_exists( 'is_plugin_active' ) ) {
 		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
@@ -51,4 +51,4 @@ function jwppp_premium_load() {
 	include( JWPPP_DIR . 'jw-widget/jwppp-carousel-config.php' );
 
 }
-add_action( 'plugins_loaded', 'jwppp_premium_load', 1 );
+add_action( 'plugins_loaded', 'jwppp_load', 100 );

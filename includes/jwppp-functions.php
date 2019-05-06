@@ -39,6 +39,18 @@ add_action( 'add_meta_boxes', 'jwppp_add_meta_box' );
 
 
 /**
+ * Button premium call to action
+ * @param string the text to use as title
+ * @return mixed
+ */
+function go_premium( $text = null ) {
+	echo '<div class="bootstrap-iso">';
+		echo '<span class="label label-warning premium"><a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank" title="' . esc_html( $text ) . '">Premium</a></label>';
+	echo '</div>';
+}
+
+
+/**
  * Get all videos of a single post
  * @param  int $post_id
  * @return array  post/ page videos with meta_key as key and url as value

@@ -394,32 +394,28 @@ function jwppp_options() {
 		}
 
 			/*Post types selection*/
-			$jwppp_get_types = get_post_types( array( 'public' => true ) );
-			$exclude = array( 'attachment', 'nav_menu_item' );
+			$jwppp_get_types = array('post', 'page');
 
 			echo '<tr>';
 			echo '<th scope="row">' . esc_html( __( 'Post types', 'jwppp' ) ) . '</th>';
 			echo '<td>';
 
 		foreach ( $jwppp_get_types as $type ) {
+			$var_type = sanitize_text_field( get_option( 'jwppp-type-' . $type ) );
 
-			if ( ! in_array( $type, $exclude, true ) ) {
+			if ( isset( $_POST['done'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
 
-				$var_type = sanitize_text_field( get_option( 'jwppp-type-' . $type ) );
+				$var_type = isset( $_POST[ $type ] ) ? sanitize_text_field( wp_unslash( $_POST[ $type ] ) ) : 0;
+				update_option( 'jwppp-type-' . $type, $var_type );
 
-				if ( isset( $_POST['done'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
-
-					$var_type = isset( $_POST[ $type ] ) ? sanitize_text_field( wp_unslash( $_POST[ $type ] ) ) : 0;
-					update_option( 'jwppp-type-' . $type, $var_type );
-
-				}
-				echo '<input type="checkbox" name="' . esc_attr( $type ) . '" id="' . esc_attr( $type ) . '" value="1"';
-				echo ( '1' === $var_type ) ? 'checked="checked"' : '';
-				echo ' /><span class="jwppp-type">' . esc_html( ucfirst( $type ) ) . '</span><br>';
 			}
+			echo '<input type="checkbox" name="' . esc_attr( $type ) . '" id="' . esc_attr( $type ) . '" value="1"';
+			echo ( '1' === $var_type ) ? 'checked="checked"' : '';
+			echo ' /><span class="jwppp-type">' . esc_html( ucfirst( $type ) ) . '</span><br>';
 		}
 
 			echo '<p class="description">' . esc_html( __( 'Content types that use video', 'jwppp' ) ) . '<br>';
+			go_premium( __( 'Upgrade for custom post types', 'jwppp' ) );
 			echo '</td>';
 			echo '</tr>';
 
@@ -456,18 +452,12 @@ function jwppp_options() {
 
 		if ( ! $dashboard_player ) {
 
-			/*The message shown to the user before the player is been embed*/
-			$jwppp_text = sanitize_text_field( get_option( 'jwppp-text' ) );
-			if ( isset( $_POST['jwppp-text'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
-				$jwppp_text = sanitize_text_field( wp_unslash( $_POST['jwppp-text'] ) );
-				update_option( 'jwppp-text', $jwppp_text );
-			}
-
 			echo '<tr>';
 			echo '<th scope="row">' . esc_html( __( 'Video Loading Message', 'jwppp' ) ) . '</th>';
 			echo '<td>';
-			echo '<textarea cols="40" rows="2" id="jwppp-text" name="jwppp-text" placeholder="' . esc_attr( __( 'Loading the player...', 'jwppp' ) ) . '">' . esc_html( $jwppp_text ) . '</textarea>';
+			echo '<textarea cols="40" rows="2" id="jwppp-text" name="jwppp-text" placeholder="' . esc_attr( __( 'Loading the player...', 'jwppp' ) ) . '" disabled="disabled"></textarea>';
 			echo '<p class="description">' . esc_html( __( 'Video loading message.', 'jwppp' ) ) . '<br>';
+			go_premium();
 			echo '</td>';
 			echo '</tr>';
 
@@ -504,24 +494,14 @@ function jwppp_options() {
 			echo '</tr>';
 
 			/*Fixed dimensions or responsive?*/
-			$jwppp_method_dimensions = sanitize_text_field( get_option( 'jwppp-method-dimensions' ) );
-			if ( isset( $_POST['jwppp-method-dimensions'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
-				$jwppp_method_dimensions = sanitize_text_field( wp_unslash( $_POST['jwppp-method-dimensions'] ) );
-				update_option( 'jwppp-method-dimensions', $jwppp_method_dimensions );
-			}
-
 			echo '<tr>';
 			echo '<th scope="row">' . esc_html( __( 'Player Embed Type', 'jwppp' ) ) . '</th>';
 			echo '<td>';
-			echo '<select id="jwppp-method-dimensions" name="jwppp-method-dimensions" />';
-			echo '<option name="fixed" id="fixed" value="fixed" ';
-			echo ( 'fixed' === $jwppp_method_dimensions ) ? 'selected="selected"' : '';
-			echo '>' . esc_html( __( 'Fixed', 'jwppp' ) ) . '</option>';
-			echo '<option name="responsive" id="responsive" value="responsive"';
-			echo ( 'responsive' === $jwppp_method_dimensions ) ? 'selected="selected"' : '';
-			echo '>' . esc_html( __( 'Responsive', 'jwppp' ) ) . '</option>';
+			echo '<select id="jwppp-method-dimensions" name="jwppp-method-dimensions" disabled="disabled" />';
+			echo '<option name="fixed" id="fixed" value="fixed">' . esc_html( __( 'Fixed', 'jwppp' ) ) . '</option>';
 			echo '</select>';
 			echo '<p class="description">' . esc_html( __( 'Player embed type.', 'jwppp' ) ) . '<br>';
+			go_premium( __( 'Upgrade for a responsive player', 'jwppp' ) );
 			echo '</td>';
 			echo '</tr>';
 
@@ -612,53 +592,28 @@ function jwppp_options() {
 			echo '</tr>';
 
 			/*Logo position*/
-			$jwppp_logo_vertical = sanitize_text_field( get_option( 'jwppp-logo-vertical' ) );
-			if ( isset( $_POST['jwppp-logo-vertical'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
-				$jwppp_logo_vertical = sanitize_text_field( wp_unslash( $_POST['jwppp-logo-vertical'] ) );
-				update_option( 'jwppp-logo-vertical', $jwppp_logo_vertical );
-			}
-			$jwppp_logo_horizontal = sanitize_text_field( get_option( 'jwppp-logo-horizontal' ) );
-			if ( isset( $_POST['jwppp-logo-horizontal'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
-				$jwppp_logo_horizontal = sanitize_text_field( wp_unslash( $_POST['jwppp-logo-horizontal'] ) );
-				update_option( 'jwppp-logo-horizontal', $jwppp_logo_horizontal );
-			}
-
 			echo '<tr>';
 			echo '<th scope="row">' . esc_html( __( 'Logo Position', 'jwppp' ) ) . '</th>';
 			echo '<td>';
-			echo '<select id="jwppp-logo-vertical" name="jwppp-logo-vertical" />';
-			echo '<option id="top" name="top" value="top"';
-			echo ( 'top' === $jwppp_logo_vertical ) ? ' selected="selected"' : '';
-			echo '>Top</option>';
-			echo '<option id="bottom" name="bottom" value="bottom"';
-			echo ( 'bottom' === $jwppp_logo_vertical ) ? ' selected="selected"' : '';
-			echo '>Bottom</option>';
+			echo '<select id="jwppp-logo-vertical" name="jwppp-logo-vertical" disabled="disabled"/>';
+			echo '<option id="top" name="top" value="top">Top</option>';
 			echo '</select>';
-			echo '<select style="margin-left: 0.5rem;" id="jwppp-logo-horizontal" name="jwppp-logo-horizontal" />';
-			echo '<option id="right" name="right" value="right"';
-			echo ( 'right' === $jwppp_logo_horizontal ) ? ' selected="selected"' : '';
-			echo '>Right</option>';
-			echo '<option id="left" name="left" value="left"';
-			echo ( 'left' === $jwppp_logo_horizontal ) ? ' selected="selected"' : '';
-			echo '>Left</option>';
+			echo '<select style="margin-left: 0.5rem;" id="jwppp-logo-horizontal" name="jwppp-logo-horizontal" disabled="disabled"/>';
+			echo '<option id="right" name="right" value="right">Right</option>';
 			echo '</select>';
 			echo '<p class="description">' . esc_html( __( 'Logo position.', 'jwppp' ) ) . '</p>';
+			go_premium();
 			echo '</td>';
 			echo '</tr>';
 
 			/*Logo link*/
-			$jwppp_logo_link = sanitize_text_field( get_option( 'jwppp-logo-link' ) );
-			if ( isset( $_POST['jwppp-logo-link'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
-				$jwppp_logo_link = sanitize_text_field( wp_unslash( $_POST['jwppp-logo-link'] ) );
-				update_option( 'jwppp-logo-link', $jwppp_logo_link );
-			}
-
 			echo '<tr>';
 			echo '<th scope="row">' . esc_html( __( 'Logo Link', 'jwppp' ) ) . '</th>';
 			echo '<td>';
 			echo '<input type="text" class="regular-text" id="jwppp-logo-link" name="jwppp-logo-link" ';
-			echo 'placeholder="' . esc_attr( __( 'Link url', 'jwppp' ) ) . '" value="' . esc_attr( $jwppp_logo_link ) . '" />';
+			echo 'placeholder="' . esc_attr( __( 'Link url', 'jwppp' ) ) . '" disabled="disabled" />';
 			echo '<p class="description">' . esc_html( __( 'Logo click-through URL.', 'jwppp' ) ) . '<br>';
+			go_premium();
 			echo '</td>';
 			echo '</tr>';
 
