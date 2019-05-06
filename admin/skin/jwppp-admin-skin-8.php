@@ -10,9 +10,6 @@ echo '<h2 style="margin: 1.5rem 0;">JW Player 8 Skin Customization</h2>';
 echo '<form id="jwppp-skin" name="jwppp-skin" method="post" action="">';
 echo '<table class="form-table">';
 
-/*Get, save and update options*/
-require( JWPPP_ADMIN . 'skin/jwppp-admin-skin-8-options.php' );
-
 /*Skin colors*/
 echo '<tr>';
 echo '<th scope="row">' . esc_html( __( 'Constrolbar Text', 'jwppp' ) ) . '</th>';

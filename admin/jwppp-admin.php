@@ -669,10 +669,6 @@ function jwppp_options() {
 
 		require( JWPPP_ADMIN . 'skin/jwppp-admin-skin-7-options.php' );
 
-	} elseif ( get_option( 'jwppp-player-version' ) === '8' ) {
-
-		require( JWPPP_ADMIN . 'skin/jwppp-admin-skin-8-options.php' );
-
 	}
 	?>
 
