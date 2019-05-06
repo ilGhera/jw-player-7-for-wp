@@ -202,11 +202,7 @@ add_action( 'wp_ajax_player_check', 'jwppp_player_check_callback' );
  * @return mixed  the html element with url and label
  */
 function jwppp_ads_tag( $n, $tag = '' ) {
-
-	$ad_url = isset( $tag['url'] ) ? $tag['url'] : $tag;
-	$ad_label = isset( $tag['label'] ) ? sanitize_text_field( $tag['label'] ) : '';
 	?>
-
 	<li>
 		<input 
 		type="text" 
@@ -214,13 +210,13 @@ function jwppp_ads_tag( $n, $tag = '' ) {
 		id="jwppp-ads-tag" 
 		name="jwppp-ads-tag-<?php echo esc_attr( $n ); ?>" 
 		placeholder="<?php echo esc_attr_e( 'Add the url of your XML file.', 'jwppp' ); ?>" 
-		value="<?php echo esc_url( $ad_url ); ?>" />
+		disabled="disabled" />
 
 		<input type="text" 
 		id="jwppp-ads-tag-label" 
 		name="jwppp-ads-tag-label<?php echo esc_attr( $n ); ?>" 
 		placeholder="<?php echo esc_attr_e( 'Add a label for this tag', 'jwppp' ); ?>" 
-		value="<?php echo esc_attr( $ad_label ); ?>" />
+		disabled="disabled" />
 
 		<?php if ( 1 === $n ) { ?>
 			<div class="add-tag-container">
