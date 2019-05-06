@@ -3,7 +3,7 @@
  * Video chapters
  * @author ilGhera
  * @package jw-player-for-vip/includes
- * @version 1.6.0
+* @version 2.0.0
  * @return string   the chapters set by the publisher in a WEBVTT file
  */
 function jwppp_video_chapters() {

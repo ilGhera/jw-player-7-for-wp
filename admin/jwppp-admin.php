@@ -3,7 +3,7 @@
  * Plugin options page
  * @author ilGhera
  * @package jw-player-for-vip/admin
- * @version 1.6.0
+* @version 2.0.0
  */
 
 /**

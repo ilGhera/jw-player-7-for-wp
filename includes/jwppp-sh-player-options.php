@@ -3,7 +3,7 @@
  * Self hosted player options
  * @author ilGhera
  * @package jw-player-for-vip/includes
- * @version 1.6.0
+* @version 2.0.0
  * @param  string $ar     aspect ratio
  * @param  string $width  the player width
  * @param  string $height the player height

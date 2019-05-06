@@ -3,7 +3,7 @@
  * The JW Player API for communicate  with the dashboard
  * @author ilGhera
  * @package jw-player-for-vip/classes
- * @version 1.6.0
+* @version 2.0.0
  */
 class JWPPP_Dashboard_Api {
 

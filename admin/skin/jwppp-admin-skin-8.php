@@ -3,7 +3,7 @@
  * Skin options 8 - Admin form
  * @author ilGhera
  * @package jw-player-for-vip/admin/skin
- * @version 1.6.0
+* @version 2.0.0
  */
 
 echo '<h2 style="margin: 1.5rem 0;">JW Player 8 Skin Customization</h2>';

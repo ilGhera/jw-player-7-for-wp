@@ -3,7 +3,7 @@
  * Ads options
  * @author ilGhera
  * @package jw-player-for-vip/admin
- * @version 1.6.0
+* @version 2.0.0
  */
 ?>
 <div name="jwppp-ads" id="jwppp-ads" class="jwppp-admin" style="display: none;">

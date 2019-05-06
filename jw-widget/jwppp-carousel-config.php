@@ -3,7 +3,7 @@
  * JW Player carousel widget configuration
  * @author ilGhera
  * @package jw-player-for-vip/jw-widget
- * @version 1.6.0
+* @version 2.0.0
  */
 function jwppp_carousel_config() {
 

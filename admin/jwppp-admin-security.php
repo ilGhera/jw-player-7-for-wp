@@ -3,7 +3,7 @@
  * Secure video URLs and player embeds
  * @author ilGhera
  * @package jw-player-for-vip/admin
- * @version 1.6.0
+* @version 2.0.0
  */
 ?>
 <div name="jwppp-security" id="jwppp-security" class="jwppp-admin" style="display: none;">

@@ -3,7 +3,7 @@
  * Facebook istant articles player
  * @author ilGhera
  * @package jw-player-for-vip/fb
- * @version 1.6.0
+* @version 2.0.0
  */
 
 function jwppp_fb_player() {

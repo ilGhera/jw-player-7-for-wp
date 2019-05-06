@@ -3,7 +3,7 @@
  * Add video callback
  * @author ilGhera
  * @package jw-player-for-vip/includes
- * @version 1.6.0
+* @version 2.0.0
  * @return mixed   a new video box
  */
 function jwppp_ajax_add_video_callback() {
