@@ -47,6 +47,19 @@ jQuery( document ).ready( function( $ ) {
 	};
 	JWPPPpagination();
 
+	/*Related videos thumbnail/ custom field*/
+    if( false == $( '#jwppp-show-related' ).prop( 'checked' ) ) {
+        $( '.related-options' ).hide();
+    }
+
+    $( '#jwppp-show-related' ).on( 'change',function() {
+        if( $( '#jwppp-show-related' ).prop( 'checked' ) ) {
+            $( '.related-options' ).show( 'slow' );
+        } else {
+            $( '.related-options' ).hide();
+        }
+
+    });
 
 	if ( 'featured-image' == $( '#thumbnail' ).val() ) {
 		$( '.cf-row' ).hide();
