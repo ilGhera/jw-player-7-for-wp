@@ -3,7 +3,7 @@
  * Skin options 7
  * @author ilGhera
  * @package jw-player-7-for-wp/admin/skin
- * @version 1.6.0
+ * @version 2.0.0
  */
 
 $jwppp_skin = sanitize_text_field( get_option( 'jwppp-skin' ) );

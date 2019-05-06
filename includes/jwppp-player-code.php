@@ -3,7 +3,7 @@
  * The player code block
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
- * @version 1.6.0
+ * @version 2.0.0
  * @param  int    $p            the post id
  * @param  int    $n            the number of video
  * @param  string $ar           the aspect ratio

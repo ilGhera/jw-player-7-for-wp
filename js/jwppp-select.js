@@ -2,8 +2,7 @@
  * Used with player and media contents from the cloud
  * @author ilGhera
  * @package jw-player-7-for-wp/js
- * @version 1.6.0
- *
+ * @version 2.0.0
  *
  * Fired when a media content in the list is clicked
  */
