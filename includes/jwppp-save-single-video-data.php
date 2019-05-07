@@ -48,9 +48,11 @@ function jwppp_save_single_video_data( $post_id ) {
 			}
 
 			/*Video sources*/
-			if ( isset( $_POST[ '_jwppp-sources-number-' . $number ] ) ) {
+			// if ( isset( $_POST[ '_jwppp-sources-number-' . $number ] ) ) {
 
-				for ( $i = 1; $i <= 1; $i++ ) {
+				$sources = 1;
+
+				for ( $i = 1; $i <= $sources; $i++ ) {
 					$source_url = isset( $_POST[ '_jwppp-' . $number . '-source-' . $i . '-url' ] ) ? sanitize_text_field( wp_unslash( $_POST[ '_jwppp-' . $number . '-source-' . $i . '-url' ] ) ) : '';
 					if ( ! $source_url ) {
 						delete_post_meta( $post_id, '_jwppp-' . $number . '-source-' . $i . '-url' );
@@ -59,7 +61,31 @@ function jwppp_save_single_video_data( $post_id ) {
 					}
 				}
 
+				update_post_meta( $post_id, '_jwppp-sources-number-' . $number, $sources );
+
+			// } else {
+
+				// $sources = get_post_meta( $post_id, '_jwppp-sources-number-' . $number, true );
+				// if ( $sources ) {
+				// 	for ( $i = 1; $i <= $sources; $i++ ) {
+				// 		delete_post_meta( $post_id, '_jwppp-' . $number . '-source-' . $i . '-url' );
+				// 		delete_post_meta( $post_id, '_jwppp-' . $number . '-source-' . $i . '-label' );
+				// 	}
+				// }
+				// delete_post_meta( $post_id, '_jwppp-sources-number-' . $number );
+			// }
+
+			if ( isset( $_POST[ '_jwppp-' . $number . '-main-source-label' ] ) ) {
+				$label = sanitize_text_field( wp_unslash( $_POST[ '_jwppp-' . $number . '-main-source-label' ] ) );
+				if ( ! $label ) {
+					delete_post_meta( $post_id, '_jwppp-' . $number . '-main-source-label' );
+				} else {
+					update_post_meta( $post_id, '_jwppp-' . $number . '-main-source-label', $label );
+				}
+			} else {
+				delete_post_meta( $post_id, '_jwppp-' . $number . '-main-source-label' );
 			}
+
 
 			/*Video title*/
 			if ( isset( $_POST[ '_jwppp-video-title-' . $number ] ) ) {

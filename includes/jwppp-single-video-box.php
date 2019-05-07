@@ -42,7 +42,6 @@ echo '<table class="widefat jwppp-' . esc_attr( $number ) . '" style="margin: 0.
 				$sh_video = strrpos( $video_url, 'http' ) === 0 ? true : false;
 
 				$sources_number = get_post_meta( $post_id, '_jwppp-sources-number-' . $number, true );
-				$main_source_label = get_post_meta( $post_id, '_jwppp-' . $number . '-main-source-label', true );
 
 				$media_details = json_decode( stripslashes( get_post_meta( $post_id, '_jwppp-media-details', true ) ) );
 
@@ -125,9 +124,6 @@ echo '<table class="widefat jwppp-' . esc_attr( $number ) . '" style="margin: 0.
 					echo '<input type="text" id="_jwppp-video-url-' . esc_attr( $number ) . '" class="jwppp-url" name="_jwppp-video-url-' . esc_attr( $number ) . '" placeholder="' . esc_attr( __( 'Media URL', 'jwppp' ) ) . '" ';
 					echo ( '1' !== $video_url ) ? 'value="' . esc_attr( $video_url ) . '" ' : 'value="" ';
 					echo 'size="60" />';
-
-					echo '<input type="text" name="_jwppp-' . esc_attr( $number ) . '-main-source-label" id ="_jwppp-' . esc_attr( $number ) . '-main-source-label" class="source-label-' . esc_attr( $number ) . '" style="margin-right:1rem; display: none;';
-					echo '" value="' . esc_attr( $main_source_label ) . '" placeholder="' . esc_attr( __( 'Label (HD, 720p, 360p)', 'jwppp' ) ) . '" size="30" />';
 
 				echo '</p>';
 

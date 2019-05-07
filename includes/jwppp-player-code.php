@@ -128,7 +128,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 					foreach ( $videos as $number ) {
 
 						$jwppp_video_url = get_post_meta( $p_id, '_jwppp-video-url-' . $number, true );
-						$jwppp_sources_number = get_post_meta( $p_id, '_jwppp-sources-number-' . $number );
+						$jwppp_sources_number = 1;
 						$jwppp_source_1 = get_post_meta( $p_id, '_jwppp-' . $number . '-source-1-url', true );
 						$video_title = get_post_meta( $p_id, '_jwppp-video-title-' . $number, true );
 						$video_description = get_post_meta( $p_id, '_jwppp-video-description-' . $number, true );
@@ -152,23 +152,17 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 						}
 
 						echo "file: " . wp_json_encode( $jwppp_video_url, JSON_UNESCAPED_SLASHES ) . ",\n";
-						if ( $jwppp_sources_number && $jwppp_sources_number[0] > 1 ) {
-							$main_source_label = get_post_meta( $p_id, '_jwppp-' . $number . '-main-source-label', true );
-							echo ( $main_source_label ) ? "label: '" . wp_json_encode( $main_source_label ) . "'\n" : '';
-						}
 
 						if ( $jwppp_source_1 ) {
 							echo "},\n";
 						}
 
 						if ( $jwppp_source_1 ) {
-							for ( $i = 1; $i < $jwppp_sources_number[0] + 1; $i++ ) {
+							for ( $i = 1; $i < $jwppp_sources_number + 1; $i++ ) {
 								$source_url = get_post_meta( $p_id, '_jwppp-' . $number . '-source-' . $i . '-url', true );
-								$source_label = get_post_meta( $p_id, '_jwppp-' . $number . '-source-' . $i . '-label', true );
 								if ( $source_url ) {
 									echo "{\n";
 									echo "file: " . wp_json_encode( $source_url, JSON_UNESCAPED_SLASHES ) . ",\n";
-									echo ( $source_label ) ? "label: '" . wp_json_encode( $source_label ) . "'\n" : '';
 									echo "},\n";
 								}
 							}
