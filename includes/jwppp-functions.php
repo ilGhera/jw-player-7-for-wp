@@ -237,10 +237,7 @@ function jwppp_add_header_code() {
 		}
 		$player_parts = explode( '.js', $library_parts[1] );
 
-		/*Check if the security option is activated*/
-		$security_embeds = sanitize_text_field( get_option( 'jwppp-secure-player-embeds' ) );
-
-		$library = $security_embeds ? jwppp_get_signed_embed( $player_parts[0] ) : $get_library;
+		$library = $get_library;
 		if ( null !== $library ) {
 			wp_enqueue_script( 'jwppp-library', $library );
 		}
