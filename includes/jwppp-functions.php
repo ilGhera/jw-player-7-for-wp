@@ -618,38 +618,37 @@ function jwppp_add_player( $content ) {
 	global $post;
 	$type = get_post_type( $post->ID );
 
-	if ( is_singular() && ( sanitize_text_field( get_option( 'jwppp-type-' . $type ) ) === '1' ) ) {
-		$jwppp_videos = jwppp_get_post_videos( $post->ID );
-		if ( $jwppp_videos ) {
-			$video = null;
+	$jwppp_videos = jwppp_get_post_videos( $post->ID );
+	if ( $jwppp_videos ) {
+		$video = null;
 
-			ob_start();
+		ob_start();
 
-			for ( $i = 1; $i <= count( $jwppp_videos ); $i++ ) {
-				$number       = $i;
-				$post_id      = get_the_ID();
-				$video       .= jwppp_player_code(
-					$post_id,
-					$number,
-					$ar = '',
-					$width = '',
-					$height = '',
-					$pl_autostart = '',
-					$pl_mute = '',
-					$pl_repeat = ''
-				);
-			}
+		for ( $i = 1; $i <= count( $jwppp_videos ); $i++ ) {
+			$number       = $i;
+			$post_id      = get_the_ID();
+			$video       .= jwppp_player_code(
+				$post_id,
+				$number,
+				$ar = '',
+				$width = '',
+				$height = '',
+				$pl_autostart = '',
+				$pl_mute = '',
+				$pl_repeat = ''
+			);
+		}
 
-			$output = ob_get_clean();
+		$output = ob_get_clean();
 
-			$position = get_option( 'jwppp-position' );
-			if ( 'after-content' === $position ) {
-				$content = $content . $output;
-			} elseif ( 'before-content' === $position ) {
-				$content = $output . $content;
-			}
+		$position = get_option( 'jwppp-position' );
+		if ( 'after-content' === $position ) {
+			$content = $content . $output;
+		} elseif ( 'before-content' === $position ) {
+			$content = $output . $content;
 		}
 	}
+	
 	return $content;
 }
 add_filter( 'the_content', 'jwppp_add_player' );
