@@ -37,6 +37,11 @@
     border-radius: 5px;
 }
 
+.label.premium.box {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
 .label.premium a {
 	color: #fff;
 	font-size: 10px;

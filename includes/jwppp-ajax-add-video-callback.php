@@ -15,7 +15,7 @@ function jwppp_ajax_add_video_callback() {
 		if ( $number && $post_id ) {
 
 			update_post_meta( $post_id, '_jwppp-video-url-' . $number, 1 );
-			include( JWPPP_INCLUDES . 'jwppp-single-video-box.php' );
+			include( JWPPP_INCLUDES . 'jwppp-second-video-box.php' );
 
 		}
 	}

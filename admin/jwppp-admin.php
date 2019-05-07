@@ -360,33 +360,15 @@ function jwppp_options() {
 			 * For cloud player
 			 * Api credentials
 			 */
-			$api_key = sanitize_text_field( get_option( 'jwppp-api-key' ) );
-			if ( isset( $_POST['jwppp-api-key'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
-				$api_key = sanitize_text_field( wp_unslash( $_POST['jwppp-api-key'] ) );
-				update_option( 'jwppp-api-key', $api_key );
-			}
-			$api_secret = sanitize_text_field( get_option( 'jwppp-api-secret' ) );
-			if ( isset( $_POST['jwppp-api-secret'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
-				$api_secret = sanitize_text_field( wp_unslash( $_POST['jwppp-api-secret'] ) );
-				update_option( 'jwppp-api-secret', $api_secret );
-			}
-
 			echo '<tr>';
 			echo '<th scope="row">' . esc_html( __( 'API Credentials', 'jwppp' ) );
 			echo '<td>';
-			echo '<input type="text" class="regular-text" id="jwppp-api-key" name="jwppp-api-key" placeholder="' . esc_attr( __( 'Add your API Key', 'jwppp' ) ) . '" value="' . esc_attr( $api_key ) . '" /><br>';
-			echo '<input type="text" class="regular-text" id="jwppp-api-secret" name="jwppp-api-secret" placeholder="' . esc_attr( __( 'Add your API Secret', 'jwppp' ) ) . '" value="' . esc_attr( $api_secret ) . '" />';
+			echo '<input type="text" class="regular-text" id="jwppp-api-key" name="jwppp-api-key" placeholder="' . esc_attr( __( 'Add your API Key', 'jwppp' ) ) . '" disabled="disabled" /><br>';
+			echo '<input type="text" class="regular-text" id="jwppp-api-secret" name="jwppp-api-secret" placeholder="' . esc_attr( __( 'Add your API Secret', 'jwppp' ) ) . '" disabled="disabled" />';
 			echo '<p class="description">' . esc_html( __( 'API Key and Secret', 'jwppp' ) ) . '</p>';
-
-			/*Api class instance*/
-			$api = new JWPPP_Dashboard_Api();
-
-			/*Credentials validation*/
-			if ( $api->args_check() && ! $api->account_validation() ) {
-				echo '<span class="jwppp-alert api">' . esc_html( 'Invalid API Credentials', 'jwppp' ) . '</span>';
-			}
-				echo '</td>';
-				echo '</tr>';
+			go_premium( __( 'Connect to your JW Player Dashboard and get your contents directly', 'jwppp') );
+			echo '</td>';
+			echo '</tr>';
 		}
 
 			/*Post types selection*/

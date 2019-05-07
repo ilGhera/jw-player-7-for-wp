@@ -14,8 +14,6 @@ require( JWPPP_INCLUDES . 'jwppp-save-single-video-data.php' );
 require( JWPPP_INCLUDES . 'jwppp-sh-player-options.php' );
 require( JWPPP_INCLUDES . 'jwppp-ads-code-block.php' );
 require( JWPPP_INCLUDES . 'jwppp-player-code.php' );
-require( JWPPP_DIR . 'classes/class-jwppp-dashboard-api.php' );
-require( JWPPP_DIR . 'botr/api.php' );
 
 require_once( JWPPP_DIR . 'libraries/JWT.php' );
 use \Firebase\JWT\JWT;
@@ -40,12 +38,13 @@ add_action( 'add_meta_boxes', 'jwppp_add_meta_box' );
 
 /**
  * Button premium call to action
- * @param string the text to use as title
+ * @param string $text the text to use as title
+ * @param bool   $box  used in single video box
  * @return mixed
  */
-function go_premium( $text = null ) {
+function go_premium( $text = null, $box = false ) {
 	echo '<div class="bootstrap-iso">';
-		echo '<span class="label label-warning premium"><a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank" title="' . esc_html( $text ) . '">Premium</a></label>';
+		echo '<span class="label label-warning premium' . ( $box ? ' box' : '' ) . '"><a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank" title="' . esc_html( $text ) . '">Premium</a></label>';
 	echo '</div>';
 }
 
@@ -717,133 +716,15 @@ function jwppp_playlist_carousel( $player_id ) {
 
 
 /**
- * Search contents in the dashboard, both single videos and playlists
- * @return string a json encoded array of the results
- */
-function jwppp_search_content_callback() {
-
-	$api = new JWPPP_Dashboard_Api();
-
-	if ( isset( $_POST['number'], $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ) ) {
-
-		if ( wp_verify_nonce(
-			$_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ],
-			'jwppp-meta-box-nonce-' . sanitize_text_field( wp_unslash( $_POST['number'] ) )
-		) ) {
-
-			$term = isset( $_POST['value'] ) ? sanitize_text_field( wp_unslash( $_POST['value'] ) ) : '';
-
-			if ( $term ) {
-				$videos = $api->search( $term );
-				$playlists = $api->search( $term, true );
-			} else {
-				$videos = $api->get_videos();
-				$playlists = $api->get_playlists();
-			}
-
-			echo wp_json_encode(
-				array(
-					'videos' => $videos,
-					'playlists' => $playlists,
-				)
-			);
-
-		}
-	}
-
-	exit;
-}
-add_action( 'wp_ajax_search-content', 'jwppp_search_content_callback' );
-
-
-/**
  * Returns videos and playlists
  * Fired when the select element is clicked
  */
 function jwppp_list_content_callback() {
 
-	if ( isset( $_POST['number'], $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ) ) {
-
-		if ( wp_verify_nonce(
-			$_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ],
-			'jwppp-meta-box-nonce-' . sanitize_text_field( wp_unslash( $_POST['number'] ) )
-		) ) {
-
-			$post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : '';
-			$number = intval( $_POST['number'] );
-
-			if ( $post_id && $number ) {
-
-				$api = new JWPPP_Dashboard_Api();
-
-				$video_url = get_post_meta( $post_id, '_jwppp-video-url-' . $number, true );
-
-				if ( $api->args_check() ) {
-					if ( $api->account_validation() ) {
-
-						$videos = $api->get_videos();
-						$playlists = $api->get_playlists();
-
-						/*Videos*/
-						if ( is_array( $videos ) ) {
-
-							if ( isset( $videos['error'] ) ) {
-
-								echo '<span class="jwppp-alert api">' . esc_html( $videos['error'] ) . '</span>';
-
-							} else {
-
-								echo '<li class="reset">' . esc_html( 'select a video', 'jwppp' ) . '<span>' . esc_html( __( 'clear', 'jwppp' ) ) . '</span></li>';
-								for ( $i = 0; $i < min( 15, count( $videos ) ); $i++ ) {
-									echo '<li ';
-										echo 'data-mediaid="' . ( isset( $videos[ $i ]->key ) ? esc_attr( $videos[ $i ]->key ) : '' ) . '" ';
-										echo 'data-duration="' . ( isset( $videos[ $i ]->duration ) ? esc_attr( $videos[ $i ]->duration ) : '' ) . '" ';
-										echo 'data-description="' . ( isset( $videos[ $i ]->description ) ? esc_attr( $videos[ $i ]->description ) : '' ) . '"';
-										echo 'data-tags="' . ( isset( $videos[ $i ]->tags ) ? esc_attr( $videos[ $i ]->tags ) : '' ) . '"';
-										echo ( $video_url === $videos[ $i ]->key ? ' class="selected"' : '' ) . '>';
-										echo '<img class="video-img" src="https://cdn.jwplayer.com/thumbs/' . ( isset( $videos[ $i ]->key ) ? esc_html( $videos[ $i ]->key ) : '' ) . '-60.jpg" />';
-										echo '<span>' . ( isset( $videos[ $i ]->title ) ? esc_html( $videos[ $i ]->title ) : '' ) . '</span>';
-									echo '</li>';
-								}
-							}
-						}
-
-						/*Playlists*/
-						if ( is_array( $playlists ) ) {
-
-							if ( isset( $playlists['error'] ) ) {
-
-								if ( ! isset( $videos['error'] ) ) {
-									echo '<span class="jwppp-alert api">' . esc_html( $playlists['error'] ) . '</span>';
-								}
-							} else {
-
-								$playlist_thumb = plugin_dir_url( __DIR__ ) . 'images/playlist4.png';
-								echo '<li class="reset">' . esc_html( 'Select a playlist', 'jwppp' ) . '<span>' . esc_html( __( 'Clear', 'jwppp' ) ) . '</span></li>';
-								for ( $i = 0; $i < min( 15, count( $playlists ) ); $i++ ) {
-									echo '<li class="playlist-element' . ( $video_url === $playlists[ $i ]->key ? ' selected' : '' ) . '" ';
-										echo 'data-mediaid="' . ( isset( $playlists[ $i ]->key ) ? esc_attr( $playlists[ $i ]->key ) : '' ) . '"';
-										echo 'data-description="' . ( isset( $playlists[ $i ]->description ) ? esc_attr( $playlists[ $i ]->description ) : '' ) . '"';
-										echo 'data-videos="' . ( isset( $playlists[ $i ]->videos->total ) ? esc_attr( $playlists[ $i ]->videos->total ) : '' ) . '"';
-										echo '>';
-										echo '<img class="video-img" src="' . esc_url( $playlist_thumb ) . '" />';
-										echo '<span>' . ( isset( $playlists[ $i ]->title ) ? esc_html( $playlists[ $i ]->title ) : '' ) . '</span>';
-									echo '</li>';
-								}
-							}
-						}
-					} else {
-
-						echo '<span class="jwppp-alert api">' . esc_html( __( 'Invalid API Credentials.', 'jwppp' ) ) . '</span>';
-
-					}
-				} else {
-
-					echo '<span class="jwppp-alert api">' . esc_html( __( 'API Credentials are required for using this tool.', 'jwppp' ) ) . '</span>';
-
-				}
-			}
-		}
+	if ( isset( $_POST['number'], $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ) ) {		
+					
+		echo '<span class="jwppp-alert api">' . esc_html( __( 'API Credentials are required for using this tool.', 'jwppp' ) ) . '</span>';
+	
 	}
 
 	exit;
@@ -863,40 +744,16 @@ function jwppp_get_player_callback() {
 			$_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ],
 			'jwppp-meta-box-nonce-' . sanitize_text_field( wp_unslash( $_POST['number'] ) )
 		) ) {
-
-			$post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : '';
-			$number = intval( $_POST['number'] );
-
-			/*Player library*/
-			$library_parts = explode( 'libraries/', get_option( 'jwppp-library' ) );
-
-			/*Choose player*/
-			$choose_player = get_post_meta( $post_id, '_jwppp-choose-player-' . $number, true );
-
-			$api = new JWPPP_Dashboard_Api();
-			$players = $api->get_players();
-
-			if ( is_array( $players ) && ! isset( $players['error'] ) ) {
-
+				$number = sanitize_text_field( $_POST['number'] );
 				echo '<label for="_jwppp-choose-player-' . esc_attr( $number ) . '"><strong>' . esc_html( __( 'Select Player', 'jwppp' ) ) . '</strong></label>';
 				echo '<p>';
 					echo '<select class="jwppp-choose-player-' . esc_attr( $number ) . '" name="_jwppp-choose-player-' . esc_attr( $number ) . '">';
-
-				foreach ( $players as $player ) {
-					$selected = false;
-					if ( $choose_player && $choose_player === $player->key ) {
-						$selected = true;
-					} elseif ( ! $choose_player && $library_parts[1] === $player->key . '.js' ) {
-						$selected = true;
-					}
-					echo '<option name="' . esc_attr( $player->key ) . '" value="' . esc_attr( $player->key ) . '"' . ( $selected ? ' selected="selected"' : '' ) . '>' . esc_html( $player->name ) . '</option>';
-				}
-
+					echo '<option>' . esc_html( __( 'No players available', 'jwppp' ) ) . '</option>';
 					echo '</select>';
+					go_premium( null, true );
 				echo '</p>';
 
 			}
-		}
 	}
 
 	exit;
