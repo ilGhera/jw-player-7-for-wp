@@ -330,7 +330,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 						/*Media type*/
 						if ( $jwppp_media_type ) {
-							echo "type: '" . wp_json_encode( $jwppp_media_type ) . "',\n";
+							echo "type: " . wp_json_encode( $jwppp_media_type ) . ",\n";
 						}
 
 						/*Autoplay*/
