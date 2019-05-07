@@ -11,7 +11,7 @@ jQuery( document ).ready( function( $ ) {
 	var tot;
 	var string;
 
-	$( '.jwppp-remove' ).bind( 'click', function() {
+	$( document ).on( 'click', '.jwppp-remove', function() {
 		var data = {
 			'action': 'jwppp_ajax_remove',
 			'hidden-nonce-remove-video': removeNonce,
