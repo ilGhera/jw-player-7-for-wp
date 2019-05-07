@@ -12,11 +12,7 @@ require( JWPPP_INCLUDES . 'jwppp-ajax-remove-video-callback.php' );
 require( JWPPP_INCLUDES . 'jwppp-video-tools.php' );
 require( JWPPP_INCLUDES . 'jwppp-save-single-video-data.php' );
 require( JWPPP_INCLUDES . 'jwppp-sh-player-options.php' );
-require( JWPPP_INCLUDES . 'jwppp-ads-code-block.php' );
 require( JWPPP_INCLUDES . 'jwppp-player-code.php' );
-
-require_once( JWPPP_DIR . 'libraries/JWT.php' );
-use \Firebase\JWT\JWT;
 
 /**
  * Add meta box
@@ -344,77 +340,6 @@ add_action( 'init', 'jwppp_get_video_post_types', 0 );
 
 
 /**
- * Create the taxonomy "Video categories"
- */
-function jwppp_create_taxonomy() {
-	$labels = array(
-		'name'              => __( 'Video categories', 'jwppp' ),
-		'singular_name'     => __( 'Video category', 'jwppp' ),
-		'search_items'      => __( 'Search video categories', 'jwppp' ),
-		'all_items'         => __( 'All video categories', 'jwppp' ),
-		'parent_item'       => __( 'Parent video category', 'jwppp' ),
-		'parent_item_colon' => __( 'Parent video category:', 'jwppp' ),
-		'edit_item'         => __( 'Edit video category', 'jwppp' ),
-		'update_item'       => __( 'Update video category', 'jwppp' ),
-		'add_new_item'      => __( 'Add New video category', 'jwppp' ),
-		'new_item_name'     => __( 'New video category Name', 'jwppp' ),
-		'menu_name'         => __( 'Video categories', 'jwppp' ),
-	);
-
-	$args = array(
-		'hierarchical'      => true,
-		'labels'            => $labels,
-		'show_ui'           => true,
-		'show_admin_column' => true,
-		'show_in_rest'    	=> true,
-		'query_var'         => true,
-		'rewrite'           => array( 'slug' => 'video-categories' ),
-	);
-
-	$jwppp_taxonomy_select = sanitize_text_field( get_option( 'jwppp-taxonomy-select' ) );
-	if ( 'video-categories' === $jwppp_taxonomy_select ) {
-		register_taxonomy( 'video-categories', jwppp_get_video_post_types(), $args );
-	}
-}
-add_action( 'init', 'jwppp_create_taxonomy', 1 );
-
-
-/**
- * Add the "Video categories" taxonomy to all chosen post types
- */
-function jwppp_add_taxonomy() {
-	$types = jwppp_get_video_post_types();
-	$jwppp_taxonomy_select = sanitize_text_field( get_option( 'jwppp-taxonomy-select' ) );
-	foreach ( $types as $type ) {
-		register_taxonomy_for_object_type( $jwppp_taxonomy_select, $type );
-		add_post_type_support( $type, $jwppp_taxonomy_select );
-	}
-}
-add_action( 'admin_init', 'jwppp_add_taxonomy' );
-
-
-/**
- * The feed for related posts
- */
-function jwppp_get_feed_url() {
-	$id = get_the_ID();
-	$taxonomy = sanitize_text_field( get_option( 'jwppp-taxonomy-select' ) );
-	$terms = wp_get_post_terms( $id, $taxonomy );
-
-	if ( isset( $terms[0]->term_id ) ) {
-		$feed = get_term_link( $terms[0]->term_id, $taxonomy ); 
-		if( get_option( 'permalink_structure' ) ) {
-			$feed .= 'related-videos';
-		} else {
-			$feed .= '&feed=related-videos';
-		}
-
-		return $feed;
-	}	
-}
-
-
-/**
  * Check if a source is a YouTube video
  * @param  string $jwppp_video_url a full url to check
  * @param  int $number             the video number of the current post
@@ -460,82 +385,6 @@ function jwppp_search_yt( $jwppp_video_url = '', $number = '' ) {
 		'video-image' => $yt_video_image,
 	);
 
-}
-
-
-/**
- * Check if the single post/ page ad tag still exists in the option array
- * @param  array $tags the ad tags saved by the user
- * @param  string $tag  the single tag choosed for the specific video
- * @return bool
- */
-function jwppp_ads_tag_exists( $tags, $tag ) {
-	foreach ( $tags as $single ) {
-		if ( $single['url'] === $tag ) {
-			return true;
-		}
-	}
-	return false;
-}
-
-
-/**
- * Generate signed URLs
- * @param  string $media_id the media id
- * @param  bool   $short return only the last part of the url
- * @param  bool   $matching define if the media is a Article Matching plylist
- * @return string
- */
-function jwppp_get_signed_url( $media_id, $short = false, $matching = false ) {
-
-	$token_secret = get_option( 'jwppp-api-secret' );
-	$resource = "v2/media/$media_id";
-	$resource4token = $resource;
-	$plus = '?';
-
-	/*Different url for Article Matching playlists*/
-	if ( $matching ) {
-		$resource = "v2/playlists/$media_id";
-		$resource4token = explode('?search', $resource)[0];
-		$plus = '&';
-	}
-
-	$timeout = get_option( 'jwppp-secure-timeout' ) ? get_option( 'jwppp-secure-timeout' ) : 60;
-
-	$expires = ceil( ( time() + ( $timeout * 60 ) ) / 180 ) * 180;
-
-	$token_body = array(
-		'resource' => $resource4token,
-		'exp' 	   => $expires,
-	);
-
-	$jwt = JWT::encode( $token_body, $token_secret );
-
-	if ( $short ) {
-		return $resource . $plus . "token=$jwt";
-	} else {
-		return "https://cdn.jwplayer.com/" . $resource . $plus . "token=$jwt";
-	}
-}
-
-
-/**
- * Generate signed embeds
- * @param  string $player_id the player id
- * @return string
- */
-function jwppp_get_signed_embed( $player_id ) {
-
-	$token_secret = get_option( 'jwppp-api-secret' );
-	$path = 'libraries/' . $player_id . '.js';
-	$timeout = get_option( 'jwppp-secure-timeout' ) ? get_option( 'jwppp-secure-timeout' ) : 60;
-
-	$expires = ceil( ( time() + ( $timeout * 60 ) ) / 180 ) * 180;
-
-	$signature = md5( $path . ':' . $expires . ':' . $token_secret );
-	$url = 'https://content.jwplatform.com/' . $path . '?exp=' . $expires . '&sig=' . $signature;
-
-	return $url;
 }
 
 
@@ -689,33 +538,6 @@ add_filter( 'the_content', 'jwppp_add_player' );
 
 
 /**
- * The playlist carousel html element
- * @param  int $player_id the id of the player
- * @return mixed
- */
-function jwppp_playlist_carousel( $player_id ) {
-
-	echo '<div id="jwppp-playlist-carousel-' . esc_attr( $player_id ) . '" class="jw-widget">';
-		echo '<div class="jw-widget-title"></div>';
-		echo '<div class="jw-widget-content"></div>';
-		echo '<div class="jw-widget-arrows">';
-			echo '<div class="arrow previous disabled">';
-				echo '<svg class="icon" width="61.1px" height="100px" viewBox="622.7 564.5 61.1 100" fill="#fff" xml:space="preserve">';
-					echo '<path d="M680.6,567.7c4.3,4.3,4.3,11.3,0,15.5l-31.2,31.2l31.2,31.2c4.3,4.3,4.3,11.3,0,15.5c-4.3,4.3-11.3,4.3-15.7,0l-39-39c-4.3-4.3-4.3-11.3,0-15.5l39.1-39C669.3,563.4,676.3,563.4,680.6,567.7z"/>';
-				echo '</svg>';
-			echo '</div>';
-			echo '<div class="arrow next">';
-				echo '<svg class="icon" width="61.3px" height="100px" viewBox="625.1 564.5 61.3 100" style="enable-background:new 625.1 564.5 61.3 100;" xml:space="preserve" fill="#fff">';
-					echo '<path d="M644,567.7l39.1,39c4.3,4.3,4.3,11.3,0,15.5l-39.1,39c-4.3,4.3-11.3,4.3-15.7,0c-4.3-4.3-4.3-11.3,0-15.5l31.3-31.2l-31.3-31.2c-4.3-4.3-4.3-11.3,0-15.5C632.6,563.4,639.6,563.4,644,567.7z"/>';
-				echo '</svg>';
-			echo '</div>';
-		echo '</div>';
-	echo '</div>';
-
-}
-
-
-/**
  * Returns videos and playlists
  * Fired when the select element is clicked
  */
@@ -730,32 +552,3 @@ function jwppp_list_content_callback() {
 	exit;
 }
 add_action( 'wp_ajax_init-api', 'jwppp_list_content_callback' );
-
-
-/**
- * Returns the players available from the dashboard
- * Fired when the "Show options" is clicked
- */
-function jwppp_get_player_callback() {
-
-	if ( isset( $_POST['number'], $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ) ) {
-
-		if ( wp_verify_nonce(
-			$_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ],
-			'jwppp-meta-box-nonce-' . sanitize_text_field( wp_unslash( $_POST['number'] ) )
-		) ) {
-				$number = sanitize_text_field( $_POST['number'] );
-				echo '<label for="_jwppp-choose-player-' . esc_attr( $number ) . '"><strong>' . esc_html( __( 'Select Player', 'jwppp' ) ) . '</strong></label>';
-				echo '<p>';
-					echo '<select class="jwppp-choose-player-' . esc_attr( $number ) . '" name="_jwppp-choose-player-' . esc_attr( $number ) . '">';
-					echo '<option>' . esc_html( __( 'No players available', 'jwppp' ) ) . '</option>';
-					echo '</select>';
-					go_premium( null, true );
-				echo '</p>';
-
-			}
-	}
-
-	exit;
-}
-add_action( 'wp_ajax_get-players', 'jwppp_get_player_callback' );
