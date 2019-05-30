@@ -14,6 +14,9 @@ Change skin, position and dimensions of your player. Allow users share and embed
 
 **NEW ON THIS VERSION!**
 
+* Support shortcodes like *[jwplayer fPHnET5D]*
+* Facebook Instant Articles support
+* WP Coding Sandard 
 * (Premium) JW Player dashboard connection by API Key and Secret
 * (Premium) Select and publish videos hosted on JW Player
 * (Premium) Select and publish playlist hosted on JW Player
@@ -27,9 +30,6 @@ Change skin, position and dimensions of your player. Allow users share and embed
 * (Premium) Possibility to use an advertising embed block variable
 * (Premium) Video/ Playlist description in meta box
 * (Premium) Video/ Playlist thumbanil in meta box
-* Support shortcodes like [jwplayer fPHnET5D]
-* Facebook Instant Articles support
-* WP Coding Sandard 
 
 JW Player for Wordpress can be used with the cloud or even the self-hosted version of the player.<br>
 
@@ -95,6 +95,9 @@ That's all, you're ready to go!
 = 2.0.0 =
 Release Date: 30 May 2019
 
+* Enhancement: Support shortcodes like *[jwplayer fPHnET5D]*
+* Enhancement: Facebook Instant Articles support
+* Enhancement: WP Coding Sandard 
 * Enhancement (Premium): JW Player dashboard connection by API Key and Secret
 * Enhancement (Premium): Select and publish videos hosted on JW Player
 * Enhancement (Premium): Select and publish playlist hosted on JW Player
@@ -108,8 +111,6 @@ Release Date: 30 May 2019
 * Enhancement (Premium): Possibility to use an advertising embed block variable
 * Enhancement (Premium): Video/ Playlist description in meta box
 * Enhancement (Premium): Video/ Playlist thumbanil in meta box
-* Enhancement: Facebook Instant Articles support
-* Enhancement: WP Coding Sandard 
 
 
 = 1.5.3 =
