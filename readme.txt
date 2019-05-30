@@ -74,11 +74,20 @@ That's all, you're ready to go!
 
 
 == Screenshots ==
-1. Post types and position
-2. JWP7 skin selection
-3. JWP8 full skin customization (Premium)
-4. Sharing options
-5. Single video options
+
+1. Publishing videos and playlists
+2. Select videos and playlists hosted on JW Player
+3. Self hosted video options
+4. Cloud player setup and API Credentials
+5. Playlist carousel options
+6. Security options
+7. Ads options
+8. Self hosted player general options
+9. JWP7 skin customization
+10. JWP8 skin customization
+11. Subtitles options
+12. Sharing options
+13. Related post options 
 
 
 == Changelog ==
