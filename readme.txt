@@ -36,11 +36,13 @@ Player customization, social sharing and advertising are just an example.
 JW Player for Wordpress can be used with the cloud or even the self-hosted version of the player.<br>
 
 **Cloud**
+
 * Register a JW Player account at https://www.jwplayer.com/sign-up/
 * Once you're logged in, copy your **Cloud Hosted Player Libraries** from https://dashboard.jwplayer.com/#/players/downloads
 * Paste your library url to the plugin options page.
 
 **Self hosted**
+
 * Register a JW Player account at https://www.jwplayer.com/sign-up/
 * Once you're logged in, download the player and copy your Licence key from https://dashboard.jwplayer.com/#/players/downloads
 * Upload the folder to your site
