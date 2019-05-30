@@ -27,6 +27,7 @@ Change skin, position and dimensions of your player. Allow users share and embed
 * (Premium) Possibility to use an advertising embed block variable
 * (Premium) Video/ Playlist description in meta box
 * (Premium) Video/ Playlist thumbanil in meta box
+* Support shortcodes like [jwplayer fPHnET5D]
 * Facebook Instant Articles support
 * WP Coding Sandard 
 
