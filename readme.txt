@@ -45,9 +45,23 @@ That's all, you're ready to go!
 
 
 = 2.0.0 =
-Release Date: xxxxxxxx
+Release Date: 30 May 2019
 
-* xxxxxxxx : xxxxxxxx
+* Enhancement : JW Player dashboard connection by API Key and Secret
+* Enhancement : Select and publish videos hosted on JW Player
+* Enhancement : Select and publish playlist hosted on JW Player
+* Enhancement : For every embeded video, select and use a specific player set on JW Player
+* Enhancement : Secure video URLs
+* Enhancement : Secure player embeds
+* Enhancement : Playlist carousel customizable
+* Enhancement : Facebook Instant Articles support
+* Enhancement : Unlimited ad tags
+* Enhancement : Select a specific ad tag for every single video
+* Enhancement : Player bidding support with SpotX
+* Enhancement : Possibility to use an advertising embed block variable
+* Enhancement : Video/ Playlist description in meta box
+* Enhancement : Video/ Playlist thumbanil in meta box
+* Enhancement : WP Coding Sandard 
 
 
 = 1.5.4 =
