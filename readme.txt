@@ -48,7 +48,7 @@ JW Player for Wordpress can be used with the cloud or even the self-hosted versi
 * Paste your Licence Key to the admin page of the plugin.
 
 After that, set your general preferences, choose the post types where you want to add videos and start to add content using the **JW Player for Wordpress** box that you'll find there.<br>
-Just add the url of your self-hosted video, YouTube video or MP3.<br>
+Just add the url of your self-hosted video or select a content hosted on your JW Player Dashboard.<br>
 That's all, you're ready to go!
 
 == Installation ==
