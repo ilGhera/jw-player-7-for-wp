@@ -33,6 +33,7 @@ Player customization, social sharing and advertising are just an example.
 * Possibility to use an advertising embed block variable
 * Video/ Playlist description in meta box
 * Video/ Playlist thumbanil in meta box
+* Support shortcodes like [jwplayer fPHnET5D]
 * WP Coding Sandard 
 
 JW Player for Wordpress - VIP can be used with the cloud or even the self-hosted version of the player.<br>
