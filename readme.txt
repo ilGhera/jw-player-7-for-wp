@@ -6,14 +6,11 @@ Requires at least: 4.0
 Tested up to: 5
 License: GPLv2
 
-**JW Player for Wordpress** is the complete solution for using JW Player into Wordpress.
-It works with the latest version of the famous video player and it gives you full control of all the options available.
-Player customization, social sharing and advertising are just an example.
+**JW Player for Wordpress** gives you all what you need to publish videos on your posts and pages, using the most famous web player in the world.
 
 == Description ==
-**JW Player for Wordpress** is the complete solution for using JW Player into Wordpress.
-It works with the latest version of the famous video player and it gives you full control of all the options available.
-Player customization, social sharing and advertising are just an example.
+**JW Player for Wordpress** gives you all what you need to publish videos on your Wordpress posts and pages, using the most famous web player in the world.
+Change skin, position and dimensions of your player. Allow users share and embed your contents.
 
 **NEW ON THIS VERSION!**
 
@@ -48,7 +45,7 @@ JW Player for Wordpress can be used with the cloud or even the self-hosted versi
 * Paste your Licence Key to the admin page of the plugin.
 
 After that, set your general preferences, choose the post types where you want to add videos and start to add content using the **JW Player for Wordpress** box that you'll find there.<br>
-Just add the url of your self-hosted video or select a content hosted on your JW Player Dashboard.<br>
+Just add the url of your self-hosted video or select a content hosted on your JW Player Dashboard (Premium).<br>
 That's all, you're ready to go!
 
 
