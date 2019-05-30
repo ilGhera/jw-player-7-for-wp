@@ -670,6 +670,7 @@ function jwppp_options() {
 	</div><!-- wrap-left -->
 	<div class="wrap-right" style="float:left; width:30%; text-align:center; padding-top:3rem;">
 		<!-- Banners here -->
+		<iframe width="300" height="800" scrolling="no" src="https://www.ilghera.com/images/jwppp-iframe.html"></iframe>
 	</div>
 	<div class="clear"></div>
 
