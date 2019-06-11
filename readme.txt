@@ -6,53 +6,58 @@ Requires at least: 4.0
 Tested up to: 5.2
 License: GPLv2
 
-**JW Player for Wordpress** gives you all what you need to publish videos on your posts and pages, using the most famous web player in the world.
+**JW Player for WordPress** enables you to publish videos on your WordPress posts and pages using the most popular video player on the web. Take complete control of your player, from branding to size and dimensions. Allow users share and embed your videos from your WordPress pages & posts.
 
 == Description ==
-**JW Player for Wordpress** gives you all what you need to publish videos on your Wordpress posts and pages, using the most famous web player in the world.
-Change skin, position and dimensions of your player. Allow users share and embed your contents.
 
-**NEW ON THIS VERSION!**
+**JW Player for WordPress** enables you to publish videos on your WordPress posts and pages using the most popular video player on the web. Take complete control of your player, from branding to size and dimensions. Allow users share and embed your videos from your WordPress pages & posts.
+ 
+**Free Features (NEW!):**
 
-* Support shortcodes like *[jwplayer fPHnET5D]*
+* Support shortcodes like [jwplayer fPHnET5D]
 * Facebook Instant Articles support
-* WP Coding Sandard 
-* (Premium) JW Player dashboard connection by API Key and Secret
-* (Premium) Select and publish videos hosted on JW Player
-* (Premium) Select and publish playlist hosted on JW Player
-* (Premium) For every embeded video, select and use a specific player set on JW Player
-* (Premium) Secure video URLs
-* (Premium) Secure player embeds
-* (Premium) Playlist carousel customizable
-* (Premium) Unlimited ad tags
-* (Premium) Select a specific ad tag for every single video
-* (Premium) Player bidding support with SpotX
-* (Premium) Possibility to use an advertising embed block variable
-* (Premium) Video/ Playlist description in meta box
-* (Premium) Video/ Playlist thumbanil in meta box
+* WP Coding Standard
 
-JW Player for Wordpress can be used with the cloud or even the self-hosted version of the player.<br>
+**Premium Features (NEW!):**
+
+* JW Player dashboard connection via API Key and Secret
+* Select and publish videos hosted on JW Player
+* Select and publish playlists hosted on JW Player
+* Select and use a specific player for individual video embeds
+* Secure video URLs
+* Secure player embeds
+* Customize playlists
+* Unlimited ad tags
+* Select a specific ad tag for every single video
+* Video player bidding support with SpotX
+* Possibility to use an advertising embed block variable
+* Video / Playlist description
+* Video / Playlist thumbnail
+
+
+JW Player for WordPress can be used with the cloud or even the self-hosted version of the player.
 
 **Cloud**
 
-* Register a JW Player account at https://www.jwplayer.com/sign-up/
-* Once you're logged in, copy your **Cloud Hosted Player Libraries** from https://dashboard.jwplayer.com/#/players/downloads
+* Register a JW Player account at https://www.jwplayer.com/pricing/
+* Once you’re logged in, copy your **Cloud Hosted Player Libraries** from https://dashboard.jwplayer.com/#/players/downloads
 * Paste your library url to the plugin options page.
 
 **Self hosted**
 
-* Register a JW Player account at https://www.jwplayer.com/sign-up/
-* Once you're logged in, download the player and copy your Licence key from https://dashboard.jwplayer.com/#/players/downloads
+* https://www.jwplayer.com/pricing/
+* Once you’re logged in, download the player and copy your License key from https://dashboard.jwplayer.com/#/players/downloads
 * Upload the folder to your site
-* Add the full url of **jwplayer.js** that you just uploaded, in the plugin options page; it will be something like https://example.com/FOLDER-UPLOADED/jwplayer.js
-* Paste your Licence Key to the admin page of the plugin.
+* Add the full url of **jwplayer.js** in the plugin options page (ex. https://example.com/FOLDER-UPLOADED/jwplayer.js)
+* Paste your License Key to the admin page of the plugin.
 
-After that, set your general preferences, choose the post types where you want to add videos and start to add content using the **JW Player for Wordpress** box that you'll find there.<br>
-Just add the url of your self-hosted video or select a content hosted on your JW Player Dashboard (Premium).<br>
-That's all, you're ready to go!
+After that, set your general preferences, choose the post types where you want to add videos and start to add content using the JW Player for WordPress box that you’ll find there. Just add the url of your self-hosted video or select cloud-hosted content from n your JW Player Dashboard.
+
+That’s it, you’re ready to go!
 
 
 == Installation ==
+
 * Download JW Player for Wordpress
 * Upload the 'jw-player-7-for-wp’ directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
 * Activate JW Player for Wordpress from your Plugins page.
