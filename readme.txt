@@ -11,7 +11,6 @@ It works with the latest version of world’s most popular video player and enab
 Enable player customization, related videos, social sharing and advertising directly into your content management system to speed up your video workflow.
 
 
-
 == Description ==
 
 **JW Player for Wordpress - VIP** is the complete solution for using JW Player into Wordpress.
