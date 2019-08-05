@@ -67,6 +67,13 @@ That’s it, you’re ready to go!
 
 == Changelog ==
 
+
+= 2.0.1 =
+Release Date: 05 August 2019
+
+* Bug fix : Plugin activation function hooked at setup_theme
+
+
 = 2.0.0 =
 Release Date: 30 May 2019
 
@@ -84,7 +91,7 @@ Release Date: 30 May 2019
 * Enhancement : Possibility to use an advertising embed block variable
 * Enhancement : Video/ Playlist description in meta box
 * Enhancement : Video/ Playlist thumbanil in meta box
-* Enhancement: Support shortcodes like *[jwplayer fPHnET5D]*
+* Enhancement : Support shortcodes like *[jwplayer fPHnET5D]*
 * Enhancement : WP Coding Sandard 
 
 
