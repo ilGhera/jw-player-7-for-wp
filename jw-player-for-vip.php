@@ -51,4 +51,4 @@ function jwppp_vip_load() {
 	include( JWPPP_DIR . 'jw-widget/jwppp-carousel-config.php' );
 
 }
-add_action( 'setup_theme', 'jwppp_vip_load' );
+add_action( 'after_setup_theme', 'jwppp_vip_load' );
