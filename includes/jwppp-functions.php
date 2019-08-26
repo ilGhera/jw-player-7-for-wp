@@ -46,26 +46,40 @@ add_action( 'add_meta_boxes', 'jwppp_add_meta_box' );
 function jwppp_get_post_videos( $post_id ) {
 
 	$videos = get_post_meta( $post_id );
-	$videos = array_filter(
-		$videos,
-		function( $key ) {
-			if ( false !== strpos( $key, '_jwppp-video-url-' ) ) {
-				return $key;
-			}
-		},
-		ARRAY_FILTER_USE_KEY
-	);
 
-	if ( count( $videos ) >= 1 && ! get_post_meta( $post_id, '_jwppp-video-url-1', true ) ) {
-		array_unshift(
+	if ( is_array( $videos ) ) {
+		
+		$videos = array_filter(
 			$videos,
-			array(
-				'_jwppp-video-url-1' => 1,
-			)
+			function( $key ) {
+				if ( false !== strpos( $key, '_jwppp-video-url-' ) ) {
+					return $key;
+				}
+			},
+			ARRAY_FILTER_USE_KEY
 		);
+
+		if ( count( $videos ) >= 1 && ! get_post_meta( $post_id, '_jwppp-video-url-1', true ) ) {
+			array_unshift(
+				$videos,
+				array(
+					'_jwppp-video-url-1' => 1,
+				)
+			);
+		}
+
+		return $videos;
+
+	} else {
+
+		return array( 
+			'_jwppp-video-url-1' => 1,
+		);
+
 	}
-	return $videos;
+
 }
+
 
 
 /**
