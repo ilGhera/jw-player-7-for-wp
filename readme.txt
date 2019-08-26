@@ -69,7 +69,6 @@ That’s it, you’re ready to go!
 = 2.0.1 =
 Release Date: 26 August 2019
 
-* Bug fix : Plugin activation function hooked at setup_theme
 * Bug fix : Array check on getting videos for the single post
 
 
