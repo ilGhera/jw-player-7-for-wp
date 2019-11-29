@@ -349,7 +349,7 @@ function jwppp_options() {
 			}
 
 			echo '<tr>';
-			echo '<th scope="row">' . esc_html( __( 'JWP Licence Key', 'jwppp' ) );
+			echo '<th scope="row">' . esc_html( __( 'JWP License Key', 'jwppp' ) );
 			echo '<a href="https://www.ilghera.com/support/topic/jw-player-self-hosted-setup/" title="More informations" target="_blank"><img class="question-mark" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a></th>';
 			echo '<td>';
 			echo '<input type="text" class="regular-text" id="jwppp-licence" name="jwppp-licence" placeholder="Only for self-hosted players" value="' . esc_attr( $licence ) . '" />';
