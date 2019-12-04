@@ -13,7 +13,7 @@ function outPlayerWidget(e) {
             f = a.querySelectorAll(".jw-widget-item"),
             m = jwplayer(o),
             h = e.widgetLayout || "spotlight",
-            v = e.widgetSize || "large",
+            v = e.widgetSize || "", //"large",
             w = e.textColor || "#fff",
             y = e.backgroundColor || "#000",
             p = e.iconColor || "#fff",
@@ -30,7 +30,7 @@ function outPlayerWidget(e) {
             i = document.querySelector(".jw-widget-item").offsetWidth + 10, S.classList.add("spotlight"), j.src = "src/img/play.svg", j.classList.add("jw-play-button"), S.append(j)
         } else "shelf" === h && (i = E());
 
-        function E() { return "large" === v ? 960 : "medium" === v ? 1120 : "small" === v ? 380 : void 0 }
+        function E() { return a.offsetWidth } //return "large" === v ? 960 : "medium" === v ? 1120 : "small" === v ? 380 : void 0 }
 
         function q() { if ("spotlight" === h) { if ("large" === v) return t.length - 3; if ("medium" === v) return t.length - 2; if ("small" === v) return t.length - 1 } else if ("shelf" === h) { for ("large" === v ? l = 4 : "medium" === v ? l = 3 : "small" === v && (l = 2); t.length > 0;) s.push(t.splice(0, l)); return s.length - 1 } }
 

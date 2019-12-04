@@ -201,11 +201,12 @@
 }
 
 .jw-widget.shelf .jw-widget-content {
-    height: 230px
+    height: 230px;
+    width: 100%;
 }
 
 .jw-widget.shelf .jw-widget-content .jw-widget-item {
-    width: 230px;
+    width: 33%;
     height: 130px;
     margin: 0 10px 0 0
 }
