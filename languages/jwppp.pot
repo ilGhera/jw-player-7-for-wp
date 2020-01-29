@@ -207,7 +207,7 @@ msgid "Activate Sharing Option"
 msgstr ""
 
 #: admin/jwppp-admin-sharing.php:51
-msgid "Activate sharing option -- can be changed on single video."
+msgid "Activate sharing option -- can be changed on single video"
 msgstr ""
 
 #: admin/jwppp-admin-sharing.php:57
@@ -230,15 +230,15 @@ msgstr ""
 #: admin/jwppp-admin-sharing.php:71
 msgid ""
 "Active <strong>embed video</strong> as default option. You'll be able to "
-"change it on single video."
+"change it on single video"
 msgstr ""
 
 #: admin/jwppp-admin-subtitles.php:19
-msgid "Please, insert a valid color."
+msgid "Please, insert a valid color"
 msgstr ""
 
 #: admin/jwppp-admin-subtitles.php:51
-msgid "Please, insert a valid background color."
+msgid "Please, insert a valid background color"
 msgstr ""
 
 #: admin/jwppp-admin-subtitles.php:67
@@ -246,7 +246,7 @@ msgid "Text Color"
 msgstr ""
 
 #: admin/jwppp-admin-subtitles.php:70
-msgid "Color of subtitles text."
+msgid "Color of subtitles text"
 msgstr ""
 
 #: admin/jwppp-admin-subtitles.php:75
@@ -298,15 +298,15 @@ msgid "Player library URL"
 msgstr ""
 
 #: admin/jwppp-admin.php:335
-msgid "Cloud-hosted or self-hosted player library URL"
+msgid "Cloud-hosted or self-hosted player library URL [self-hosted players are available for Enterprise JW Customers]"
 msgstr ""
 
 #: admin/jwppp-admin.php:352
-msgid "JWP Licence Key"
+msgid "JWP License Key"
 msgstr ""
 
 #: admin/jwppp-admin.php:356
-msgid "For Self hosted player, add your JW Player license key."
+msgid "If you are using the self-hosted player, add your JW Player license key"
 msgstr ""
 
 #: admin/jwppp-admin.php:378
@@ -365,7 +365,7 @@ msgid "Loading the player..."
 msgstr ""
 
 #: admin/jwppp-admin.php:469
-msgid "Video loading message."
+msgid "Video loading message"
 msgstr ""
 
 #: admin/jwppp-admin.php:481
@@ -373,7 +373,7 @@ msgid "Default poster image"
 msgstr ""
 
 #: admin/jwppp-admin.php:484
-msgid "Default poster image URL."
+msgid "Default poster image URL"
 msgstr ""
 
 #: admin/jwppp-admin.php:496
@@ -385,7 +385,7 @@ msgid "Use the post thumbnail"
 msgstr ""
 
 #: admin/jwppp-admin.php:501
-msgid "Use post thumbnail as poster image."
+msgid "Use post thumbnail as poster image"
 msgstr ""
 
 #: admin/jwppp-admin.php:513
@@ -401,7 +401,7 @@ msgid "Responsive"
 msgstr ""
 
 #: admin/jwppp-admin.php:523
-msgid "Player embed type."
+msgid "Player embed type"
 msgstr ""
 
 #: admin/jwppp-admin.php:542
@@ -429,7 +429,7 @@ msgid "Image url"
 msgstr ""
 
 #: admin/jwppp-admin.php:609
-msgid "Custom logo image URL."
+msgid "Custom logo image URL"
 msgstr ""
 
 #: admin/jwppp-admin.php:626
@@ -437,7 +437,7 @@ msgid "Logo Position"
 msgstr ""
 
 #: admin/jwppp-admin.php:644
-msgid "Logo position."
+msgid "Logo position"
 msgstr ""
 
 #: admin/jwppp-admin.php:656
@@ -449,7 +449,7 @@ msgid "Link url"
 msgstr ""
 
 #: admin/jwppp-admin.php:660
-msgid "Logo click-through URL."
+msgid "Logo click-through URL"
 msgstr ""
 
 #: admin/jwppp-admin.php:672
@@ -473,7 +473,7 @@ msgid "Playlist"
 msgstr ""
 
 #: admin/jwppp-admin.php:692
-msgid "Text for playlist tooltip."
+msgid "Text for playlist tooltip"
 msgstr ""
 
 #: admin/jwppp-admin.php:705
@@ -489,7 +489,7 @@ msgid "Add a custom skin..."
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-7.php:55
-msgid "Select a skin or add a new one for customizing your player."
+msgid "Select a skin or add a new one for customizing your player"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-7.php:61
@@ -497,7 +497,7 @@ msgid "Skin URL"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-7.php:64
-msgid "The url of the style.css file of your custom skin."
+msgid "The url of the style.css file of your custom skin"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-7.php:69
@@ -515,7 +515,7 @@ msgstr ""
 #: admin/skin/jwppp-admin-skin-7.php:81
 msgid ""
 "    Active skin elements. This includes active and highlighted labels, as "
-"well scrubber time that has elapsed."
+"well scrubber time that has elapsed"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-7.php:86
@@ -525,7 +525,7 @@ msgstr ""
 #: admin/skin/jwppp-admin-skin-7.php:89
 msgid ""
 "    Skin elements that are not active. This includes scrubber time that has "
-"not yet elapsed."
+"not yet elapsed"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-7.php:94
@@ -533,41 +533,41 @@ msgid "Background"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-7.php:97
-msgid "The color of hovered or selected icons in the control bar."
+msgid "The color of hovered or selected icons in the control bar"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:18
-msgid "Constrolbar Text"
+msgid "Controlbar Text"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:21
-msgid "Color of plain text in the control bar, such as the time."
+msgid "Color of plain text in the control bar, such as the time"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:26
-msgid "Constrolbar Icons"
+msgid "Controlbar Icons"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:29
-msgid "Default, inactive color of all icons in the control bar."
+msgid "Default, inactive color of all icons in the control bar"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:34
-msgid "Constrolbar Active Icons"
+msgid "Controlbar Active Icons"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:37
-msgid "Color of hovered or selected icons in the control bar."
+msgid "Color of hovered or selected icons in the control bar"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:42
-msgid "Constrolbar Background"
+msgid "Controlbar Background"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:45
 msgid ""
 "Background color of the control bar and the volume slider. Default "
-"background is transparent.."
+"background is transparent"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:50
@@ -575,7 +575,7 @@ msgid "Timeslider Progress"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:53
-msgid "Color of the progress bar in the time slider."
+msgid "Color of the progress bar in the time slider"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:58
@@ -583,7 +583,7 @@ msgid "Timeslider Rail"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:61
-msgid "Base color of the timeslider, known as the rail."
+msgid "Base color of the timeslider, known as the rail"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:66
@@ -591,7 +591,7 @@ msgid "Menus Text"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:69
-msgid "Color of inactive, default text in menus and the Next Up overlay."
+msgid "Color of inactive, default text in menus and the Next Up overlay"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:74
@@ -599,7 +599,7 @@ msgid "Menus Active Text"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:77
-msgid "Color of hovered or selected text in menus. "
+msgid "Color of hovered or selected text in menus"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:82
@@ -607,7 +607,7 @@ msgid "Menus Background"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:85
-msgid "Background color of menus and the Next Up overlay."
+msgid "Background color of menus and the Next Up overlay"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:90
@@ -615,7 +615,7 @@ msgid "Tooltips Text"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:93
-msgid "Color of tooltips text."
+msgid "Color of tooltips text"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:98
@@ -623,7 +623,7 @@ msgid "Tooltips Background"
 msgstr ""
 
 #: admin/skin/jwppp-admin-skin-8.php:101
-msgid "Background color of tooltips."
+msgid "Background color of tooltips"
 msgstr ""
 
 #: includes/jwppp-functions.php:117
