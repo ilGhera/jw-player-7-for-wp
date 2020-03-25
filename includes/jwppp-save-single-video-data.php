@@ -3,7 +3,7 @@
  * Save all informations of the single video
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
- * @version 2.0.0
+ * @version 2.0.2
  * @param  int $post_id
  */
 function jwppp_save_single_video_data( $post_id ) {
@@ -26,7 +26,7 @@ function jwppp_save_single_video_data( $post_id ) {
 	foreach ( $jwppp_videos as $key => $value ) {
 
 		$jwppp_number = explode( '_jwppp-video-url-', $key );
-		$number = $jwppp_number[1];
+		$number       = isset( $jwppp_number[1] ) ? $jwppp_number[1] : 1;
 
 		if ( ! isset( $_POST[ 'hidden-meta-box-nonce-' . $number ] ) ) {
 			return;
