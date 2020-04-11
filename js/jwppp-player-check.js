@@ -2,7 +2,7 @@
  * Player check, used for changing the admin options available
  * @author ilGhera
  * @package jw-player-for-vip/js
-* @version 2.0.0
+ * @since 2.0.0
  */
 jQuery( document ).ready( function( $ ) {
 

@@ -1,7 +1,7 @@
 === JW Player for Wordpress - VIP ===
 Contributors: jwplayer, ghera74
 Tags: jw player, jw player 7, jw player 8, jwplayer, jwplayer 7, jwplayer 8, video, embed video, youtube, video preroll, video chapters, video subtitles
-Version: 2.0.1
+Version: 2.0.2
 Requires at least: 4.0
 Tested up to: 5.3
 License: GPLv2
@@ -66,6 +66,13 @@ That’s it, you’re ready to go!
 
 
 == Changelog ==
+
+
+= 2.0.2 =
+Release Date: xxx
+
+* Bug fix: default subtitle option missing
+* Bug fix: quotation marks subtitle labels removed
 
 
 = 2.0.1 =

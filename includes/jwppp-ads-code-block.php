@@ -3,7 +3,7 @@
  * The advertising player code block
  * @author ilGhera
  * @package jw-player-for-vip/includes
- * @version 2.0.2
+ * @since 2.0.2
  * @param  int $post_id the post id
  * @param  int $number  the number of the video
  * @return string       the code block

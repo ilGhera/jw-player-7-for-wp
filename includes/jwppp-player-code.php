@@ -3,7 +3,7 @@
  * The player code block
  * @author ilGhera
  * @package jw-player-for-vip/includes
- * @version 2.0.2
+ * @since 2.0.2
  * @param  int    $p            the post id
  * @param  int    $n            the number of video
  * @param  string $ar           the aspect ratio

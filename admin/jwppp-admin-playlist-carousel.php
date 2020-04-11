@@ -3,7 +3,7 @@
  * Playlist carousel options
  * @author ilGhera
  * @package jw-player-for-vip/admin
-* @version 2.0.0
+ * @since 2.0.0
  */
 ?>
 <div name="jwppp-playlist-carousel" id="jwppp-playlist-carousel" class="jwppp-admin" style="display: none;">

@@ -3,7 +3,7 @@
  * Plugin functions
  * @author ilGhera
  * @package jw-player-for-vip/includes
- * @version 2.0.2
+ * @since 2.0.2
  */
 
 /*Files required*/

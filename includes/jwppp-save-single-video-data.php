@@ -3,7 +3,7 @@
  * Save all informations of the single video
  * @author ilGhera
  * @package jw-player-for-vip/includes
- * @version 2.0.2
+ * @since 2.0.2
  * @param  int $post_id
  */
 function jwppp_save_single_video_data( $post_id ) {
