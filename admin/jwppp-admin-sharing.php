@@ -3,7 +3,7 @@
  * Share options
  * @author ilGhera
  * @package jw-player-for-vip/admin
-* @version 2.0.0
+ * @version 2.0.2
  */
 ?>
 <div name="jwppp-social" id="jwppp-social" class="jwppp-admin" style="display: none;">
@@ -46,7 +46,7 @@
 	echo '<th scope="row">' . esc_html( __( 'Activate Sharing Option', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<input type="checkbox" id="jwppp-active-share" name="jwppp-active-share" value="1"';
-	echo ( '1' === $active_share ) ? ' checked="checked"' : '';
+	echo ( 1 === intval( $active_share ) ) ? ' checked="checked"' : '';
 	echo ' />';
 	echo '<p class="description">' . esc_html( __( 'Activate sharing option -- can be changed on single video.', 'jwppp' ) ) . '</p>';
 	echo '</td>';
@@ -66,7 +66,7 @@
 	echo '<th scope="row">' . esc_html( __( 'Active embed option', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<input type="checkbox" id="jwppp-embed-video" name="jwppp-embed-video" value="1"';
-	echo ( '1' === $jwppp_embed_video ) ? ' checked="checked"' : '';
+	echo ( 1 === intval( $jwppp_embed_video ) ) ? ' checked="checked"' : '';
 	echo ' />';
 	echo '<p class="description">' . wp_kses( __( 'Active <strong>embed video</strong> as default option. You\'ll be able to change it on single video.', 'jwppp' ), $allowed_tags ) . '</p>';
 	echo '</td>';

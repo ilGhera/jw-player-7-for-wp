@@ -3,7 +3,7 @@
  * Ads options
  * @author ilGhera
  * @package jw-player-for-vip/admin
-* @version 2.0.0
+ * @version 2.0.2
  */
 ?>
 <div name="jwppp-ads" id="jwppp-ads" class="jwppp-admin" style="display: none;">
@@ -111,7 +111,7 @@
 	echo '<th scope="row">' . esc_html( __( 'Active Video Ads', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<input type="checkbox" id="jwppp-active-ads" name="jwppp-active-ads" value="1"';
-	echo ( '1' === $active_ads ) ? ' checked="checked"' : '';
+	echo ( 1 === intval( $active_ads ) ) ? ' checked="checked"' : '';
 	echo ' />';
 	echo '<p class="description">' . wp_kses( __( 'Add a <strong>Basic Preroll Video Ads</strong>', 'jwppp' ), $allowed_tags ) . '</p>';
 	echo '<p class="description">' . wp_kses( __( 'This option is only available with the <u>JW Player Enterprise license</u> -- details <a href="https://www.jwplayer.com/pricing/" target="_blank">here</a> ', 'jwppp' ), $allowed_tags ) . '</p>';
@@ -123,7 +123,7 @@
 	echo '<th scope="row">' . esc_html( __( 'Ads Variable', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<input type="checkbox" id="jwppp-active-ads-var" name="jwppp-active-ads-var" value="1"';
-	echo ( '1' === $active_ads_var ) ? ' checked="checked"' : '';
+	echo ( 1 === intval( $active_ads_var ) ) ? ' checked="checked"' : '';
 	echo ' />';
 	echo '<p class="description">' . esc_html( __( 'Use an advertising embed block variable', 'jwppp' ) ) . '</p>';
 	echo '<td>';
@@ -198,7 +198,7 @@
 	echo '<td>';
 	echo '<label>';
 	echo '<input type="checkbox" id="jwppp-active-bidding" name="jwppp-active-bidding" value="1"';
-	echo ( '1' === $active_bidding ) ? ' checked="checked"' : '';
+	echo ( 1 === intval( $active_bidding ) ) ? ' checked="checked"' : '';
 	echo ' />';
 	echo esc_html( __( 'Enable Video Player Bidding', 'jwppp' ) );
 	echo '<p class="description">';

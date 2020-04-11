@@ -3,7 +3,7 @@
  * The player code block
  * @author ilGhera
  * @package jw-player-for-vip/includes
-* @version 2.0.0
+ * @version 2.0.2
  * @param  int    $p            the post id
  * @param  int    $n            the number of video
  * @param  string $ar           the aspect ratio
@@ -313,7 +313,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 						/*Poster image*/
 						if ( $video_image ) {
 							echo "image: " . wp_json_encode( $video_image, JSON_UNESCAPED_SLASHES ) . ",\n";
-						} else if ( has_post_thumbnail( $p_id ) && get_option( 'jwppp-post-thumbnail' ) === '1' ) {
+						} else if ( has_post_thumbnail( $p_id ) && 1 === intval( get_option( 'jwppp-post-thumbnail' ) ) ) {
 							echo "image: " . wp_json_encode( get_the_post_thumbnail_url(), JSON_UNESCAPED_SLASHES ) . ",\n";
 						} else if ( $youtube['yes'] ) {
 							echo "image: " . wp_json_encode( $yt_video_image, JSON_UNESCAPED_SLASHES ) . ",\n";
@@ -334,17 +334,17 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 						}
 
 						/*Autoplay*/
-						if ( ! $jwppp_new_playlist && '1' === $jwppp_autoplay ) {
+						if ( ! $jwppp_new_playlist && 1 === intval( $jwppp_autoplay ) ) {
 							echo "autostart: 'true',\n";
 						}
 
 						/*Mute*/
-						if ( ! $jwppp_new_playlist && '1' === $jwppp_mute ) {
+						if ( ! $jwppp_new_playlist && 1 === intval( $jwppp_mute ) ) {
 							echo "mute: 'true',\n";
 						}
 
 						/*Mepeat*/
-						if ( ! $jwppp_new_playlist && '1' === $jwppp_repeat ) {
+						if ( ! $jwppp_new_playlist && 1 === intval( $jwppp_repeat ) ) {
 							echo "repeat: 'true',\n";
 						}
 
@@ -353,7 +353,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 						/*Share*/
 						$active_share = sanitize_text_field( get_option( 'jwppp-active-share' ) );
-						if ( ! $jwppp_new_playlist && '1' === $active_share ) {
+						if ( ! $jwppp_new_playlist && 1 === intval( $active_share ) ) {
 							echo "sharing: {\n";
 								$jwppp_share_heading = sanitize_text_field( get_option( 'jwppp-share-heading' ) );
 								if ( null !== $jwppp_share_heading ) {
@@ -362,14 +362,14 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 									echo "heading: '" . esc_html( __( 'Share Video', 'jwppp' ) ) . "',\n";
 								}
 								echo "sites: ['email','facebook','twitter','pinterest','tumblr','googleplus','reddit','linkedin'],\n";
-								if ( ( $jwppp_embed_video || '1' === $jwppp_single_embed ) && ! $jwppp_playlist ) {
+								if ( ( $jwppp_embed_video || 1 === intval( $jwppp_single_embed ) ) && ! $jwppp_playlist ) {
 									echo "code: " . wp_json_encode( "<iframe src='$jwppp_embed_url'  width='640'  height='360'  frameborder='0'  scrolling='auto'></iframe>", JSON_UNESCAPED_SLASHES ) . "\n";
 								}
 							echo "},\n";
 						}
 
 						/*Add chapters/ subtitles*/
-						if ( '1' === $jwppp_add_chapters ) {
+						if ( 1 === intval( $jwppp_add_chapters ) ) {
 							echo "tracks:[\n";
 
 							if ( 'subtitles' === $jwppp_chapters_subtitles && 'load' === $jwppp_subtitles_method ) {
@@ -377,8 +377,8 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 									echo "{\n";
 									echo "file:" . wp_json_encode( get_post_meta( $p_id, '_jwppp-' . $number . '-subtitle-' . $i . '-url', true ), JSON_UNESCAPED_SLASHES ) . ",\n";
 									echo "kind:'captions',\n";
-									echo "label:'" . wp_json_encode( get_post_meta( $p_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label', true ) ) . "',\n";
-									if ( '1' === $i && '1' === $jwppp_subtitles_load_default ) {
+									echo "label:" . wp_json_encode( get_post_meta( $p_id, '_jwppp-' . $number . '-subtitle-' . $i . '-label', true ) ) . ",\n";
+									if ( 1 === $i && 1 === intval( $jwppp_subtitles_load_default ) ) {
 										echo "'default': 'true'\n";
 									}
 									echo "},\n";
@@ -390,7 +390,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 									echo "kind:'chapters'\n";
 								} else if ( 'subtitles' === $jwppp_chapters_subtitles ) {
 									echo "kind:'captions',\n";
-									if ( '1' === $jwppp_subtitles_write_default ) {
+									if ( 1 === intval( $jwppp_subtitles_write_default ) ) {
 										echo "'default': 'true'\n";
 									}
 								} else {
@@ -414,7 +414,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 				}
 
 				/*Playlist sharing*/
-				if ( $jwppp_new_playlist && '1' === $active_share ) {
+				if ( $jwppp_new_playlist && 1 === intval( $active_share ) ) {
 					echo "sharing: {\n";
 						$jwppp_share_heading = sanitize_text_field( get_option( 'jwppp-share-heading' ) );
 						if ( null !== $jwppp_share_heading ) {
@@ -430,17 +430,17 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 				if ( $jwppp_new_playlist ) {
 
 					/*Autoplay*/
-					if ( '1' === $pl_autostart ) {
+					if ( 1 === intval( $pl_autostart ) ) {
 						echo "autostart: 'true',\n";
 					}
 
 					/*Mute*/
-					if ( '1' === $pl_mute ) {
+					if ( 1 === intval( $pl_mute ) ) {
 						echo "mute: 'true',\n";
 					}
 
 					/*Repeat*/
-					if ( '1' === $pl_repeat ) {
+					if ( 1 === intval( $pl_repeat ) ) {
 						echo "repeat: 'true',\n";
 					}
 				}
@@ -457,7 +457,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 			/*Check for a YouTube video*/
 			$is_yt = jwppp_search_yt( '', $number );
 
-			if ( $is_yt['yes'] || '1' === $pl_mute ) {
+			if ( $is_yt['yes'] || 1 === intval( $pl_mute ) ) {
 
 				/*Volume off*/
 				echo 'playerInstance_' . intval( $this_video ) . ".on('play', function(){\n";
