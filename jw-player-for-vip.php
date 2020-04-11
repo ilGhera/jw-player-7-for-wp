@@ -31,9 +31,6 @@ function jwppp_vip_load() {
 		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 	}
 
-	/*Add database version*/
-	update_option( 'jwppp-database-version', JWPPP_VERSION );
-
 	/*Internationalization*/
 	load_plugin_textdomain( 'jwppp', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
