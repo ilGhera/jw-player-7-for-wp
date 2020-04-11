@@ -3,7 +3,7 @@
  * Save all informations of the single video
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
- * @version 2.0.2
+ * @since 2.0.2
  * @param  int $post_id
  */
 function jwppp_save_single_video_data( $post_id ) {
@@ -138,7 +138,7 @@ function jwppp_save_single_video_data( $post_id ) {
 				delete_post_meta( $post_id, '_jwppp-activate-media-type-' . $number );
 			}
 
-			if ( '1' === $jwppp_activate_media_type ) {
+			if ( 1 === intval( $jwppp_activate_media_type ) ) {
 				$media_type = isset( $_POST[ '_jwppp-media-type-' . $number ] ) ? sanitize_text_field( wp_unslash( $_POST[ '_jwppp-media-type-' . $number ] ) ) : '';
 				update_post_meta( $post_id, '_jwppp-media-type-' . $number, $media_type );
 			} else {
@@ -235,7 +235,7 @@ function jwppp_save_single_video_data( $post_id ) {
 					update_post_meta( $post_id, '_jwppp-subtitles-write-default-' . $number, $jwppp_subtitles_write_default );
 				}
 
-				if ( '1' === $jwppp_add_chapters ) {
+				if ( 1 === intval( $jwppp_add_chapters ) ) {
 
 					$chapters = isset( $_POST[ '_jwppp-chapters-number-' . $number ] ) ? sanitize_text_field( wp_unslash( $_POST[ '_jwppp-chapters-number-' . $number ] ) ) : '';
 					update_post_meta( $post_id, '_jwppp-chapters-number-' . $number, $chapters );
@@ -293,7 +293,7 @@ function jwppp_save_single_video_data( $post_id ) {
 						}
 					}
 				} else {
-					$chapters = isset( $_POST[ '_jwppp-chapters-number-' . $number ] ) ? sanitize_text_field( wp_unslash( $_POST[ '_jwppp-chapters-number-' . $number ] ) ) : '';
+					$chapters = isset( $_POST[ '_jwppp-chapters-number-' . $number ] ) ? sanitize_text_field( wp_unslash( $_POST[ '_jwppp-chapters-number-' . $number ] ) ) : 0;
 					for ( $i = 1; $i < $chapters + 1; $i++ ) {
 						delete_post_meta( $post_id, '_jwppp-' . $number . '-chapter-' . $i . '-title' );
 						delete_post_meta( $post_id, '_jwppp-' . $number . '-chapter-' . $i . '-start' );

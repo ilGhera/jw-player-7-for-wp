@@ -4,6 +4,7 @@
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
  * @version 2.0.0
+ * @since 2.0.2
  * @param  int $post_id    the post id
  * @param  int $number     the video number
  * @param  bool $sh_video  is the video sel-hosted?
@@ -155,7 +156,7 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 		echo '<div class="jwppp-single-option-' . esc_attr( $number ) . ' cloud-option playlist-carousel-container ' . esc_attr( $number ) . '"' . ( $jwppp_playlist_carousel ? ' style="display: inline-block;"' : '' ) . '>';
 			echo '<label for="_jwppp-playlist-carousel-' . esc_attr( $number ) . '">';
 			echo '<input type="checkbox" id="_jwppp-playlist-carousel-' . esc_attr( $number ) . '" name="_jwppp-playlist-carousel-' . esc_attr( $number ) . '" value="1"';
-			echo ( '1' === $jwppp_playlist_carousel ) ? ' checked="checked"' : '';
+			echo ( 1 === intval( $jwppp_playlist_carousel ) ) ? ' checked="checked"' : '';
 			echo ' />';
 			echo '<strong>' . esc_html( __( 'Show a carousel with the playlist\'s video thumbnails.', 'jwppp' ) ) . '</strong>';
 			echo '</label>';
@@ -168,7 +169,7 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 		echo '<p>';
 		echo '<label for="_jwppp-activate-media-type-' . esc_attr( $number ) . '">';
 		echo '<input type="checkbox" id="_jwppp-activate-media-type-' . esc_attr( $number ) . '" name="_jwppp-activate-media-type-' . esc_attr( $number ) . '" value="1"';
-		echo ( '1' === $jwppp_activate_media_type ) ? ' checked="checked"' : '';
+		echo ( 1 === intval( $jwppp_activate_media_type ) ) ? ' checked="checked"' : '';
 		echo ' />';
 		echo '<strong>' . esc_html( __( 'Force a media type', 'jwppp' ) ) . '</strong>';
 		echo '<a class="question-mark" title="' . esc_attr( __( 'Only required when a file extension is missing or not recognized', 'jwppp' ) ) . '"><img class="question-mark" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a></th>';
@@ -197,7 +198,7 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 			echo '<p>';
 			echo '<label for="_jwppp-autoplay-' . esc_attr( $number ) . '">';
 			echo '<input type="checkbox" id="_jwppp-autoplay-' . esc_attr( $number ) . '" name="_jwppp-autoplay-' . esc_attr( $number ) . '" value="1"';
-			echo ( '1' === $jwppp_autoplay ) ? ' checked="checked"' : '';
+			echo ( 1 === intval( $jwppp_autoplay ) ) ? ' checked="checked"' : '';
 			echo ' />';
 			echo '<strong>' . esc_html( __( 'Autostart on page load', 'jwppp' ) ) . '</strong>';
 			echo '</label>';
@@ -210,7 +211,7 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 			echo '<p>';
 			echo '<label for="_jwppp-mute-' . esc_attr( $number ) . '">';
 			echo '<input type="checkbox" id="_jwppp-mute-' . esc_attr( $number ) . '" name="_jwppp-mute-' . esc_attr( $number ) . '" value="1"';
-			echo ( '1' === $jwppp_mute ) ? ' checked="checked"' : '';
+			echo ( 1 === intval( $jwppp_mute ) ) ? ' checked="checked"' : '';
 			echo ' />';
 			echo '<strong>' . esc_html( __( 'Mute', 'jwppp' ) ) . '</strong>';
 			echo '</label>';
@@ -223,7 +224,7 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 			echo '<p>';
 			echo '<label for="_jwppp-repeat-' . esc_attr( $number ) . '">';
 			echo '<input type="checkbox" id="_jwppp-repeat-' . esc_attr( $number ) . '" name="_jwppp-repeat-' . esc_attr( $number ) . '" value="1"';
-			echo ( '1' === $jwppp_repeat ) ? ' checked="checked"' : '';
+			echo ( 1 === intval( $jwppp_repeat ) ) ? ' checked="checked"' : '';
 			echo ' />';
 			echo '<strong>' . esc_html( __( 'Repeat', 'jwppp' ) ) . '</strong>';
 			echo '</label>';
@@ -233,12 +234,12 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 
 		/*Embed video*/
 		if ( $jwppp_share_video ) {
-			if ( '1' === $jwppp_single_embed ) {
+			if ( 1 === intval( $jwppp_single_embed ) ) {
 				$checked = 'checked="checked"';
 			} elseif ( '0' === $jwppp_single_embed ) {
 				$checked = '';
 			} elseif ( ! $jwppp_single_embed ) {
-				$checked = ( '1' === $jwppp_embed_video ) ? 'checked="checked"' : '';
+				$checked = ( 1 === intval( $jwppp_embed_video ) ) ? 'checked="checked"' : '';
 			}
 
 			echo '<div class="jwppp-single-option-' . esc_attr( $number ) . '">';
@@ -259,10 +260,10 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 			echo '<p>';
 			echo '<label for="_jwppp-add-chapters-' . esc_attr( $number ) . '">';
 			echo '<input type="checkbox" id="_jwppp-add-chapters-' . esc_attr( $number ) . '" name="_jwppp-add-chapters-' . esc_attr( $number ) . '" value="1"';
-			echo ( '1' === $add_chapters ) ? ' checked="checked"' : '';
+			echo ( 1 === intval( $add_chapters ) ) ? ' checked="checked"' : '';
 			echo ' />';
 			echo '<strong><span class="add-chapters ' . esc_attr( $number ) . '">';
-		if ( '1' === esc_html( $add_chapters ) ) {
+		if ( 1 === intval( $add_chapters ) ) {
 			echo esc_html( __( 'Add', 'jwppp' ) );
 		} else {
 			echo esc_html( __( 'Add Chapters, Subtitles or Preview Thumbnails', 'jwppp' ) );
@@ -325,10 +326,10 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 			echo esc_html( __( 'in seconds', 'jwpend' ) );
 
 			/*Subtitles activated by default*/
-			if ( '1' === $i ) {
+			if ( 1 === $i ) {
 				echo '<label for="_jwppp-subtitles-write-default-' . esc_attr( $number ) . '" style="display: inline-block; margin-left: 1rem;">';
 				echo '<input type="checkbox" id="_jwppp-subtitles-write-default-' . esc_attr( $number ) . '" name="_jwppp-subtitles-write-default-' . esc_attr( $number ) . '" value="1"';
-				echo ( '1' === $jwppp_subtitles_write_default ) ? ' checked="checked"' : '';
+				echo ( 1 === intval( $jwppp_subtitles_write_default ) ) ? ' checked="checked"' : '';
 				echo ' />';
 				echo esc_html( __( 'Default', 'jwppp' ) );
 				echo '<a class="question-mark" title="' . esc_attr( __( 'These subtitles will be activated by default', 'jwppp' ) ) . '"><img class="question-mark" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a></th>';
@@ -349,10 +350,10 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 			echo '<input type="text" style="margin-right:1rem;" name="_jwppp-' . esc_attr( $number ) . '-subtitle-' . esc_attr( $n ) . '-url" value="' . esc_url( $url ) . '" placeholder="' . esc_attr( __( 'Subtitles file url (VTT, SRT, DFXP)', 'jwppp' ) ) . '" size="60" />';
 			echo '<input type="text" name="_jwppp-' . esc_attr( $number ) . '-subtitle-' . esc_attr( $n ) . '-label" style="margin-right:1rem;" value="' . esc_attr( $label ) . '" placeholder="' . esc_attr( __( 'Label (EN, IT, FR )', 'jwppp' ) ) . '" size="30" />';
 
-			if ( '1' === $n ) {
+			if ( 1 === $n ) {
 				echo '<label for="_jwppp-subtitles-load-default-' . esc_attr( $number ) . '">';
 				echo '<input type="checkbox" id="_jwppp-subtitles-load-default-' . esc_attr( $number ) . '" name="_jwppp-subtitles-load-default-' . esc_attr( $number ) . '" value="1"';
-				echo ( '1' === $jwppp_subtitles_load_default ) ? ' checked="checked"' : '';
+				echo ( 1 === intval( $jwppp_subtitles_load_default ) ) ? ' checked="checked"' : '';
 				echo ' />';
 				echo esc_html( __( 'Default', 'jwppp' ) );
 				echo '<a class="question-mark" title="' . esc_attr( __( 'These first subtitles will be activated by default', 'jwppp' ) ) . '"><img class="question-mark" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a></th>';

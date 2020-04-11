@@ -3,7 +3,7 @@
  * Subtitles options
  * @author ilGhera
  * @package jw-player-7-for-wp/admin
- * @version 2.0.0
+ * @since 2.0.0
  */
 ?>
 <div name="jwppp-subtitles" id="jwppp-subtitles" class="jwppp-admin" style="display: none;">

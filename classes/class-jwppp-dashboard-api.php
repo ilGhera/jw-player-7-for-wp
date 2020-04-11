@@ -3,7 +3,7 @@
  * The JW Player API for communicate  with the dashboard
  * @author ilGhera
  * @package jw-player-7-for-wp/classes
- * @version 2.0.0
+ * @since 2.0.0
  */
 class JWPPP_Dashboard_Api {
 

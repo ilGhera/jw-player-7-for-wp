@@ -2,7 +2,7 @@
  * Single video script
  * @author ilGhera
  * @package jw-player-7-for-wp/js
- * @version 2.0.0
+ * @since 2.0.0
  * @param  {int} number  the video's number in the post/ page
  * @param  {int} post_id the post/ page id
  */

@@ -3,7 +3,7 @@
  * Secure video URLs and player embeds
  * @author ilGhera
  * @package jw-player-7-for-wp/admin
- * @version 2.0.0
+ * @since 2.0.2
  */
 ?>
 <div name="jwppp-security" id="jwppp-security" class="jwppp-admin" style="display: none;">
@@ -49,7 +49,7 @@
 	echo '<th scope="row">' . esc_html( __( 'Secure Video URLs', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<input type="checkbox" id="jwppp-secure-video-urls" name="jwppp-secure-video-urls" value="1"';
-	echo ( '1' === $secure_video_urls ) ? ' checked="checked"' : '';
+	echo ( 1 === intval( $secure_video_urls ) ) ? ' checked="checked"' : '';
 	echo ' />';
 	echo '<p class="description">' . wp_kses( __( 'Must match setting on JW Platform Account > Properties > (Choose Property) settings', 'jwppp' ), $allowed_tags ) . '</p>';
 	echo '<td>';
@@ -60,7 +60,7 @@
 	echo '<th scope="row">' . esc_html( __( 'Secure Player Embeds', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<input type="checkbox" id="jwppp-secure-player-embeds" name="jwppp-secure-player-embeds" value="1"';
-	echo ( '1' === $secure_player_embeds ) ? ' checked="checked"' : '';
+	echo ( 1 === intval( $secure_player_embeds ) ) ? ' checked="checked"' : '';
 	echo ' />';
 	echo '<p class="description">' . wp_kses( __( 'Must match setting on JW Platform Account > Properties > (Choose Property) settings', 'jwppp' ), $allowed_tags ) . '</p>';
 	echo '<td>';

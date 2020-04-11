@@ -3,7 +3,7 @@
  * The advertising player code block
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
- * @version 2.0.0
+ * @since 2.0.2
  * @param  int $post_id the post id
  * @param  int $number  the number of the video
  * @return string       the code block
@@ -23,7 +23,7 @@ function jwppp_ads_code_block( $post_id, $number ) {
 	$output = null;
 
 	/*Is the main ads option activated?*/
-	if ( '1' === $jwppp_show_ads ) {
+	if ( 1 === intval( $jwppp_show_ads ) ) {
 
 		/*Single video ads tag*/
 		$jwppp_ads_tag = get_post_meta( $post_id, '_jwppp-ads-tag-' . $number, true );
