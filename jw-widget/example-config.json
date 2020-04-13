@@ -1,0 +1,15 @@
+{
+  "widgets": [
+    {
+      "widgetDivId": "jwppp-playlist-carousel",
+      "playlist": "https://cdn.jwplayer.com/v2/playlists/uGjAm4L6",
+      "videoPlayerId": "jwppp-video-26951",
+      "header": "More Videos",
+      "textColor": "#fff",
+      "backgroundColor": "#000",
+      "iconColor": "#fff",
+      "widgetLayout": "shelf",
+      "widgetSize": "medium"
+    }
+  ]
+}
