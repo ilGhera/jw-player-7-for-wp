@@ -4,6 +4,7 @@
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
  * @version 2.0.0
+ * @since 2.0.2
  * @param  int $post_id    the post id
  * @param  int $number     the video number
  * @param  bool $sh_video  is the video sel-hosted?
@@ -102,7 +103,7 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 		echo '<p>';
 		echo '<label for="_jwppp-activate-media-type-' . esc_attr( $number ) . '">';
 		echo '<input type="checkbox" id="_jwppp-activate-media-type-' . esc_attr( $number ) . '" name="_jwppp-activate-media-type-' . esc_attr( $number ) . '" value="1"';
-		echo ( '1' === $jwppp_activate_media_type ) ? ' checked="checked"' : '';
+		echo ( 1 === intval( $jwppp_activate_media_type ) ) ? ' checked="checked"' : '';
 		echo ' />';
 		echo '<strong>' . esc_html( __( 'Force a media type', 'jwppp' ) ) . '</strong>';
 		echo '<a class="question-mark" title="' . esc_attr( __( 'Only required when a file extension is missing or not recognized', 'jwppp' ) ) . '"><img class="question-mark" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a></th>';

@@ -3,7 +3,7 @@
  * Save all informations of the single video
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
- * @version 2.0.0
+ * @since 2.0.2
  * @param  int $post_id
  */
 function jwppp_save_single_video_data( $post_id ) {
@@ -26,7 +26,7 @@ function jwppp_save_single_video_data( $post_id ) {
 	foreach ( $jwppp_videos as $key => $value ) {
 
 		$jwppp_number = explode( '_jwppp-video-url-', $key );
-		$number = $jwppp_number[1];
+		$number       = isset( $jwppp_number[1] ) ? $jwppp_number[1] : 1;
 
 		if ( ! isset( $_POST[ 'hidden-meta-box-nonce-' . $number ] ) ) {
 			return;
@@ -120,7 +120,7 @@ function jwppp_save_single_video_data( $post_id ) {
 				delete_post_meta( $post_id, '_jwppp-activate-media-type-' . $number );
 			}
 
-			if ( '1' === $jwppp_activate_media_type ) {
+			if ( 1 === intval( $jwppp_activate_media_type ) ) {
 				$media_type = isset( $_POST[ '_jwppp-media-type-' . $number ] ) ? sanitize_text_field( wp_unslash( $_POST[ '_jwppp-media-type-' . $number ] ) ) : '';
 				update_post_meta( $post_id, '_jwppp-media-type-' . $number, $media_type );
 			} else {

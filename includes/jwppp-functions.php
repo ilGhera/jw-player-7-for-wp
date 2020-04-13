@@ -3,7 +3,7 @@
  * Plugin functions
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
- * @version 2.0.1
+ * @since 2.0.2
  */
 
 /*Files required*/
@@ -115,14 +115,14 @@ function jwppp_videos_string( $post_id ) {
 function jwppp_single_video_box( $post_id, $number ) {
 
 	/*Delete video if url is equal to 1, it means empty*/
-	if ( get_post_meta( $post_id, '_jwppp-video-url-' . $number, true ) === '1' ) {
+	if ( 1 === intval( get_post_meta( $post_id, '_jwppp-video-url-' . $number, true ) ) ) {
 		delete_post_meta( $post_id, '_jwppp-video-url-' . $number );
 		return;
 	}
 
 	/*How to add the playlist*/
 	$plist_hide = true;
-	if ( 1 === $number && 'custom' === get_option( 'jwppp-position' ) && count( jwppp_get_post_videos( $post_id ) ) > 1 ) {
+	if ( 1 === intval( $number ) && 'custom' === get_option( 'jwppp-position' ) && count( jwppp_get_post_videos( $post_id ) ) > 1 ) {
 		$plist_hide = false;
 	}
 
@@ -130,11 +130,11 @@ function jwppp_single_video_box( $post_id, $number ) {
 	$dashboard_player = is_dashboard_player();
 
 	/*Available only with self-hosted players*/
-	if ( 1 === $number ) {
+	if ( 1 === intval( $number ) ) {
 		$output  = '<div class="playlist-how-to" style="position:relative;background:#2FBFB0;color:#fff;padding:0.5rem 1rem;';
 		$output .= ( $plist_hide ) ? 'display:none;">' : 'display:block;">';
 		$output .= 'Add a playlist of your videos using this code: <code style="display:inline-block;color:#fff;background:none;">[jwp-video n="' . jwppp_videos_string( $post_id ) . '"]</code>';
-		if ( get_option( 'jwppp-position' ) !== 'custom' ) {
+		if ( 'custom' !== get_option( 'jwppp-position' ) ) {
 			$output .= '<a class="attention-mark" title="' . __( 'You need to set the VIDEO PLAYER POSITION option to CUSTOM in order to use this shortcode.', 'jwppp' ) . '"><img class="attention-mark" src="' . plugin_dir_url( __DIR__ ) . 'images/attention-mark.png" /></a></th>';
 		}
 		$output .= '</div>';

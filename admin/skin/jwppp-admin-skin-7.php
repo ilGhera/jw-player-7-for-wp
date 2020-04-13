@@ -3,7 +3,7 @@
  * Skin options 7 - Admin form
  * @author ilGhera
  * @package jw-player-7-for-wp/admin/skin
- * @version 2.0.0
+ * @since 2.0.0
  */
 
 echo '<h2 style="margin: 1.5rem 0;">JW Player 7 Skin Customization</h2>';

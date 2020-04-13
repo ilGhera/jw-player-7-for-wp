@@ -3,7 +3,7 @@
  * The player code block
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
- * @version 2.0.0
+ * @since 2.0.2
  * @param  int    $p            the post id
  * @param  int    $n            the number of video
  * @param  string $ar           the aspect ratio
@@ -183,7 +183,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 						}
 
 						/*Poster image*/
-						if ( has_post_thumbnail( $p_id ) && get_option( 'jwppp-post-thumbnail' ) === '1' ) {
+						if ( has_post_thumbnail( $p_id ) && 1 === intval( get_option( 'jwppp-post-thumbnail' ) ) ) {
 							echo "image: " . wp_json_encode( get_the_post_thumbnail_url(), JSON_UNESCAPED_SLASHES ) . ",\n";
 						} else if ( $youtube['yes'] ) {
 							echo "image: " . wp_json_encode( $yt_video_image, JSON_UNESCAPED_SLASHES ) . ",\n";
@@ -205,7 +205,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 						/*Share*/
 						$active_share = sanitize_text_field( get_option( 'jwppp-active-share' ) );
-						if ( ! $jwppp_new_playlist && '1' === $active_share ) {
+						if ( ! $jwppp_new_playlist && 1 === intval( $active_share ) ) {
 							echo "sharing: {\n";
 								$jwppp_share_heading = sanitize_text_field( get_option( 'jwppp-share-heading' ) );
 								if ( null !== $jwppp_share_heading ) {
@@ -231,7 +231,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 				}
 
 				/*Playlist sharing*/
-				if ( $jwppp_new_playlist && '1' === $active_share ) {
+				if ( $jwppp_new_playlist && 1 === intval( $active_share ) ) {
 					echo "sharing: {\n";
 						$jwppp_share_heading = sanitize_text_field( get_option( 'jwppp-share-heading' ) );
 						if ( null !== $jwppp_share_heading ) {
@@ -255,7 +255,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 			/*Check for a YouTube video*/
 			$is_yt = jwppp_search_yt( '', $number );
 
-			if ( $is_yt['yes'] || '1' === $pl_mute ) {
+			if ( $is_yt['yes'] || 1 === intval( $pl_mute ) ) {
 
 				/*Volume off*/
 				echo 'playerInstance_' . intval( $this_video ) . ".on('play', function(){\n";

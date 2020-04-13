@@ -3,7 +3,7 @@
  * Plugin options page
  * @author ilGhera
  * @package jw-player-7-for-wp/admin
- * @version 2.0.0
+ * @since 2.0.2
  */
 
 /**
@@ -465,7 +465,7 @@ function jwppp_options() {
 			echo '<th scope="row">' . esc_html( __( 'Post thumbnail', 'jwppp' ) ) . '</th>';
 			echo '<td>';
 			echo '<input type="checkbox" id="post-thumbnail" name="post-thumbnail" ';
-			echo ( '1' === $thumbnail ) ? ' checked="checked"' : '';
+			echo ( 1 === intval( $thumbnail ) ) ? ' checked="checked"' : '';
 			echo 'value="1" />' . esc_html( __( 'Use the post thumbnail', 'jwppp' ) );
 			echo '<p class="description">' . esc_html( __( 'Use post thumbnail as poster image.', 'jwppp' ) ) . '</p>';
 			echo '<td>';

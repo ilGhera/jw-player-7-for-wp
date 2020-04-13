@@ -2,7 +2,7 @@
  * Add a new video in post/ page
  * @author ilGhera
  * @package jw-player-7-for-wp/js
- * @version 2.0.0
+ * @since 2.0.0
  */
 jQuery( document ).ready( function( $ ) {
 

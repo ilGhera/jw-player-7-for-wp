@@ -6,10 +6,10 @@
  * It works with the latest version of the famous video player and it gives you full control of all the options available.
  * Player customization, social sharing and advertising are just an example.
  * Author: ilGhera
- * Version: 2.0.1
+ * Version: 2.0.2
  * Author URI: https://www.ilghera.com/
  * Requires at least: 4.0
- * Tested up to: 5.2
+ * Tested up to: 5.4
  * Text Domain: jwppp
  */
 
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /*Define the plugin version*/
-define( 'JWPPP_VERSION', '2.0.1' );
+define( 'JWPPP_VERSION', '2.0.2' );
 
 /**
  * Fired on the activation.
@@ -29,9 +29,6 @@ function jwppp_load() {
 	if ( ! function_exists( 'is_plugin_active' ) ) {
 		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 	}
-
-	/*Add database version*/
-	update_option( 'jwppp-database-version', JWPPP_VERSION );
 
 	/*Internationalization*/
 	load_plugin_textdomain( 'jwppp', false, basename( dirname( __FILE__ ) ) . '/languages' );
