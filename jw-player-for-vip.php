@@ -9,7 +9,7 @@
  * Version: 2.0.2
  * Author URI: https://www.jwplayer.com/
  * Requires at least: 4.0
- * Tested up to: 5
+ * Tested up to: 5.4
  * Text Domain: jwppp
  */
 
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /*Define the plugin version*/
-define( 'JWPPP_VERSION', '2.0.1' );
+define( 'JWPPP_VERSION', '2.0.2' );
 
 /**
  * Fired on the activation.
