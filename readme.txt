@@ -100,8 +100,8 @@ That’s it, you’re ready to go!
 = 2.0.2 =
 Release Date: 13 April 2020
 
-* Bug fix: (Premium) default subtitles option missing
-* Bug fix: (Premium) quotation marks subtitles labels removed
+* Bug fix: (Premium) Default subtitles option missing
+* Bug fix: (Premium) Quotation marks subtitles labels removed
 
 
 = 2.0.1 =
