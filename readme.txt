@@ -98,9 +98,10 @@ That’s it, you’re ready to go!
 == Changelog ==
 
 = 2.0.2 =
-Release Date: 26 August 2019
+Release Date: 13 April 2020
 
-* Bug fix : Array check on getting videos for the single post
+* Bug fix: (Premium) default subtitles option missing
+* Bug fix: (Premium) quotation marks subtitles labels removed
 
 
 = 2.0.1 =
