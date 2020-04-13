@@ -69,8 +69,8 @@ That’s it, you’re ready to go!
 = 2.0.2 =
 Release Date: xxx
 
-* Bug fix: default subtitle option missing
-* Bug fix: quotation marks subtitle labels removed
+* Bug fix: default subtitles option missing
+* Bug fix: quotation marks subtitles labels removed
 
 
 = 2.0.1 =
