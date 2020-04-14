@@ -1,4 +1,4 @@
-=== JW Player for Wordpress ===
+=== JW Player for WordPress ===
 Contributors: ghera74
 Tags: jw player, jw player 7, jw player 8, jwplayer, jwplayer 7, jwplayer 8, video, embed video, youtube, video preroll, video chapters, video subtitles
 Version: 2.0.2
@@ -6,14 +6,22 @@ Requires at least: 4.0
 Tested up to: 5.4
 License: GPLv2
 
-**JW Player for Wordpress** is the complete solution for using JW Player into Wordpress.
+<<<<<<< HEAD
+**JW Player for WordPress** is the complete solution for using JW Player into WordPress.
+=======
+**JW Player for WordPress - VIP** is the complete solution for using JW Player into WordPress.
+>>>>>>> vip
 It works with the latest version of world’s most popular video player and enables full power of the JW Player dashboard and APIs directly into your WordPress CMS.
 Enable player customization, related videos, social sharing and advertising directly into your content management system to speed up your video workflow.
 
 
 == Description ==
 
-**JW Player for Wordpress** is the complete solution for using JW Player into Wordpress.
+<<<<<<< HEAD
+**JW Player for WordPress** is the complete solution for using JW Player into WordPress.
+=======
+**JW Player for WordPress - VIP** is the complete solution for using JW Player into WordPress.
+>>>>>>> vip
 It works with the latest version of world’s most popular video player and enables full power of the JW Player dashboard and APIs directly into your WordPress CMS.
 Enable player customization, related videos, social sharing and advertising directly into your content management system to speed up your video workflow.
 
@@ -35,7 +43,11 @@ Enable player customization, related videos, social sharing and advertising dire
 * Support shortcodes like *[jwplayer fPHnET5D]*
 * WP Coding Sandard 
 
-JW Player for Wordpress can be used with the cloud or even the self-hosted version of the player.<br>
+<<<<<<< HEAD
+JW Player for WordPress can be used with the cloud or even the self-hosted version of the player.<br>
+=======
+JW Player for WordPress - VIP can be used with the cloud or even the self-hosted version of the player.<br>
+>>>>>>> vip
 
 **Cloud**
 
@@ -57,9 +69,16 @@ That’s it, you’re ready to go!
 
 
 == Installation ==
-* Download JW Player for Wordpress
+<<<<<<< HEAD
+* Download JW Player for WordPress
 * Upload the 'jw-player-7-for-wp’ directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
-* Activate JW Player for Wordpress from your Plugins page.
+* Activate JW Player for WordPress from your Plugins page.
+=======
+
+* Download JW Player for WordPress - VIP
+* Upload the 'jw-player-7-for-wp-VIP’ directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
+* Activate JW Player for WordPress - VIP from your Plugins page.
+>>>>>>> vip
 * Once Activated, go to <strong>JW Player</strong> menu and set you preferences.
 
 
@@ -107,7 +126,7 @@ Release Date: 6 Mar 2019
 
 = 1.5.3 =
 Release Date: 8 Dec 2018
-* Bug Fix: 	   Add/ Delete video buttons not visible in Wordpress 5.0
+* Bug Fix: 	   Add/ Delete video buttons not visible in WordPress 5.0
 
 
 = 1.5.2 =
@@ -127,7 +146,7 @@ Release Date: 7 Nov 2017
 = 1.5.0 =
 Release Date: 4 Nov 2017
 
-* Enhancement: Plugin name changed to JW Player for Wordpress, version 7 removed.
+* Enhancement: Plugin name changed to JW Player for WordPress, version 7 removed.
 * Enhancement: Now it's possible to use the cloud player library, without the need to upload the player.
 * Enhancement: New plugin update checker.
 * Enhancement: JW Player 8 ready.
