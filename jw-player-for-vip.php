@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: JW Player for Wordpress - VIP
+ * Plugin Name: JW Player for WordPress - VIP
  * Plugin URI: https://wpvip.com/plugins/jwplayer/
- * Description:  The complete solution for using JW Player into Wordpress.
+ * Description:  The complete solution for using JW Player into WordPress.
  * It works with the latest version of the famous video player and it gives you full control of all the options available.
  * Player customization, social sharing and advertising are just an example.
  * Author: JW Player
