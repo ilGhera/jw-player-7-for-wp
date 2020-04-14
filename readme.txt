@@ -6,22 +6,14 @@ Requires at least: 4.0
 Tested up to: 5.4
 License: GPLv2
 
-<<<<<<< HEAD
 **JW Player for WordPress** is the complete solution for using JW Player into WordPress.
-=======
-**JW Player for WordPress - VIP** is the complete solution for using JW Player into WordPress.
->>>>>>> vip
 It works with the latest version of world’s most popular video player and enables full power of the JW Player dashboard and APIs directly into your WordPress CMS.
 Enable player customization, related videos, social sharing and advertising directly into your content management system to speed up your video workflow.
 
 
 == Description ==
 
-<<<<<<< HEAD
 **JW Player for WordPress** is the complete solution for using JW Player into WordPress.
-=======
-**JW Player for WordPress - VIP** is the complete solution for using JW Player into WordPress.
->>>>>>> vip
 It works with the latest version of world’s most popular video player and enables full power of the JW Player dashboard and APIs directly into your WordPress CMS.
 Enable player customization, related videos, social sharing and advertising directly into your content management system to speed up your video workflow.
 
@@ -43,11 +35,7 @@ Enable player customization, related videos, social sharing and advertising dire
 * Support shortcodes like *[jwplayer fPHnET5D]*
 * WP Coding Sandard 
 
-<<<<<<< HEAD
 JW Player for WordPress can be used with the cloud or even the self-hosted version of the player.<br>
-=======
-JW Player for WordPress - VIP can be used with the cloud or even the self-hosted version of the player.<br>
->>>>>>> vip
 
 **Cloud**
 
@@ -69,16 +57,10 @@ That’s it, you’re ready to go!
 
 
 == Installation ==
-<<<<<<< HEAD
+
 * Download JW Player for WordPress
 * Upload the 'jw-player-7-for-wp’ directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
 * Activate JW Player for WordPress from your Plugins page.
-=======
-
-* Download JW Player for WordPress - VIP
-* Upload the 'jw-player-7-for-wp-VIP’ directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
-* Activate JW Player for WordPress - VIP from your Plugins page.
->>>>>>> vip
 * Once Activated, go to <strong>JW Player</strong> menu and set you preferences.
 
 
