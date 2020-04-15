@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: JW Player for Wordpress
+ * Plugin Name: JW Player for WordPress
  * Plugin URI: https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/
- * Description:  The complete solution for using JW Player into Wordpress.
+ * Description:  The complete solution for using JW Player into WordPress.
  * It works with the latest version of the famous video player and it gives you full control of all the options available.
  * Player customization, social sharing and advertising are just an example.
  * Author: ilGhera

@@ -1,4 +1,4 @@
-=== JW Player for Wordpress ===
+=== JW Player for WordPress ===
 Contributors: ghera74
 Tags: jw player, jw player 7, jw player 8, jwplayer, jwplayer 7, jwplayer 8, video, embed video, youtube, related videos, video preroll, video chapters, video subtitles
 Version: 2.0.2
@@ -58,23 +58,23 @@ That’s it, you’re ready to go!
 
 == Installation ==
 
-* Download JW Player for Wordpress
+* Download JW Player for WordPress
 * Upload the 'jw-player-7-for-wp’ directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
-* Activate JW Player for Wordpress from your Plugins page.
+* Activate JW Player for WordPress from your Plugins page.
 * Once Activated, go to <strong>JW Player</strong> menu and set you preferences.
 
 **From your WordPress dashboard**
 
 * Visit *Plugins > Add New*
-* Search for *JW Player 7 for Wordpress* and download it.
-* Activate JW Player 7 for Wordpress from your Plugins page.
+* Search for *JW Player 7 for WordPress* and download it.
+* Activate JW Player 7 for WordPress from your Plugins page.
 * Once Activated, go to <strong>JW Player</strong> menu and set you preferences.
 
 **From WordPress.org or ilghera.com**
 
-* Download JW Player 7 for Wordpress
+* Download JW Player 7 for WordPress
 * Upload the *jw-player-7-for-wp* directory to your */wp-content/plugins/* directory, using your favorite method (ftp, sftp, scp, etc...)
-* Activate JW Player 7 for Wordpress from your Plugins page.
+* Activate JW Player 7 for WordPress from your Plugins page.
 * Once Activated, go to <strong>JW Player</strong> menu and set you preferences.
 
 
@@ -133,7 +133,7 @@ Release Date: 30 May 2019
 
 = 1.5.3 =
 Release Date: 8 Dec 2018
-* Bug Fix: 	   Add/ Delete video buttons not visible in Wordpress 5.0
+* Bug Fix: 	   Add/ Delete video buttons not visible in WordPress 5.0
 
 
 = 1.5.2 =
@@ -155,7 +155,7 @@ Release Date: 24 Jan 2018
 = 1.5.0 =
 Release Date: 6 Nov 2017
 
-* Enhancement: Plugin name changed to JW Player for Wordpress, version 7 removed.
+* Enhancement: Plugin name changed to JW Player for WordPress, version 7 removed.
 * Enhancement: Now it's possible to use the cloud player library, without the need to upload the player.
 * Enhancement: JW Player 8 ready.
 * Enhancement: New shortcode jwp-video.

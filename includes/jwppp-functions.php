@@ -26,7 +26,7 @@ function jwppp_add_meta_box() {
 		}
 	}
 	foreach ( $screens as $screen ) {
-		add_meta_box( 'jwppp-box', __( 'JW Player for Wordpress', 'jwppp' ), 'jwppp_meta_box_callback', $screen );
+		add_meta_box( 'jwppp-box', __( 'JW Player for WordPress', 'jwppp' ), 'jwppp_meta_box_callback', $screen );
 	}
 }
 add_action( 'add_meta_boxes', 'jwppp_add_meta_box' );
