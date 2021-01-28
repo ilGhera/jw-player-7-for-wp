@@ -69,7 +69,7 @@ That’s it, you’re ready to go!
 
 
 = 2.0.2 =
-Release Date: xxx
+Release Date: 14 April 2020
 
 * Bug fix: Default subtitles option missing
 * Bug fix: Quotation marks subtitles labels removed
