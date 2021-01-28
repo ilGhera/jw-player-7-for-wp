@@ -911,20 +911,25 @@ function jwppp_poster_image_as_thumbnail( $post_id, $video, $image_title ) {
     /* If image exists */
     if ( @getimagesize( $image_url ) ) {
 
-        $image_name       = sanitize_title( $image_title ) . '.jpg';
-        $upload_dir       = wp_upload_dir(); // Set upload folder
-        $image_data       = file_get_contents( $image_url ); // Get image data
-        $unique_file_name = wp_unique_filename( $upload_dir['path'], $image_name ); // Generate unique name
-        $filename         = basename( $unique_file_name ); // Create image file name
+        $path       = parse_url( $image_url, PHP_URL_PATH );
+        $extension  = pathinfo( $path, PATHINFO_EXTENSION );
+        $image_name = $image_title ? sanitize_title( $image_title ) : pathinfo( $path, PATHINFO_FILENAME );
+        error_log( 'IMAGE NAME: ' . $image_name );
 
         /* Check if image is already in wp media */
         $old_attach = get_page_by_title( $image_name, OBJECT, 'attachment' );
+        error_log( 'old att: ' . print_r( $old_attach, true ) );
 
         if ( isset( $old_attach->ID ) ) {
 
             $attach_id = $old_attach->ID;
 
         } else {
+
+            $upload_dir       = wp_upload_dir(); // Set upload folder
+            $image_data       = file_get_contents( $image_url ); // Get image data
+            $unique_file_name = wp_unique_filename( $upload_dir['path'], $image_name ); // Generate unique name
+            $filename         = basename( $unique_file_name ) . '.' . $extension; // Create image file name
 
             /* Check folder permission and define file location */
             if( wp_mkdir_p( $upload_dir['path'] ) ) {
@@ -942,7 +947,7 @@ function jwppp_poster_image_as_thumbnail( $post_id, $video, $image_title ) {
             /* Set attachment data */
             $attachment = array(
                 'post_mime_type' => $wp_filetype['type'],
-                'post_title'     => sanitize_file_name( $filename ),
+                'post_title'     => sanitize_file_name( $image_name ),
                 'post_content'   => '',
                 'post_status'    => 'inherit'
             );
