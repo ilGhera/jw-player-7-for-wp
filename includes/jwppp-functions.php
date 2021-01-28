@@ -3,7 +3,7 @@
  * Plugin functions
  * @author ilGhera
  * @package jw-player-for-vip/includes
- * @since 2.0.2
+ * @since 2.1.0
  */
 
 /*Files required*/
@@ -984,7 +984,7 @@ function jwppp_check_post_thumbnail( $has_thumbnail, $post_id ) {
         $video_url   = get_post_meta( $post_id, '_jwppp-video-url-1', true );
         $video_title = get_post_meta( $post_id, '_jwppp-video-title-1', true );
 
-        poster_image_as_thumbnail( $post_id, $video_url, $video_title );
+        jwppp_poster_image_as_thumbnail( $post_id, $video_url, $video_title );
 
     }
 
