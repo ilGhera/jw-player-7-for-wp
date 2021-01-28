@@ -117,6 +117,13 @@ function jwppp_save_single_video_data( $post_id ) {
 				delete_post_meta( $post_id, '_jwppp-video-title-' . $number );
 			}
 
+            /*Featured image*/
+            if ( 1 === intval( $number ) && ! has_post_thumbnail( $post_id ) ) { // Temp.
+
+                jwppp_poster_image_as_thumbnail( $post_id, $video, $title );
+
+            }
+
 			/*Video description*/
 			if ( isset( $_POST[ '_jwppp-video-description-' . $number ] ) ) {
 				$description = sanitize_text_field( wp_unslash( $_POST[ '_jwppp-video-description-' . $number ] ) );
