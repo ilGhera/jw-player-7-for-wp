@@ -883,99 +883,8 @@ function jwppp_get_player_callback() {
 add_action( 'wp_ajax_get-players', 'jwppp_get_player_callback' );
 
 
-/**
- * Set the first video poster-image as post/ page thumbnail
- *
- * @param int    $post_id     the post id.
- * @param string $video       the video id or URL.
- * @param string $image_title the image name.
- *
- * @return void
- */
-function jwppp_poster_image_as_thumbnail( $post_id, $video, $image_title ) {
-
-    /*Is the video self hosted?*/
-    $sh_video = strrpos( $video, 'http' ) === 0 ? true : false;
-
-    /* Remote image URL */
-    if ( $sh_video ) {
-
-        $image_url = get_post_meta( $post_id, '_jwppp-video-image-1', true );
-
-    } else {
-
-        $image_url = 'https://cdn.jwplayer.com/thumbs/' . $video . '-720.jpg';
-
-    }
-
-    /* If image exists */
-    if ( @getimagesize( $image_url ) ) {
-
-        $path       = parse_url( $image_url, PHP_URL_PATH );
-        $extension  = pathinfo( $path, PATHINFO_EXTENSION );
-        $image_name = $image_title ? sanitize_title( $image_title ) : pathinfo( $path, PATHINFO_FILENAME );
-        error_log( 'IMAGE NAME: ' . $image_name );
-
-        /* Check if image is already in wp media */
-        $old_attach = get_page_by_title( $image_name, OBJECT, 'attachment' );
-        error_log( 'old att: ' . print_r( $old_attach, true ) );
-
-        if ( isset( $old_attach->ID ) ) {
-
-            $attach_id = $old_attach->ID;
-
-        } else {
-
-            $upload_dir       = wp_upload_dir(); // Set upload folder
-            $image_data       = file_get_contents( $image_url ); // Get image data
-            $unique_file_name = wp_unique_filename( $upload_dir['path'], $image_name ); // Generate unique name
-            $filename         = basename( $unique_file_name ) . '.' . $extension; // Create image file name
-
-            /* Check folder permission and define file location */
-            if( wp_mkdir_p( $upload_dir['path'] ) ) {
-                $file = $upload_dir['path'] . '/' . $filename;
-            } else {
-                $file = $upload_dir['basedir'] . '/' . $filename;
-            }
-
-            /* Create the image  file on the server */
-            file_put_contents( $file, $image_data );
-
-            /* Check image file type */
-            $wp_filetype = wp_check_filetype( $filename, null );
-
-            /* Set attachment data */
-            $attachment = array(
-                'post_mime_type' => $wp_filetype['type'],
-                'post_title'     => sanitize_file_name( $image_name ),
-                'post_content'   => '',
-                'post_status'    => 'inherit'
-            );
-
-            /* Create the attachment */
-            $attach_id = wp_insert_attachment( $attachment, $file, $post_id );
-
-            /* Include image.php */
-            require_once(ABSPATH . 'wp-admin/includes/image.php');
-
-            /* Define attachment metadata */
-            $attach_data = wp_generate_attachment_metadata( $attach_id, $file );
-
-            /* Assign metadata to attachment */
-            wp_update_attachment_metadata( $attach_id, $attach_data );
-
-        }
-
-        /* Assign featured image to post */
-        set_post_thumbnail( $post_id, $attach_id );
-
-    }
-
-}
-
-
 /*
- * Set video poster-image as thumbanail if a featured image is not set
+ * Return true if a video is set
  *
  * @param bool $has_thumbnail true if post has thumbnail.
  * @param int $post_id        the post id.
@@ -986,15 +895,56 @@ function jwppp_check_post_thumbnail( $has_thumbnail, $post_id ) {
 
     if ( ! $has_thumbnail ) {
 
-        $video_url   = get_post_meta( $post_id, '_jwppp-video-url-1', true );
-        $video_title = get_post_meta( $post_id, '_jwppp-video-title-1', true );
+        if( ! $post_id || get_post_meta( $post_id, '_jwppp-video-url-1', true ) ) {
 
-        jwppp_poster_image_as_thumbnail( $post_id, $video_url, $video_title );
+            $has_thumbnail = true;
+
+        }
 
     }
 
     return $has_thumbnail;
 
 }
-add_filter( 'has_post_thumbnail', 'jwppp_check_post_thumbnail', 10, 2 );
+add_filter( 'has_post_thumbnail', 'jwppp_check_post_thumbnail', 20, 2 );
+
+
+/*
+ * Use video poster-image as thumbanail if a featured image is not set
+ *
+ *
+ */
+function jwppp_poster_image_as_thumbnail( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
+
+    $video = get_post_meta( $post_id, '_jwppp-video-url-1', true );
+
+    if ( ! $html && $video ) {
+
+        /*Is the video self hosted?*/
+        $sh_video = strrpos( $video, 'http' ) === 0 ? true : false;
+
+        /* Remote image URL */
+        if ( $sh_video ) {
+
+            $image_url = get_post_meta( $post_id, '_jwppp-video-image-1', true );
+
+        } else {
+
+            $image_url = 'https://cdn.jwplayer.com/thumbs/' . $video . '-720.jpg';
+
+        }
+
+        /* If image exists */
+        if ( @getimagesize( $image_url ) ) {
+
+            $html = sprintf( '<img src="%s">', esc_url( $image_url ) );
+
+        }
+
+    }
+
+    return $html;
+
+}
+add_filter( 'post_thumbnail_html', 'jwppp_poster_image_as_thumbnail', 10, 5 );
 
