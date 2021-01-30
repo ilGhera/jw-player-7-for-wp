@@ -893,7 +893,7 @@ add_action( 'wp_ajax_get-players', 'jwppp_get_player_callback' );
  */
 function jwppp_check_post_thumbnail( $has_thumbnail, $post_id ) {
 
-    if ( ! $has_thumbnail ) {
+    if ( ! $has_thumbnail && get_option( 'jwppp-poster-image-as-thumb' ) ) {
 
         if( ! $post_id || get_post_meta( $post_id, '_jwppp-video-url-1', true ) ) {
 
@@ -912,32 +912,39 @@ add_filter( 'has_post_thumbnail', 'jwppp_check_post_thumbnail', 20, 2 );
 /*
  * Use video poster-image as thumbanail if a featured image is not set
  *
+ * @param string $html the post thumbnail HTML.
+ * @param int    $post_id  the post ID.
  *
+ * $return string
  */
-function jwppp_poster_image_as_thumbnail( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
+function jwppp_poster_image_as_thumbnail( $html, $post_id ) {
 
-    $video = get_post_meta( $post_id, '_jwppp-video-url-1', true );
+    if( get_option( 'jwppp-poster-image-as-thumb' ) ) {
 
-    if ( ! $html && $video ) {
+        $video = get_post_meta( $post_id, '_jwppp-video-url-1', true );
 
-        /*Is the video self hosted?*/
-        $sh_video = strrpos( $video, 'http' ) === 0 ? true : false;
+        if ( ! $html && $video ) {
 
-        /* Remote image URL */
-        if ( $sh_video ) {
+            /*Is the video self hosted?*/
+            $sh_video = strrpos( $video, 'http' ) === 0 ? true : false;
 
-            $image_url = get_post_meta( $post_id, '_jwppp-video-image-1', true );
+            /* Remote image URL */
+            if ( $sh_video ) {
 
-        } else {
+                $image_url = get_post_meta( $post_id, '_jwppp-video-image-1', true );
 
-            $image_url = 'https://cdn.jwplayer.com/thumbs/' . $video . '-720.jpg';
+            } else {
 
-        }
+                $image_url = 'https://cdn.jwplayer.com/thumbs/' . $video . '-720.jpg';
 
-        /* If image exists */
-        if ( @getimagesize( $image_url ) ) {
+            }
 
-            $html = sprintf( '<img src="%s">', esc_url( $image_url ) );
+            /* If image exists */
+            if ( @getimagesize( $image_url ) ) {
+
+                $html = sprintf( '<img src="%s">', esc_url( $image_url ) );
+
+            }
 
         }
 
@@ -946,5 +953,5 @@ function jwppp_poster_image_as_thumbnail( $html, $post_id, $post_thumbnail_id, $
     return $html;
 
 }
-add_filter( 'post_thumbnail_html', 'jwppp_poster_image_as_thumbnail', 10, 5 );
+add_filter( 'post_thumbnail_html', 'jwppp_poster_image_as_thumbnail', 10, 2 );
 
