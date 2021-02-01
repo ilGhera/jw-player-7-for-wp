@@ -633,7 +633,10 @@ function jwppp_add_player( $content ) {
 	$type = get_post_type( $post->ID );
 
 	$jwppp_videos = jwppp_get_post_videos( $post->ID );
-	if ( $jwppp_videos ) {
+
+    error_log( 'VIDEOS: ' . print_r( $jwppp_videos, true ) );
+
+    if ( $jwppp_videos ) {
 		$video = null;
 
 		ob_start();

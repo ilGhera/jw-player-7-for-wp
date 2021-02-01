@@ -137,9 +137,9 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 			echo "<div id='jwppp-video-" . intval( $this_video ) . "' class='jwplayer' itemscope itemtype='http://schema.org/VideoObject'>";
 
-            echo $video_title ? '<meta itemprop="name" content="' . $video_title . '"/>' : null;
-            echo $video_description ? '<meta itemprop="description" content="' .  $video_description. '"/>' : null;
-            echo $video_image ? '<meta itemprop="thumbnailUrl" content="' . $video_image . '"/>' : null;
+            echo isset( $video_title ) ? '<meta itemprop="name" content="' . esc_attr( $video_title ) . '"/>' : null;
+            echo isset( $video_description ) ? '<meta itemprop="description" content="' .  esc_attr( $video_description ) . '"/>' : null;
+            echo isset( $video_image ) ? '<meta itemprop="thumbnailUrl" content="' . esc_attr( $video_image ) . '"/>' : null;
 
 				/*Loading the player text*/
 				if ( get_option( 'jwppp-text' ) ) {
