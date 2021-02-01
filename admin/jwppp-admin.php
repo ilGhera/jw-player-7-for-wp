@@ -30,19 +30,12 @@ add_action( 'admin_menu', 'jwppp_js_menu' );
  */
 function jwppp_enqueue_scripts() {
     
-    $screen = get_current_screen();
-
-	if ( $screen->id === 'toplevel_page_jw-player-for-wp' ) {
+	if ( is_admin() ) {
 
 		/*ColorPicker*/
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_script( 'wp-color-picker', array( 'jquery' ), '', true );
 		wp_enqueue_script( 'jwppp-single-video', plugin_dir_url( __DIR__ ) . 'js/jwppp-single-video.js' );
-
-        /*tzCheckBox*/
-		wp_enqueue_style( 'tzcheckbox-style', JWPPP_URI . 'js/tzCheckbox/jquery.tzCheckbox/jquery.tzCheckbox.css' );
-		wp_enqueue_script( 'tzcheckbox', JWPPP_URI . 'js/tzCheckbox/jquery.tzCheckbox/jquery.tzCheckbox.js', array( 'jquery' ) );
-		wp_enqueue_script( 'tzcheckbox-script', JWPPP_URI . 'js/tzCheckbox/js/script.js', array( 'jquery' ) );
 
 		/*Select contents from the JWP Dashboard*/
 		wp_enqueue_script( 'jwppp-select', plugin_dir_url( __DIR__ ) . 'js/jwppp-select.js', array( 'jquery' ) );
@@ -56,6 +49,11 @@ function jwppp_enqueue_scripts() {
 
 		$admin_page = get_current_screen();
 		if ( 'toplevel_page_jw-player-for-wp' === $admin_page->base ) {
+
+            /*tzCheckBox*/
+            wp_enqueue_style( 'tzcheckbox-style', JWPPP_URI . 'js/tzCheckbox/jquery.tzCheckbox/jquery.tzCheckbox.css' );
+            wp_enqueue_script( 'tzcheckbox', JWPPP_URI . 'js/tzCheckbox/jquery.tzCheckbox/jquery.tzCheckbox.js', array( 'jquery' ) );
+            wp_enqueue_script( 'tzcheckbox-script', JWPPP_URI . 'js/tzCheckbox/js/script.js', array( 'jquery' ) );
 
 			$jwplayer = sanitize_text_field( get_option( 'jwppp-library' ) );
 			$nonce_skin = wp_create_nonce( 'jwppp-nonce-skin' );
