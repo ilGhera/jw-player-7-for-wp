@@ -135,7 +135,11 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 			/*FB Instant Articles*/
 			echo '<span class="jwppp-instant" style="display: none;" data-video="' . esc_url( home_url() . "/?jwp-instant-articles=1&player=$choose_player&mediaID=$jwppp_video_url" ) . '" data-width="480" data-height="270"></span>';
 
-			echo "<div id='jwppp-video-" . intval( $this_video ) . "' class='jwplayer'>";
+			echo "<div id='jwppp-video-" . intval( $this_video ) . "' class='jwplayer' itemscope itemtype='http://schema.org/VideoObject'>";
+
+            echo $video_title ? '<meta itemprop="name" content="' . $video_title . '"/>' : null;
+            echo $video_description ? '<meta itemprop="description" content="' .  $video_description. '"/>' : null;
+            echo $video_image ? '<meta itemprop="thumbnailUrl" content="' . $video_image . '"/>' : null;
 
 				/*Loading the player text*/
 				if ( get_option( 'jwppp-text' ) ) {
