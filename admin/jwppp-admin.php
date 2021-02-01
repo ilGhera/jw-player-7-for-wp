@@ -29,12 +29,20 @@ add_action( 'admin_menu', 'jwppp_js_menu' );
  * Enqueue different scripts
  */
 function jwppp_enqueue_scripts() {
-	if ( is_admin() ) {
+    
+    $screen = get_current_screen();
+
+	if ( $screen->id === 'toplevel_page_jw-player-for-wp' ) {
 
 		/*ColorPicker*/
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_script( 'wp-color-picker', array( 'jquery' ), '', true );
 		wp_enqueue_script( 'jwppp-single-video', plugin_dir_url( __DIR__ ) . 'js/jwppp-single-video.js' );
+
+        /*tzCheckBox*/
+		wp_enqueue_style( 'tzcheckbox-style', JWPPP_URI . 'js/tzCheckbox/jquery.tzCheckbox/jquery.tzCheckbox.css' );
+		wp_enqueue_script( 'tzcheckbox', JWPPP_URI . 'js/tzCheckbox/jquery.tzCheckbox/jquery.tzCheckbox.js', array( 'jquery' ) );
+		wp_enqueue_script( 'tzcheckbox-script', JWPPP_URI . 'js/tzCheckbox/js/script.js', array( 'jquery' ) );
 
 		/*Select contents from the JWP Dashboard*/
 		wp_enqueue_script( 'jwppp-select', plugin_dir_url( __DIR__ ) . 'js/jwppp-select.js', array( 'jquery' ) );
@@ -396,7 +404,7 @@ function jwppp_options() {
 			$jwppp_get_types = get_post_types( array( 'public' => true ) );
 			$exclude = array( 'attachment', 'nav_menu_item' );
 
-			echo '<tr>';
+			echo '<tr class="jwppp-types-row">';
 			echo '<th scope="row">' . esc_html( __( 'Post types', 'jwppp' ) ) . '</th>';
 			echo '<td>';
 
