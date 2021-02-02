@@ -69,9 +69,10 @@ That’s it, you’re ready to go!
 
 
 = 2.1.0 =
-Release Date: 28 January 2021
+Release Date: 2 February 2021
 
-* Enhancement : Set video poster-image as WordPress featured image of post or page 
+* Enhancement : Set video poster-image as WordPress featured image
+* Enhancement : SEO improvements with schema markup
 
 
 = 2.0.2 =

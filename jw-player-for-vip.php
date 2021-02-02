@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /*Define the plugin version*/
-define( 'JWPPP_VERSION', '2.0.2' );
+define( 'JWPPP_VERSION', '2.1.0' );
 
 /**
  * Fired on the activation.
