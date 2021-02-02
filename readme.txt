@@ -73,6 +73,7 @@ Release Date: 2 February 2021
 
 * Enhancement : Set video poster-image as WordPress featured image
 * Enhancement : SEO improvements with schema markup
+* Enhancement : New switch buttons in plugin options page
 
 
 = 2.0.2 =
