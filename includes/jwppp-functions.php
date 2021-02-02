@@ -634,8 +634,6 @@ function jwppp_add_player( $content ) {
 
 	$jwppp_videos = jwppp_get_post_videos( $post->ID );
 
-    error_log( 'VIDEOS: ' . print_r( $jwppp_videos, true ) );
-
     if ( $jwppp_videos ) {
 		$video = null;
 
@@ -886,6 +884,40 @@ function jwppp_get_player_callback() {
 add_action( 'wp_ajax_get-players', 'jwppp_get_player_callback' );
 
 
+/**
+ * Get poster image of both self-hosted and cloud videos
+ *
+ * @param int   the post id.
+ * @param mixed the URL or video id from the JW Player Dashboard.
+ *
+ * @return string the image URL
+ */
+function jwppp_get_poster_image( $post_id, $video ) {
+
+    /*Is the video self hosted?*/
+    $sh_video = strrpos( $video, 'http' ) === 0 ? true : false;
+
+    /* Remote image URL */
+    if ( $sh_video ) {
+
+        $image_url = get_post_meta( $post_id, '_jwppp-video-image-1', true );
+
+    } else {
+
+        $image_url = 'https://cdn.jwplayer.com/thumbs/' . $video . '-720.jpg';
+
+    }
+
+    /* If image exists */
+    if ( @getimagesize( $image_url ) ) {
+
+        return $image_url;
+
+    }
+
+}
+
+
 /*
  * Return true if a video is set
  *
@@ -928,22 +960,9 @@ function jwppp_poster_image_as_thumbnail( $html, $post_id ) {
 
         if ( ! $html && $video ) {
 
-            /*Is the video self hosted?*/
-            $sh_video = strrpos( $video, 'http' ) === 0 ? true : false;
+            $image_url = jwppp_get_poster_image( $post_id, $video );
 
-            /* Remote image URL */
-            if ( $sh_video ) {
-
-                $image_url = get_post_meta( $post_id, '_jwppp-video-image-1', true );
-
-            } else {
-
-                $image_url = 'https://cdn.jwplayer.com/thumbs/' . $video . '-720.jpg';
-
-            }
-
-            /* If image exists */
-            if ( @getimagesize( $image_url ) ) {
+            if ( $image_url ) {
 
                 $html = sprintf( '<img src="%s">', esc_url( $image_url ) );
 
