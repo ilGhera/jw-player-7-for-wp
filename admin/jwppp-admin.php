@@ -3,7 +3,7 @@
  * Plugin options page
  * @author ilGhera
  * @package jw-player-7-for-wp/admin
- * @since 2.0.2
+ * @since 2.1.0
  */
 
 /**
@@ -29,6 +29,7 @@ add_action( 'admin_menu', 'jwppp_js_menu' );
  * Enqueue different scripts
  */
 function jwppp_enqueue_scripts() {
+    
 	if ( is_admin() ) {
 
 		/*ColorPicker*/
@@ -48,6 +49,11 @@ function jwppp_enqueue_scripts() {
 
 		$admin_page = get_current_screen();
 		if ( 'toplevel_page_jw-player-for-wp' === $admin_page->base ) {
+
+            /*tzCheckBox*/
+            wp_enqueue_style( 'tzcheckbox-style', JWPPP_URI . 'js/tzCheckbox/jquery.tzCheckbox/jquery.tzCheckbox.css' );
+            wp_enqueue_script( 'tzcheckbox', JWPPP_URI . 'js/tzCheckbox/jquery.tzCheckbox/jquery.tzCheckbox.js', array( 'jquery' ) );
+            wp_enqueue_script( 'tzcheckbox-script', JWPPP_URI . 'js/tzCheckbox/js/script.js', array( 'jquery' ) );
 
 			$jwplayer = sanitize_text_field( get_option( 'jwppp-library' ) );
 			$nonce_skin = wp_create_nonce( 'jwppp-nonce-skin' );
@@ -397,7 +403,7 @@ function jwppp_options() {
 			$jwppp_get_types = get_post_types( array( 'public' => true ) );
 			$exclude = array( 'attachment', 'nav_menu_item' );
 
-			echo '<tr>';
+			echo '<tr class="jwppp-types-row">';
 			echo '<th scope="row">' . esc_html( __( 'Post types', 'jwppp' ) ) . '</th>';
 			echo '<td>';
 
@@ -454,22 +460,24 @@ function jwppp_options() {
 			echo '</td>';
 			echo '</tr>';
 
-		if ( ! $dashboard_player ) {
-
-			/*The message shown to the user before the player is been embed*/
-			$jwppp_text = sanitize_text_field( get_option( 'jwppp-text' ) );
-			if ( isset( $_POST['jwppp-text'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
-				$jwppp_text = sanitize_text_field( wp_unslash( $_POST['jwppp-text'] ) );
-				update_option( 'jwppp-text', $jwppp_text );
+			/*Video post-image as post thumbnail*/
+			$poster_image_as_thumb = sanitize_text_field( get_option( 'jwppp-poster-image-as-thumb' ) );
+			if ( isset( $_POST['done'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
+				$poster_image_as_thumb = isset( $_POST['poster-image-as-thumb'] ) ? sanitize_text_field( wp_unslash( $_POST['poster-image-as-thumb'] ) ) : 0;
+				update_option( 'jwppp-poster-image-as-thumb', $poster_image_as_thumb );
 			}
 
-			echo '<tr>';
-			echo '<th scope="row">' . esc_html( __( 'Video Loading Message', 'jwppp' ) ) . '</th>';
-			echo '<td>';
-			echo '<textarea cols="40" rows="2" id="jwppp-text" name="jwppp-text" placeholder="' . esc_attr( __( 'Loading the player...', 'jwppp' ) ) . '">' . esc_html( $jwppp_text ) . '</textarea>';
-			echo '<p class="description">' . esc_html( __( 'Video loading message.', 'jwppp' ) ) . '<br>';
-			echo '</td>';
-			echo '</tr>';
+            echo '<tr>';
+            echo '<th scope="row">' . esc_html( __( 'Auto thumbnail', 'jwppp' ) ) . '</th>';
+            echo '<td>';
+            echo '<input type="checkbox" id="poster-image-as-thumb" name="poster-image-as-thumb" value="1"';
+            echo ( 1 === intval( $poster_image_as_thumb ) ) ? ' checked="checked"' : '';
+            echo ' />';
+            echo '<p class="description">' . esc_html( __( 'Use video poster image as post thumbnail.', 'jwppp' ) ) . '</p>';
+            echo '<td>';
+            echo '</tr>';
+
+		if ( ! $dashboard_player ) {
 
 			/*Poster image*/
 			$poster_image = sanitize_text_field( get_option( 'jwppp-poster-image' ) );
@@ -501,6 +509,21 @@ function jwppp_options() {
 			echo 'value="1" />' . esc_html( __( 'Use the post thumbnail', 'jwppp' ) );
 			echo '<p class="description">' . esc_html( __( 'Use post thumbnail as poster image.', 'jwppp' ) ) . '</p>';
 			echo '<td>';
+			echo '</tr>';
+
+			/*The message shown to the user before the player is been embed*/
+			$jwppp_text = sanitize_text_field( get_option( 'jwppp-text' ) );
+			if ( isset( $_POST['jwppp-text'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
+				$jwppp_text = sanitize_text_field( wp_unslash( $_POST['jwppp-text'] ) );
+				update_option( 'jwppp-text', $jwppp_text );
+			}
+
+			echo '<tr>';
+			echo '<th scope="row">' . esc_html( __( 'Video Loading Message', 'jwppp' ) ) . '</th>';
+			echo '<td>';
+			echo '<textarea cols="40" rows="2" id="jwppp-text" name="jwppp-text" placeholder="' . esc_attr( __( 'Loading the player...', 'jwppp' ) ) . '">' . esc_html( $jwppp_text ) . '</textarea>';
+			echo '<p class="description">' . esc_html( __( 'Video loading message.', 'jwppp' ) ) . '<br>';
+			echo '</td>';
 			echo '</tr>';
 
 			/*Fixed dimensions or responsive?*/

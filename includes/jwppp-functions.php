@@ -3,7 +3,7 @@
  * Plugin functions
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
- * @since 2.0.2
+ * @since 2.1.0
  */
 
 /*Files required*/
@@ -655,7 +655,8 @@ function jwppp_add_player( $content ) {
 	$type = get_post_type( $post->ID );
 
 	$jwppp_videos = jwppp_get_post_videos( $post->ID );
-	if ( $jwppp_videos ) {
+
+    if ( $jwppp_videos ) {
 		$video = null;
 
 		ob_start();
@@ -903,3 +904,98 @@ function jwppp_get_player_callback() {
 	exit;
 }
 add_action( 'wp_ajax_get-players', 'jwppp_get_player_callback' );
+
+
+/**
+ * Get poster image of both self-hosted and cloud videos
+ *
+ * @param int   the post id.
+ * @param mixed the URL or video id from the JW Player Dashboard.
+ *
+ * @return string the image URL
+ */
+function jwppp_get_poster_image( $post_id, $video ) {
+
+    /*Is the video self hosted?*/
+    $sh_video = strrpos( $video, 'http' ) === 0 ? true : false;
+
+    /* Remote image URL */
+    if ( $sh_video ) {
+
+        $image_url = get_post_meta( $post_id, '_jwppp-video-image-1', true );
+
+    } else {
+
+        $image_url = 'https://cdn.jwplayer.com/thumbs/' . $video . '-720.jpg';
+
+    }
+
+    /* If image exists */
+    if ( @getimagesize( $image_url ) ) {
+
+        return $image_url;
+
+    }
+
+}
+
+
+/*
+ * Return true if a video is set
+ *
+ * @param bool $has_thumbnail true if post has thumbnail.
+ * @param int $post_id        the post id.
+ *
+ * @return void
+ */
+function jwppp_check_post_thumbnail( $has_thumbnail, $post_id ) {
+
+    if ( ! $has_thumbnail && get_option( 'jwppp-poster-image-as-thumb' ) ) {
+
+        if( ! $post_id || get_post_meta( $post_id, '_jwppp-video-url-1', true ) ) {
+
+            $has_thumbnail = true;
+
+        }
+
+    }
+
+    return $has_thumbnail;
+
+}
+add_filter( 'has_post_thumbnail', 'jwppp_check_post_thumbnail', 20, 2 );
+
+
+/*
+ * Use video poster-image as thumbanail if a featured image is not set
+ *
+ * @param string $html the post thumbnail HTML.
+ * @param int    $post_id  the post ID.
+ *
+ * $return string
+ */
+function jwppp_poster_image_as_thumbnail( $html, $post_id ) {
+
+    if( get_option( 'jwppp-poster-image-as-thumb' ) ) {
+
+        $video = get_post_meta( $post_id, '_jwppp-video-url-1', true );
+
+        if ( ! $html && $video ) {
+
+            $image_url = jwppp_get_poster_image( $post_id, $video );
+
+            if ( $image_url ) {
+
+                $html = sprintf( '<img src="%s">', esc_url( $image_url ) );
+
+            }
+
+        }
+
+    }
+
+    return $html;
+
+}
+add_filter( 'post_thumbnail_html', 'jwppp_poster_image_as_thumbnail', 10, 2 );
+

@@ -2,7 +2,7 @@
  * Admin options and tools style
  * @author ilGhera
  * @package jw-player-7-for-wp/css
- * @since 2.0.0
+ * @since 2.1.0
  */
 
 .jwppp-alert {
@@ -317,6 +317,10 @@ li .video-img {
 	height: 16px;
 }
 
+.jwppp-types-row .tzCheckBox {
+    margin-bottom: 0.5rem !important;
+}
+     
 @media screen and (max-width: 1720px) {
 	.jwppp-video-details {
 		width: 300px;
