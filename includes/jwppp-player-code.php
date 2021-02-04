@@ -3,7 +3,7 @@
  * The player code block
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
- * @since 2.0.2
+ * @since 2.1.0
  * @param  int    $p            the post id
  * @param  int    $n            the number of video
  * @param  string $ar           the aspect ratio
@@ -45,18 +45,33 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 		/*Video url or media id*/
 		$jwppp_video_url = get_post_meta( $p_id, '_jwppp-video-url-' . $number, true );
-		$contextual = false !== strpos( $jwppp_video_url, '__CONTEXTUAL__' ) ? true : false;
+		$contextual      = false !== strpos( $jwppp_video_url, '__CONTEXTUAL__' ) ? true : false;
 
 		/*Is the video self hosted?*/
 		$sh_video = strrpos( $jwppp_video_url, 'http' ) === 0 ? true : false;
 
 		/*Playlist carousel*/
 		$jwppp_playlist_carousel = get_post_meta( $p_id, '_jwppp-playlist-carousel-' . $number, true );
+        $video_title             = get_post_meta( $p_id, '_jwppp-video-title-' . $number, true );
+        $video_description       = get_post_meta( $p_id, '_jwppp-video-description-' . $number, true );
+
+        /*Video image*/
+        $video_image = jwppp_get_poster_image( $p_id, $jwppp_video_url );
+
+        /*SEO items props*/
+        $itemprop_title = $video_title ? $video_title : get_the_title( $p_id );
+        $itemprop_image = $video_image ? $video_image : get_the_post_thumbnail_url( $p_id );
+
+        $itemprop_description = null;
+
+        if( $video_description ) {
+            $itemprop_description = $video_description;
+        } elseif( has_excerpt( $p_id ) ) {
+            $itemprop_description = get_the_excerpt( $p_id );
+        }
 
 		if ( ! $dashboard_player || $sh_video ) {
 
-			$video_title = get_post_meta( $p_id, '_jwppp-video-title-' . $number, true );
-			$video_description = get_post_meta( $p_id, '_jwppp-video-description-' . $number, true );
 			$jwppp_activate_media_type = get_post_meta( $p_id, '_jwppp-activate-media-type-' . $number, true );
 			$jwppp_media_type = get_post_meta( $p_id, '_jwppp-media-type-' . $number, true );
 
@@ -82,10 +97,19 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 	if ( $dashboard_player && ! $sh_video && $jwppp_video_url ) {
 
 		/*Video*/
-		$self_content = strpos( $jwppp_video_url, 'http' );
+		$self_content  = strpos( $jwppp_video_url, 'http' );
 
 		/*Output the player*/
-		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
+		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' itemscope itemtype='http://schema.org/VideoObject' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
+
+            $video_duration = get_post_meta( $p_id, '_jwppp-video-duration-' . $number, true ); 
+
+            echo $itemprop_title ? "<meta itemprop='name' content='" . esc_attr( $itemprop_title ) . "'/>\n" : null;
+            echo $itemprop_description ? "<meta itemprop='description' content='" .  esc_attr( $itemprop_description ) . "'/>\n" : null;
+            echo $video_duration ? "<meta itemprop='duration' content='" .  esc_attr( $video_duration ) . "'/>\n" : null;
+            echo $itemprop_image ? "<meta itemprop='thumbnailUrl' content='" . esc_attr( $itemprop_image ) . "'/>\n" : null;
+            echo "<meta itemprop='uploadDate' content='" .  esc_attr( get_the_date( 'c', $p_id ) ) . "'/>\n";
+            echo "<meta itemprop='contentUrl' content='" . esc_attr( 'https://cdn.jwplayer.com/v2/media/' . $jwppp_video_url ) . "'/>\n";
 
 			echo "<div id='jwppp-video-" . intval( $this_video ) . "' class='jwplayer'>";
 
@@ -106,9 +130,17 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 	} elseif ( $jwppp_video_url && $sh_video ) {
 
-		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
+		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' itemscope itemtype='http://schema.org/VideoObject' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
+
+            echo $itemprop_title ? "<meta itemprop='name' content='" . esc_attr( $itemprop_title ) . "'/>\n" : null;
+            echo $itemprop_description ? "<meta itemprop='description' content='" .  esc_attr( $itemprop_description ) . "'/>\n" : null;
+            echo $itemprop_image ? "<meta itemprop='thumbnailUrl' content='" . esc_attr( $itemprop_image ) . "'/>\n" : null;
+            echo "<meta itemprop='uploadDate' content='" .  esc_attr( get_the_date( 'c', $p_id ) ) . "'/>\n";
+            echo "<meta itemprop='contentUrl' content='" . esc_attr( 'https://cdn.jwplayer.com/v2/media/' . $jwppp_video_url ) . "'/>\n";
 
 			echo "<div id='jwppp-video-" . intval( $this_video ) . "' class='jwplayer'>";
+
+
 
 				/*Loading the player text*/
 				echo esc_html( __( 'Loading the player...', 'jwppp' ) );

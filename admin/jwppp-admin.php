@@ -3,7 +3,7 @@
  * Plugin options page
  * @author ilGhera
  * @package jw-player-7-for-wp/admin
- * @since 2.0.2
+ * @since 2.1.0
  */
 
 /**
@@ -29,6 +29,7 @@ add_action( 'admin_menu', 'jwppp_js_menu' );
  * Enqueue different scripts
  */
 function jwppp_enqueue_scripts() {
+    
 	if ( is_admin() ) {
 
 		/*ColorPicker*/
@@ -48,6 +49,11 @@ function jwppp_enqueue_scripts() {
 
 		$admin_page = get_current_screen();
 		if ( 'toplevel_page_jw-player-for-wp' === $admin_page->base ) {
+
+            /*tzCheckBox*/
+            wp_enqueue_style( 'tzcheckbox-style', JWPPP_URI . 'js/tzCheckbox/jquery.tzCheckbox/jquery.tzCheckbox.css' );
+            wp_enqueue_script( 'tzcheckbox', JWPPP_URI . 'js/tzCheckbox/jquery.tzCheckbox/jquery.tzCheckbox.js', array( 'jquery' ) );
+            wp_enqueue_script( 'tzcheckbox-script', JWPPP_URI . 'js/tzCheckbox/js/script.js', array( 'jquery' ) );
 
 			$jwplayer = sanitize_text_field( get_option( 'jwppp-library' ) );
 			$nonce_skin = wp_create_nonce( 'jwppp-nonce-skin' );
@@ -374,7 +380,7 @@ function jwppp_options() {
 			/*Post types selection*/
 			$jwppp_get_types = array('post', 'page');
 
-			echo '<tr>';
+			echo '<tr class="jwppp-types-row">';
 			echo '<th scope="row">' . esc_html( __( 'Post types', 'jwppp' ) ) . '</th>';
 			echo '<td>';
 
@@ -392,7 +398,7 @@ function jwppp_options() {
 			echo ' /><span class="jwppp-type">' . esc_html( ucfirst( $type ) ) . '</span><br>';
 		}
 
-			echo '<p class="description">' . esc_html( __( 'Content types that use video', 'jwppp' ) ) . '<br>';
+			echo '<p class="description">' . esc_html( __( 'Content types that use video', 'jwppp' ) ) . '</p>';
 			go_premium( __( 'Upgrade for custom post types', 'jwppp' ) );
 			echo '</td>';
 			echo '</tr>';
@@ -428,16 +434,17 @@ function jwppp_options() {
 			echo '</td>';
 			echo '</tr>';
 
-		if ( ! $dashboard_player ) {
-
-			echo '<tr>';
-			echo '<th scope="row">' . esc_html( __( 'Video Loading Message', 'jwppp' ) ) . '</th>';
-			echo '<td>';
-			echo '<textarea cols="40" rows="2" id="jwppp-text" name="jwppp-text" placeholder="' . esc_attr( __( 'Loading the player...', 'jwppp' ) ) . '" disabled="disabled"></textarea>';
-			echo '<p class="description">' . esc_html( __( 'Video loading message.', 'jwppp' ) ) . '<br>';
+			/*Video post-image as post thumbnail*/
+            echo '<tr>';
+            echo '<th scope="row">' . esc_html( __( 'Auto thumbnail', 'jwppp' ) ) . '</th>';
+            echo '<td>';
+            echo '<input type="checkbox" id="poster-image-as-thumb" name="poster-image-as-thumb" value="1" />';
+            echo '<p class="description">' . esc_html( __( 'Use video poster image as post thumbnail.', 'jwppp' ) ) . '</p>';
 			go_premium();
-			echo '</td>';
-			echo '</tr>';
+            echo '<td>';
+            echo '</tr>';
+
+		if ( ! $dashboard_player ) {
 
 			/*Poster image*/
 			$poster_image = sanitize_text_field( get_option( 'jwppp-poster-image' ) );
@@ -471,6 +478,23 @@ function jwppp_options() {
 			echo '<td>';
 			echo '</tr>';
 
+			/*The message shown to the user before the player is been embed*/
+			$jwppp_text = sanitize_text_field( get_option( 'jwppp-text' ) );
+			if ( isset( $_POST['jwppp-text'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
+				$jwppp_text = sanitize_text_field( wp_unslash( $_POST['jwppp-text'] ) );
+				update_option( 'jwppp-text', $jwppp_text );
+			}
+
+			echo '<tr>';
+			echo '<th scope="row">' . esc_html( __( 'Video Loading Message', 'jwppp' ) ) . '</th>';
+			echo '<td>';
+			echo '<textarea cols="40" rows="2" id="jwppp-text" name="jwppp-text" placeholder="' . esc_attr( __( 'Loading the player...', 'jwppp' ) ) . '" disabled="disabled"></textarea>';
+			echo '<p class="description">' . esc_html( __( 'Video loading message.', 'jwppp' ) ) . '</p>';
+			go_premium();
+			echo '</td>';
+			echo '</tr>';
+			echo '<tr>';
+
 			/*Fixed dimensions or responsive?*/
 			echo '<tr>';
 			echo '<th scope="row">' . esc_html( __( 'Player Embed Type', 'jwppp' ) ) . '</th>';
@@ -478,7 +502,7 @@ function jwppp_options() {
 			echo '<select id="jwppp-method-dimensions" name="jwppp-method-dimensions" disabled="disabled" />';
 			echo '<option name="fixed" id="fixed" value="fixed">' . esc_html( __( 'Fixed', 'jwppp' ) ) . '</option>';
 			echo '</select>';
-			echo '<p class="description">' . esc_html( __( 'Player embed type.', 'jwppp' ) ) . '<br>';
+			echo '<p class="description">' . esc_html( __( 'Player embed type.', 'jwppp' ) ) . '</p>';
 			go_premium( __( 'Upgrade for a responsive player', 'jwppp' ) );
 			echo '</td>';
 			echo '</tr>';
@@ -590,7 +614,7 @@ function jwppp_options() {
 			echo '<td>';
 			echo '<input type="text" class="regular-text" id="jwppp-logo-link" name="jwppp-logo-link" ';
 			echo 'placeholder="' . esc_attr( __( 'Link url', 'jwppp' ) ) . '" disabled="disabled" />';
-			echo '<p class="description">' . esc_html( __( 'Logo click-through URL.', 'jwppp' ) ) . '<br>';
+			echo '<p class="description">' . esc_html( __( 'Logo click-through URL.', 'jwppp' ) ) . '</p>';
 			go_premium();
 			echo '</td>';
 			echo '</tr>';
