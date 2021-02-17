@@ -146,7 +146,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 		/*Output the player*/
 		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' itemscope itemtype='http://schema.org/VideoObject' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
 
-            $video_duration = get_post_meta( $p_id, '_jwppp-video-duration-' . $number, true ); 
+            $video_duration = get_duration_iso_format( get_post_meta( $p_id, '_jwppp-video-duration-' . $number, true ) ); 
 
             echo $itemprop_title ? "<meta itemprop='name' content='" . esc_attr( $itemprop_title ) . "'/>\n" : null;
             echo $itemprop_description ? "<meta itemprop='description' content='" .  esc_attr( $itemprop_description ) . "'/>\n" : null;

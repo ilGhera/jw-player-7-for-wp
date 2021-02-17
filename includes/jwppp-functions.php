@@ -81,7 +81,6 @@ function jwppp_get_post_videos( $post_id ) {
 }
 
 
-
 /**
  * Get videos ids string
  * @param  int $post_id
@@ -976,4 +975,29 @@ function jwppp_poster_image_as_thumbnail( $html, $post_id ) {
 
 }
 add_filter( 'post_thumbnail_html', 'jwppp_poster_image_as_thumbnail', 10, 2 );
+
+
+/*
+ * Transform time string to ISO 8601 format
+ *
+ * @param string $duration the time string in 00:00:00 format.
+ *
+ * @return string
+ *
+ */
+function get_duration_iso_format( $duration ) {
+
+    if ( '00:00:00' !== $duration ) {
+
+        $times = explode( ':', $duration );
+
+        if ( 3 === count( $times ) ) {
+
+            return sprintf('PT%dH%dM%dS', $times[0], $times[1], $times[2]);
+
+        }
+
+    }
+
+}
 
