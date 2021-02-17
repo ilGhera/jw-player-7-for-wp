@@ -70,7 +70,7 @@ var JWPPPSelectContent = function() {
 
 				} else {
 
-					if ( 0 < $( this ).data( 'duration' ) ) {
+					if ( $( this ).data( 'duration' ) ) {
 						duration = new Date( $( this ).data( 'duration' ) * 1000 ).toISOString().substr( 11, 8 );
 					}
 
@@ -86,7 +86,7 @@ var JWPPPSelectContent = function() {
 						$( '.jwppp-video-details-' + number ).append( '<span>Description</span>: ' + description + '<br>' );
 					}
 
-					if ( duration ) {
+					if ( 0 < $(this).data( 'duration' ) ) {
 						$( '.jwppp-video-details-' + number ).append( '<span>Duration</span>: ' + duration + '<br>' );
 					}
 
