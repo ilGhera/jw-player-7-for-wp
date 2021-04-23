@@ -72,7 +72,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 		$jwppp_video_url = get_post_meta( $p_id, '_jwppp-video-url-' . $number, true );
 		$contextual      = false !== strpos( $jwppp_video_url, '__CONTEXTUAL__' ) ? true : false;
 
-		/*Is the video self hosted?*/
+		/*Is video self hosted?*/
 		$sh_video = strrpos( $jwppp_video_url, 'http' ) === 0 ? true : false;
 
 		/*Playlist carousel*/
@@ -218,7 +218,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
             echo $itemprop_description ? "<meta itemprop='description' content='" .  esc_attr( $itemprop_description ) . "'/>\n" : null;
             echo $itemprop_image ? "<meta itemprop='thumbnailUrl' content='" . esc_attr( $itemprop_image ) . "'/>\n" : null;
             echo "<meta itemprop='uploadDate' content='" .  esc_attr( get_the_date( 'c', $p_id ) ) . "'/>\n";
-            echo "<meta itemprop='contentUrl' content='" . esc_attr( 'https://cdn.jwplayer.com/v2/media/' . $jwppp_video_url ) . "'/>\n";
+            echo "<meta itemprop='contentUrl' content='" . esc_attr( $jwppp_video_url ) . "'/>\n";
 
 			/*Player definition*/
 			if ( $dashboard_player ) {
