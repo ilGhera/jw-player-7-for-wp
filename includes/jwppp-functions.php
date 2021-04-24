@@ -460,6 +460,44 @@ function jwppp_ads_tag_exists( $tags, $tag ) {
 
 
 /**
+ * Check if media is a playlist
+ *
+ * @param  int    $post_id      the post id.
+ * @param  int    $video_number the number of the video in page.
+ * @param  string $media_id     the media id.
+ *
+ * @return bool
+ */
+function is_cloud_playlist( $post_id, $video_number, $media_id ) {
+
+    $output  = false;
+    $from_db = get_post_meta( $post_id, '_jwppp-cloud-playlist-' . $video_number, true );
+
+    if ( ! $from_db ) {
+
+        $api       = new JWPPP_Dashboard_Api();
+        $playlists = $api->get_playlists( $media_id );
+
+        if ( is_array( $playlists ) && ! empty( $playlists ) ) {
+
+            update_post_meta( $post_id, '_jwppp-cloud-playlist-' . $video_number, 'yes' );
+
+            $output = true;
+
+        }
+
+    } elseif ( 'yes' === $from_db ) {
+
+        $output = true;
+
+    } 
+
+    return $output;
+
+}
+
+
+/**
  * Generate signed URLs
  * @param  string $media_id the media id
  * @param  bool   $short return only the last part of the url

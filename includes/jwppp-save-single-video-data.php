@@ -47,6 +47,15 @@ function jwppp_save_single_video_data( $post_id ) {
 				update_post_meta( $post_id, '_jwppp-video-url-' . $number, $video );
 			}
 
+            /*Cloud playlist*/
+            $cloud_playlist = sanitize_text_field( wp_unslash( $_POST[ '_jwppp-cloud-playlist-' . $number ] ) );
+            
+			if ( ! $cloud_playlist ) {
+				delete_post_meta( $post_id, '_jwppp-cloud-playlist-' . $number );
+			} else {
+				update_post_meta( $post_id, '_jwppp-cloud-playlist-' . $number, $cloud_playlist );
+			}
+
 			/*Video sources*/
 			if ( isset( $_POST[ '_jwppp-sources-number-' . $number ] ) ) {
 

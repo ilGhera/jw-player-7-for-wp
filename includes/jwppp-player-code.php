@@ -186,13 +186,21 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 					$security_urls = get_option( 'jwppp-secure-video-urls' );
 
 				if ( $security_urls ) {
+
 					echo "playlist: " . wp_json_encode( jwppp_get_signed_url( $jwppp_video_url, false, $contextual ), JSON_UNESCAPED_SLASHES ) . ",\n";
+
 				} else {
-					if ( $contextual ) {
-						echo "playlist: " . wp_json_encode( "https://cdn.jwplayer.com/v2/playlists/" . $jwppp_video_url, JSON_UNESCAPED_SLASHES ) . ",\n";
+
+					if ( $contextual || is_cloud_playlist( $p_id, $n, $jwppp_video_url ) ) {
+
+                        echo "playlist: " . wp_json_encode( "https://cdn.jwplayer.com/v2/playlists/" . $jwppp_video_url, JSON_UNESCAPED_SLASHES ) . ",\n";
+
 					} else {
-						echo "playlist: " . wp_json_encode( "https://cdn.jwplayer.com/v2/media/" . $jwppp_video_url, JSON_UNESCAPED_SLASHES ) . ",\n";
-					}
+
+                        echo "playlist: " . wp_json_encode( "https://cdn.jwplayer.com/v2/media/" . $jwppp_video_url, JSON_UNESCAPED_SLASHES ) . ",\n";
+
+                    }
+
 				}
 	
 				/*Ads block*/
@@ -236,8 +244,6 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 			echo '<span class="jwppp-instant" style="display: none;" data-video="' . esc_url( home_url() . "/?jwp-instant-articles=1&$instant_player&mediaURL=$jwppp_video_url&image=$instant_image" ) . '" data-width="480" data-height="270"></span>';
 
 			echo "<div id='jwppp-video-" . intval( $this_video ) . "' class='jwplayer'>";
-
-
 
 				/*Loading the player text*/
 				if ( get_option( 'jwppp-text' ) ) {
