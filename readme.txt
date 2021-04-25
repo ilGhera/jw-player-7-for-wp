@@ -69,12 +69,14 @@ That’s it, you’re ready to go!
 
 
 = 2.1.0 =
-Release Date: 2 February 2021
+Release Date: xx April 2021
 
+* Enhancement : Different endpoints for single-videos and playlists
 * Enhancement : Set video poster-image as WordPress featured image
 * Enhancement : SEO improvements with schema markup
 * Enhancement : New switch buttons in plugin options page
 * Bug fix: Thumbnails with different width in playlist carousel  
+* Bug fix: Quotation marks in sources labels
 
 
 = 2.0.2 =

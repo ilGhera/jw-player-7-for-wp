@@ -2,7 +2,7 @@
  * Used with player and media contents from the cloud
  * @author ilGhera
  * @package jw-player-for-vip/js
- * @since 2.0.0
+ * @since 2.1.0
  *
  *
  * Fired when a media content in the list is clicked
