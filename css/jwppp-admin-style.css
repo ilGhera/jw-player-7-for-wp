@@ -321,7 +321,8 @@ li .video-img {
     margin-bottom: 0.5rem !important;
 }
 
-span.jwppp-type {
+span.jwppp-type,
+span.jwppp-check-label {
     padding-left: 5px;
     position: relative;
     top: 2px;
