@@ -499,15 +499,18 @@ function is_cloud_playlist( $post_id, $video_number, $media_id ) {
 
 /**
  * Generate signed URLs
- * @param  string $media_id the media id
- * @param  bool   $short return only the last part of the url
- * @param  bool   $matching define if the media is a Article Matching plylist
+ *
+ * @param  string $media_id the media id.
+ * @param  bool   $short return only the last part of the url.
+ * @param  bool   $matching define if the media is a Article Matching plylist.
+ * @param  bool   $playlist define if the media is a playlist.
+ *
  * @return string
  */
-function jwppp_get_signed_url( $media_id, $short = false, $matching = false ) {
+function jwppp_get_signed_url( $media_id, $short = false, $matching = false, $playlist = false ) {
 
-	$token_secret = get_option( 'jwppp-api-secret' );
-	$resource = "v2/media/$media_id";
+	$token_secret   = get_option( 'jwppp-api-secret' );
+	$resource       = $playlist ? "v2/playlists/$media_id" : "v2/media/$media_id";
 	$resource4token = $resource;
 	$plus = '?';
 

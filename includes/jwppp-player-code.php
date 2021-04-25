@@ -189,7 +189,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 				if ( $security_urls ) {
 
-					echo "playlist: " . wp_json_encode( jwppp_get_signed_url( $jwppp_video_url, false, $contextual ), JSON_UNESCAPED_SLASHES ) . ",\n";
+					echo "playlist: " . wp_json_encode( jwppp_get_signed_url( $jwppp_video_url, false, $contextual, $is_cloud_playlist ), JSON_UNESCAPED_SLASHES ) . ",\n";
 
 				} else {
 
