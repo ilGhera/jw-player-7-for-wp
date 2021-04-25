@@ -146,14 +146,16 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 		/*Output the player*/
 		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' itemscope itemtype='http://schema.org/VideoObject' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
 
-            $video_duration = get_duration_iso_format( get_post_meta( $p_id, '_jwppp-video-duration-' . $number, true ) ); 
+            $is_cloud_playlist = is_cloud_playlist( $p_id, $n, $jwppp_video_url ); 
+            $content_url       = $is_cloud_playlist ? 'https://cdn.jwplayer.com/v2/playlists/' . $jwppp_video_url : 'https://cdn.jwplayer.com/v2/media/' . $jwppp_video_url;
+            $video_duration    = get_duration_iso_format( get_post_meta( $p_id, '_jwppp-video-duration-' . $number, true ) ); 
 
             echo $itemprop_title ? "<meta itemprop='name' content='" . esc_attr( $itemprop_title ) . "'/>\n" : null;
             echo $itemprop_description ? "<meta itemprop='description' content='" .  esc_attr( $itemprop_description ) . "'/>\n" : null;
             echo $video_duration ? "<meta itemprop='duration' content='" .  esc_attr( $video_duration ) . "'/>\n" : null;
             echo $itemprop_image ? "<meta itemprop='thumbnailUrl' content='" . esc_attr( $itemprop_image ) . "'/>\n" : null;
             echo "<meta itemprop='uploadDate' content='" .  esc_attr( get_the_date( 'c', $p_id ) ) . "'/>\n";
-            echo "<meta itemprop='contentUrl' content='" . esc_attr( 'https://cdn.jwplayer.com/v2/media/' . $jwppp_video_url ) . "'/>\n";
+            echo "<meta itemprop='contentUrl' content='" . esc_attr( $content_url ) . "'/>\n";
 
 			/*FB Instant Articles*/
 			echo '<span class="jwppp-instant" style="display: none;" data-video="' . esc_url( home_url() . "/?jwp-instant-articles=1&player=$choose_player&mediaID=$jwppp_video_url" ) . '" data-width="480" data-height="270"></span>';
@@ -191,7 +193,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 				} else {
 
-					if ( $contextual || is_cloud_playlist( $p_id, $n, $jwppp_video_url ) ) {
+					if ( $contextual || $is_cloud_playlist ) {
 
                         echo "playlist: " . wp_json_encode( "https://cdn.jwplayer.com/v2/playlists/" . $jwppp_video_url, JSON_UNESCAPED_SLASHES ) . ",\n";
 
