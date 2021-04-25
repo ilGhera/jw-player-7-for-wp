@@ -402,7 +402,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 								}
 								echo "sites: ['email','facebook','twitter','pinterest','tumblr','googleplus','reddit','linkedin'],\n";
 								if ( ( $jwppp_embed_video || 1 === intval( $jwppp_single_embed ) ) && ! $jwppp_playlist ) {
-									echo "code: " . wp_json_encode( "<iframe src='$jwppp_embed_url'  width='640'  height='360'  frameborder='0'  scrolling='auto'></iframe>", JSON_UNESCAPED_SLASHES ) . "\n";
+									echo "code: " . wp_json_encode( "<iframe class='jwp-video-code' src='$jwppp_embed_url'  width='640'  height='360'  frameborder='0'  scrolling='auto'></iframe>", JSON_UNESCAPED_SLASHES ) . "\n";
 								}
 							echo "},\n";
 						}
