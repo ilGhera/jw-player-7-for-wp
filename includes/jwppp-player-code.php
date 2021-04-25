@@ -315,7 +315,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 						echo "file: " . wp_json_encode( $jwppp_video_url, JSON_UNESCAPED_SLASHES ) . ",\n";
 						if ( $jwppp_sources_number && $jwppp_sources_number[0] > 1 ) {
 							$main_source_label = get_post_meta( $p_id, '_jwppp-' . $number . '-main-source-label', true );
-							echo ( $main_source_label ) ? "label: '" . wp_json_encode( $main_source_label ) . "'\n" : '';
+							echo ( $main_source_label ) ? "label: " . wp_json_encode( $main_source_label ) . "\n" : '';
 						}
 
 						if ( $jwppp_source_1 ) {
@@ -329,7 +329,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 								if ( $source_url ) {
 									echo "{\n";
 									echo "file: " . wp_json_encode( $source_url, JSON_UNESCAPED_SLASHES ) . ",\n";
-									echo ( $source_label ) ? "label: '" . wp_json_encode( $source_label ) . "'\n" : '';
+									echo ( $source_label ) ? "label: " . wp_json_encode( $source_label ) . "\n" : '';
 									echo "},\n";
 								}
 							}
