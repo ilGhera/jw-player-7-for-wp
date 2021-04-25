@@ -320,7 +320,13 @@ li .video-img {
 .jwppp-types-row .tzCheckBox {
     margin-bottom: 0.5rem !important;
 }
-     
+
+span.jwppp-type {
+    padding-left: 5px;
+    position: relative;
+    top: 2px;
+}
+
 @media screen and (max-width: 1720px) {
 	.jwppp-video-details {
 		width: 300px;
