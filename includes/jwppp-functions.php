@@ -645,7 +645,7 @@ function jwppp_simple_player_code( $media_id ) {
 			echo "playerInstance_" . trim( wp_json_encode( $media_id ), '"' ) . ".setup({\n";
 
 			if ( $security_urls ) {
-					echo "playlist: " . wp_json_encode( jwppp_get_signed_url( $media_id ), JSON_UNESCAPED_SLASHES ) . ",\n";
+					echo "playlist: " . wp_json_encode( jwppp_get_signed_url( $media_id, false, false, $playlist ), JSON_UNESCAPED_SLASHES ) . ",\n";
 			} else {
 				echo "playlist: " . wp_json_encode( $resource, JSON_UNESCAPED_SLASHES ) . ",\n";
 			}
