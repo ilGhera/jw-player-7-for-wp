@@ -48,12 +48,13 @@ jQuery( document ).ready( function( $ ) {
 	JWPPPpagination();
 
 	/*Related videos thumbnail/ custom field*/
-    if( false == $( '#jwppp-show-related' ).prop( 'checked' ) ) {
+    if( ! $( '.jwppp-show-related .tzCheckBox' ).hasClass( 'checked' ) ) {
         $( '.related-options' ).hide();
     }
 
-    $( '#jwppp-show-related' ).on( 'change',function() {
-        if( $( '#jwppp-show-related' ).prop( 'checked' ) ) {
+    $( '.jwppp-show-related .tzCheckBox' ).on( 'click',function() {
+        console.log('test 200');
+        if( $( this ).hasClass( 'checked' ) ) {
             $( '.related-options' ).show( 'slow' );
         } else {
             $( '.related-options' ).hide();
@@ -78,12 +79,13 @@ jQuery( document ).ready( function( $ ) {
 
 
 	/*Share options*/
-	if ( false == $( '#jwppp-active-share' ).prop( 'checked' ) ) {
+	if ( ! $( '.jwppp-active-share .tzCheckBox' ).hasClass( 'checked' ) ) {
 		$( '.share-options' ).hide();
 	}
 
-	$( '#jwppp-active-share' ).on( 'change', function() {
-		if ( $( '#jwppp-active-share' ).prop( 'checked' ) ) {
+	$( '.jwppp-active-share .tzCheckBox' ).on( 'click', function() {
+        console.log( 'test!' );
+		if ( $( this ).hasClass( 'checked' ) ) {
 			$( '.share-options' ).show( 'slow' );
 		} else {
 			$( '.share-options' ).hide();

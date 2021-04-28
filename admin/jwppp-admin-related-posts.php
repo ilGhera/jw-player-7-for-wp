@@ -53,7 +53,7 @@
     echo '<table class="form-table">';
 
     /*Show related?*/
-    echo '<tr>';
+    echo '<tr class="jwppp-show-related">';
     echo '<th scope="row">' . esc_html( __( 'Active Related Posts option', 'jwppp' ) ) . '</th>';
     echo '<td>';
     echo '<input type="checkbox" id="jwppp-show-related" name="jwppp-show-related" value="1"';
