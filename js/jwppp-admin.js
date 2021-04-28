@@ -53,7 +53,7 @@ jQuery( document ).ready( function( $ ) {
     }
 
     $( '.jwppp-show-related .tzCheckBox' ).on( 'click',function() {
-        console.log('test 200');
+
         if( $( this ).hasClass( 'checked' ) ) {
             $( '.related-options' ).show( 'slow' );
         } else {
@@ -84,7 +84,7 @@ jQuery( document ).ready( function( $ ) {
 	}
 
 	$( '.jwppp-active-share .tzCheckBox' ).on( 'click', function() {
-        console.log( 'test!' );
+
 		if ( $( this ).hasClass( 'checked' ) ) {
 			$( '.share-options' ).show( 'slow' );
 		} else {
