@@ -42,7 +42,7 @@
 	echo '<table class="form-table">';
 
 	/*Active share?*/
-	echo '<tr>';
+	echo '<tr class="jwppp-active-share">';
 	echo '<th scope="row">' . esc_html( __( 'Activate Sharing Option', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<input type="checkbox" id="jwppp-active-share" name="jwppp-active-share" value="1"';

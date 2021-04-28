@@ -65,12 +65,13 @@ jQuery( document ).ready( function( $ ) {
 
 
 	/*Share options*/
-	if ( false == $( '#jwppp-active-share' ).prop( 'checked' ) ) {
+	if ( ! $( '.jwppp-active-share .tzCheckBox' ).hasClass( 'checked' ) ) {
 		$( '.share-options' ).hide();
 	}
 
-	$( '#jwppp-active-share' ).on( 'change', function() {
-		if ( $( '#jwppp-active-share' ).prop( 'checked' ) ) {
+	$( '.jwppp-active-share .tzCheckBox' ).on( 'click', function() {
+        console.log( 'test!' );
+		if ( $( this ).hasClass( 'checked' ) ) {
 			$( '.share-options' ).show( 'slow' );
 		} else {
 			$( '.share-options' ).hide();
