@@ -107,7 +107,7 @@
 	echo '<table class="form-table">';
 
 	/*Active ads?*/
-	echo '<tr>';
+	echo '<tr class="jwppp-active-ads">';
 	echo '<th scope="row">' . esc_html( __( 'Active Video Ads', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<input type="checkbox" id="jwppp-active-ads" name="jwppp-active-ads" value="1"';
@@ -193,10 +193,9 @@
 	echo '</tr>';
 
 	/*Bidding*/
-	echo '<tr class="ads-options"' . esc_attr( $hide ) . '>';
+	echo '<tr class="ads-options jwppp-active-bidding"' . esc_attr( $hide ) . '>';
 	echo '<th scope="row">' . esc_html( __( 'Player Bidding', 'jwppp' ) ) . '</th>';
 	echo '<td>';
-	echo '<label>';
 	echo '<input type="checkbox" id="jwppp-active-bidding" name="jwppp-active-bidding" value="1"';
 	echo ( 1 === intval( $active_bidding ) ) ? ' checked="checked"' : '';
 	echo ' />';
@@ -204,7 +203,6 @@
 	echo '<p class="description">';
 	echo wp_kses( __( 'All the benefits of Header Bidding are now built directly into your JW Player. With a simple one-click integration, you get access to quality demand at scale with reduced latency. SpotX is the leading video ad serving platform and gives publishers control, transparency and insights to maximize revenue.<br><a href="https://support.jwplayer.com/articles/how-to-setup-video-player-bidding" target="_blank">Contact SpotX to get started</a>', 'jwppp' ), $allowed_tags );
 	echo '</p>';
-	echo '</label>';
 	echo '<td>';
 	echo '</tr>';
 

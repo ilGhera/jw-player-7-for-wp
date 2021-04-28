@@ -98,20 +98,20 @@ jQuery( document ).ready( function( $ ) {
 
 
 	/*Ads options*/
-	if ( false == $( '#jwppp-active-ads' ).prop( 'checked' ) ) {
+	if ( ! $( '.jwppp-active-ads .tzCheckBox' ).hasClass( 'checked' ) ) {
 		$( '.ads-options' ).hide();
 	} else {
-		if ( $( '#jwppp-active-ads-var' ).prop( 'checked' ) ) {
+		if ( $( '.ads-var-block .tzCheckBox' ).hasClass( 'checked' ) ) {
 			$( '.ads-options' ).hide();
 			$( '.ads-options.ads-var-block' ).show( 'slow' );
 		}
 	}
 
-	$( '#jwppp-active-ads' ).on( 'change', function() {
-		if ( $( '#jwppp-active-ads' ).prop( 'checked' ) ) {
+	$( '.jwppp-active-ads .tzCheckBox' ).on( 'click', function() {
+		if ( $(this).hasClass( 'checked' ) ) {
 
 			/*ADS variable block*/
-			if ( $( '#jwppp-active-ads-var' ).prop( 'checked' ) ) {
+			if ( $( '.ads-var-block .tzCheckBox' ).hasClass( 'checked' ) ) {
 				$( '.ads-options' ).hide();
 				$( '.ads-options.ads-var-block' ).show( 'slow' );
 			} else {
@@ -119,7 +119,7 @@ jQuery( document ).ready( function( $ ) {
 				$( '.ads-options.ads-var-block' ).hide();
 				$( '.ads-options.ads-var-block.activation' ).show( 'slow' );
 
-				if ( false == $( '#jwppp-active-bidding' ).prop( 'checked' ) ) {
+				if ( ! $( '.jwppp-active-bidding .tzCheckBox' ).hasClass( 'checked' ) ) {
 					$( '.ads-options.bidding' ).hide();
 				} else {
 					if ( 'jwp' !== $( '#jwppp-mediation' ).val() && 'jwpdfp' !== $( '#jwppp-mediation' ).val() ) {
@@ -130,7 +130,7 @@ jQuery( document ).ready( function( $ ) {
 			}
 
 			/*Bidding*/
-			if ( false == $( '#jwppp-active-bidding' ).prop( 'checked' ) ) {
+			if ( $( '.jwppp-active-bidding .tzCheckBox' ).hasClass( 'checked' ) ) {
 				$( '.ads-options.bidding' ).hide();
 			} else {
 				if ( 'jwp' !== $( '#jwppp-mediation' ).val() && 'jwpdfp' !== $( '#jwppp-mediation' ).val() ) {
@@ -145,8 +145,8 @@ jQuery( document ).ready( function( $ ) {
 	});
 
 	/*ADS variable block*/
-	$( '#jwppp-active-ads-var' ).on( 'change', function() {
-		if ( $( this ).prop( 'checked' ) ) {
+	$( '.ads-var-block .tzCheckBox' ).on( 'click', function() {
+		if ( $( this ).hasClass( 'checked' ) ) {
 			$( '.ads-options' ).hide();
 			$( '.ads-options.ads-var-block' ).show( 'slow' );
 		} else {
@@ -154,7 +154,7 @@ jQuery( document ).ready( function( $ ) {
 			$( '.ads-options.ads-var-block' ).hide();
 			$( '.ads-options.ads-var-block.activation' ).show( 'slow' );
 
-			if ( false == $( '#jwppp-active-bidding' ).prop( 'checked' ) ) {
+			if ( ! $( '.jwppp-active-bidding .tzCheckBox' ).hasClass( 'checked' ) ) {
 				$( '.ads-options.bidding' ).hide();
 			} else {
 				if ( 'jwp' !== $( '#jwppp-mediation' ).val() && 'jwpdfp' !== $( '#jwppp-mediation' ).val() ) {
@@ -187,12 +187,12 @@ jQuery( document ).ready( function( $ ) {
 	});
 
 	/*Bidding*/
-	if ( false == $( '#jwppp-active-bidding' ).prop( 'checked' ) ) {
+	if ( ! $( '.jwppp-active-bidding .tzCheckBox' ).hasClass( 'checked' ) ) {
 		$( '.ads-options.bidding' ).hide();
 	}
 
-	$( '#jwppp-active-bidding' ).on( 'change', function() {
-		if ( $( '#jwppp-active-bidding' ).prop( 'checked' ) ) {
+	$( '.jwppp-active-bidding .tzCheckBox' ).on( 'click', function() {
+		if ( $( this ).hasClass( 'checked' ) ) {
 			$( '.ads-options.bidding' ).show( 'slow' );
 
 			if ( 'jwp' !== $( '#jwppp-mediation' ).val() && 'jwpdfp' !== $( '#jwppp-mediation' ).val() ) {
