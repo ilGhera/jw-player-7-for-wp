@@ -3,7 +3,7 @@
  * Related posts option
  * @author ilGhera
  * @package jw-player-7-for-wp/admin
- * @version 2.0.0
+ * @version 2.1.2
  */
 ?>
 <div name="jwppp-related" id="jwppp-related" class="jwppp-admin" style="display: none;">
@@ -14,7 +14,7 @@
     echo '<table class="form-table">';
 
     /*Show related?*/
-    echo '<tr>';
+    echo '<tr class="jwppp-show-related">';
     echo '<th scope="row">' . esc_html( __( 'Active Related Posts option', 'jwppp' ) ) . '</th>';
     echo '<td>';
     echo '<input type="checkbox" id="jwppp-show-related" name="jwppp-show-related" value=""/>';

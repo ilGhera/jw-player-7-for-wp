@@ -3,7 +3,7 @@
  * Share options
  * @author ilGhera
  * @package jw-player-7-for-wp/admin
- * @since 2.0.2
+ * @since 2.1.2
  */
 ?>
 <div name="jwppp-social" id="jwppp-social" class="jwppp-admin" style="display: none;">
@@ -42,7 +42,7 @@
 	echo '<table class="form-table">';
 
 	/*Active share?*/
-	echo '<tr>';
+	echo '<tr class="jwppp-active-share">';
 	echo '<th scope="row">' . esc_html( __( 'Activate Sharing Option', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<input type="checkbox" id="jwppp-active-share" name="jwppp-active-share" value="1"';

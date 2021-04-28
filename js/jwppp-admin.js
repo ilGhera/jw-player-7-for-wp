@@ -2,7 +2,7 @@
  * Main admin js file
  * @author ilGhera
  * @package jw-player-7-for-wp/js
- * @since 2.0.0
+ * @since 2.1.2
  */
 jQuery( document ).ready( function( $ ) {
 
@@ -48,12 +48,13 @@ jQuery( document ).ready( function( $ ) {
 	JWPPPpagination();
 
 	/*Related videos thumbnail/ custom field*/
-    if( false == $( '#jwppp-show-related' ).prop( 'checked' ) ) {
+    if( ! $( '.jwppp-show-related .tzCheckBox' ).hasClass( 'checked' ) ) {
         $( '.related-options' ).hide();
     }
 
-    $( '#jwppp-show-related' ).on( 'change',function() {
-        if( $( '#jwppp-show-related' ).prop( 'checked' ) ) {
+    $( '.jwppp-show-related .tzCheckBox' ).on( 'click',function() {
+
+        if( $( this ).hasClass( 'checked' ) ) {
             $( '.related-options' ).show( 'slow' );
         } else {
             $( '.related-options' ).hide();
@@ -78,12 +79,13 @@ jQuery( document ).ready( function( $ ) {
 
 
 	/*Share options*/
-	if ( false == $( '#jwppp-active-share' ).prop( 'checked' ) ) {
+	if ( ! $( '.jwppp-active-share .tzCheckBox' ).hasClass( 'checked' ) ) {
 		$( '.share-options' ).hide();
 	}
 
-	$( '#jwppp-active-share' ).on( 'change', function() {
-		if ( $( '#jwppp-active-share' ).prop( 'checked' ) ) {
+	$( '.jwppp-active-share .tzCheckBox' ).on( 'click', function() {
+
+		if ( $( this ).hasClass( 'checked' ) ) {
 			$( '.share-options' ).show( 'slow' );
 		} else {
 			$( '.share-options' ).hide();
@@ -111,20 +113,20 @@ jQuery( document ).ready( function( $ ) {
 
 
 	/*Ads options*/
-	if ( false == $( '#jwppp-active-ads' ).prop( 'checked' ) ) {
+	if ( ! $( '.jwppp-active-ads .tzCheckBox' ).hasClass( 'checked' ) ) {
 		$( '.ads-options' ).hide();
 	} else {
-		if ( $( '#jwppp-active-ads-var' ).prop( 'checked' ) ) {
+		if ( $( '.ads-var-block .tzCheckBox' ).hasClass( 'checked' ) ) {
 			$( '.ads-options' ).hide();
 			$( '.ads-options.ads-var-block' ).show( 'slow' );
 		}
 	}
 
-	$( '#jwppp-active-ads' ).on( 'change', function() {
-		if ( $( '#jwppp-active-ads' ).prop( 'checked' ) ) {
+	$( '.jwppp-active-ads .tzCheckBox' ).on( 'click', function() {
+		if ( $(this).hasClass( 'checked' ) ) {
 
 			/*ADS variable block*/
-			if ( $( '#jwppp-active-ads-var' ).prop( 'checked' ) ) {
+			if ( $( '.ads-var-block .tzCheckBox' ).hasClass( 'checked' ) ) {
 				$( '.ads-options' ).hide();
 				$( '.ads-options.ads-var-block' ).show( 'slow' );
 			} else {
@@ -132,7 +134,7 @@ jQuery( document ).ready( function( $ ) {
 				$( '.ads-options.ads-var-block' ).hide();
 				$( '.ads-options.ads-var-block.activation' ).show( 'slow' );
 
-				if ( false == $( '#jwppp-active-bidding' ).prop( 'checked' ) ) {
+				if ( ! $( '.jwppp-active-bidding .tzCheckBox' ).hasClass( 'checked' ) ) {
 					$( '.ads-options.bidding' ).hide();
 				} else {
 					if ( 'jwp' !== $( '#jwppp-mediation' ).val() && 'jwpdfp' !== $( '#jwppp-mediation' ).val() ) {
@@ -143,7 +145,7 @@ jQuery( document ).ready( function( $ ) {
 			}
 
 			/*Bidding*/
-			if ( false == $( '#jwppp-active-bidding' ).prop( 'checked' ) ) {
+			if ( $( '.jwppp-active-bidding .tzCheckBox' ).hasClass( 'checked' ) ) {
 				$( '.ads-options.bidding' ).hide();
 			} else {
 				if ( 'jwp' !== $( '#jwppp-mediation' ).val() && 'jwpdfp' !== $( '#jwppp-mediation' ).val() ) {
@@ -158,8 +160,8 @@ jQuery( document ).ready( function( $ ) {
 	});
 
 	/*ADS variable block*/
-	$( '#jwppp-active-ads-var' ).on( 'change', function() {
-		if ( $( this ).prop( 'checked' ) ) {
+	$( '.ads-var-block .tzCheckBox' ).on( 'click', function() {
+		if ( $( this ).hasClass( 'checked' ) ) {
 			$( '.ads-options' ).hide();
 			$( '.ads-options.ads-var-block' ).show( 'slow' );
 		} else {
@@ -167,7 +169,7 @@ jQuery( document ).ready( function( $ ) {
 			$( '.ads-options.ads-var-block' ).hide();
 			$( '.ads-options.ads-var-block.activation' ).show( 'slow' );
 
-			if ( false == $( '#jwppp-active-bidding' ).prop( 'checked' ) ) {
+			if ( ! $( '.jwppp-active-bidding .tzCheckBox' ).hasClass( 'checked' ) ) {
 				$( '.ads-options.bidding' ).hide();
 			} else {
 				if ( 'jwp' !== $( '#jwppp-mediation' ).val() && 'jwpdfp' !== $( '#jwppp-mediation' ).val() ) {
@@ -200,12 +202,12 @@ jQuery( document ).ready( function( $ ) {
 	});
 
 	/*Bidding*/
-	if ( false == $( '#jwppp-active-bidding' ).prop( 'checked' ) ) {
+	if ( ! $( '.jwppp-active-bidding .tzCheckBox' ).hasClass( 'checked' ) ) {
 		$( '.ads-options.bidding' ).hide();
 	}
 
-	$( '#jwppp-active-bidding' ).on( 'change', function() {
-		if ( $( '#jwppp-active-bidding' ).prop( 'checked' ) ) {
+	$( '.jwppp-active-bidding .tzCheckBox' ).on( 'click', function() {
+		if ( $( this ).hasClass( 'checked' ) ) {
 			$( '.ads-options.bidding' ).show( 'slow' );
 
 			if ( 'jwp' !== $( '#jwppp-mediation' ).val() && 'jwpdfp' !== $( '#jwppp-mediation' ).val() ) {
