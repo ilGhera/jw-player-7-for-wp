@@ -471,41 +471,47 @@ function jwppp_ads_tag_exists( $tags, $tag ) {
 function is_cloud_playlist( $post_id, $video_number = null, $media_id ) {
 
     $output  = false;
-    $from_db = null;
-
-    if ( $video_number ) {
-
-        $from_db = get_post_meta( $post_id, '_jwppp-cloud-playlist-' . $video_number, true );
-
-    } else {
-
-        $from_db = get_post_meta( $post_id, '_jwppp-cloud-playlist-' . $media_id, true );
-
-    }
+    $code    = $video_number ? $video_number : $media_id;
+    $from_db = get_post_meta( $post_id, '_jwppp-cloud-playlist-' . $code, true );
 
     if ( ! $from_db ) {
 
-        $api       = new JWPPP_Dashboard_Api();
-        $playlists = $api->get_playlists( $media_id );
-        $value     = 'no';
+        $value = 'no';
+        $url   = 'https://cdn.jwplayer.com/v2/playlists/' . $media_id;
 
-        if ( is_array( $playlists ) && ! empty( $playlists ) ) {
+        if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
 
-            $value = 'yes';
-            $output = true;
-
-        }
-
-        if ( $video_number ) {
-
-            update_post_meta( $post_id, '_jwppp-cloud-playlist-' . $video_number, $value );
+            $response = vip_safe_wp_remote_get(
+                $url,
+                '',
+                3,
+                3,
+                20
+            );
 
         } else {
 
-            /* Used for old JW Player Plugin shortcodes */
-            update_post_meta( $post_id, '_jwppp-cloud-playlist-' . $media_id, $value );
+            $response = wp_remote_get( // @codingStandardsIgnoreLine -- for non-VIP environments
+                $url,
+                array(
+                    'timeout' => 3,
+                )
+            );
 
         }
+
+        if ( ! is_wp_error( $response ) && is_array( $response ) && isset( $response['response']['code'] ) ) {
+
+            if ( 200 === $response['response']['code'] ) {
+
+                $value = 'yes';
+                $output = true;
+
+            }
+
+        }
+
+        update_post_meta( $post_id, '_jwppp-cloud-playlist-' . $code, $value );
 
     } elseif ( 'yes' === $from_db ) {
 
