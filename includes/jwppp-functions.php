@@ -463,7 +463,7 @@ function jwppp_ads_tag_exists( $tags, $tag ) {
  * Check if media is a playlist
  *
  * @param  int    $post_id      the post id.
- * @param  int    $video_number the number of the video in page.
+ * @param  int    $video_number the number of the video in the page.
  * @param  string $media_id     the media id.
  *
  * @return bool
