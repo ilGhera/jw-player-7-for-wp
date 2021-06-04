@@ -462,13 +462,14 @@ function jwppp_ads_tag_exists( $tags, $tag ) {
 /**
  * Check if media is a playlist
  *
- * @param  int    $post_id      the post id.
- * @param  int    $video_number the number of the video in the page.
- * @param  string $media_id     the media id.
+ * @param  int    $post_id       the post id.
+ * @param  int    $video_number  the number of the video in the page.
+ * @param  string $media_id      the media id.
+ * @param  bool   $securitu_urls true with this option activated.
  *
  * @return bool
  */
-function is_cloud_playlist( $post_id, $video_number = null, $media_id ) {
+function is_cloud_playlist( $post_id, $video_number = null, $media_id, $security_urls = false ) {
 
     $output  = false;
     $code    = $video_number ? $video_number : $media_id;
@@ -477,7 +478,16 @@ function is_cloud_playlist( $post_id, $video_number = null, $media_id ) {
     if ( ! $from_db ) {
 
         $value = 'no';
-        $url   = 'https://cdn.jwplayer.com/v2/playlists/' . $media_id;
+
+        if ( $security_urls ) {
+
+            $url = jwppp_get_signed_url( $media_id, false, false, true );
+
+        } else {
+
+            $url   = 'https://cdn.jwplayer.com/v2/playlists/' . $media_id;
+
+        }
 
         if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
 

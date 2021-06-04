@@ -146,7 +146,10 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 		/*Output the player*/
 		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' itemscope itemtype='http://schema.org/VideoObject' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
 
-            $is_cloud_playlist = is_cloud_playlist( $p_id, $n, $jwppp_video_url ); 
+            /*Check if the security option is activated*/
+            $security_urls = get_option( 'jwppp-secure-video-urls' );
+
+            $is_cloud_playlist = is_cloud_playlist( $p_id, $n, $jwppp_video_url, $security_urls ); 
             $content_url       = $is_cloud_playlist ? 'https://cdn.jwplayer.com/v2/playlists/' . $jwppp_video_url : 'https://cdn.jwplayer.com/v2/media/' . $jwppp_video_url;
             $video_duration    = get_duration_iso_format( get_post_meta( $p_id, '_jwppp-video-duration-' . $number, true ) ); 
 
@@ -183,9 +186,6 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 			echo "<script type='text/javascript'>\n";
 				echo "var playerInstance_" . intval( $this_video ) . " = jwplayer( " . wp_json_encode( "jwppp-video-" . $this_video ) . " );\n";
 				echo "playerInstance_" . intval( $this_video ) . ".setup({\n";
-
-					/*Check if the security option is activated*/
-					$security_urls = get_option( 'jwppp-secure-video-urls' );
 
 				if ( $security_urls ) {
 
