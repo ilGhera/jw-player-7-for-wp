@@ -9,7 +9,7 @@
  * Version: 2.1.0
  * Author URI: https://www.jwplayer.com/
  * Requires at least: 4.0
- * Tested up to: 5.6
+ * Tested up to: 5.7
  * Text Domain: jwppp
  */
 
