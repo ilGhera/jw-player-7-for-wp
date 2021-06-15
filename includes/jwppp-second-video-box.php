@@ -3,7 +3,7 @@
  * Second video box
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
- * @version 2.0.0
+ * @version 2.1.3
  */
 
 $dashboard_player = is_dashboard_player();

@@ -3,7 +3,7 @@
  * Plugin functions
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
- * @since 2.1.1
+ * @since 2.1.3
  */
 
 /*Files required*/
