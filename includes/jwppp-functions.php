@@ -417,16 +417,7 @@ function is_cloud_playlist( $post_id, $video_number = null, $media_id, $security
     if ( ! $from_db ) {
 
         $value = 'no';
-
-        if ( $security_urls ) {
-
-            $url = jwppp_get_signed_url( $media_id, false, false, true );
-
-        } else {
-
-            $url   = 'https://cdn.jwplayer.com/v2/playlists/' . $media_id;
-
-        }
+        $url   = 'https://cdn.jwplayer.com/v2/playlists/' . $media_id;
 
         if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
 
@@ -529,18 +520,11 @@ function jwppp_simple_player_code( $media_id ) {
 		}
 		echo "</div>\n";
 
-		/*Check if the security option is activated*/
-		$security_urls = get_option( 'jwppp-secure-video-urls' );
-
 		echo "<script type='text/javascript'>\n";
 			echo "var playerInstance_" . trim( wp_json_encode( $media_id ), '"' ) . " = jwplayer(" . wp_json_encode( 'jwppp-video-' . $media_id ) . ");\n";
 			echo "playerInstance_" . trim( wp_json_encode( $media_id ), '"' ) . ".setup({\n";
 
-			if ( $security_urls ) {
-					echo "playlist: " . wp_json_encode( jwppp_get_signed_url( $media_id, false, false, $playlist ), JSON_UNESCAPED_SLASHES ) . ",\n";
-			} else {
-				echo "playlist: " . wp_json_encode( $resource, JSON_UNESCAPED_SLASHES ) . ",\n";
-			}
+            echo "playlist: " . wp_json_encode( $resource, JSON_UNESCAPED_SLASHES ) . ",\n";
 
 			/*Is it a dashboard player?*/
 			$dashboard_player = is_dashboard_player();
