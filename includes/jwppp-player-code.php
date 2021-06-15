@@ -3,7 +3,7 @@
  * The player code block
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
- * @since 2.1.1
+ * @since 2.1.3
  * @param  int    $p            the post id
  * @param  int    $n            the number of video
  * @param  string $ar           the aspect ratio
@@ -47,7 +47,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 		$jwppp_video_url = get_post_meta( $p_id, '_jwppp-video-url-' . $number, true );
 		$contextual      = false !== strpos( $jwppp_video_url, '__CONTEXTUAL__' ) ? true : false;
 
-		/*Is the video self hosted?*/
+		/*Is video self hosted?*/
 		$sh_video = strrpos( $jwppp_video_url, 'http' ) === 0 ? true : false;
 
 		/*Playlist carousel*/
@@ -102,14 +102,19 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 		/*Output the player*/
 		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' itemscope itemtype='http://schema.org/VideoObject' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
 
-            $video_duration = get_duration_iso_format( get_post_meta( $p_id, '_jwppp-video-duration-' . $number, true ) ); 
+            /*Check if the security option is activated*/
+            $security_urls = get_option( 'jwppp-secure-video-urls' );
+
+            $is_cloud_playlist = is_cloud_playlist( $p_id, $n, $jwppp_video_url, $security_urls ); 
+            $content_url       = $is_cloud_playlist ? 'https://cdn.jwplayer.com/v2/playlists/' . $jwppp_video_url : 'https://cdn.jwplayer.com/v2/media/' . $jwppp_video_url;
+            $video_duration    = get_duration_iso_format( get_post_meta( $p_id, '_jwppp-video-duration-' . $number, true ) ); 
 
             echo $itemprop_title ? "<meta itemprop='name' content='" . esc_attr( $itemprop_title ) . "'/>\n" : null;
             echo $itemprop_description ? "<meta itemprop='description' content='" .  esc_attr( $itemprop_description ) . "'/>\n" : null;
             echo $video_duration ? "<meta itemprop='duration' content='" .  esc_attr( $video_duration ) . "'/>\n" : null;
             echo $itemprop_image ? "<meta itemprop='thumbnailUrl' content='" . esc_attr( $itemprop_image ) . "'/>\n" : null;
             echo "<meta itemprop='uploadDate' content='" .  esc_attr( get_the_date( 'c', $p_id ) ) . "'/>\n";
-            echo "<meta itemprop='contentUrl' content='" . esc_attr( 'https://cdn.jwplayer.com/v2/media/' . $jwppp_video_url ) . "'/>\n";
+            echo "<meta itemprop='contentUrl' content='" . esc_attr( $content_url ) . "'/>\n";
 
 			echo "<div id='jwppp-video-" . intval( $this_video ) . "' class='jwplayer'>";
 
@@ -122,7 +127,15 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 				echo "var playerInstance_" . intval( $this_video ) . " = jwplayer( " . wp_json_encode( "jwppp-video-" . $this_video ) . " );\n";
 				echo "playerInstance_" . intval( $this_video ) . ".setup({\n";
 
-				echo "playlist: " . wp_json_encode( "https://cdn.jwplayer.com/v2/media/" . $jwppp_video_url, JSON_UNESCAPED_SLASHES ) . ",\n";
+                if ( $contextual || $is_cloud_playlist ) {
+
+                    echo "playlist: " . wp_json_encode( "https://cdn.jwplayer.com/v2/playlists/" . $jwppp_video_url, JSON_UNESCAPED_SLASHES ) . ",\n";
+
+                } else {
+
+                    echo "playlist: " . wp_json_encode( "https://cdn.jwplayer.com/v2/media/" . $jwppp_video_url, JSON_UNESCAPED_SLASHES ) . ",\n";
+
+                }
 	
 				echo "})\n";
 			echo '</script>';
@@ -136,11 +149,9 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
             echo $itemprop_description ? "<meta itemprop='description' content='" .  esc_attr( $itemprop_description ) . "'/>\n" : null;
             echo $itemprop_image ? "<meta itemprop='thumbnailUrl' content='" . esc_attr( $itemprop_image ) . "'/>\n" : null;
             echo "<meta itemprop='uploadDate' content='" .  esc_attr( get_the_date( 'c', $p_id ) ) . "'/>\n";
-            echo "<meta itemprop='contentUrl' content='" . esc_attr( 'https://cdn.jwplayer.com/v2/media/' . $jwppp_video_url ) . "'/>\n";
+            echo "<meta itemprop='contentUrl' content='" . esc_attr( $jwppp_video_url ) . "'/>\n";
 
 			echo "<div id='jwppp-video-" . intval( $this_video ) . "' class='jwplayer'>";
-
-
 
 				/*Loading the player text*/
 				echo esc_html( __( 'Loading the player...', 'jwppp' ) );
@@ -247,7 +258,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 								}
 								echo "sites: ['email','facebook','twitter','pinterest','tumblr','googleplus','reddit','linkedin'],\n";
 								if ( $jwppp_embed_video && ! $jwppp_playlist ) {
-									echo "code: " . wp_json_encode( "<iframe src='$jwppp_embed_url'  width='640'  height='360'  frameborder='0'  scrolling='auto'></iframe>", JSON_UNESCAPED_SLASHES ) . "\n";
+									echo "code: " . wp_json_encode( "<iframe class='jwp-video-code' src='$jwppp_embed_url'  width='640'  height='360'  frameborder='0'  scrolling='auto'></iframe>", JSON_UNESCAPED_SLASHES ) . "\n";
 								}
 							echo "},\n";
 						}

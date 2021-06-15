@@ -1,7 +1,7 @@
 === JW Player for WordPress ===
 Contributors: ghera74
 Tags: jw player, jw player 7, jw player 8, jwplayer, jwplayer 7, jwplayer 8, video, embed video, youtube, related videos, video preroll, video chapters, video subtitles
-Version: 2.1.2
+Version: 2.1.3
 Requires at least: 4.0
 Tested up to: 5.7
 License: GPLv2
@@ -17,25 +17,6 @@ License: GPLv2
 * Support shortcodes like [jwplayer fPHnET5D]
 * Facebook Instant Articles support
 * WP Coding Standard
-
-**Premium Features (NEW!):**
-
-* JW Player dashboard connection via API Key and Secret
-* Select and publish videos hosted on JW Player
-* Select and publish playlists hosted on JW Player
-* Select and use a specific player for individual video embeds
-* Secure video URLs
-* Secure player embeds
-* Customize playlists
-* Unlimited ad tags
-* Select a specific ad tag for every single video
-* Video player bidding support with SpotX
-* Possibility to use an advertising embed block variable
-* Video / Playlist description
-* Video / Playlist thumbnail
-
-
-JW Player for WordPress can be used with the cloud or even the self-hosted version of the player.
 
 **Cloud**
 
@@ -96,6 +77,12 @@ That’s it, you’re ready to go!
 
 
 == Changelog ==
+
+= 2.1.3 =
+Release Date: 15 June 2021
+
+* Enhancement : Different endpoints for single-videos and playlists
+
 
 = 2.1.2 =
 Release Date: 28 April 2021

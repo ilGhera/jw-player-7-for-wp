@@ -3,7 +3,7 @@
  * Ads options
  * @author ilGhera
  * @package jw-player-7-for-wp/admin
- * @since 2.1.2
+ * @since 2.1.3
  */
 ?>
 <div name="jwppp-ads" id="jwppp-ads" class="jwppp-admin" style="display: none;">
@@ -101,7 +101,7 @@
 	echo '<th scope="row">' . esc_html( __( 'Player Bidding', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<input type="checkbox" id="jwppp-active-bidding" name="jwppp-active-bidding" value="1" />';
-	echo '<span>' . esc_html( __( 'Enable Video Player Bidding', 'jwppp' ) ) . '</span>';
+	echo '<span class="jwppp-check-label">' . esc_html( __( 'Enable Video Player Bidding', 'jwppp' ) ) . '</span>';
 	echo '<p class="description">';
 	echo wp_kses( __( 'All the benefits of Header Bidding are now built directly into your JW Player. With a simple one-click integration, you get access to quality demand at scale with reduced latency. SpotX is the leading video ad serving platform and gives publishers control, transparency and insights to maximize revenue.<br><a href="https://support.jwplayer.com/articles/how-to-setup-video-player-bidding" target="_blank">Contact SpotX to get started</a>', 'jwppp' ), $allowed_tags );
 	echo '</p>';
