@@ -29,9 +29,8 @@ echo '<table class="widefat jwppp-' . esc_attr( $number ) . '" style="margin: 0.
 				wp_nonce_field( 'jwppp-meta-box-nonce-' . $number, 'hidden-meta-box-nonce-' . $number );
 
 				/*Single video details*/
-				$video_url = get_post_meta( $post_id, '_jwppp-video-url-' . $number, true );
-				$video_title = get_post_meta( $post_id, '_jwppp-video-title-' . $number, true );
-
+				$video_url         = get_post_meta( $post_id, '_jwppp-video-url-' . $number, true );
+				$video_title       = get_post_meta( $post_id, '_jwppp-video-title-' . $number, true );
 				$video_description = get_post_meta( $post_id, '_jwppp-video-description-' . $number, true );
 
 				$playlist_items = get_post_meta( $post_id, '_jwppp-playlist-items-' . $number, true );
@@ -40,6 +39,9 @@ echo '<table class="widefat jwppp-' . esc_attr( $number ) . '" style="margin: 0.
 
 				/*Is the video self hosted?*/
 				$sh_video = strrpos( $video_url, 'http' ) === 0 ? true : false;
+
+                /*Is it a jwp playlist?*/
+                $cloud_playlist = get_post_meta( $post_id, '_jwppp-cloud-playlist-' . $number, true );
 
 				$sources_number = get_post_meta( $post_id, '_jwppp-sources-number-' . $number, true );
 
@@ -91,10 +93,8 @@ echo '<table class="widefat jwppp-' . esc_attr( $number ) . '" style="margin: 0.
 						echo '<p>';
 
 							echo '<input type="text" autocomplete="off" id="_jwppp-video-title-' . esc_attr( $number ) . '" class="jwppp-search-content choose" data-number="' . esc_attr( $number ) . '" placeholder="' . esc_attr( __( 'Select video/playlist or search by ID', 'jwppp' ) ) . '" style="margin-right:1rem;" value="' . esc_attr( $video_title ) . '"><br>';
-
 							echo '<input type="hidden" name="_jwppp-video-url-' . esc_attr( $number ) . '" id="_jwppp-video-url-' . esc_attr( $number ) . '" class="choose" value="' . esc_attr( $video_url ) . '">';
-
-
+							echo '<input type="hidden" name="_jwppp-cloud-playlist-' . esc_attr( $number ) . '" id="_jwppp-cloud-playlist-' . esc_attr( $number ) . '" class="choose" value="' . esc_attr( $cloud_playlist ) . '">';
 							echo '<input type="hidden" name="_jwppp-video-title-' . esc_attr( $number ) . '" id="_jwppp-video-title-' . esc_attr( $number ) . '" class="choose" value="' . esc_attr( $video_title ) . '">';
 							echo '<input type="hidden" name="_jwppp-video-description-' . esc_attr( $number ) . '" id="_jwppp-video-description-' . esc_attr( $number ) . '" class="choose" value="' . esc_attr( $video_description ) . '">';
 							echo '<input type="hidden" name="_jwppp-playlist-items-' . esc_attr( $number ) . '" id="_jwppp-playlist-items-' . esc_attr( $number ) . '" class="choose" value="' . esc_attr( $playlist_items ) . '">';

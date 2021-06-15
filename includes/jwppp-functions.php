@@ -441,6 +441,9 @@ add_shortcode( 'jwp-video', 'jwppp_player_s_code' );
  */
 function jwppp_simple_player_code( $media_id ) {
 
+    $playlist = is_cloud_playlist( get_the_ID(), null, $media_id );
+    $resource = $playlist ? 'https://cdn.jwplayer.com/v2/playlists/' . $media_id : 'https://cdn.jwplayer.com/v2/media/' . $media_id; 
+
 	/*Output the player*/
 	echo "<div id='jwppp-video-box-" . esc_attr( $media_id ) . "' class='jwppp-video-box' data-video='" . esc_attr( $media_id ) . "' style=\"margin: 1rem 0;\">\n";
 		echo  "<div id='jwppp-video-" . esc_attr( $media_id ) . "'>";
@@ -459,9 +462,9 @@ function jwppp_simple_player_code( $media_id ) {
 			echo "playerInstance_" . trim( wp_json_encode( $media_id ), '"' ) . ".setup({\n";
 
 			if ( $security_urls ) {
-					echo "playlist: " . wp_json_encode( jwppp_get_signed_url( $media_id ), JSON_UNESCAPED_SLASHES ) . ",\n";
+					echo "playlist: " . wp_json_encode( jwppp_get_signed_url( $media_id, false, false, $playlist ), JSON_UNESCAPED_SLASHES ) . ",\n";
 			} else {
-				echo "playlist: " . wp_json_encode( "https://cdn.jwplayer.com/v2/media/" . $media_id, JSON_UNESCAPED_SLASHES ) . ",\n";
+				echo "playlist: " . wp_json_encode( $resource, JSON_UNESCAPED_SLASHES ) . ",\n";
 			}
 
 			/*Is it a dashboard player?*/
