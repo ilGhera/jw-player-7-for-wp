@@ -482,16 +482,94 @@ function jwppp_ads_tag_exists( $tags, $tag ) {
 
 
 /**
+ * Check if media is a playlist
+ *
+ * @param  int    $post_id       the post id.
+ * @param  int    $video_number  the number of the video in the page.
+ * @param  string $media_id      the media id.
+ * @param  bool   $securitu_urls true with this option activated.
+ *
+ * @return bool
+ */
+function is_cloud_playlist( $post_id, $video_number = null, $media_id, $security_urls = false ) {
+
+    $output  = false;
+    $code    = $video_number ? $video_number : $media_id;
+    $from_db = get_post_meta( $post_id, '_jwppp-cloud-playlist-' . $code, true );
+
+    if ( ! $from_db ) {
+
+        $value = 'no';
+
+        if ( $security_urls ) {
+
+            $url = jwppp_get_signed_url( $media_id, false, false, true );
+
+        } else {
+
+            $url   = 'https://cdn.jwplayer.com/v2/playlists/' . $media_id;
+
+        }
+
+        if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
+
+            $response = vip_safe_wp_remote_get(
+                $url,
+                '',
+                3,
+                3,
+                20
+            );
+
+        } else {
+
+            $response = wp_remote_get( // @codingStandardsIgnoreLine -- for non-VIP environments
+                $url,
+                array(
+                    'timeout' => 3,
+                )
+            );
+
+        }
+
+        if ( ! is_wp_error( $response ) && is_array( $response ) && isset( $response['response']['code'] ) ) {
+
+            if ( 200 === $response['response']['code'] ) {
+
+                $value = 'yes';
+                $output = true;
+
+            }
+
+        }
+
+        update_post_meta( $post_id, '_jwppp-cloud-playlist-' . $code, $value );
+
+    } elseif ( 'yes' === $from_db ) {
+
+        $output = true;
+
+    } 
+
+    return $output;
+
+}
+
+
+/**
  * Generate signed URLs
- * @param  string $media_id the media id
- * @param  bool   $short return only the last part of the url
- * @param  bool   $matching define if the media is a Article Matching plylist
+ *
+ * @param  string $media_id the media id.
+ * @param  bool   $short return only the last part of the url.
+ * @param  bool   $matching define if the media is a Article Matching plylist.
+ * @param  bool   $playlist define if the media is a playlist.
+ *
  * @return string
  */
-function jwppp_get_signed_url( $media_id, $short = false, $matching = false ) {
+function jwppp_get_signed_url( $media_id, $short = false, $matching = false, $playlist = false ) {
 
-	$token_secret = get_option( 'jwppp-api-secret' );
-	$resource = "v2/media/$media_id";
+	$token_secret   = get_option( 'jwppp-api-secret' );
+	$resource       = $playlist ? "v2/playlists/$media_id" : "v2/media/$media_id";
 	$resource4token = $resource;
 	$plus = '?';
 
@@ -584,6 +662,9 @@ add_shortcode( 'jwp-video', 'jwppp_player_s_code' );
  */
 function jwppp_simple_player_code( $media_id ) {
 
+    $playlist = is_cloud_playlist( get_the_ID(), null, $media_id );
+    $resource = $playlist ? 'https://cdn.jwplayer.com/v2/playlists/' . $media_id : 'https://cdn.jwplayer.com/v2/media/' . $media_id; 
+
 	/*Output the player*/
 	echo "<div id='jwppp-video-box-" . esc_attr( $media_id ) . "' class='jwppp-video-box' data-video='" . esc_attr( $media_id ) . "' style=\"margin: 1rem 0;\">\n";
 		echo  "<div id='jwppp-video-" . esc_attr( $media_id ) . "'>";
@@ -602,9 +683,9 @@ function jwppp_simple_player_code( $media_id ) {
 			echo "playerInstance_" . trim( wp_json_encode( $media_id ), '"' ) . ".setup({\n";
 
 			if ( $security_urls ) {
-					echo "playlist: " . wp_json_encode( jwppp_get_signed_url( $media_id ), JSON_UNESCAPED_SLASHES ) . ",\n";
+					echo "playlist: " . wp_json_encode( jwppp_get_signed_url( $media_id, false, false, $playlist ), JSON_UNESCAPED_SLASHES ) . ",\n";
 			} else {
-				echo "playlist: " . wp_json_encode( "https://cdn.jwplayer.com/v2/media/" . $media_id, JSON_UNESCAPED_SLASHES ) . ",\n";
+				echo "playlist: " . wp_json_encode( $resource, JSON_UNESCAPED_SLASHES ) . ",\n";
 			}
 
 			/*Is it a dashboard player?*/

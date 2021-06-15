@@ -2,7 +2,7 @@
  * Used with player and media contents from the cloud
  * @author ilGhera
  * @package jw-player-7-for-wp/js
- * @since 2.0.0
+ * @since 2.1.0
  *
  * Fired when a media content in the list is clicked
  */
@@ -29,6 +29,7 @@ var JWPPPSelectContent = function() {
 				mediaId = null;
 				videoTitle = null;
 				$( '.jwppp-video-details-' + number ).empty();
+                $( '#_jwppp-cloud-playlist-' + number ).attr( 'value', '' );
 
 			} else {
 
@@ -65,8 +66,9 @@ var JWPPPSelectContent = function() {
 
 					$( '.jwppp-video-details-' + number ).append( '<span>Items</span>: ' + items + '<br>' );
 
-
 					$( '#_jwppp-playlist-items-' + number ).attr( 'value', items );
+
+                    $( '#_jwppp-cloud-playlist-' + number ).attr( 'value', 'yes' );
 
 				} else {
 
@@ -95,7 +97,10 @@ var JWPPPSelectContent = function() {
 					}
 
 					$( '#_jwppp-video-duration-' + number ).attr( 'value', duration );
+
 					$( '#_jwppp-video-tags-' + number ).attr( 'value', tags );
+
+                    $( '#_jwppp-cloud-playlist-' + number ).attr( 'value', 'no' );
 
 				}
 

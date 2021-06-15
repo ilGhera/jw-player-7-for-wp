@@ -3,7 +3,7 @@ Contributors: ghera74
 Tags: jw player, jw player 7, jw player 8, jwplayer, jwplayer 7, jwplayer 8, video, embed video, youtube, video preroll, video chapters, video subtitles
 Version: 2.1.0
 Requires at least: 4.0
-Tested up to: 5.6
+Tested up to: 5.7
 License: GPLv2
 
 **JW Player for WordPress** is the complete solution for using JW Player into WordPress.
@@ -16,26 +16,6 @@ Enable player customization, related videos, social sharing and advertising dire
 **JW Player for WordPress** is the complete solution for using JW Player into WordPress.
 It works with the latest version of world’s most popular video player and enables full power of the JW Player dashboard and APIs directly into your WordPress CMS.
 Enable player customization, related videos, social sharing and advertising directly into your content management system to speed up your video workflow.
-
-**NEW ON THIS VERSION!**
-
-* JW Player dashboard connection via API Key and Secret
-* Select and publish videos hosted on JW Player
-* Select and publish playlists hosted on JW Player
-* Select and use a specific player for individual video embeds
-* Secure video URLs
-* Secure player embeds
-* Customize playlists
-* Unlimited ad tags
-* Select a specific ad tag for every single video
-* Video player bidding support with SpotX
-* Possibility to use an advertising embed block variable
-* Video / Playlist description
-* Video / Playlist thumbnail
-* Support shortcodes like *[jwplayer fPHnET5D]*
-* WP Coding Sandard 
-
-JW Player for WordPress can be used with the cloud or even the self-hosted version of the player.<br>
 
 **Cloud**
 
@@ -68,12 +48,14 @@ That’s it, you’re ready to go!
 
 
 = 2.1.0 =
-Release Date: 2 February 2021
+Release Date: 15 June 2021
 
+* Enhancement : Different endpoints for single-videos and playlists
 * Enhancement : Set video poster-image as WordPress featured image
 * Enhancement : SEO improvements with schema markup
 * Enhancement : New switch buttons in plugin options page
 * Bug fix: Thumbnails with different width in playlist carousel  
+* Bug fix: Quotation marks in sources labels
 
 
 = 2.0.2 =
