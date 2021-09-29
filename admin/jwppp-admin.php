@@ -374,24 +374,27 @@ function jwppp_options() {
 				$api_key = sanitize_text_field( wp_unslash( $_POST['jwppp-api-key'] ) );
 				update_option( 'jwppp-api-key', $api_key );
 			}
-			$api_secret = sanitize_text_field( get_option( 'jwppp-api-secret' ) );
-			if ( isset( $_POST['jwppp-api-secret'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
-				$api_secret = sanitize_text_field( wp_unslash( $_POST['jwppp-api-secret'] ) );
-				update_option( 'jwppp-api-secret', $api_secret );
+			$api_secret_v2 = sanitize_text_field( get_option( 'jwppp-api-secret-v2' ) );
+			if ( isset( $_POST['jwppp-api-secret-v2'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
+				$api_secret_v2 = sanitize_text_field( wp_unslash( $_POST['jwppp-api-secret-v2'] ) );
+				update_option( 'jwppp-api-secret-v2', $api_secret_v2 );
 			}
 
 			echo '<tr>';
-			echo '<th scope="row">' . esc_html( __( 'API Credentials', 'jwppp' ) );
+			echo '<th scope="row">' . esc_html( __( 'API v2 Credentials', 'jwppp' ) );
+			echo '<a href="https://developer.jwplayer.com/jwplayer/reference/building-a-request#site-id" title="Get your Site ID" target="_blank"><img class="question-mark" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a>';
+			echo '<a href="https://developer.jwplayer.com/jwplayer/reference/api-v2-authentication" title="Get your API v2 Secret" target="_blank"><img class="question-mark second" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a></th>';
 			echo '<td>';
-			echo '<input type="text" class="regular-text" id="jwppp-api-key" name="jwppp-api-key" placeholder="' . esc_attr( __( 'Add your API Key', 'jwppp' ) ) . '" value="' . esc_attr( $api_key ) . '" /><br>';
-			echo '<input type="text" class="regular-text" id="jwppp-api-secret" name="jwppp-api-secret" placeholder="' . esc_attr( __( 'Add your API Secret', 'jwppp' ) ) . '" value="' . esc_attr( $api_secret ) . '" />';
-			echo '<p class="description">' . esc_html( __( 'API Key and Secret', 'jwppp' ) ) . '</p>';
+			echo '<input type="text" class="regular-text" id="jwppp-api-key" name="jwppp-api-key" placeholder="' . esc_attr( __( 'Add your Site ID', 'jwppp' ) ) . '" value="' . esc_attr( $api_key ) . '" /><br>';
+            echo '<p></p>';
+			echo '<input type="text" class="regular-text" id="jwppp-api-secret-v2" name="jwppp-api-secret-v2" placeholder="' . esc_attr( __( 'Add your API Secret', 'jwppp' ) ) . '" value="' . esc_attr( $api_secret_v2 ) . '" />';
+			echo '<p class="description">' . esc_html( __( 'Site ID and API Secret', 'jwppp' ) ) . '</p>';
 
 			/*Api class instance*/
 			$api = new JWPPP_Dashboard_Api();
 
 			/*Credentials validation*/
-			if ( $api->args_check() && ! $api->account_validation() ) {
+			if ( ! $api->args_check() ) {
 				echo '<span class="jwppp-alert api">' . esc_html( 'Invalid API Credentials', 'jwppp' ) . '</span>';
 			}
 				echo '</td>';
