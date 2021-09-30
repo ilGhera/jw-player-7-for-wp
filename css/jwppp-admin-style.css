@@ -51,11 +51,12 @@ a.attention-mark {
 img.question-mark, img.attention-mark {
 	position:relative; 
 	top:0.2rem;
+    right: 1rem;
 }
 
 img.question-mark.second {
     top: 2.2rem;
-    left: -2rem;
+    left: 0;
 }
 
 .jwppp-video-toggles {

@@ -799,6 +799,7 @@ function jwppp_search_content_callback() {
 			} else {
 				$videos    = $api->get_videos();
 				$playlists = $api->get_playlists();
+                error_log( 'PLAYLISTS: ' . print_r( $playlists, true ) );
 			}
 
 			echo wp_json_encode(
