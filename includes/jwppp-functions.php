@@ -987,7 +987,7 @@ function jwppp_get_poster_image( $post_id, $video ) {
     }
 
     /* If image exists */
-    if ( @getimagesize( $image_url ) ) {
+    if ( $image_url && @getimagesize( $image_url ) ) {
 
         return $image_url;
 
