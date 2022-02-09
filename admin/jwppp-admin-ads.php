@@ -71,6 +71,14 @@
 		update_option( 'jwppp-active-bidding', $active_bidding );
 	}
 
+	/*Ad partner*/
+    $partners   = jwppp_ad_partners(); 
+	$ad_partner = sanitize_text_field( get_option( 'jwppp-ad-partner' ) );
+	if ( isset( $_POST['jwppp-ad-partner'] ) && is_array( $partners ) ) {
+		$ad_partner = sanitize_text_field( wp_unslash( $_POST['jwppp-ad-partner'] ) );
+		update_option( 'jwppp-ad-partner', $ad_partner );
+	}
+
 	/*Channel id*/
 	$channel_id = sanitize_text_field( get_option( 'jwppp-channel-id' ) );
 	if ( isset( $_POST['jwppp-channel-id'] ) ) {
@@ -206,12 +214,29 @@
 	echo '<td>';
 	echo '</tr>';
 
-	/*Spotx channel id*/
+	/*Ad partner*/
 	echo '<tr class="ads-options bidding"' . esc_attr( $hide ) . '>';
-	echo '<th scope="row"><img src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/spotx-70.png"></th>';
+	/* echo '<th scope="row"><img src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/spotx-70.png"></th>'; */
+	echo '<th scope="row">' . esc_html( __( 'Ad partner', 'jwppp' ) ) . '</th>';
+	echo '<td>';
+    echo '<select id="jwppp-ad-partner" name="jwppp-ad-partner">';
+    
+    foreach ( $partners as $key => $value ) {
+
+        echo '<option value="' . intval( $key ) . '"' . ( intval( $ad_partner ) === $key ? ' selected="selected"' : null ) . '>' . $value . '</option>';
+        
+    }
+
+    echo '</select>';
+	echo '<p class="description">' . wp_kses( __( 'The Ad partner', 'jwppp' ), $allowed_tags ) . '</p>';
+	echo '</td>';
+	echo '</tr>';
+
+	echo '<tr class="ads-options bidding"' . esc_attr( $hide ) . '>';
+	echo '<th scope="row">' . esc_html( __( 'Ad partne ID', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<input type="text" class="regular-text" id="jwppp-channel-id" name="jwppp-channel-id" placeholder="' . esc_attr( __( 'Add a Channel ID', 'jwppp' ) ) . '" value="' . esc_attr( $channel_id ) . '" />';
-	echo '<p class="description">' . wp_kses( __( 'Channel ID', 'jwppp' ), $allowed_tags ) . '</p>';
+	echo '<p class="description">' . wp_kses( __( 'Identifier issued by the bidding partner that represents a segment of a publisher\'s inventory', 'jwppp' ), $allowed_tags ) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 

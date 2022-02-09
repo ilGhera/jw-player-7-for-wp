@@ -279,6 +279,37 @@ add_action( 'wp_ajax_nopriv_ads-var', 'jwppp_ads_var_callback' );
 
 
 /**
+ * The list of JW Player as partners
+ *
+ * @return array
+ */
+function jwppp_ad_partners() {
+
+    $partners = array(
+        'Select an ad partner',
+        'Adtelligent',
+        'AppNexus',
+        'DistrictM',
+        'EMX',
+        'IndexExchange',
+        'MediaGrid',
+        'MediaNet',
+        'OneVideo',
+        'OpenX',
+        'PubMatic',
+        'Rubicon',
+        'Sonobi',
+        'SpotX',
+        'SynacorMedia',
+        'Unruly',
+    );
+
+    return $partners;
+
+}
+
+
+/**
  * Plugin options page
  */
 function jwppp_options() {

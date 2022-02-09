@@ -11,16 +11,26 @@
 function jwppp_ads_code_block( $post_id, $number ) {
 
 	/*Ads options*/
-	$jwppp_show_ads = sanitize_text_field( get_option( 'jwppp-active-ads' ) );
-	$jwppp_ads_client = sanitize_text_field( get_option( 'jwppp-ads-client' ) );
-	$ads_tags = get_option( 'jwppp-ads-tag' );
-	$jwppp_ads_skip = sanitize_text_field( get_option( 'jwppp-ads-skip' ) );
-	$jwppp_bidding = sanitize_text_field( get_option( 'jwppp-active-bidding' ) );
-	$jwppp_channel_id = sanitize_text_field( get_option( 'jwppp-channel-id' ) );
-	$jwppp_mediation = sanitize_text_field( get_option( 'jwppp-mediation' ) );
+	$jwppp_show_ads    = sanitize_text_field( get_option( 'jwppp-active-ads' ) );
+	$jwppp_ads_client  = sanitize_text_field( get_option( 'jwppp-ads-client' ) );
+	$ads_tags          = get_option( 'jwppp-ads-tag' );
+	$jwppp_ads_skip    = sanitize_text_field( get_option( 'jwppp-ads-skip' ) );
+	$ajaxurl           = admin_url( 'admin-ajax.php' );
+	$output            = null;
+    
+    /*Bidding*/
+	$jwppp_bidding     = sanitize_text_field( get_option( 'jwppp-active-bidding' ) );
+	$jwppp_channel_id  = sanitize_text_field( get_option( 'jwppp-channel-id' ) );
+	$jwppp_mediation   = sanitize_text_field( get_option( 'jwppp-mediation' ) );
 	$jwppp_floor_price = sanitize_text_field( get_option( 'jwppp-floor-price' ) );
-	$ajaxurl = admin_url( 'admin-ajax.php' );
-	$output = null;
+    $partners          = jwppp_ad_partners(); 
+	$ad_partner        = sanitize_text_field( get_option( 'jwppp-ad-partner' ) );
+
+    if ( 0 !== intval( $ad_partner ) ) {
+
+        $ad_partner        = is_array( $partners ) && isset( $partners[ $ad_partner ] ) ? $partners[ $ad_partner ] : null; 
+
+    }
 
 	/*Is the main ads option activated?*/
 	if ( 1 === intval( $jwppp_show_ads ) ) {
@@ -69,7 +79,7 @@ function jwppp_ads_code_block( $post_id, $number ) {
 			if ( $jwppp_ads_skip ) {
 				echo 'skipoffset: ' . esc_html( $jwppp_ads_skip ) . ",\n";
 			}
-			if ( $jwppp_bidding ) {
+			if ( $jwppp_bidding && $ad_partner ) {
 				echo "bids: {\n";
 					echo "settings: {\n";
 						echo "mediationLayerAdServer: '" . esc_html( $jwppp_mediation ) . "',\n";
@@ -79,7 +89,7 @@ function jwppp_ads_code_block( $post_id, $number ) {
 					echo "},\n";
 					echo "bidders: [\n";
 						echo "{\n";
-						echo "name: 'SpotX',\n";
+						echo "name: '" . esc_html( $ad_partner ) . "',\n";
 						echo "id: '" . esc_html( $jwppp_channel_id ) . "'\n";
 						echo "}\n";
 					echo "]\n";
