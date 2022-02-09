@@ -15,7 +15,7 @@ require( JWPPP_ADMIN . 'skin/jwppp-admin-skin-8-options.php' );
 
 /*Skin colors*/
 echo '<tr>';
-echo '<th scope="row">' . esc_html( __( 'Constrolbar Text', 'jwppp' ) ) . '</th>';
+echo '<th scope="row">' . esc_html( __( 'Controlbar Text', 'jwppp' ) ) . '</th>';
 echo '<td>';
 echo '<input type="text" class="jwppp-color-field" name="jwppp-skin-color-controlbar-text" value="' . esc_attr( $jwppp_skin_color_controlbar_text ) . '">';
 echo '<p class="description">' . esc_html( __( 'Color of plain text in the control bar, such as the time.', 'jwppp' ) ) . '</p>';
@@ -23,7 +23,7 @@ echo '</td>';
 echo '</tr>';
 
 echo '<tr>';
-echo '<th scope="row">' . esc_html( __( 'Constrolbar Icons', 'jwppp' ) ) . '</th>';
+echo '<th scope="row">' . esc_html( __( 'Controlbar Icons', 'jwppp' ) ) . '</th>';
 echo '<td>';
 echo '<input type="text" class="jwppp-color-field" name="jwppp-skin-color-controlbar-icons" value="' . esc_attr( $jwppp_skin_color_controlbar_icons ) . '">';
 echo '<p class="description">' . esc_html( __( 'Default, inactive color of all icons in the control bar.', 'jwppp' ) ) . '</p>';
@@ -31,7 +31,7 @@ echo '</td>';
 echo '</tr>';
 
 echo '<tr>';
-echo '<th scope="row">' . esc_html( __( 'Constrolbar Active Icons', 'jwppp' ) ) . '</th>';
+echo '<th scope="row">' . esc_html( __( 'Controlbar Active Icons', 'jwppp' ) ) . '</th>';
 echo '<td>';
 echo '<input type="text" class="jwppp-color-field" name="jwppp-skin-color-controlbar-active-icons" value="' . esc_attr( $jwppp_skin_color_controlbar_active_icons ) . '">';
 echo '<p class="description">' . esc_html( __( 'Color of hovered or selected icons in the control bar.', 'jwppp' ) ) . '</p>';
@@ -39,10 +39,10 @@ echo '</td>';
 echo '</tr>';
 
 echo '<tr>';
-echo '<th scope="row">' . esc_html( __( 'Constrolbar Background', 'jwppp' ) ) . '</th>';
+echo '<th scope="row">' . esc_html( __( 'Controlbar Background', 'jwppp' ) ) . '</th>';
 echo '<td>';
 echo '<input type="text" class="jwppp-color-field" name="jwppp-skin-color-controlbar-background" value="' . esc_attr( $jwppp_skin_color_controlbar_background ) . '">';
-echo '<p class="description">' . esc_html( __( 'Background color of the control bar and the volume slider. Default background is transparent..', 'jwppp' ) ) . '</p>';
+echo '<p class="description">' . esc_html( __( 'Background color of the control bar and the volume slider. Default background is transparent.', 'jwppp' ) ) . '</p>';
 echo '</td>';
 echo '</tr>';
 
