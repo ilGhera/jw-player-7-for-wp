@@ -18,7 +18,7 @@ function jwppp_ads_code_block( $post_id, $number ) {
 	$ajaxurl           = admin_url( 'admin-ajax.php' );
 	$output            = null;
     
-    /* Bidding */
+    /*Bidding*/
 	$jwppp_bidding     = sanitize_text_field( get_option( 'jwppp-active-bidding' ) );
 	$jwppp_channel_id  = sanitize_text_field( get_option( 'jwppp-channel-id' ) );
 	$jwppp_mediation   = sanitize_text_field( get_option( 'jwppp-mediation' ) );
