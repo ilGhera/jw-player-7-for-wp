@@ -19,12 +19,18 @@ function jwppp_ads_code_block( $post_id, $number ) {
 	$output            = null;
     
     /*Bidding*/
-	$jwppp_bidding     = sanitize_text_field( get_option( 'jwppp-active-bidding' ) );
-	$jwppp_channel_id  = sanitize_text_field( get_option( 'jwppp-channel-id' ) );
-	$jwppp_mediation   = sanitize_text_field( get_option( 'jwppp-mediation' ) );
-	$jwppp_floor_price = sanitize_text_field( get_option( 'jwppp-floor-price' ) );
-    $partners          = jwppp_ad_partners(); 
-	$ad_partner        = sanitize_text_field( get_option( 'jwppp-ad-partner' ) );
+	$jwppp_bidding       = sanitize_text_field( get_option( 'jwppp-active-bidding' ) );
+	$jwppp_channel_id    = sanitize_text_field( get_option( 'jwppp-channel-id' ) );
+    $jwppp_del_domain    = sanitize_text_field( get_option( 'jwppp-del-domain' ) );
+    $jwppp_site_id       = sanitize_text_field( get_option( 'jwppp-site-id' ) );
+    $jwppp_zone_id       = sanitize_text_field( get_option( 'jwppp-zone-id' ) );
+    $jwppp_inv_code      = sanitize_text_field( get_option( 'jwppp-inv-code' ) );
+    $jwppp_member_id     = sanitize_text_field( get_option( 'jwppp-member-id' ) );
+    $jwppp_publisher_id  = sanitize_text_field( get_option( 'jwppp-publisher-id' ) );
+	$jwppp_mediation     = sanitize_text_field( get_option( 'jwppp-mediation' ) );
+	$jwppp_floor_price   = sanitize_text_field( get_option( 'jwppp-floor-price' ) );
+    $partners            = jwppp_ad_partners(); 
+	$ad_partner          = sanitize_text_field( get_option( 'jwppp-ad-partner' ) );
 
     if ( 0 !== intval( $ad_partner ) ) {
 
@@ -88,10 +94,53 @@ function jwppp_ads_code_block( $post_id, $number ) {
 				}
 					echo "},\n";
 					echo "bidders: [\n";
-						echo "{\n";
-						echo "name: '" . esc_html( $ad_partner ) . "',\n";
-						echo "id: '" . esc_html( $jwppp_channel_id ) . "'\n";
-						echo "}\n";
+                        
+                    switch ( $ad_partner ) {
+
+                        case 'MediaGrid';
+                        case 'IndexExchange';
+                        case 'PubMatic';
+                        case 'Verizon';
+                        case 'SpotX';
+                        case 'MediaNet';
+                        case 'DistrictM';
+                        case 'SynacorMedia';
+                        case 'Unruly';
+                        case 'Sonobi';
+                        case 'EMX':
+                            echo "{\n";
+                            echo "name: '" . esc_html( $ad_partner ) . "',\n";
+                            echo "id: '" . esc_html( $jwppp_channel_id ) . "'\n";
+                            echo "}\n";
+                            break;
+
+                        case 'Rubicon':
+                            echo "{\n";
+                            echo "name: '" . esc_html( $ad_partner ) . "',\n";
+                            echo "siteId: '" . esc_html( $jwppp_site_id ) . "',\n";
+                            echo "zoneId: '" . esc_html( $jwppp_zone_id ) . "'\n";
+                            echo "}\n";
+                            break;
+
+                        case 'AppNexus':
+                            echo "{\n";
+                            echo "name: '" . esc_html( $ad_partner ) . "',\n";
+                            echo "id: '" . esc_html( $jwppp_channel_id ) . "',\n";
+                            echo "invCode: '" . esc_html( $jwppp_inv_code ) . "',\n";
+                            echo "member: '" . esc_html( $jwppp_member_id ) . "'\n";
+                            echo "}\n";
+                            break;
+
+                        case 'OpenX':
+                            echo "{\n";
+                            echo "name: '" . esc_html( $ad_partner ) . "',\n";
+                            echo "id: '" . esc_html( $jwppp_channel_id ) . "',\n";
+                            echo "delDomain: '" . esc_html( $jwppp_del_domain ) . "'\n";
+                            echo "}\n";
+                            break;
+
+                    }
+                            
 					echo "]\n";
 				echo "}\n";
 			}

@@ -48,6 +48,44 @@ jQuery( document ).ready( function( $ ) {
 	JWPPPpagination();
 
 
+    /**
+     * Bidding options to display based on the partner selected
+     *
+     * @param int el the target val to check.
+     *
+     * @return void
+     */
+    var jwpppBiddingOptions = function( el ) {
+
+        if ( 3 == el ) {
+            $( '.ads-options.bidding.partner-id' ).hide();
+            $( '.ads-options.bidding.site-id' ).show('show');
+            $( '.ads-options.bidding.zone-id' ).show('show');
+        } else {
+            $( '.ads-options.bidding.partner-id' ).show('slow');
+            $( '.ads-options.bidding.site-id' ).hide();
+            $( '.ads-options.bidding.zone-id' ).hide();
+        }
+
+        if ( 5 == el ) {
+            $( '.ads-options.bidding.inv-code' ).show('slow');
+            $( '.ads-options.bidding.member-id' ).show('slow');
+            $( '.ads-options.bidding.publisher-id' ).show('slow');
+        } else {
+            $( '.ads-options.bidding.inv-code' ).hide();
+            $( '.ads-options.bidding.member-id' ).hide();
+            $( '.ads-options.bidding.publisher-id' ).hide();
+        }
+
+        if ( 12 == el ) {
+            $( '.ads-options.bidding.del-domain' ).show('slow');
+        } else {
+            $( '.ads-options.bidding.del-domain' ).hide();
+        }
+
+    }
+
+
 	if ( 'featured-image' == $( '#thumbnail' ).val() ) {
 		$( '.cf-row' ).hide();
 	}
@@ -190,7 +228,20 @@ jQuery( document ).ready( function( $ ) {
 	/*Bidding*/
 	if ( ! $( '.jwppp-active-bidding .tzCheckBox' ).hasClass( 'checked' ) ) {
 		$( '.ads-options.bidding' ).hide();
-	}
+	} else {
+
+        var partnerId = $('#jwppp-ad-partner').val();
+        jwpppBiddingOptions( partnerId );
+
+        $('#jwppp-ad-partner').on( 'change', function(){
+            console.log( 'THIS VAL: ' + $(this).val() );
+
+            jwpppBiddingOptions( $(this).val() );
+
+        })
+
+        console.log( 'PARTNER: ' + $('#jwppp-ad-partner').val() );
+    }     
 
 	$( '.jwppp-active-bidding .tzCheckBox' ).on( 'click', function() {
 		if ( $( this ).hasClass( 'checked' ) ) {

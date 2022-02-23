@@ -287,21 +287,20 @@ function jwppp_ad_partners() {
 
     $partners = array(
         'Select an ad partner',
-        'Adtelligent',
-        'AppNexus',
-        'DistrictM',
-        'EMX',
-        'IndexExchange',
         'MediaGrid',
-        'MediaNet',
-        'OneVideo',
-        'OpenX',
-        'PubMatic',
+        'IndexExchange',
         'Rubicon',
-        'Sonobi',
+        'PubMatic',
+        'AppNexus',
+        'Verizon',
         'SpotX',
+        'MediaNet',
+        'DistrictM',
         'SynacorMedia',
         'Unruly',
+        'OpenX',
+        'Sonobi',
+        'EMX',
     );
 
     return $partners;
