@@ -165,6 +165,26 @@ span.currency {
 	display: inline;
 }
 
+li.single-partner {
+    padding: 20px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    position: relative;
+}
+
+li.single-partner p.description {
+    margin-bottom: 20px;
+}
+
+li.single-partner .add-tag-container,
+li.single-partner .remove-tag-container {
+	position: absolute;
+	top: 1rem;
+    right: 1rem;
+	cursor: pointer;
+}
+
 select.jwppp-choose-player,
 select.jwppp-ads-tag {
 	width: 507px;

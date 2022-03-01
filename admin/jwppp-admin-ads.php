@@ -71,61 +71,53 @@
 		update_option( 'jwppp-active-bidding', $active_bidding );
 	}
 
-	/*Ad partner*/
-    $partners   = jwppp_ad_partners(); 
-	$ad_partner = sanitize_text_field( get_option( 'jwppp-ad-partner' ) );
-	if ( isset( $_POST['jwppp-ad-partner'] ) && is_array( $partners ) ) {
-		$ad_partner = sanitize_text_field( wp_unslash( $_POST['jwppp-ad-partner'] ) );
-		update_option( 'jwppp-ad-partner', $ad_partner );
-	}
+	/*Ad partners*/
+	$ad_partners = get_option( 'jwppp-ad-partners' );
 
-	/*Channel id*/
-	$channel_id = sanitize_text_field( get_option( 'jwppp-channel-id' ) );
-	if ( isset( $_POST['jwppp-channel-id'] ) ) {
-		$channel_id = sanitize_text_field( wp_unslash( $_POST['jwppp-channel-id'] ) );
-		update_option( 'jwppp-channel-id', $channel_id );
-	}
+    error_log( 'SAVED PARTNERS: ' . print_r( $ad_partners, true ) );
 
-	/*Delivery domain*/
-	$del_domain = sanitize_text_field( get_option( 'jwppp-del-domain' ) );
-	if ( isset( $_POST['jwppp-del-domain'] ) ) {
-		$del_domain = sanitize_text_field( wp_unslash( $_POST['jwppp-del-domain'] ) );
-		update_option( 'jwppp-del-domain', $del_domain );
-	}
+	if ( isset( $_POST['hidden-total-partners'] ) ) {
+        /* error_log( 'POST: ' . print_r( $_POST, true ) ); */
+		$ad_partners = array();
+		for ( $i = 0; $i < sanitize_text_field( wp_unslash( $_POST['hidden-total-partners'] ) ); $i++ ) {
 
-	/*Site ID*/
-	$site_id = sanitize_text_field( get_option( 'jwppp-site-id' ) );
-	if ( isset( $_POST['jwppp-site-id'] ) ) {
-		$site_id = sanitize_text_field( wp_unslash( $_POST['jwppp-site-id'] ) );
-		update_option( 'jwppp-site-id', $site_id );
-	}
+            $ad_partners[] = array(
+                'ad-partner'   => sanitize_text_field( wp_unslash( $_POST[ 'jwppp-ad-partner-' . ( $i + 1 ) ] ) ),
+            );
 
-	/*Zone ID*/
-	$zone_id = sanitize_text_field( get_option( 'jwppp-zone-id' ) );
-	if ( isset( $_POST['jwppp-zone-id'] ) ) {
-		$zone_id = sanitize_text_field( wp_unslash( $_POST['jwppp-zone-id'] ) );
-		update_option( 'jwppp-zone-id', $zone_id );
-	}
+            if ( isset( $_POST[ 'jwppp-channel-id-' . ( $i + 1 ) ] ) ) {
+                $ad_partners[ $i ]['channel-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-channel-id-' . ( $i + 1 ) ] ) );
+            }
 
-	/*Inventory code*/
-	$inv_code = sanitize_text_field( get_option( 'jwppp-inv-code' ) );
-	if ( isset( $_POST['jwppp-inv-code'] ) ) {
-		$inv_code = sanitize_text_field( wp_unslash( $_POST['jwppp-inv-code'] ) );
-		update_option( 'jwppp-inv-code', $inv_code );
-	}
+            if ( isset( $_POST[ 'jwppp-del-domain-' . ( $i + 1 ) ] ) ) {
+                $ad_partners[ $i ]['del-domain'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-del-domain-' . ( $i + 1 ) ] ) );
+            }
 
-	/*Member ID*/
-	$member_id = sanitize_text_field( get_option( 'jwppp-member-id' ) );
-	if ( isset( $_POST['jwppp-member-id'] ) ) {
-		$member_id = sanitize_text_field( wp_unslash( $_POST['jwppp-member-id'] ) );
-		update_option( 'jwppp-member-id', $member_id );
-	}
+            if ( isset( $_POST[ 'jwppp-site-id-' . ( $i + 1 ) ] ) ) {
+                $ad_partners[ $i ]['site-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-site-id-' . ( $i + 1 ) ] ) );
+            }
 
-	/*Member ID*/
-	$publisher_id = sanitize_text_field( get_option( 'jwppp-publisher-id' ) );
-	if ( isset( $_POST['jwppp-publisher-id'] ) ) {
-		$publisher_id = sanitize_text_field( wp_unslash( $_POST['jwppp-publisher-id'] ) );
-		update_option( 'jwppp-publisher-id', $publisher_id );
+            if ( isset( $_POST[ 'jwppp-zone-id-' . ( $i + 1 ) ] ) ) {
+                $ad_partners[ $i ]['zone-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-zone-id-' . ( $i + 1 ) ] ) );
+            }
+
+            if ( isset( $_POST[ 'jwppp-inv-code-' . ( $i + 1 ) ] ) ) {
+                $ad_partners[ $i ]['inv-code'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-inv-code-' . ( $i + 1 ) ] ) );
+            }
+
+            if ( isset( $_POST[ 'jwppp-member-id-' . ( $i + 1 ) ] ) ) {
+                $ad_partners[ $i ]['member-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-member-id-' . ( $i + 1 ) ] ) );
+            }
+
+            if ( isset( $_POST[ 'jwppp-publisher-id-' . ( $i + 1 ) ] ) ) {
+                $ad_partners[ $i ]['publisher-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-publisher-id-' . ( $i + 1 ) ] ) );
+            }
+
+        };
+
+        error_log( 'AD PARTNERS: ' . print_r( $ad_partners, true ) );
+		update_option( 'jwppp-ad-partners', $ad_partners );
+
 	}
     
 	/*Mediation*/
@@ -256,87 +248,30 @@
 	echo '<td>';
 	echo '</tr>';
 
-	/*Ad partner*/
-	echo '<tr class="ads-options bidding"' . esc_attr( $hide ) . '>';
-	/* echo '<th scope="row"><img src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/spotx-70.png"></th>'; */
-	echo '<th scope="row">' . esc_html( __( 'Ad partner', 'jwppp' ) ) . '</th>';
+	echo '<tr class="ads-options bidding ad-partners"' . esc_attr( $hide ) . '>';
+	echo '<th scope="row">' . esc_html( __( 'Ad partners', 'jwppp' ) ) . '</th>';
 	echo '<td>';
-    echo '<select id="jwppp-ad-partner" name="jwppp-ad-partner">';
+	echo '<ul style="margin: 0;">';
     
-    foreach ( $partners as $key => $value ) {
+	/*Nonce*/
+	$add_partner_nonce = wp_create_nonce( 'jwppp-nonce-add-partner' );
+	wp_localize_script( 'jwppp-admin', 'addPartner', array( 'nonce' => $add_partner_nonce ) );
 
-        echo '<option value="' . intval( $key ) . '"' . ( intval( $ad_partner ) === $key ? ' selected="selected"' : null ) . '>' . $value . '</option>';
-        
-    }
+	$total_partners = 1;
+	if ( is_array( $ad_partners ) && ! empty( $ad_partners ) ) {
+		for ( $i = 1; $i <= count( $ad_partners ); $i++ ) {
+			jwppp_ad_partner( $i, $hide, $ad_partners[ $i - 1 ] );
+		}
+		$total_partners = count( $ad_partners );
+	} else {
+		jwppp_ad_partner( 1, $hide );
+	}
 
-    echo '</select>';
-	echo '<p class="description">' . wp_kses( __( 'The Ad partner', 'jwppp' ), $allowed_tags ) . '</p>';
+	echo '</ul>';
+	echo '<input type="hidden" name="hidden-total-partners" class="hidden-total-partners" value="' . esc_attr( $total_partners ) . '" />';
+	echo '<p class="description">' . esc_html( __( 'Select your ad partners', 'jwppp' ) ) . '</p>';
 	echo '</td>';
 	echo '</tr>';
-
-    echo '<tr class="ads-options bidding partner-id"' . esc_attr( $hide ) . '>';
-    echo '<th scope="row">' . esc_html( __( 'Ad partner ID', 'jwppp' ) ) . '</th>';
-    echo '<td>';
-    echo '<input type="text" class="regular-text" id="jwppp-channel-id" name="jwppp-channel-id" placeholder="' . esc_attr( __( 'Add a Channel ID', 'jwppp' ) ) . '" value="' . esc_attr( $channel_id ) . '" />';
-    echo '<p class="description">' . wp_kses( __( 'Identifier issued by the bidding partner that represents a segment of a publisher\'s inventory', 'jwppp' ), $allowed_tags ) . '</p>';
-    echo '</td>';
-    echo '</tr>';
-        
-    echo '<tr class="ads-options bidding del-domain"' . esc_attr( $hide ) . '>';
-    echo '<th scope="row">' . esc_html( __( 'Delivery domain', 'jwppp' ) ) . '</th>';
-    echo '<td>';
-    echo '<input type="text" class="regular-text" id="jwppp-del-domain" name="jwppp-del-domain" placeholder="' . esc_attr( __( 'Delivery domain', 'jwppp' ) ) . '" value="' . esc_attr( $del_domain ) . '" />';
-    echo '<p class="description">' . wp_kses( __( 'The delivey domain provided by OpenX', 'jwppp' ), $allowed_tags ) . '</p>';
-    echo '</td>';
-    echo '</tr>';
-
-    echo '<tr class="ads-options bidding site-id"' . esc_attr( $hide ) . '>';
-    echo '<th scope="row">' . esc_html( __( 'Site ID', 'jwppp' ) ) . '</th>';
-    echo '<td>';
-    echo '<input type="text" class="regular-text" id="jwppp-site-id" name="jwppp-site-id" placeholder="' . esc_attr( __( 'Site ID', 'jwppp' ) ) . '" value="' . esc_attr( $site_id ) . '" />';
-    echo '<p class="description">' . wp_kses( __( 'The site id required by Rubicon', 'jwppp' ), $allowed_tags ) . '</p>';
-    echo '</td>';
-    echo '</tr>';
-
-    echo '<tr class="ads-options bidding zone-id"' . esc_attr( $hide ) . '>';
-    echo '<th scope="row">' . esc_html( __( 'Zone ID', 'jwppp' ) ) . '</th>';
-    echo '<td>';
-    echo '<input type="text" class="regular-text" id="jwppp-zone-id" name="jwppp-zone-id" placeholder="' . esc_attr( __( 'Zone ID', 'jwppp' ) ) . '" value="' . esc_attr( $zone_id ) . '" />';
-    echo '<p class="description">' . wp_kses( __( 'The zone id required by Rubicon', 'jwppp' ), $allowed_tags ) . '</p>';
-    echo '</td>';
-    echo '</tr>';
-
-	echo '<tr class="ads-options bidding inv-code"' . esc_attr( $hide ) . '>';
-	echo '<th scope="row">' . esc_html( __( 'Inventory code', 'jwppp' ) ) . '</th>';
-	echo '<td>';
-	echo '<input type="text" class="regular-text" id="jwppp-inv-code" name="jwppp-inv-code" placeholder="' . esc_attr( __( 'Inventory code', 'jwppp' ) ) . '" value="' . esc_attr( $inv_code ) . '" />';
-	echo '<p class="description">' . wp_kses( __( 'The inventory code required by AppNexus', 'jwppp' ), $allowed_tags ) . '</p>';
-	echo '</td>';
-	echo '</tr>';
-
-	echo '<tr class="ads-options bidding member-id"' . esc_attr( $hide ) . '>';
-	echo '<th scope="row">' . esc_html( __( 'Member ID', 'jwppp' ) ) . '</th>';
-	echo '<td>';
-	echo '<input type="text" class="regular-text" id="jwppp-member-id" name="jwppp-member-id" placeholder="' . esc_attr( __( 'Member id', 'jwppp' ) ) . '" value="' . esc_attr( $member_id ) . '" />';
-	echo '<p class="description">' . wp_kses( __( 'The member id required by AppNexus', 'jwppp' ), $allowed_tags ) . '</p>';
-	echo '</td>';
-	echo '</tr>';
-
-	echo '<tr class="ads-options bidding publisher-id"' . esc_attr( $hide ) . '>';
-	echo '<th scope="row">' . esc_html( __( 'Publisher ID', 'jwppp' ) ) . '</th>';
-	echo '<td>';
-	echo '<input type="text" class="regular-text" id="jwppp-publisher-id" name="jwppp-publisher-id" placeholder="' . esc_attr( __( 'Publisher id', 'jwppp' ) ) . '" value="' . esc_attr( $publisher_id ) . '" />';
-	echo '<p class="description">' . wp_kses( __( 'The publisher id required by AppNexus', 'jwppp' ), $allowed_tags ) . '</p>';
-	echo '</td>';
-	echo '</tr>';
-
-	/* echo '<tr class="ads-options bidding"' . esc_attr( $hide ) . '>'; */
-	/* echo '<th scope="row">' . esc_html( __( 'xxxxxx', 'jwppp' ) ) . '</th>'; */
-	/* echo '<td>'; */
-	/* echo '<input type="text" class="regular-text" id="jwppp-xxxxxx" name="jwppp-xxxxxx" placeholder="' . esc_attr( __( 'xxxxxx', 'jwppp' ) ) . '" value="' . esc_attr( $xxxxxx ) . '" />'; */
-	/* echo '<p class="description">' . wp_kses( __( 'xxxxxx', 'jwppp' ), $allowed_tags ) . '</p>'; */
-	/* echo '</td>'; */
-	/* echo '</tr>'; */
 
 	/*Mediation*/
 	echo '<tr class="ads-options bidding"' . esc_attr( $hide ) . '>';

@@ -309,6 +309,157 @@ function jwppp_ad_partners() {
 
 
 /**
+ * Callback - add a new ad partner
+ */
+function jwppp_ad_partner_callback() {
+
+	if ( isset( $_POST['hidden-nonce-add-partner'] ) && wp_verify_nonce( $_POST['hidden-nonce-add-partner'], 'jwppp-nonce-add-partner' ) ) {
+		$n = isset( $_POST['number'] ) ? sanitize_text_field( wp_unslash( $_POST['number'] ) ) : '';
+		if ( $n ) {
+			jwppp_ad_partner( $n, false );
+		}
+	}
+
+	exit;
+}
+add_action( 'wp_ajax_add_ad_partner', 'jwppp_ad_partner_callback' );
+
+
+/**
+ * The single ad partner added in the bidding options
+ *
+ * @param int   $i    the element number.
+ * @param mixed $hide hiddend if ads are disabled.
+ * @param array $data the ad partners data.
+ *
+ * @return void
+ */
+function jwppp_ad_partner( $i, $hide, $data = array() ) {
+
+error_log( 'I: ' . $i );    
+error_log( 'Hide: ' . $hide );
+error_log( 'Ad partner: ' . print_r( $data, true ) );
+
+    /*Get the partners list*/
+    $partners   = jwppp_ad_partners(); 
+
+    $ad_partner   = isset( $data['ad-partner'] ) ? $data['ad-partner'] : null; 
+    $channel_id   = isset( $data['channel-id'] ) ? $data['channel-id'] : null; 
+    $del_domain   = isset( $data['del-domain'] ) ? $data['del-domain'] : null; 
+    $site_id      = isset( $data['site-id'] ) ? $data['site-id'] : null; 
+    $zone_id      = isset( $data['zone-id'] ) ?  $data['zone-id'] : null; 
+    $inv_code     = isset( $data['inv_code'] ) ? $data['inv_code'] : null; 
+    $member_id    = isset( $data['member-id'] ) ? $data['member-id'] : null; 
+    $publisher_id = isset( $data['publisher-id'] ) ? $data['publisher-id'] : null; 
+
+    if ( isset( $_POST[ 'jwppp-channel-id-' . ( $i + 1 ) ] ) ) {
+        $data['channel-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-channel-id-' . ( $i + 1 ) ] ) );
+    }
+    
+    if ( isset( $_POST[ 'jwppp-del-domain-' . ( $i + 1 ) ] ) ) {
+        $data['del-domain'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-del-domain-' . ( $i + 1 ) ] ) );
+    }
+
+    if ( isset( $_POST[ 'jwppp-site-id-' . ( $i + 1 ) ] ) ) {
+        $data['site-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-site-id-' . ( $i + 1 ) ] ) );
+    }
+
+    if ( isset( $_POST[ 'jwppp-zone-id-' . ( $i + 1 ) ] ) ) {
+        $data['zone-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-zone-id-' . ( $i + 1 ) ] ) );
+    }
+
+    if ( isset( $_POST[ 'jwppp-inv-code-' . ( $i + 1 ) ] ) ) {
+        $data['inv-code'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-inv-code-' . ( $i + 1 ) ] ) );
+    }
+
+    if ( isset( $_POST[ 'jwppp-member-id-' . ( $i + 1 ) ] ) ) {
+        $data['member-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-member-id-' . ( $i + 1 ) ] ) );
+    }
+
+    if ( isset( $_POST[ 'jwppp-publisher-id-' . ( $i + 1 ) ] ) ) {
+        $data['publisher-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-publisher-id-' . ( $i + 1 ) ] ) );
+    }
+    
+	$allowed_tags = array(
+		'u' => [],
+		'strong' => [],
+		'a' => [
+			'href'   => [],
+			'target' => [],
+		],
+		'br' => [],
+	);
+
+	echo '<li class="single-partner-' . esc_attr( $i ) . ' single-partner" data-number="' . esc_attr( $i ) . '"' . esc_attr( $hide ) . '>';
+    echo '<select id="jwppp-ad-partner-' . esc_attr( $i ) . '" class="jwppp-ad-partner" name="jwppp-ad-partner-' . esc_attr( $i ) . '">';
+    
+    foreach ( $partners as $key => $value ) {
+
+        echo '<option value="' . intval( $key ) . '"' . ( intval( $ad_partner ) === $key ? ' selected="selected"' : null ) . '>' . $value . '</option>';
+        
+    }
+
+    echo '</select>';
+	echo '<p class="description">' . wp_kses( __( 'The Ad partner', 'jwppp' ), $allowed_tags ) . '</p>';
+
+    echo '<input type="text" class="regular-text" id="jwppp-channel-id-' . esc_attr( $i ) . '" name="jwppp-channel-id-' . esc_attr( $i ) . '" placeholder="' . esc_attr( __( 'Add a Channel ID', 'jwppp' ) ) . '" value="' . esc_attr( $channel_id ) . '" />';
+    echo '<p class="description">' . wp_kses( __( 'Identifier issued by the bidding partner that represents a segment of a publisher\'s inventory', 'jwppp' ), $allowed_tags ) . '</p>';
+        
+    echo '<div class="ads-options bidding del-domain-' . esc_attr( $i ) . '">';
+    echo '<input type="text" class="regular-text" id="jwppp-del-domain-' . esc_attr( $i ) . '" name="jwppp-del-domain-' . esc_attr( $i ) . '" placeholder="' . esc_attr( __( 'Delivery domain', 'jwppp' ) ) . '" value="' . esc_attr( $del_domain ) . '" />';
+    echo '<p class="description">' . wp_kses( __( 'The delivey domain provided by OpenX', 'jwppp' ), $allowed_tags ) . '</p>';
+    echo '</div>';
+
+    echo '<div class="ads-options bidding site-id-' . esc_attr( $i ) . '">';
+    echo '<input type="text" class="regular-text" id="jwppp-site-id-' . esc_attr( $i ) . '" name="jwppp-site-id-' . esc_attr( $i ) . '" placeholder="' . esc_attr( __( 'Site ID', 'jwppp' ) ) . '" value="' . esc_attr( $site_id ) . '" />';
+    echo '<p class="description">' . wp_kses( __( 'The site id required by Rubicon', 'jwppp' ), $allowed_tags ) . '</p>';
+    echo '</div>';
+    
+    echo '<div class="ads-options bidding zone-id-' . esc_attr( $i ) . '">';
+    echo '<input type="text" class="regular-text" id="jwppp-zone-id-' . esc_attr( $i ) . '" name="jwppp-zone-id-' . esc_attr( $i ) . '" placeholder="' . esc_attr( __( 'Zone ID', 'jwppp' ) ) . '" value="' . esc_attr( $zone_id ) . '" />';
+    echo '<p class="description">' . wp_kses( __( 'The zone id required by Rubicon', 'jwppp' ), $allowed_tags ) . '</p>';
+    echo '</div>';
+
+	echo '<div class="ads-options bidding inv-code-' . esc_attr( $i ) . '">';
+	echo '<input type="text" class="regular-text" id="jwppp-inv-code-' . esc_attr( $i ) . '" name="jwppp-inv-code-' . esc_attr( $i ) . '" placeholder="' . esc_attr( __( 'Inventory code', 'jwppp' ) ) . '" value="' . esc_attr( $inv_code ) . '" />';
+	echo '<p class="description">' . wp_kses( __( 'The inventory code required by AppNexus', 'jwppp' ), $allowed_tags ) . '</p>';
+    echo '</div>';
+
+	echo '<div class="ads-options bidding member-id-' . esc_attr( $i ) . '">';
+	echo '<input type="text" class="regular-text" id="jwppp-member-id-' . esc_attr( $i ) . '" name="jwppp-member-id-' . esc_attr( $i ) . '" placeholder="' . esc_attr( __( 'Member id', 'jwppp' ) ) . '" value="' . esc_attr( $member_id ) . '" />';
+	echo '<p class="description">' . wp_kses( __( 'The member id required by AppNexus', 'jwppp' ), $allowed_tags ) . '</p>';
+    echo '</div>';
+
+	echo '<div class="ads-options bidding publisher-id-' . esc_attr( $i ) . '">';
+	echo '<input type="text" class="regular-text" id="jwppp-publisher-id-' . esc_attr( $i ) . '" name="jwppp-publisher-id-' . esc_attr( $i ) . '" placeholder="' . esc_attr( __( 'Publisher id', 'jwppp' ) ) . '" value="' . esc_attr( $publisher_id ) . '" />';
+	echo '<p class="description">' . wp_kses( __( 'The publisher id required by AppNexus', 'jwppp' ), $allowed_tags ) . '</p>';
+    echo '</div>';
+
+	/* echo '<tr class="ads-options bidding"' . esc_attr( $hide ) . '>'; */
+	/* echo '<th scope="row">' . esc_html( __( 'xxxxxx', 'jwppp' ) ) . '</th>'; */
+	/* echo '<td>'; */
+	/* echo '<input type="text" class="regular-text" id="jwppp-xxxxxx" name="jwppp-xxxxxx" placeholder="' . esc_attr( __( 'xxxxxx', 'jwppp' ) ) . '" value="' . esc_attr( $xxxxxx ) . '" />'; */
+	/* echo '<p class="description">' . wp_kses( __( 'xxxxxx', 'jwppp' ), $allowed_tags ) . '</p>'; */
+	/* echo '</td>'; */
+	/* echo '</tr>'; */
+    
+    if ( 1 === $i ) {
+        echo '<div class="add-tag-container">';
+        echo '<img class="add-tag" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/add-tag.png">';
+        echo '<img class="add-tag-hover partner" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/add-tag-hover.png">';
+        echo '</div>';
+    } else {
+        echo '<div class="remove-tag-container">';
+        echo '<img class="remove-tag" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/remove-tag.png">';
+        echo '<img class="remove-tag-hover partner" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/remove-tag-hover.png">';
+        echo '</div>';
+    }
+
+    echo '</li>';
+}
+
+
+/**
  * Plugin options page
  */
 function jwppp_options() {

@@ -52,35 +52,39 @@ jQuery( document ).ready( function( $ ) {
      * Bidding options to display based on the partner selected
      *
      * @param int el the target val to check.
+     * @param int n  the number of partner in page.
      *
      * @return void
      */
-    var jwpppBiddingOptions = function( el ) {
+    var jwpppBiddingOptions = function( el, n ) {
+
+        console.log( 'EL: ' + el );
+        console.log( 'N: ' + n );
 
         if ( 3 == el ) {
-            $( '.ads-options.bidding.partner-id' ).hide();
-            $( '.ads-options.bidding.site-id' ).show('show');
-            $( '.ads-options.bidding.zone-id' ).show('show');
+            $( '.ads-options.bidding.partner-id-' + n ).hide();
+            $( '.ads-options.bidding.site-id-' + n ).show('show');
+            $( '.ads-options.bidding.zone-id-' + n ).show('show');
         } else {
-            $( '.ads-options.bidding.partner-id' ).show('slow');
-            $( '.ads-options.bidding.site-id' ).hide();
-            $( '.ads-options.bidding.zone-id' ).hide();
+            $( '.ads-options.bidding.partner-id-' + n ).show('slow');
+            $( '.ads-options.bidding.site-id-' + n ).hide();
+            $( '.ads-options.bidding.zone-id-' + n ).hide();
         }
 
         if ( 5 == el ) {
-            $( '.ads-options.bidding.inv-code' ).show('slow');
-            $( '.ads-options.bidding.member-id' ).show('slow');
-            $( '.ads-options.bidding.publisher-id' ).show('slow');
+            $( '.ads-options.bidding.inv-code-' + n ).show('slow');
+            $( '.ads-options.bidding.member-id-' + n ).show('slow');
+            $( '.ads-options.bidding.publisher-id-' + n ).show('slow');
         } else {
-            $( '.ads-options.bidding.inv-code' ).hide();
-            $( '.ads-options.bidding.member-id' ).hide();
-            $( '.ads-options.bidding.publisher-id' ).hide();
+            $( '.ads-options.bidding.inv-code-' + n ).hide();
+            $( '.ads-options.bidding.member-id-' + n ).hide();
+            $( '.ads-options.bidding.publisher-id-' + n ).hide();
         }
 
         if ( 12 == el ) {
-            $( '.ads-options.bidding.del-domain' ).show('slow');
+            $( '.ads-options.bidding.del-domain-' + n ).show('slow');
         } else {
-            $( '.ads-options.bidding.del-domain' ).hide();
+            $( '.ads-options.bidding.del-domain-' + n ).hide();
         }
 
     }
@@ -206,41 +210,84 @@ jQuery( document ).ready( function( $ ) {
 
 	/*ADS Tags*/
 	$( document ).on( 'click', '.add-tag-hover', function() {
-		var number = $( 'li #jwppp-ads-tag' ).length + 1;
-		var data = {
-			'action': 'add_ads_tag',
-			'hidden-nonce-add-tag': addTag.nonce,
-			'number': number
-		};
-		$.post( ajaxurl, data, function( response ) {
-			$( '.ads-options.tag ul' ).append( response );
-			$( '.hidden-total-tags' ).val( number );
-		});
+        if ( ! $(this).hasClass('partner') ) {
+            var number = $( 'li #jwppp-ads-tag' ).length + 1;
+            var data = {
+                'action': 'add_ads_tag',
+                'hidden-nonce-add-tag': addTag.nonce,
+                'number': number
+            };
+            $.post( ajaxurl, data, function( response ) {
+                $( '.ads-options.tag ul' ).append( response );
+                $( '.hidden-total-tags' ).val( number );
+            });
+        }
 	});
 
 	$( document ).on( 'click', '.remove-tag-hover', function() {
-		number = $( 'li #jwppp-ads-tag' ).length;
-		$( this ).closest( 'li' ).remove();
-		$( '.hidden-total-tags' ).val( number );
+        if ( ! $(this).hasClass('partner') ) {
+            number = $( 'li #jwppp-ads-tag' ).length;
+            $( this ).closest( 'li' ).remove();
+            $( '.hidden-total-tags' ).val( number );
+        }
 
 	});
 
 	/*Bidding*/
 	if ( ! $( '.jwppp-active-bidding .tzCheckBox' ).hasClass( 'checked' ) ) {
+
 		$( '.ads-options.bidding' ).hide();
+
 	} else {
 
-        var partnerId = $('#jwppp-ad-partner').val();
-        jwpppBiddingOptions( partnerId );
+        $('.ads-options.ad-partners ul li').each(function(){
 
-        $('#jwppp-ad-partner').on( 'change', function(){
-            console.log( 'THIS VAL: ' + $(this).val() );
+            var number    = $(this).attr('data-number');
+            var partnerId = $('.jwppp-ad-partner', this ).val();
 
-            jwpppBiddingOptions( $(this).val() );
+            jwpppBiddingOptions( partnerId, number );
+
+            $('.jwppp-ad-partner', this).on('change', function(){
+
+                jwpppBiddingOptions( $(this).val(), number );
+
+            })
 
         })
 
-        console.log( 'PARTNER: ' + $('#jwppp-ad-partner').val() );
+        /*Add a partner*/
+        $( document ).on( 'click', '.add-tag-hover.partner', function() {
+            var number = $( 'li.single-partner' ).length + 1;
+            var data = {
+                'action': 'add_ad_partner',
+                'hidden-nonce-add-partner': addPartner.nonce,
+                'number': number
+            };
+            $.post( ajaxurl, data, function( response ) {
+                
+                $( '.ads-options.ad-partners ul' ).append( response );
+                $( '.hidden-total-partners' ).val( number );
+                
+                jwpppBiddingOptions( null, number );
+
+                $('#jwppp-ad-partner-' + number).on('change', function(){
+
+                    console.log( 'value: ' + $(this).val() );
+
+                    jwpppBiddingOptions( $(this).val(), number );
+
+                })
+            });
+        });
+
+        $( document ).on( 'click', '.remove-tag-hover.partner', function() {
+            var number;
+            $( this ).closest( 'li' ).remove();
+            number = $( 'li.single-partner' ).length;
+            $( '.hidden-total-partners' ).val( number );
+
+        });
+        
     }     
 
 	$( '.jwppp-active-bidding .tzCheckBox' ).on( 'click', function() {
