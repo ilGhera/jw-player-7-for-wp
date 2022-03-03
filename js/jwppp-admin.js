@@ -49,6 +49,28 @@ jQuery( document ).ready( function( $ ) {
 
 
     /**
+     * The list of ad partners already used by the publisher
+     *
+     * @return array
+     */
+    var jwpppUsedPartners = function() {
+
+        var usedPartners = [];
+        $('.ads-options.ad-partners ul li .jwppp-ad-partner').each(function(){
+            
+            usedPartners.push( $(this).val() );
+
+        })
+
+        console.log( 'USED PARTNERS: ' + usedPartners );
+
+        return usedPartners;
+
+    }
+    // jwpppPartnersFilter();
+
+
+    /**
      * Bidding options to display based on the partner selected
      *
      * @param int el the target val to check.
@@ -56,12 +78,12 @@ jQuery( document ).ready( function( $ ) {
      *
      * @return void
      */
-    var jwpppBiddingOptions = function( el, n ) {
+    var jwpppPartnerFields = function( el, n ) {
 
         console.log( 'EL: ' + el );
         console.log( 'N: ' + n );
 
-        if ( 3 == el ) {
+        if ( 'Rubicon' == el ) {
             $( '.ads-options.bidding.partner-id-' + n ).hide();
             $( '.ads-options.bidding.site-id-' + n ).show('show');
             $( '.ads-options.bidding.zone-id-' + n ).show('show');
@@ -71,7 +93,7 @@ jQuery( document ).ready( function( $ ) {
             $( '.ads-options.bidding.zone-id-' + n ).hide();
         }
 
-        if ( 5 == el ) {
+        if ( 'AppNexus' == el ) {
             $( '.ads-options.bidding.inv-code-' + n ).show('slow');
             $( '.ads-options.bidding.member-id-' + n ).show('slow');
             $( '.ads-options.bidding.publisher-id-' + n ).show('slow');
@@ -81,7 +103,7 @@ jQuery( document ).ready( function( $ ) {
             $( '.ads-options.bidding.publisher-id-' + n ).hide();
         }
 
-        if ( 12 == el ) {
+        if ( 'OpenX' == el ) {
             $( '.ads-options.bidding.del-domain-' + n ).show('slow');
         } else {
             $( '.ads-options.bidding.del-domain-' + n ).hide();
@@ -242,14 +264,14 @@ jQuery( document ).ready( function( $ ) {
 
         $('.ads-options.ad-partners ul li').each(function(){
 
-            var number    = $(this).attr('data-number');
-            var partnerId = $('.jwppp-ad-partner', this ).val();
+            var number  = $(this).attr('data-number');
+            var partner = $('.jwppp-ad-partner', this ).val();
 
-            jwpppBiddingOptions( partnerId, number );
+            jwpppPartnerFields( partner, number );
 
             $('.jwppp-ad-partner', this).on('change', function(){
 
-                jwpppBiddingOptions( $(this).val(), number );
+                jwpppPartnerFields( $(this).val(), number );
 
             })
 
@@ -261,20 +283,21 @@ jQuery( document ).ready( function( $ ) {
             var data = {
                 'action': 'add_ad_partner',
                 'hidden-nonce-add-partner': addPartner.nonce,
-                'number': number
+                'number': number,
+                'used-partners': jwpppUsedPartners
             };
             $.post( ajaxurl, data, function( response ) {
                 
                 $( '.ads-options.ad-partners ul' ).append( response );
                 $( '.hidden-total-partners' ).val( number );
                 
-                jwpppBiddingOptions( null, number );
+                jwpppPartnerFields( null, number );
 
                 $('#jwppp-ad-partner-' + number).on('change', function(){
 
                     console.log( 'value: ' + $(this).val() );
 
-                    jwpppBiddingOptions( $(this).val(), number );
+                    jwpppPartnerFields( $(this).val(), number );
 
                 })
             });
@@ -293,6 +316,16 @@ jQuery( document ).ready( function( $ ) {
 	$( '.jwppp-active-bidding .tzCheckBox' ).on( 'click', function() {
 		if ( $( this ).hasClass( 'checked' ) ) {
 			$( '.ads-options.bidding' ).show( 'slow' );
+
+            $('.ads-options.ad-partners ul li').each(function(){
+
+                var number  = $(this).attr('data-number');
+                var partner = $('.jwppp-ad-partner', this ).val();
+
+                jwpppPartnerFields( partner, number );
+
+            })
+
 
 			if ( 'jwp' !== $( '#jwppp-mediation' ).val() && 'jwpdfp' !== $( '#jwppp-mediation' ).val() ) {
 				$( '.ads-options.bidding.floor-price' ).hide();

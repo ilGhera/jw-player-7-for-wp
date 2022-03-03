@@ -20,23 +20,9 @@ function jwppp_ads_code_block( $post_id, $number ) {
     
     /*Bidding*/
 	$jwppp_bidding       = sanitize_text_field( get_option( 'jwppp-active-bidding' ) );
-	$jwppp_channel_id    = sanitize_text_field( get_option( 'jwppp-channel-id' ) );
-    $jwppp_del_domain    = sanitize_text_field( get_option( 'jwppp-del-domain' ) );
-    $jwppp_site_id       = sanitize_text_field( get_option( 'jwppp-site-id' ) );
-    $jwppp_zone_id       = sanitize_text_field( get_option( 'jwppp-zone-id' ) );
-    $jwppp_inv_code      = sanitize_text_field( get_option( 'jwppp-inv-code' ) );
-    $jwppp_member_id     = sanitize_text_field( get_option( 'jwppp-member-id' ) );
-    $jwppp_publisher_id  = sanitize_text_field( get_option( 'jwppp-publisher-id' ) );
+	$ad_partners         = get_option( 'jwppp-ad-partners' );
 	$jwppp_mediation     = sanitize_text_field( get_option( 'jwppp-mediation' ) );
 	$jwppp_floor_price   = sanitize_text_field( get_option( 'jwppp-floor-price' ) );
-    $partners            = jwppp_ad_partners(); 
-	$ad_partner          = sanitize_text_field( get_option( 'jwppp-ad-partner' ) );
-
-    if ( 0 !== intval( $ad_partner ) ) {
-
-        $ad_partner        = is_array( $partners ) && isset( $partners[ $ad_partner ] ) ? $partners[ $ad_partner ] : null; 
-
-    }
 
 	/*Is the main ads option activated?*/
 	if ( 1 === intval( $jwppp_show_ads ) ) {
@@ -85,7 +71,9 @@ function jwppp_ads_code_block( $post_id, $number ) {
 			if ( $jwppp_ads_skip ) {
 				echo 'skipoffset: ' . esc_html( $jwppp_ads_skip ) . ",\n";
 			}
-			if ( $jwppp_bidding && $ad_partner ) {
+
+            /*Bidding*/
+			if ( $jwppp_bidding ) {
 				echo "bids: {\n";
 					echo "settings: {\n";
 						echo "mediationLayerAdServer: '" . esc_html( $jwppp_mediation ) . "',\n";
@@ -94,52 +82,79 @@ function jwppp_ads_code_block( $post_id, $number ) {
 				}
 					echo "},\n";
 					echo "bidders: [\n";
-                        
-                    switch ( $ad_partner ) {
 
-                        case 'MediaGrid';
-                        case 'IndexExchange';
-                        case 'PubMatic';
-                        case 'Verizon';
-                        case 'SpotX';
-                        case 'MediaNet';
-                        case 'DistrictM';
-                        case 'SynacorMedia';
-                        case 'Unruly';
-                        case 'Sonobi';
-                        case 'EMX':
-                            echo "{\n";
-                            echo "name: '" . esc_html( $ad_partner ) . "',\n";
-                            echo "id: '" . esc_html( $jwppp_channel_id ) . "'\n";
-                            echo "}\n";
-                            break;
+                    if ( is_array( $ad_partners  ) ) {
 
-                        case 'Rubicon':
-                            echo "{\n";
-                            echo "name: '" . esc_html( $ad_partner ) . "',\n";
-                            echo "siteId: '" . esc_html( $jwppp_site_id ) . "',\n";
-                            echo "zoneId: '" . esc_html( $jwppp_zone_id ) . "'\n";
-                            echo "}\n";
-                            break;
+                        foreach ( $ad_partners as $partner ) {
 
-                        case 'AppNexus':
-                            echo "{\n";
-                            echo "name: '" . esc_html( $ad_partner ) . "',\n";
-                            echo "id: '" . esc_html( $jwppp_channel_id ) . "',\n";
-                            echo "invCode: '" . esc_html( $jwppp_inv_code ) . "',\n";
-                            echo "member: '" . esc_html( $jwppp_member_id ) . "'\n";
-                            echo "}\n";
-                            break;
+                            error_log( 'PARTNER: ' . print_r( $partner, true ) );
+                            if ( is_array( $partner ) ) {
 
-                        case 'OpenX':
-                            echo "{\n";
-                            echo "name: '" . esc_html( $ad_partner ) . "',\n";
-                            echo "id: '" . esc_html( $jwppp_channel_id ) . "',\n";
-                            echo "delDomain: '" . esc_html( $jwppp_del_domain ) . "'\n";
-                            echo "}\n";
-                            break;
+                                echo "{\n";
+
+                                foreach ( $partner as $key => $value ) {
+
+                                    if ( $value ) {
+                                        /* Translators: 1: property name 2: property value */
+                                        echo sprintf( '%1$s: \'%2$s\',' . "\n", $key, $value );
+                                    }
+
+                                }
+                                
+                                echo "},\n";
+
+                            }
+
+                        }
 
                     }
+
+                        
+                    /* switch ( $ad_partner ) { */
+
+                    /*     case 'MediaGrid'; */
+                    /*     case 'IndexExchange'; */
+                    /*     case 'PubMatic'; */
+                    /*     case 'Verizon'; */
+                    /*     case 'SpotX'; */
+                    /*     case 'MediaNet'; */
+                    /*     case 'DistrictM'; */
+                    /*     case 'SynacorMedia'; */
+                    /*     case 'Unruly'; */
+                    /*     case 'Sonobi'; */
+                    /*     case 'EMX': */
+                    /*         echo "{\n"; */
+                    /*         echo "name: '" . esc_html( $ad_partner ) . "',\n"; */
+                    /*         echo "id: '" . esc_html( $jwppp_channel_id ) . "'\n"; */
+                    /*         echo "}\n"; */
+                    /*         break; */
+
+                    /*     case 'Rubicon': */
+                    /*         echo "{\n"; */
+                    /*         echo "name: '" . esc_html( $ad_partner ) . "',\n"; */
+                    /*         echo "siteId: '" . esc_html( $jwppp_site_id ) . "',\n"; */
+                    /*         echo "zoneId: '" . esc_html( $jwppp_zone_id ) . "'\n"; */
+                    /*         echo "}\n"; */
+                    /*         break; */
+
+                    /*     case 'AppNexus': */
+                    /*         echo "{\n"; */
+                    /*         echo "name: '" . esc_html( $ad_partner ) . "',\n"; */
+                    /*         echo "id: '" . esc_html( $jwppp_channel_id ) . "',\n"; */
+                    /*         echo "invCode: '" . esc_html( $jwppp_inv_code ) . "',\n"; */
+                    /*         echo "member: '" . esc_html( $jwppp_member_id ) . "'\n"; */
+                    /*         echo "}\n"; */
+                    /*         break; */
+
+                    /*     case 'OpenX': */
+                    /*         echo "{\n"; */
+                    /*         echo "name: '" . esc_html( $ad_partner ) . "',\n"; */
+                    /*         echo "id: '" . esc_html( $jwppp_channel_id ) . "',\n"; */
+                    /*         echo "delDomain: '" . esc_html( $jwppp_del_domain ) . "'\n"; */
+                    /*         echo "}\n"; */
+                    /*         break; */
+
+                    /* } */
                             
 					echo "]\n";
 				echo "}\n";

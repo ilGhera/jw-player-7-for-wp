@@ -77,40 +77,48 @@
     error_log( 'SAVED PARTNERS: ' . print_r( $ad_partners, true ) );
 
 	if ( isset( $_POST['hidden-total-partners'] ) ) {
+        
         /* error_log( 'POST: ' . print_r( $_POST, true ) ); */
-		$ad_partners = array();
+        $ad_partners = array();
+
 		for ( $i = 0; $i < sanitize_text_field( wp_unslash( $_POST['hidden-total-partners'] ) ); $i++ ) {
 
-            $ad_partners[] = array(
-                'ad-partner'   => sanitize_text_field( wp_unslash( $_POST[ 'jwppp-ad-partner-' . ( $i + 1 ) ] ) ),
-            );
+            $partner = null;
 
-            if ( isset( $_POST[ 'jwppp-channel-id-' . ( $i + 1 ) ] ) ) {
-                $ad_partners[ $i ]['channel-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-channel-id-' . ( $i + 1 ) ] ) );
+            if ( isset( $_POST[ 'jwppp-ad-partner-' . ( $i + 1 ) ] ) ) {
+                $partner = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-ad-partner-' . ( $i + 1 ) ] ) ); 
+                $ad_partners[ $i ]['name'] = $partner;
             }
 
-            if ( isset( $_POST[ 'jwppp-del-domain-' . ( $i + 1 ) ] ) ) {
-                $ad_partners[ $i ]['del-domain'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-del-domain-' . ( $i + 1 ) ] ) );
-            }
+            if ( $partner ) {
 
-            if ( isset( $_POST[ 'jwppp-site-id-' . ( $i + 1 ) ] ) ) {
-                $ad_partners[ $i ]['site-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-site-id-' . ( $i + 1 ) ] ) );
-            }
+                if ( isset( $_POST[ 'jwppp-channel-id-' . ( $i + 1 ) ] ) ) {
+                    $ad_partners[ $i ]['id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-channel-id-' . ( $i + 1 ) ] ) );
+                }
 
-            if ( isset( $_POST[ 'jwppp-zone-id-' . ( $i + 1 ) ] ) ) {
-                $ad_partners[ $i ]['zone-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-zone-id-' . ( $i + 1 ) ] ) );
-            }
+                if ( isset( $_POST[ 'jwppp-del-domain-' . ( $i + 1 ) ] ) ) {
+                    $ad_partners[ $i ]['delDomain'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-del-domain-' . ( $i + 1 ) ] ) );
+                }
 
-            if ( isset( $_POST[ 'jwppp-inv-code-' . ( $i + 1 ) ] ) ) {
-                $ad_partners[ $i ]['inv-code'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-inv-code-' . ( $i + 1 ) ] ) );
-            }
+                if ( isset( $_POST[ 'jwppp-site-id-' . ( $i + 1 ) ] ) ) {
+                    $ad_partners[ $i ]['siteId'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-site-id-' . ( $i + 1 ) ] ) );
+                }
 
-            if ( isset( $_POST[ 'jwppp-member-id-' . ( $i + 1 ) ] ) ) {
-                $ad_partners[ $i ]['member-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-member-id-' . ( $i + 1 ) ] ) );
-            }
+                if ( isset( $_POST[ 'jwppp-zone-id-' . ( $i + 1 ) ] ) ) {
+                    $ad_partners[ $i ]['zoneId'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-zone-id-' . ( $i + 1 ) ] ) );
+                }
 
-            if ( isset( $_POST[ 'jwppp-publisher-id-' . ( $i + 1 ) ] ) ) {
-                $ad_partners[ $i ]['publisher-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-publisher-id-' . ( $i + 1 ) ] ) );
+                if ( isset( $_POST[ 'jwppp-inv-code-' . ( $i + 1 ) ] ) ) {
+                    $ad_partners[ $i ]['invCode'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-inv-code-' . ( $i + 1 ) ] ) );
+                }
+
+                if ( isset( $_POST[ 'jwppp-member-id-' . ( $i + 1 ) ] ) ) {
+                    $ad_partners[ $i ]['member'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-member-id-' . ( $i + 1 ) ] ) );
+                }
+
+                if ( isset( $_POST[ 'jwppp-publisher-id-' . ( $i + 1 ) ] ) ) {
+                    $ad_partners[ $i ]['publisherId'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-publisher-id-' . ( $i + 1 ) ] ) );
+                }
             }
 
         };

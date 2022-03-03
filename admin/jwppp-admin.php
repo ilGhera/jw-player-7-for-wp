@@ -286,7 +286,6 @@ add_action( 'wp_ajax_nopriv_ads-var', 'jwppp_ads_var_callback' );
 function jwppp_ad_partners() {
 
     $partners = array(
-        'Select an ad partner',
         'MediaGrid',
         'IndexExchange',
         'Rubicon',
@@ -314,9 +313,14 @@ function jwppp_ad_partners() {
 function jwppp_ad_partner_callback() {
 
 	if ( isset( $_POST['hidden-nonce-add-partner'] ) && wp_verify_nonce( $_POST['hidden-nonce-add-partner'], 'jwppp-nonce-add-partner' ) ) {
-		$n = isset( $_POST['number'] ) ? sanitize_text_field( wp_unslash( $_POST['number'] ) ) : '';
+		$n             = isset( $_POST['number'] ) ? sanitize_text_field( wp_unslash( $_POST['number'] ) ) : '';
+        $used_partners = isset( $_POST['used-partners'] ) ? sanitize_text_field( wp_unslash( $_POST['used-partners']  ) ) : '';
+        $used_partners = explode( ',', $used_partners );
+
+        error_log( 'USED PARTNERS: ' . print_r( $used_partners, true ) );
+
 		if ( $n ) {
-			jwppp_ad_partner( $n, false );
+			jwppp_ad_partner( $n, false, null, $used_partners );
 		}
 	}
 
@@ -328,58 +332,33 @@ add_action( 'wp_ajax_add_ad_partner', 'jwppp_ad_partner_callback' );
 /**
  * The single ad partner added in the bidding options
  *
- * @param int   $i    the element number.
- * @param mixed $hide hiddend if ads are disabled.
- * @param array $data the ad partners data.
+ * @param int   $i       the element number.
+ * @param mixed $hide    hiddend if ads are disabled.
+ * @param array $data    the ad partners data.
+ * @param array $exclude the ad partners to exclude.
  *
  * @return void
  */
-function jwppp_ad_partner( $i, $hide, $data = array() ) {
-
-error_log( 'I: ' . $i );    
-error_log( 'Hide: ' . $hide );
-error_log( 'Ad partner: ' . print_r( $data, true ) );
+function jwppp_ad_partner( $i, $hide, $data = array(), $exclude = array() ) {
 
     /*Get the partners list*/
-    $partners   = jwppp_ad_partners(); 
+    $partners = jwppp_ad_partners(); 
 
-    $ad_partner   = isset( $data['ad-partner'] ) ? $data['ad-partner'] : null; 
-    $channel_id   = isset( $data['channel-id'] ) ? $data['channel-id'] : null; 
-    $del_domain   = isset( $data['del-domain'] ) ? $data['del-domain'] : null; 
-    $site_id      = isset( $data['site-id'] ) ? $data['site-id'] : null; 
-    $zone_id      = isset( $data['zone-id'] ) ?  $data['zone-id'] : null; 
-    $inv_code     = isset( $data['inv_code'] ) ? $data['inv_code'] : null; 
-    $member_id    = isset( $data['member-id'] ) ? $data['member-id'] : null; 
-    $publisher_id = isset( $data['publisher-id'] ) ? $data['publisher-id'] : null; 
+    if ( is_array( $exclude ) && ! empty( $exclude ) ) {
 
-    if ( isset( $_POST[ 'jwppp-channel-id-' . ( $i + 1 ) ] ) ) {
-        $data['channel-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-channel-id-' . ( $i + 1 ) ] ) );
-    }
-    
-    if ( isset( $_POST[ 'jwppp-del-domain-' . ( $i + 1 ) ] ) ) {
-        $data['del-domain'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-del-domain-' . ( $i + 1 ) ] ) );
+        $partners = array_diff( $partners, $exclude );
+
     }
 
-    if ( isset( $_POST[ 'jwppp-site-id-' . ( $i + 1 ) ] ) ) {
-        $data['site-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-site-id-' . ( $i + 1 ) ] ) );
-    }
+    $ad_partner   = isset( $data['name'] ) ? $data['name'] : null; 
+    $channel_id   = isset( $data['id'] ) ? $data['id'] : null; 
+    $del_domain   = isset( $data['delDomain'] ) ? $data['delDomain'] : null; 
+    $site_id      = isset( $data['siteId'] ) ? $data['siteId'] : null; 
+    $zone_id      = isset( $data['zoneId'] ) ?  $data['zoneId'] : null; 
+    $inv_code     = isset( $data['invCode'] ) ? $data['invCode'] : null; 
+    $member_id    = isset( $data['member'] ) ? $data['member'] : null; 
+    $publisher_id = isset( $data['publisherId'] ) ? $data['publisherId'] : null; 
 
-    if ( isset( $_POST[ 'jwppp-zone-id-' . ( $i + 1 ) ] ) ) {
-        $data['zone-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-zone-id-' . ( $i + 1 ) ] ) );
-    }
-
-    if ( isset( $_POST[ 'jwppp-inv-code-' . ( $i + 1 ) ] ) ) {
-        $data['inv-code'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-inv-code-' . ( $i + 1 ) ] ) );
-    }
-
-    if ( isset( $_POST[ 'jwppp-member-id-' . ( $i + 1 ) ] ) ) {
-        $data['member-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-member-id-' . ( $i + 1 ) ] ) );
-    }
-
-    if ( isset( $_POST[ 'jwppp-publisher-id-' . ( $i + 1 ) ] ) ) {
-        $data['publisher-id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-publisher-id-' . ( $i + 1 ) ] ) );
-    }
-    
 	$allowed_tags = array(
 		'u' => [],
 		'strong' => [],
@@ -392,10 +371,11 @@ error_log( 'Ad partner: ' . print_r( $data, true ) );
 
 	echo '<li class="single-partner-' . esc_attr( $i ) . ' single-partner" data-number="' . esc_attr( $i ) . '"' . esc_attr( $hide ) . '>';
     echo '<select id="jwppp-ad-partner-' . esc_attr( $i ) . '" class="jwppp-ad-partner" name="jwppp-ad-partner-' . esc_attr( $i ) . '">';
-    
-    foreach ( $partners as $key => $value ) {
+    echo '<option>' . esc_html( 'Select an ad partner', 'jwppp' ) . '</option>';
 
-        echo '<option value="' . intval( $key ) . '"' . ( intval( $ad_partner ) === $key ? ' selected="selected"' : null ) . '>' . $value . '</option>';
+    foreach ( $partners as $partner ) {
+
+        echo '<option value="' . esc_attr( $partner ) . '"' . ( $ad_partner === $partner ? ' selected="selected"' : null ) . '>' . $partner . '</option>';
         
     }
 
