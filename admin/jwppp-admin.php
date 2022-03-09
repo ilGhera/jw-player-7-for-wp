@@ -317,8 +317,6 @@ function jwppp_ad_partner_callback() {
         $used_partners = isset( $_POST['used-partners'] ) ? sanitize_text_field( wp_unslash( $_POST['used-partners']  ) ) : '';
         $used_partners = explode( ',', $used_partners );
 
-        error_log( 'USED PARTNERS: ' . print_r( $used_partners, true ) );
-
 		if ( $n ) {
 			jwppp_ad_partner( $n, false, null, $used_partners );
 		}
@@ -415,14 +413,6 @@ function jwppp_ad_partner( $i, $hide, $data = array(), $exclude = array() ) {
 	echo '<p class="description">' . wp_kses( __( 'The publisher id required by AppNexus', 'jwppp' ), $allowed_tags ) . '</p>';
     echo '</div>';
 
-	/* echo '<tr class="ads-options bidding"' . esc_attr( $hide ) . '>'; */
-	/* echo '<th scope="row">' . esc_html( __( 'xxxxxx', 'jwppp' ) ) . '</th>'; */
-	/* echo '<td>'; */
-	/* echo '<input type="text" class="regular-text" id="jwppp-xxxxxx" name="jwppp-xxxxxx" placeholder="' . esc_attr( __( 'xxxxxx', 'jwppp' ) ) . '" value="' . esc_attr( $xxxxxx ) . '" />'; */
-	/* echo '<p class="description">' . wp_kses( __( 'xxxxxx', 'jwppp' ), $allowed_tags ) . '</p>'; */
-	/* echo '</td>'; */
-	/* echo '</tr>'; */
-    
     if ( 1 === $i ) {
         echo '<div class="add-tag-container">';
         echo '<img class="add-tag" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/add-tag.png">';

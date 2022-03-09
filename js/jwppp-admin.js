@@ -62,12 +62,9 @@ jQuery( document ).ready( function( $ ) {
 
         })
 
-        console.log( 'USED PARTNERS: ' + usedPartners );
-
         return usedPartners;
 
     }
-    // jwpppPartnersFilter();
 
 
     /**
@@ -79,9 +76,6 @@ jQuery( document ).ready( function( $ ) {
      * @return void
      */
     var jwpppPartnerFields = function( el, n ) {
-
-        console.log( 'EL: ' + el );
-        console.log( 'N: ' + n );
 
         if ( 'Rubicon' == el ) {
             $( '.ads-options.bidding.partner-id-' + n ).hide();
@@ -295,8 +289,6 @@ jQuery( document ).ready( function( $ ) {
 
                 $('#jwppp-ad-partner-' + number).on('change', function(){
 
-                    console.log( 'value: ' + $(this).val() );
-
                     jwpppPartnerFields( $(this).val(), number );
 
                 })
@@ -342,6 +334,10 @@ jQuery( document ).ready( function( $ ) {
 		$( '.ads-options.bidding.floor-price' ).hide();
 	}
 
+	if ( 'dfp' !== $( '#jwppp-mediation' ).val() ) {
+		$( '.ads-options.bidding.range-price' ).hide();
+	}
+
 	$( '#jwppp-mediation' ).on( 'change', function() {
 		if ( $( '.jwp' ).prop( 'selected' ) || $( '.jwpdfp' ).prop( 'selected' ) ) {
 			$( '.ads-options.bidding.floor-price' ).show( 'slow' );
@@ -349,8 +345,39 @@ jQuery( document ).ready( function( $ ) {
 			$( '.ads-options.bidding.floor-price' ).hide();
 		}
 
+		if ( $( '.dfp' ).prop( 'selected' ) ) {
+			$( '.ads-options.bidding.range-price' ).show( 'slow' );
+		} else {
+			$( '.ads-options.bidding.range-price' ).hide();
+		}
+
 	});
 
+	/*GDPR*/
+	if ( ! $( '.bidding.gdpr .tzCheckBox' ).hasClass( 'checked' ) ) {
+		$( '.ads-options.gdpr .gdpr' ).hide();
+    }
+    
+	$( '.bidding.gdpr .tzCheckBox' ).on( 'click', function() {
+		if ( $( this ).hasClass( 'checked' ) ) {
+            $( '.ads-options .gdpr' ).show('slow');
+        } else {
+            $( '.ads-options .gdpr' ).hide();
+        }
+    })
+
+	/*CCPA*/
+	if ( ! $( '.bidding.ccpa .tzCheckBox' ).hasClass( 'checked' ) ) {
+		$( '.ads-options.ccpa .ccpa' ).hide();
+    }
+    
+	$( '.bidding.ccpa .tzCheckBox' ).on( 'click', function() {
+		if ( $( this ).hasClass( 'checked' ) ) {
+            $( '.ads-options .ccpa' ).show('slow');
+        } else {
+            $( '.ads-options .ccpa' ).hide();
+        }
+    })
 
 	/*Color field for subtitles*/
 	$( '.jwppp-color-field' ).wpColorPicker();

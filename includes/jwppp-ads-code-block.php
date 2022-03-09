@@ -19,10 +19,25 @@ function jwppp_ads_code_block( $post_id, $number ) {
 	$output            = null;
     
     /*Bidding*/
-	$jwppp_bidding       = sanitize_text_field( get_option( 'jwppp-active-bidding' ) );
-	$ad_partners         = get_option( 'jwppp-ad-partners' );
-	$jwppp_mediation     = sanitize_text_field( get_option( 'jwppp-mediation' ) );
-	$jwppp_floor_price   = sanitize_text_field( get_option( 'jwppp-floor-price' ) );
+	$jwppp_bidding               = sanitize_text_field( get_option( 'jwppp-active-bidding' ) );
+	$ad_partners                 = get_option( 'jwppp-ad-partners' );
+	$jwppp_mediation             = sanitize_text_field( get_option( 'jwppp-mediation' ) );
+	$jwppp_floor_price           = sanitize_text_field( get_option( 'jwppp-floor-price' ) );
+	$jwppp_range_price_increment = sanitize_text_field( get_option( 'jwppp-range-price-increment' ) );
+	$jwppp_range_price_max       = sanitize_text_field( get_option( 'jwppp-range-price-max' ) );
+	$jwppp_range_price_min       = sanitize_text_field( get_option( 'jwppp-range-price-min' ) );
+
+    /*Consent management*/
+	$active_gdpr        = sanitize_text_field( get_option( 'jwppp-active-gdpr' ) );
+	$active_ccpa        = sanitize_text_field( get_option( 'jwppp-active-ccpa' ) );
+    $consent            = $active_gdpr || $active_ccpa ? true : false;
+	$gdpr_cmp_api       = sanitize_text_field( get_option( 'jwppp-gdpr-cmp-api' ) );
+	$gdpr_timeout       = get_option( 'jwppp-gdpr-timeout' ) ? sanitize_text_field( get_option( 'jwppp-gdpr-timeout' ) ) : 10000;
+	$default_gdpr_scope = sanitize_text_field( get_option( 'jwppp-default-gdpr-scope' ) );
+	$default_gdpr_scope = $default_gdpr_scope ? 'true' : 'false';
+	$ccpa_cmp_api       = sanitize_text_field( get_option( 'jwppp-ccpa-cmp-api' ) );
+	$ccpa_timeout       = get_option( 'jwppp-ccpa-timeout' ) ? sanitize_text_field( get_option( 'jwppp-ccpa-timeout' ) ) : 10000;
+
 
 	/*Is the main ads option activated?*/
 	if ( 1 === intval( $jwppp_show_ads ) ) {
@@ -77,9 +92,40 @@ function jwppp_ads_code_block( $post_id, $number ) {
 				echo "bids: {\n";
 					echo "settings: {\n";
 						echo "mediationLayerAdServer: '" . esc_html( $jwppp_mediation ) . "',\n";
-				if ( in_array( $jwppp_mediation, array( 'jwp', 'jwpdfp' ), true ) && $jwppp_floor_price ) {
-					echo 'floorPriceCents: ' . esc_html( $jwppp_floor_price ) * 100 . "\n";
-				}
+                    if ( in_array( $jwppp_mediation, array( 'jwp', 'jwpdfp' ), true ) && $jwppp_floor_price ) {
+                        echo 'floorPriceCents: ' . esc_html( $jwppp_floor_price ) * 100 . ",\n";
+                    } elseif ( in_array( $jwppp_mediation, array( 'dfp' ), true ) ) {
+                        echo "buckets: [{\n";
+                        echo 'increment: ' . esc_html( $jwppp_range_price_increment ) . ",\n";
+                        echo 'max: ' . esc_html( $jwppp_range_price_max ) . ",\n";
+                        echo 'min: ' . esc_html( $jwppp_range_price_min ) . "\n";
+                        echo "}],\n";
+                    }
+                    if ( $consent ) {
+                        echo "consentManagement: {\n";
+                        if ( $active_gdpr ) {
+                            echo "gdpr: {\n";
+                            if ( $gdpr_cmp_api ) {
+                                echo "cmpApi: '" . esc_html( $gdpr_cmp_api ) . "',\n";
+                            }
+                            if ( $gdpr_timeout ) {
+                                echo 'timeout: ' . intval( $gdpr_timeout ) . ",\n";
+                            }
+                            echo 'defaultGdprScope: ' . esc_html( $default_gdpr_scope ) . ",\n";
+                            echo $active_ccpa ? "},\n" : "}\n";
+                        }
+                        if ( $active_ccpa ) {
+                            echo "usp: {\n";
+                            if ( $ccpa_cmp_api ) {
+                                echo "cmpApi: '" . esc_html( $ccpa_cmp_api ) . "',\n";
+                            }
+                            if ( $ccpa_timeout ) {
+                                echo 'timeout: ' . intval( $ccpa_timeout ) . ",\n";
+                            }
+                            echo "}\n";
+                        }
+                        echo "}\n";
+                    }
 					echo "},\n";
 					echo "bidders: [\n";
 
@@ -87,7 +133,6 @@ function jwppp_ads_code_block( $post_id, $number ) {
 
                         foreach ( $ad_partners as $partner ) {
 
-                            error_log( 'PARTNER: ' . print_r( $partner, true ) );
                             if ( is_array( $partner ) ) {
 
                                 echo "{\n";
@@ -108,53 +153,6 @@ function jwppp_ads_code_block( $post_id, $number ) {
                         }
 
                     }
-
-                        
-                    /* switch ( $ad_partner ) { */
-
-                    /*     case 'MediaGrid'; */
-                    /*     case 'IndexExchange'; */
-                    /*     case 'PubMatic'; */
-                    /*     case 'Verizon'; */
-                    /*     case 'SpotX'; */
-                    /*     case 'MediaNet'; */
-                    /*     case 'DistrictM'; */
-                    /*     case 'SynacorMedia'; */
-                    /*     case 'Unruly'; */
-                    /*     case 'Sonobi'; */
-                    /*     case 'EMX': */
-                    /*         echo "{\n"; */
-                    /*         echo "name: '" . esc_html( $ad_partner ) . "',\n"; */
-                    /*         echo "id: '" . esc_html( $jwppp_channel_id ) . "'\n"; */
-                    /*         echo "}\n"; */
-                    /*         break; */
-
-                    /*     case 'Rubicon': */
-                    /*         echo "{\n"; */
-                    /*         echo "name: '" . esc_html( $ad_partner ) . "',\n"; */
-                    /*         echo "siteId: '" . esc_html( $jwppp_site_id ) . "',\n"; */
-                    /*         echo "zoneId: '" . esc_html( $jwppp_zone_id ) . "'\n"; */
-                    /*         echo "}\n"; */
-                    /*         break; */
-
-                    /*     case 'AppNexus': */
-                    /*         echo "{\n"; */
-                    /*         echo "name: '" . esc_html( $ad_partner ) . "',\n"; */
-                    /*         echo "id: '" . esc_html( $jwppp_channel_id ) . "',\n"; */
-                    /*         echo "invCode: '" . esc_html( $jwppp_inv_code ) . "',\n"; */
-                    /*         echo "member: '" . esc_html( $jwppp_member_id ) . "'\n"; */
-                    /*         echo "}\n"; */
-                    /*         break; */
-
-                    /*     case 'OpenX': */
-                    /*         echo "{\n"; */
-                    /*         echo "name: '" . esc_html( $ad_partner ) . "',\n"; */
-                    /*         echo "id: '" . esc_html( $jwppp_channel_id ) . "',\n"; */
-                    /*         echo "delDomain: '" . esc_html( $jwppp_del_domain ) . "'\n"; */
-                    /*         echo "}\n"; */
-                    /*         break; */
-
-                    /* } */
                             
 					echo "]\n";
 				echo "}\n";
