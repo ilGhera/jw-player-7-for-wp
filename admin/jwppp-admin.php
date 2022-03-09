@@ -279,6 +279,157 @@ add_action( 'wp_ajax_nopriv_ads-var', 'jwppp_ads_var_callback' );
 
 
 /**
+ * The list of JW Player as partners
+ *
+ * @return array
+ */
+function jwppp_ad_partners() {
+
+    $partners = array(
+        'MediaGrid',
+        'IndexExchange',
+        'Rubicon',
+        'PubMatic',
+        'AppNexus',
+        'Verizon',
+        'SpotX',
+        'MediaNet',
+        'DistrictM',
+        'SynacorMedia',
+        'Unruly',
+        'OpenX',
+        'Sonobi',
+        'EMX',
+    );
+
+    return $partners;
+
+}
+
+
+/**
+ * Callback - add a new ad partner
+ */
+function jwppp_ad_partner_callback() {
+
+	if ( isset( $_POST['hidden-nonce-add-partner'] ) && wp_verify_nonce( $_POST['hidden-nonce-add-partner'], 'jwppp-nonce-add-partner' ) ) {
+		$n             = isset( $_POST['number'] ) ? sanitize_text_field( wp_unslash( $_POST['number'] ) ) : '';
+        $used_partners = isset( $_POST['used-partners'] ) ? sanitize_text_field( wp_unslash( $_POST['used-partners']  ) ) : '';
+        $used_partners = explode( ',', $used_partners );
+
+		if ( $n ) {
+			jwppp_ad_partner( $n, false, null, $used_partners );
+		}
+	}
+
+	exit;
+}
+add_action( 'wp_ajax_add_ad_partner', 'jwppp_ad_partner_callback' );
+
+
+/**
+ * The single ad partner added in the bidding options
+ *
+ * @param int   $i       the element number.
+ * @param mixed $hide    hiddend if ads are disabled.
+ * @param array $data    the ad partners data.
+ * @param array $exclude the ad partners to exclude.
+ *
+ * @return void
+ */
+function jwppp_ad_partner( $i, $hide, $data = array(), $exclude = array() ) {
+
+    /*Get the partners list*/
+    $partners = jwppp_ad_partners(); 
+
+    if ( is_array( $exclude ) && ! empty( $exclude ) ) {
+
+        $partners = array_diff( $partners, $exclude );
+
+    }
+
+    $ad_partner   = isset( $data['name'] ) ? $data['name'] : null; 
+    $channel_id   = isset( $data['id'] ) ? $data['id'] : null; 
+    $del_domain   = isset( $data['delDomain'] ) ? $data['delDomain'] : null; 
+    $site_id      = isset( $data['siteId'] ) ? $data['siteId'] : null; 
+    $zone_id      = isset( $data['zoneId'] ) ?  $data['zoneId'] : null; 
+    $inv_code     = isset( $data['invCode'] ) ? $data['invCode'] : null; 
+    $member_id    = isset( $data['member'] ) ? $data['member'] : null; 
+    $publisher_id = isset( $data['publisherId'] ) ? $data['publisherId'] : null; 
+
+	$allowed_tags = array(
+		'u' => [],
+		'strong' => [],
+		'a' => [
+			'href'   => [],
+			'target' => [],
+		],
+		'br' => [],
+	);
+
+	echo '<li class="single-partner-' . esc_attr( $i ) . ' single-partner" data-number="' . esc_attr( $i ) . '"' . esc_attr( $hide ) . '>';
+    echo '<select id="jwppp-ad-partner-' . esc_attr( $i ) . '" class="jwppp-ad-partner" name="jwppp-ad-partner-' . esc_attr( $i ) . '">';
+    echo '<option>' . esc_html( 'Select an ad partner', 'jwppp' ) . '</option>';
+
+    foreach ( $partners as $partner ) {
+
+        echo '<option value="' . esc_attr( $partner ) . '"' . ( $ad_partner === $partner ? ' selected="selected"' : null ) . '>' . $partner . '</option>';
+        
+    }
+
+    echo '</select>';
+	echo '<p class="description">' . wp_kses( __( 'The Ad partner', 'jwppp' ), $allowed_tags ) . '</p>';
+
+    echo '<input type="text" class="regular-text" id="jwppp-channel-id-' . esc_attr( $i ) . '" name="jwppp-channel-id-' . esc_attr( $i ) . '" placeholder="' . esc_attr( __( 'Add a Channel ID', 'jwppp' ) ) . '" value="' . esc_attr( $channel_id ) . '" />';
+    echo '<p class="description">' . wp_kses( __( 'Identifier issued by the bidding partner that represents a segment of a publisher\'s inventory', 'jwppp' ), $allowed_tags ) . '</p>';
+        
+    echo '<div class="ads-options bidding del-domain-' . esc_attr( $i ) . '">';
+    echo '<input type="text" class="regular-text" id="jwppp-del-domain-' . esc_attr( $i ) . '" name="jwppp-del-domain-' . esc_attr( $i ) . '" placeholder="' . esc_attr( __( 'Delivery domain', 'jwppp' ) ) . '" value="' . esc_attr( $del_domain ) . '" />';
+    echo '<p class="description">' . wp_kses( __( 'The delivey domain provided by OpenX', 'jwppp' ), $allowed_tags ) . '</p>';
+    echo '</div>';
+
+    echo '<div class="ads-options bidding site-id-' . esc_attr( $i ) . '">';
+    echo '<input type="text" class="regular-text" id="jwppp-site-id-' . esc_attr( $i ) . '" name="jwppp-site-id-' . esc_attr( $i ) . '" placeholder="' . esc_attr( __( 'Site ID', 'jwppp' ) ) . '" value="' . esc_attr( $site_id ) . '" />';
+    echo '<p class="description">' . wp_kses( __( 'The site id required by Rubicon', 'jwppp' ), $allowed_tags ) . '</p>';
+    echo '</div>';
+    
+    echo '<div class="ads-options bidding zone-id-' . esc_attr( $i ) . '">';
+    echo '<input type="text" class="regular-text" id="jwppp-zone-id-' . esc_attr( $i ) . '" name="jwppp-zone-id-' . esc_attr( $i ) . '" placeholder="' . esc_attr( __( 'Zone ID', 'jwppp' ) ) . '" value="' . esc_attr( $zone_id ) . '" />';
+    echo '<p class="description">' . wp_kses( __( 'The zone id required by Rubicon', 'jwppp' ), $allowed_tags ) . '</p>';
+    echo '</div>';
+
+	echo '<div class="ads-options bidding inv-code-' . esc_attr( $i ) . '">';
+	echo '<input type="text" class="regular-text" id="jwppp-inv-code-' . esc_attr( $i ) . '" name="jwppp-inv-code-' . esc_attr( $i ) . '" placeholder="' . esc_attr( __( 'Inventory code', 'jwppp' ) ) . '" value="' . esc_attr( $inv_code ) . '" />';
+	echo '<p class="description">' . wp_kses( __( 'The inventory code required by AppNexus', 'jwppp' ), $allowed_tags ) . '</p>';
+    echo '</div>';
+
+	echo '<div class="ads-options bidding member-id-' . esc_attr( $i ) . '">';
+	echo '<input type="text" class="regular-text" id="jwppp-member-id-' . esc_attr( $i ) . '" name="jwppp-member-id-' . esc_attr( $i ) . '" placeholder="' . esc_attr( __( 'Member id', 'jwppp' ) ) . '" value="' . esc_attr( $member_id ) . '" />';
+	echo '<p class="description">' . wp_kses( __( 'The member id required by AppNexus', 'jwppp' ), $allowed_tags ) . '</p>';
+    echo '</div>';
+
+	echo '<div class="ads-options bidding publisher-id-' . esc_attr( $i ) . '">';
+	echo '<input type="text" class="regular-text" id="jwppp-publisher-id-' . esc_attr( $i ) . '" name="jwppp-publisher-id-' . esc_attr( $i ) . '" placeholder="' . esc_attr( __( 'Publisher id', 'jwppp' ) ) . '" value="' . esc_attr( $publisher_id ) . '" />';
+	echo '<p class="description">' . wp_kses( __( 'The publisher id required by AppNexus', 'jwppp' ), $allowed_tags ) . '</p>';
+    echo '</div>';
+
+    if ( 1 === $i ) {
+        echo '<div class="add-tag-container">';
+        echo '<img class="add-tag" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/add-tag.png">';
+        echo '<img class="add-tag-hover partner" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/add-tag-hover.png">';
+        echo '</div>';
+    } else {
+        echo '<div class="remove-tag-container">';
+        echo '<img class="remove-tag" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/remove-tag.png">';
+        echo '<img class="remove-tag-hover partner" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/remove-tag-hover.png">';
+        echo '</div>';
+    }
+
+    echo '</li>';
+}
+
+
+/**
  * Plugin options page
  */
 function jwppp_options() {
@@ -375,24 +526,27 @@ function jwppp_options() {
 				$api_key = sanitize_text_field( wp_unslash( $_POST['jwppp-api-key'] ) );
 				update_option( 'jwppp-api-key', $api_key );
 			}
-			$api_secret = sanitize_text_field( get_option( 'jwppp-api-secret' ) );
-			if ( isset( $_POST['jwppp-api-secret'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
-				$api_secret = sanitize_text_field( wp_unslash( $_POST['jwppp-api-secret'] ) );
-				update_option( 'jwppp-api-secret', $api_secret );
+			$api_secret_v2 = sanitize_text_field( get_option( 'jwppp-api-secret-v2' ) );
+			if ( isset( $_POST['jwppp-api-secret-v2'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
+				$api_secret_v2 = sanitize_text_field( wp_unslash( $_POST['jwppp-api-secret-v2'] ) );
+				update_option( 'jwppp-api-secret-v2', $api_secret_v2 );
 			}
 
 			echo '<tr>';
-			echo '<th scope="row">' . esc_html( __( 'API Credentials', 'jwppp' ) );
+			echo '<th scope="row">' . esc_html( __( 'API v2 Credentials', 'jwppp' ) );
+			echo '<a href="https://developer.jwplayer.com/jwplayer/reference/building-a-request#site-id" title="Get your Site ID" target="_blank"><img class="question-mark" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a>';
+			echo '<a href="https://developer.jwplayer.com/jwplayer/reference/api-v2-authentication" title="Get your API v2 Secret" target="_blank"><img class="question-mark second" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a></th>';
 			echo '<td>';
-			echo '<input type="text" class="regular-text" id="jwppp-api-key" name="jwppp-api-key" placeholder="' . esc_attr( __( 'Add your API Key', 'jwppp' ) ) . '" value="' . esc_attr( $api_key ) . '" /><br>';
-			echo '<input type="text" class="regular-text" id="jwppp-api-secret" name="jwppp-api-secret" placeholder="' . esc_attr( __( 'Add your API Secret', 'jwppp' ) ) . '" value="' . esc_attr( $api_secret ) . '" />';
-			echo '<p class="description">' . esc_html( __( 'API Key and Secret', 'jwppp' ) ) . '</p>';
+			echo '<input type="text" class="regular-text" id="jwppp-api-key" name="jwppp-api-key" placeholder="' . esc_attr( __( 'Add your Site ID', 'jwppp' ) ) . '" value="' . esc_attr( $api_key ) . '" /><br>';
+            echo '<p></p>';
+			echo '<input type="text" class="regular-text" id="jwppp-api-secret-v2" name="jwppp-api-secret-v2" placeholder="' . esc_attr( __( 'Add your API Secret', 'jwppp' ) ) . '" value="' . esc_attr( $api_secret_v2 ) . '" />';
+			echo '<p class="description">' . esc_html( __( 'Site ID and API Secret', 'jwppp' ) ) . '</p>';
 
 			/*Api class instance*/
 			$api = new JWPPP_Dashboard_Api();
 
 			/*Credentials validation*/
-			if ( $api->args_check() && ! $api->account_validation() ) {
+			if ( ! $api->args_check() ) {
 				echo '<span class="jwppp-alert api">' . esc_html( 'Invalid API Credentials', 'jwppp' ) . '</span>';
 			}
 				echo '</td>';

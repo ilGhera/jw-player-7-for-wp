@@ -227,6 +227,8 @@ var JWPPPSearchContent = function( number ) {
 
 				$.post( ajaxurl, data, function( response ) {
 
+                    console.log( 'RESPONSE: ' + response );
+
 					var baseUrl = 'https://cdn.jwplayer.com/thumbs/';
 					var contents = JSON.parse( response );
 					var videos = contents.videos;
@@ -240,16 +242,16 @@ var JWPPPSearchContent = function( number ) {
 						$( listContainer ).html( '<li class="results reset">Videos found</li>' );
 						for ( i = 0; i < videos.length; i++ ) {
 							$( listContainer ).append( '<li class="' + i + '"></li>' );
-							$( 'li.' + i, listContainer ).data( 'mediaid', ( videos[i].key ? videos[i].key : '-' ) );
-							$( 'li.' + i, listContainer ).data( 'description', ( videos[i].description ? videos[i].description : '-' ) );
+							$( 'li.' + i, listContainer ).data( 'mediaid', ( videos[i].id ? videos[i].id : '-' ) );
+							$( 'li.' + i, listContainer ).data( 'description', ( videos[i].metadata.description ? videos[i].metadata.description : '-' ) );
 							$( 'li.' + i, listContainer ).data( 'duration', ( videos[i].duration ? videos[i].duration : '-' ) );
-							$( 'li.' + i, listContainer ).data( 'tags', ( videos[i].tags ? videos[i].tags : '-' ) );
+							$( 'li.' + i, listContainer ).data( 'tags', ( videos[i].metadata.tags ? videos[i].metadata.tags : '-' ) );
 
 							/*Preview image*/
 							$( 'li.' + i, listContainer ).append( '<img class="video-img" />' );
-							$( 'li.' + i + ' .video-img', listContainer ).attr( 'src', baseUrl + videos[i].key + '-60.jpg' );
+							$( 'li.' + i + ' .video-img', listContainer ).attr( 'src', baseUrl + videos[i].id + '-60.jpg' );
 
-							$( 'li.' + i, listContainer ).append( '<span>' + videos[i].title + '</span>' );
+							$( 'li.' + i, listContainer ).append( '<span>' + videos[i].metadata.title + '</span>' );
 
 						}
 					}
@@ -268,16 +270,16 @@ var JWPPPSearchContent = function( number ) {
 							/*Check if the playlist is type = article_matching*/
 							articleMatching = 'article_matching' === playlists[n].type ? '?search=__CONTEXTUAL__' : '';
 
-							$( 'li.playlist-element.' + n, listContainer ).data( 'mediaid', ( playlists[n].key ? playlists[n].key : '-' ) + articleMatching );
-							$( 'li.playlist-element.' + n, listContainer ).data( 'description', ( playlists[n].description ? playlists[n].description : '-' ) );
-							$( 'li.playlist-element.' + n, listContainer ).data( 'videos', ( playlists[n].videos.total ? playlists[n].videos.total : '-' ) );
-							$( 'li.playlist-element.' + n, listContainer ).data( 'tags', ( playlists[n].tags ? playlists[n].tags : '-' ) );
+							$( 'li.playlist-element.' + n, listContainer ).data( 'mediaid', ( playlists[n].id ? playlists[n].id : '-' ) + articleMatching );
+							$( 'li.playlist-element.' + n, listContainer ).data( 'description', ( playlists[n].metadata.description ? playlists[n].metadata.description : '-' ) );
+							// $( 'li.playlist-element.' + n, listContainer ).data( 'videos', ( playlists[n].videos.total ? playlists[n].videos.total : '-' ) );
+							$( 'li.playlist-element.' + n, listContainer ).data( 'tags', ( playlists[n].metadata.tags ? playlists[n].metadata.tags : '-' ) );
 
 							/*Preview image*/
 							$( 'li.playlist-element.' + n, listContainer ).append( '<img class="video-img" />' );
 							$( 'li.playlist-element.' + n + ' .video-img', listContainer ).attr( 'src', jwpppSelect.pluginUrl + '/images/playlist4.png' );
 
-							$( 'li.playlist-element.' + n, listContainer ).append( '<span>' + playlists[n].title + '</span>' );
+							$( 'li.playlist-element.' + n, listContainer ).append( '<span>' + playlists[n].metadata.title + '</span>' );
 
 						}
 					}

@@ -1,40 +1,81 @@
 <?php
 /**
  * The JW Player API for communicate  with the dashboard
+ *
  * @author ilGhera
  * @package jw-player-7-for-wp/classes
  * @since 2.0.0
  */
 class JWPPP_Dashboard_Api {
 
+    /**
+     * The constructor
+     *
+     * @return void
+     */
 	public function __construct() {
 
-		$this->api_key = get_option( 'jwppp-api-key' );
-		$this->api_secret = get_option( 'jwppp-api-secret' );
-
-		$this->api = $this->init();
+		$this->api_key       = get_option( 'jwppp-api-key' );
+		$this->api_secret    = get_option( 'jwppp-api-secret' );
+		$this->api_secret_v2 = get_option( 'jwppp-api-secret-v2' );
+        $this->url           = 'https://api.jwplayer.com/v2/sites/' . $this->api_key . '/';
+        $this->args_check();
 
 	}
 
+
+    /**
+     * Display an alert if the publisher still using API v1
+     *
+     * @return void
+     */
+    public function api_v2_alert() {
+        ?>
+        <div class="notice error my-acf-notice is-dismissible" >
+            <p><?php _e( "<strong>JW Player for WordPress - Premium</strong> now uses the API v2 and requires to be configured.", 'jwppp' ); ?></p>
+        </div>
+        <?php
+    }
+
+
+    /**
+     * Chek if key and secret are set
+     *
+     * @return void
+     */
 	public function args_check() {
-		if ( $this->api_key && $this->api_secret ) {
-			return true;
-		}
+
+		if ( $this->api_key && $this->api_secret_v2 ) { // Temp.
+            
+            return true;
+
+        } elseif ( is_dashboard_player() && $this->api_secret && ! $this->api_secret_v2 ) {
+
+			if ( ! isset( $_POST['jwppp-api-secret-v2'] ) ) {
+
+                add_action( 'admin_notices', array( $this, 'api_v2_alert' ) );
+
+            }
+
+        }
+
 		return false;
+
 	}
 
-	public function init() {
 
-		$botr_api = null;
-		if ( strlen( $this->api_key ) === 8 && strlen( $this->api_secret ) === 24 ) {
-			$botr_api = new BotrAPI( $this->api_key, $this->api_secret );
-		}
-		return $botr_api;
-	}
+    /**
+     * The API call
+     *
+     * @param string $endpoint the endpoint.
+     *
+     * @return mixed
+     */
+	public function call( $endpoint ) {
 
-	public function call( $url ) {
 		global $wp_version;
 
+        $url        = $this->url . $endpoint;
 		$user_agent = 'WordPress/' . $wp_version . ' JWPlayerForWordPress/' . JWPPP_VERSION . ' PHP/' . phpversion();
 
 		if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
@@ -46,7 +87,11 @@ class JWPPP_Dashboard_Api {
 				3,
 				20,
 				array(
-					'user-agent'  => $user_agent,
+					'user-agent'    => $user_agent,
+                    'headers'       => array(
+                        'Authorization' => 'Bearer ' . $this->api_secret_v2,
+                        'Content-Type' => 'application/json',
+                    ),
 				)
 			);
 
@@ -57,17 +102,26 @@ class JWPPP_Dashboard_Api {
 				array(
 					'timeout' => 3,
 					'user-agent'  => $user_agent,
+                    'headers'       => array(
+                        'Authorization' => 'Bearer ' . $this->api_secret_v2,
+                        'Content-Type' => 'application/json',
+                    ),
 				)
 			);
 
 		}
 
 		if ( is_array( $output ) ) {
+
 			if ( 200 !== $output['response']['code'] ) {
 
 				$body = json_decode( $output['body'] );
 
-				return array( 'error' => $body->message );
+                if ( isset( $body->errors[0]->description ) ) {
+
+                    return array( 'error' =>  $body->errors[0]->description );
+
+                }
 
 			} else {
 
@@ -75,122 +129,133 @@ class JWPPP_Dashboard_Api {
 
 			}
 		}
+
 	}
 
 
+    /**
+     * Search videos and playlists
+     *
+     * @param string $term     the term to search.
+     * @param bool   $playlist search playlist with true.
+     *
+     * @return mixed
+     */
 	public function search( $term, $playlist = false ) {
 
-		if ( $this->api ) {
-			if ( $playlist ) {
-				$url = $this->api->call_url(
-					'channels/list',
-					array(
-						'api_format' => 'json',
-						'search' => $term,
-						'result_limit' => 15,
-					)
-				);
-				$key = 'channels';
-			} else {
-				$url = $this->api->call_url(
-					'videos/list',
-					array(
-						'api_format' => 'json',
-						'search' => $term,
-						'result_limit' => 15,
-						'order_by' => 'date:desc',
-					)
-				);
-				$key = 'videos';
-			}
-			$output = $this->call( $url );
-			if ( isset( $output->$key ) ) {
-				return $output->$key;
-			} else {
-				return $output;
-			}
-		}
+        if ( $playlist ) {
+    
+            $endpoint = sprintf( "playlists/?page=1&page_length=15&q=title:\"%1\$s\"+OR+id:\"%1\$s\"&sort=created:dsc", $term );
+            $key      = 'playlists';
+
+            error_log( 'SEARCH P: ' . $endpoint );
+    
+        } else {
+    
+            $endpoint = sprintf( "media/?page=1&page_length=15&q=title:\"%1\$s\"+OR+id:\"%1\$s\"&sort=created:dsc", $term );
+            $key      = 'media';
+    
+            error_log( 'SEARCH M: ' . $endpoint );
+        }
+    
+        $output = $this->call( $endpoint );
+
+        if ( isset( $output->$key ) ) {
+        
+            return $output->$key;
+        
+        } else {
+        
+            return $output;
+        
+        }
+
 	}
 
+
+    /**
+     * Get a list of videos or a specific one if an id is provided
+     *
+     * @param string $media_id the media id.
+     *
+     * @return mixed 
+     */
 	public function get_videos( $media_id = null ) {
-		if ( $this->api ) {
 
-			$parameters = array(
-				'api_format' => 'json',
-				'result_limit' => 15,
-				'order_by' => 'date:desc',
-			);
-			if ( $media_id ) {
-				$parameters['video_keys_filter'] = $media_id;
-			}
+        $parameters = '?page=1&page_length=15&sort=created:dsc';
 
-			$url = $this->api->call_url( 'videos/list', $parameters ); //videos
-			$output = $this->call( $url );
+        if ( $media_id ) {
+    
+            $parameters = $media_id;
+    
+        }
 
-			if ( isset( $output->videos ) ) {
-				return $output->videos;
-			} else {
-				return $output;
-			}
-		}
+        $output = $this->call( 'media/' . $parameters );
+
+        if ( isset( $output->media ) ) {
+    
+            return $output->media;
+    
+        } else {
+    
+            return $output;
+    
+        }
+
 	}
 
-	public function get_playlists( $media_id = null ) {
-		if ( $this->api ) {
 
-			$parameters = array(
-				'api_format'   => 'json',
-				'result_limit' => 5,
-			);
-			if ( $media_id ) {
-				$parameters['search'] = $media_id;
-			}
+    /**
+     * Get a list of playlists or a specific one if an id is provided
+     *
+     * @param string $media_id the media id.
+     *
+     * @return mixed 
+     */
+	public function get_playlists( $playlist_id = null ) {
 
-			$url = $this->api->call_url( 'channels/list', $parameters );
-			$output = $this->call( $url );
+        $parameters = '?page=1&page_length=15&sort=created:dsc';
 
-			if ( isset( $output->channels ) ) {
-				return $output->channels;
-			} else {
-				return $output;
-			}
-		}
+        if ( $playlist_id ) {
+            $parameters = $playlist_id;
+        }
+
+        $output = $this->call( 'playlists/' . $parameters );
+
+        if ( isset( $output->playlists ) ) {
+
+            return $output->playlists;
+        
+        } else {
+        
+            return $output;
+        
+        }
+
 	}
 
-	public function account_validation() {
 
-		if ( $this->api ) {
-			$url = $this->api->call_url(
-				'accounts/show',
-				array(
-					'api_format' => 'json',
-					'account_key' => $this->api_key,
-				)
-			); //videos
-			$output = $this->call( $url );
-
-			if ( isset( $output->status ) && 'ok' === $output->status ) {
-				return true;
-			} else {
-				return $output;
-			}
-		} else {
-			return false;
-		}
-	}
-
+    /**
+     * Get the players available
+     *
+     * @return array
+     */
 	public function get_players() {
 
-		if ( $this->api ) {
-			$url = $this->api->call_url( 'players/list', array( 'api_format' => 'json' ) ); //videos
-			$output = $this->call( $url );
+        $output = $this->call( 'players' ); //videos
 
-			if ( isset( $output->players ) ) {
-				return $output->players;
-			} else {
-				return $output;
-			}
-		}
+        if ( isset( $output->players ) ) {
+        
+            return $output->players;
+        
+        } else {
+        
+            return $output;
+        }
+
 	}
 
 }
+
+new JWPPP_Dashboard_Api();
+

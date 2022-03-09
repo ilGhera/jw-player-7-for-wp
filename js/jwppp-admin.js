@@ -62,6 +62,64 @@ jQuery( document ).ready( function( $ ) {
 
     });
 
+    /**
+     * The list of ad partners already used by the publisher
+     *
+     * @return array
+     */
+    var jwpppUsedPartners = function() {
+
+        var usedPartners = [];
+        $('.ads-options.ad-partners ul li .jwppp-ad-partner').each(function(){
+            
+            usedPartners.push( $(this).val() );
+
+        })
+
+        return usedPartners;
+
+    }
+
+
+    /**
+     * Bidding options to display based on the partner selected
+     *
+     * @param int el the target val to check.
+     * @param int n  the number of partner in page.
+     *
+     * @return void
+     */
+    var jwpppPartnerFields = function( el, n ) {
+
+        if ( 'Rubicon' == el ) {
+            $( '.ads-options.bidding.partner-id-' + n ).hide();
+            $( '.ads-options.bidding.site-id-' + n ).show('show');
+            $( '.ads-options.bidding.zone-id-' + n ).show('show');
+        } else {
+            $( '.ads-options.bidding.partner-id-' + n ).show('slow');
+            $( '.ads-options.bidding.site-id-' + n ).hide();
+            $( '.ads-options.bidding.zone-id-' + n ).hide();
+        }
+
+        if ( 'AppNexus' == el ) {
+            $( '.ads-options.bidding.inv-code-' + n ).show('slow');
+            $( '.ads-options.bidding.member-id-' + n ).show('slow');
+            $( '.ads-options.bidding.publisher-id-' + n ).show('slow');
+        } else {
+            $( '.ads-options.bidding.inv-code-' + n ).hide();
+            $( '.ads-options.bidding.member-id-' + n ).hide();
+            $( '.ads-options.bidding.publisher-id-' + n ).hide();
+        }
+
+        if ( 'OpenX' == el ) {
+            $( '.ads-options.bidding.del-domain-' + n ).show('slow');
+        } else {
+            $( '.ads-options.bidding.del-domain-' + n ).hide();
+        }
+
+    }
+
+
 	if ( 'featured-image' == $( '#thumbnail' ).val() ) {
 		$( '.cf-row' ).hide();
 	}
@@ -182,33 +240,98 @@ jQuery( document ).ready( function( $ ) {
 
 	/*ADS Tags*/
 	$( document ).on( 'click', '.add-tag-hover', function() {
-		var number = $( 'li #jwppp-ads-tag' ).length + 1;
-		var data = {
-			'action': 'add_ads_tag',
-			'hidden-nonce-add-tag': addTag.nonce,
-			'number': number
-		};
-		$.post( ajaxurl, data, function( response ) {
-			$( '.ads-options.tag ul' ).append( response );
-			$( '.hidden-total-tags' ).val( number );
-		});
+        if ( ! $(this).hasClass('partner') ) {
+            var number = $( 'li #jwppp-ads-tag' ).length + 1;
+            var data = {
+                'action': 'add_ads_tag',
+                'hidden-nonce-add-tag': addTag.nonce,
+                'number': number
+            };
+            $.post( ajaxurl, data, function( response ) {
+                $( '.ads-options.tag ul' ).append( response );
+                $( '.hidden-total-tags' ).val( number );
+            });
+        }
 	});
 
 	$( document ).on( 'click', '.remove-tag-hover', function() {
-		number = $( 'li #jwppp-ads-tag' ).length;
-		$( this ).closest( 'li' ).remove();
-		$( '.hidden-total-tags' ).val( number );
+        if ( ! $(this).hasClass('partner') ) {
+            number = $( 'li #jwppp-ads-tag' ).length;
+            $( this ).closest( 'li' ).remove();
+            $( '.hidden-total-tags' ).val( number );
+        }
 
 	});
 
 	/*Bidding*/
 	if ( ! $( '.jwppp-active-bidding .tzCheckBox' ).hasClass( 'checked' ) ) {
+
 		$( '.ads-options.bidding' ).hide();
-	}
+
+	} else {
+
+        $('.ads-options.ad-partners ul li').each(function(){
+
+            var number  = $(this).attr('data-number');
+            var partner = $('.jwppp-ad-partner', this ).val();
+
+            jwpppPartnerFields( partner, number );
+
+            $('.jwppp-ad-partner', this).on('change', function(){
+
+                jwpppPartnerFields( $(this).val(), number );
+
+            })
+
+        })
+
+        /*Add a partner*/
+        $( document ).on( 'click', '.add-tag-hover.partner', function() {
+            var number = $( 'li.single-partner' ).length + 1;
+            var data = {
+                'action': 'add_ad_partner',
+                'hidden-nonce-add-partner': addPartner.nonce,
+                'number': number,
+                'used-partners': jwpppUsedPartners
+            };
+            $.post( ajaxurl, data, function( response ) {
+                
+                $( '.ads-options.ad-partners ul' ).append( response );
+                $( '.hidden-total-partners' ).val( number );
+                
+                jwpppPartnerFields( null, number );
+
+                $('#jwppp-ad-partner-' + number).on('change', function(){
+
+                    jwpppPartnerFields( $(this).val(), number );
+
+                })
+            });
+        });
+
+        $( document ).on( 'click', '.remove-tag-hover.partner', function() {
+            var number;
+            $( this ).closest( 'li' ).remove();
+            number = $( 'li.single-partner' ).length;
+            $( '.hidden-total-partners' ).val( number );
+
+        });
+        
+    }     
 
 	$( '.jwppp-active-bidding .tzCheckBox' ).on( 'click', function() {
 		if ( $( this ).hasClass( 'checked' ) ) {
 			$( '.ads-options.bidding' ).show( 'slow' );
+
+            $('.ads-options.ad-partners ul li').each(function(){
+
+                var number  = $(this).attr('data-number');
+                var partner = $('.jwppp-ad-partner', this ).val();
+
+                jwpppPartnerFields( partner, number );
+
+            })
+
 
 			if ( 'jwp' !== $( '#jwppp-mediation' ).val() && 'jwpdfp' !== $( '#jwppp-mediation' ).val() ) {
 				$( '.ads-options.bidding.floor-price' ).hide();
@@ -225,6 +348,10 @@ jQuery( document ).ready( function( $ ) {
 		$( '.ads-options.bidding.floor-price' ).hide();
 	}
 
+	if ( 'dfp' !== $( '#jwppp-mediation' ).val() ) {
+		$( '.ads-options.bidding.range-price' ).hide();
+	}
+
 	$( '#jwppp-mediation' ).on( 'change', function() {
 		if ( $( '.jwp' ).prop( 'selected' ) || $( '.jwpdfp' ).prop( 'selected' ) ) {
 			$( '.ads-options.bidding.floor-price' ).show( 'slow' );
@@ -232,8 +359,39 @@ jQuery( document ).ready( function( $ ) {
 			$( '.ads-options.bidding.floor-price' ).hide();
 		}
 
+		if ( $( '.dfp' ).prop( 'selected' ) ) {
+			$( '.ads-options.bidding.range-price' ).show( 'slow' );
+		} else {
+			$( '.ads-options.bidding.range-price' ).hide();
+		}
+
 	});
 
+	/*GDPR*/
+	if ( ! $( '.bidding.gdpr .tzCheckBox' ).hasClass( 'checked' ) ) {
+		$( '.ads-options.gdpr .gdpr' ).hide();
+    }
+    
+	$( '.bidding.gdpr .tzCheckBox' ).on( 'click', function() {
+		if ( $( this ).hasClass( 'checked' ) ) {
+            $( '.ads-options .gdpr' ).show('slow');
+        } else {
+            $( '.ads-options .gdpr' ).hide();
+        }
+    })
+
+	/*CCPA*/
+	if ( ! $( '.bidding.ccpa .tzCheckBox' ).hasClass( 'checked' ) ) {
+		$( '.ads-options.ccpa .ccpa' ).hide();
+    }
+    
+	$( '.bidding.ccpa .tzCheckBox' ).on( 'click', function() {
+		if ( $( this ).hasClass( 'checked' ) ) {
+            $( '.ads-options .ccpa' ).show('slow');
+        } else {
+            $( '.ads-options .ccpa' ).hide();
+        }
+    })
 
 	/*Color field for subtitles*/
 	$( '.jwppp-color-field' ).wpColorPicker();

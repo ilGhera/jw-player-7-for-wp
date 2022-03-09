@@ -33,6 +33,7 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 	$jwppp_repeat                  = get_post_meta( $post_id, '_jwppp-repeat-' . $number, true );
 	$jwppp_share_video             = get_option( 'jwppp-active-share' );
 	$jwppp_embed_video             = get_option( 'jwppp-embed-video' );
+    $player_version                = get_option( 'jwppp-player-version' ); 
 
 	$jwppp_single_embed = null;
 	if ( isset( $_POST[ '_jwppp-single-embed-' . $number ], $_POST[ 'hidden-meta-box-nonce-' . $number ] ) && wp_verify_nonce( $_POST[ 'hidden-meta-box-nonce-' . $number ], 'jwppp-meta-box-nonce-' . $number ) ) {
@@ -180,9 +181,14 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 		echo '<option name="mp4" value="mp4"';
 		echo ( 'mp4' === $jwppp_media_type ) ? ' selected="selected"' : '';
 		echo '>mp4</option>';
-		echo '<option name="flv" value="flv"';
-		echo ( 'flv' === $jwppp_media_type ) ? ' selected="selected"' : '';
-		echo '>flv</option>';
+
+        /* FLV is not supported from version 8 */
+        if ( 7 >= $player_version ) {
+            echo '<option name="flv" value="flv"';
+            echo ( 'flv' === $jwppp_media_type ) ? ' selected="selected"' : '';
+            echo '>flv</option>';
+        }
+
 		echo '<option name="mp3" value="mp3"';
 		echo ( 'mp3' === $jwppp_media_type ) ? ' selected="selected"' : '';
 		echo '>mp3</option>';

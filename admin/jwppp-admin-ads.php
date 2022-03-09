@@ -71,13 +71,59 @@
 		update_option( 'jwppp-active-bidding', $active_bidding );
 	}
 
-	/*Channel id*/
-	$channel_id = sanitize_text_field( get_option( 'jwppp-channel-id' ) );
-	if ( isset( $_POST['jwppp-channel-id'] ) ) {
-		$channel_id = sanitize_text_field( wp_unslash( $_POST['jwppp-channel-id'] ) );
-		update_option( 'jwppp-channel-id', $channel_id );
-	}
+	/*Ad partners*/
+	$ad_partners = get_option( 'jwppp-ad-partners' );
 
+	if ( isset( $_POST['hidden-total-partners'] ) ) {
+        
+        $ad_partners = array();
+
+		for ( $i = 0; $i < sanitize_text_field( wp_unslash( $_POST['hidden-total-partners'] ) ); $i++ ) {
+
+            $partner = null;
+
+            if ( isset( $_POST[ 'jwppp-ad-partner-' . ( $i + 1 ) ] ) ) {
+                $partner = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-ad-partner-' . ( $i + 1 ) ] ) ); 
+                $ad_partners[ $i ]['name'] = $partner;
+            }
+
+            if ( $partner ) {
+
+                if ( isset( $_POST[ 'jwppp-channel-id-' . ( $i + 1 ) ] ) ) {
+                    $ad_partners[ $i ]['id'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-channel-id-' . ( $i + 1 ) ] ) );
+                }
+
+                if ( isset( $_POST[ 'jwppp-del-domain-' . ( $i + 1 ) ] ) ) {
+                    $ad_partners[ $i ]['delDomain'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-del-domain-' . ( $i + 1 ) ] ) );
+                }
+
+                if ( isset( $_POST[ 'jwppp-site-id-' . ( $i + 1 ) ] ) ) {
+                    $ad_partners[ $i ]['siteId'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-site-id-' . ( $i + 1 ) ] ) );
+                }
+
+                if ( isset( $_POST[ 'jwppp-zone-id-' . ( $i + 1 ) ] ) ) {
+                    $ad_partners[ $i ]['zoneId'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-zone-id-' . ( $i + 1 ) ] ) );
+                }
+
+                if ( isset( $_POST[ 'jwppp-inv-code-' . ( $i + 1 ) ] ) ) {
+                    $ad_partners[ $i ]['invCode'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-inv-code-' . ( $i + 1 ) ] ) );
+                }
+
+                if ( isset( $_POST[ 'jwppp-member-id-' . ( $i + 1 ) ] ) ) {
+                    $ad_partners[ $i ]['member'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-member-id-' . ( $i + 1 ) ] ) );
+                }
+
+                if ( isset( $_POST[ 'jwppp-publisher-id-' . ( $i + 1 ) ] ) ) {
+                    $ad_partners[ $i ]['publisherId'] = sanitize_text_field( wp_unslash( $_POST[ 'jwppp-publisher-id-' . ( $i + 1 ) ] ) );
+                }
+            }
+
+        };
+
+		update_option( 'jwppp-ad-partners', $ad_partners );
+
+	}
+    
 	/*Mediation*/
 	$mediation = sanitize_text_field( get_option( 'jwppp-mediation' ) );
 	if ( isset( $_POST['jwppp-mediation'] ) ) {
@@ -90,6 +136,69 @@
 	if ( isset( $_POST['jwppp-floor-price'] ) ) {
 		$floor_price = sanitize_text_field( wp_unslash( $_POST['jwppp-floor-price'] ) );
 		update_option( 'jwppp-floor-price', $floor_price );
+	}
+
+	/*Range price*/
+	$range_price_increment = get_option( 'jwppp-range-price-increment' ) ? sanitize_text_field( get_option( 'jwppp-range-price-increment' ) ) : '10';
+	if ( isset( $_POST['jwppp-range-price-increment'] ) ) {
+		$range_price_increment = sanitize_text_field( wp_unslash( $_POST['jwppp-range-price-increment'] ) );
+		update_option( 'jwppp-range-price-increment', $range_price_increment );
+	}
+    
+	$range_price_max = get_option( 'jwppp-range-price-max' ) ? sanitize_text_field( get_option( 'jwppp-range-price-max' ) ) : '10';
+	if ( isset( $_POST['jwppp-range-price-max'] ) ) {
+		$range_price_max = sanitize_text_field( wp_unslash( $_POST['jwppp-range-price-max'] ) );
+		update_option( 'jwppp-range-price-max', $range_price_max );
+	}
+
+	$range_price_min = get_option( 'jwppp-range-price-min' ) ? sanitize_text_field( get_option( 'jwppp-range-price-min' ) ) : '10';
+	if ( isset( $_POST['jwppp-range-price-min'] ) ) {
+		$range_price_min = sanitize_text_field( wp_unslash( $_POST['jwppp-range-price-min'] ) );
+		update_option( 'jwppp-range-price-min', $range_price_min );
+	}
+    
+	/*GDPR*/
+	$active_gdpr = sanitize_text_field( get_option( 'jwppp-active-gdpr' ) );
+	if ( isset( $_POST['ads-sent'] ) ) {
+		$active_gdpr = isset( $_POST['jwppp-active-gdpr'] ) ? sanitize_text_field( wp_unslash( $_POST['jwppp-active-gdpr'] ) ) : 0;
+		update_option( 'jwppp-active-gdpr', $active_gdpr );
+	}
+
+	$gdpr_cmp_api = sanitize_text_field( get_option( 'jwppp-gdpr-cmp-api' ) );
+	if ( isset( $_POST['ads-sent'] ) ) {
+		$gdpr_cmp_api = isset( $_POST['jwppp-gdpr-cmp-api'] ) ? sanitize_text_field( wp_unslash( $_POST['jwppp-gdpr-cmp-api'] ) ) : 0;
+		update_option( 'jwppp-gdpr-cmp-api', $gdpr_cmp_api );
+	}
+
+	$gdpr_timeout = get_option( 'jwppp-gdpr-timeout' ) ? sanitize_text_field( get_option( 'jwppp-gdpr-timeout' ) ) : 10000;
+	if ( isset( $_POST['ads-sent'] ) ) {
+		$gdpr_timeout = isset( $_POST['jwppp-gdpr-timeout'] ) ? sanitize_text_field( wp_unslash( $_POST['jwppp-gdpr-timeout'] ) ) : 0;
+		update_option( 'jwppp-gdpr-timeout', $gdpr_timeout );
+	}
+
+	$default_gdpr_scope = sanitize_text_field( get_option( 'jwppp-default-gdpr-scope' ) );
+	if ( isset( $_POST['ads-sent'] ) ) {
+		$default_gdpr_scope = isset( $_POST['jwppp-default-gdpr-scope'] ) ? sanitize_text_field( wp_unslash( $_POST['jwppp-default-gdpr-scope'] ) ) : 0;
+		update_option( 'jwppp-default-gdpr-scope', $default_gdpr_scope );
+	}
+
+	/*CCPA*/
+	$active_ccpa = sanitize_text_field( get_option( 'jwppp-active-ccpa' ) );
+	if ( isset( $_POST['ads-sent'] ) ) {
+		$active_ccpa = isset( $_POST['jwppp-active-ccpa'] ) ? sanitize_text_field( wp_unslash( $_POST['jwppp-active-ccpa'] ) ) : 0;
+		update_option( 'jwppp-active-ccpa', $active_ccpa );
+	}
+
+	$ccpa_cmp_api = sanitize_text_field( get_option( 'jwppp-ccpa-cmp-api' ) );
+	if ( isset( $_POST['ads-sent'] ) ) {
+		$ccpa_cmp_api = isset( $_POST['jwppp-ccpa-cmp-api'] ) ? sanitize_text_field( wp_unslash( $_POST['jwppp-ccpa-cmp-api'] ) ) : 0;
+		update_option( 'jwppp-ccpa-cmp-api', $ccpa_cmp_api );
+	}
+
+	$ccpa_timeout = get_option( 'jwppp-ccpa-timeout' ) ? sanitize_text_field( get_option( 'jwppp-ccpa-timeout' ) ) : 10000;
+	if ( isset( $_POST['ads-sent'] ) ) {
+		$ccpa_timeout = isset( $_POST['jwppp-ccpa-timeout'] ) ? sanitize_text_field( wp_unslash( $_POST['jwppp-ccpa-timeout'] ) ) : 0;
+		update_option( 'jwppp-ccpa-timeout', $ccpa_timeout );
 	}
 
 	/*Define the allowed tags for wp_kses*/
@@ -203,15 +312,31 @@
 	echo '<p class="description">';
 	echo wp_kses( __( 'All the benefits of Header Bidding are now built directly into your JW Player. With a simple one-click integration, you get access to quality demand at scale with reduced latency. SpotX is the leading video ad serving platform and gives publishers control, transparency and insights to maximize revenue.<br><a href="https://support.jwplayer.com/articles/how-to-setup-video-player-bidding" target="_blank">Contact SpotX to get started</a>', 'jwppp' ), $allowed_tags );
 	echo '</p>';
-	echo '<td>';
+	echo '</td>';
 	echo '</tr>';
 
-	/*Spotx channel id*/
-	echo '<tr class="ads-options bidding"' . esc_attr( $hide ) . '>';
-	echo '<th scope="row"><img src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/spotx-70.png"></th>';
+	echo '<tr class="ads-options bidding ad-partners"' . esc_attr( $hide ) . '>';
+	echo '<th scope="row">' . esc_html( __( 'Ad partners', 'jwppp' ) ) . '</th>';
 	echo '<td>';
-	echo '<input type="text" class="regular-text" id="jwppp-channel-id" name="jwppp-channel-id" placeholder="' . esc_attr( __( 'Add a Channel ID', 'jwppp' ) ) . '" value="' . esc_attr( $channel_id ) . '" />';
-	echo '<p class="description">' . wp_kses( __( 'Channel ID', 'jwppp' ), $allowed_tags ) . '</p>';
+	echo '<ul style="margin: 0;">';
+    
+	/*Nonce*/
+	$add_partner_nonce = wp_create_nonce( 'jwppp-nonce-add-partner' );
+	wp_localize_script( 'jwppp-admin', 'addPartner', array( 'nonce' => $add_partner_nonce ) );
+
+	$total_partners = 1;
+	if ( is_array( $ad_partners ) && ! empty( $ad_partners ) ) {
+		for ( $i = 1; $i <= count( $ad_partners ); $i++ ) {
+			jwppp_ad_partner( $i, $hide, $ad_partners[ $i - 1 ] );
+		}
+		$total_partners = count( $ad_partners );
+	} else {
+		jwppp_ad_partner( 1, $hide );
+	}
+
+	echo '</ul>';
+	echo '<input type="hidden" name="hidden-total-partners" class="hidden-total-partners" value="' . esc_attr( $total_partners ) . '" />';
+	echo '<p class="description">' . esc_html( __( 'Select your ad partners', 'jwppp' ) ) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 
@@ -251,6 +376,75 @@
 	echo '<span class="currency">$</span>';
 	echo '<input type="number" min="0" step="0.01" class="small-text" id="jwppp-floor-price" name="jwppp-floor-price" value="' . esc_attr( $floor_price ) . '" />';
 	echo '<p class="description">' . esc_html( __( 'Set floor price', 'jwppp' ) ) . '</p>';
+	echo '</td>';
+	echo '</tr>';
+
+	/*Price range*/
+	echo '<tr class="ads-options bidding range-price"' . esc_attr( $hide ) . '>';
+	echo '<th scope="row">' . esc_html( __( 'Price Range', 'jwppp' ) ) . '</th>';
+	echo '<td>';
+	echo '<span class="currency">$</span>';
+	echo '<input type="number" min="0" step="0.01" class="small-text" id="jwppp-range-price-increment" name="jwppp-range-price-increment" value="' . esc_attr( $range_price_increment ) . '" />';
+	echo '<p class="description">' . esc_html( __( 'Nearest increment to which a bid is rounded down, in bidding currency	', 'jwppp' ) ) . '</p>';
+	echo '<span class="currency">$</span>';
+	echo '<input type="number" min="0" step="0.01" class="small-text" id="jwppp-range-price-max" name="jwppp-range-price-max" value="' . esc_attr( $range_price_max ) . '" />';
+	echo '<p class="description">' . esc_html( __( 'Maximum value of a price bucket, in bidding currency', 'jwppp' ) ) . '</p>';
+	echo '<span class="currency">$</span>';
+	echo '<input type="number" min="0" step="0.01" class="small-text" id="jwppp-range-price-min" name="jwppp-range-price-min" value="' . esc_attr( $range_price_min ) . '" />';
+	echo '<p class="description">' . esc_html( __( 'Minimum value of a price bucket, in bidding currency', 'jwppp' ) ) . '</p>';
+	echo '</td>';
+	echo '</tr>';
+
+    /*GDPR*/
+	echo '<tr class="ads-options bidding gdpr"' . esc_attr( $hide ) . '>';
+	echo '<th scope="row">' . esc_html( __( 'GDPR', 'jwppp' ) ) . '</th>';
+	echo '<td>';
+	echo '<input type="checkbox" id="jwppp-active-gdpr" name="jwppp-active-gdpr" value="1"';
+	echo ( 1 === intval( $active_gdpr ) ) ? ' checked="checked"' : '';
+	echo ' />';
+	echo '<span class="jwppp-check-label">' . esc_html( __( 'Enable GDPR', 'jwppp' ) ) . '</span>';
+	echo '<select id="jwppp-gdpr-cmp-api" class="gdpr" name="jwppp-gdpr-cmp-api" />';
+	echo '<option name="iab" class="iab" value="iab"';
+	echo ( 'iab' === $gdpr_cmp_api ) ? ' selected="selected"' : '';
+	echo '>' . esc_html( __( 'IAB', 'jwppp' ) ) . '</option>';
+	echo '<option name="static" class="static" value="static"';
+	echo ( 'static' === $gdpr_cmp_api ) ? ' selected="selected"' : '';
+	echo '>' . esc_html( __( 'Static', 'jwppp' ) ) . '</option>';
+    echo '</select>';
+	echo '<p class="description gdpr">' . esc_html( __( 'The CMP interface that is in use.', 'jwppp' ) ) . '</p>';
+	echo '<input type="number" min="1000" step="100" class="small-text gdpr" id="jwppp-gdpr-timeout" name="jwppp-gdpr-timeout" value="' . esc_attr( $gdpr_timeout ) . '" />';
+	echo '<p class="description gdpr">' . esc_html( __( 'Length of time (in milliseconds) to allow the CMP to obtain the GDPR consent string', 'jwppp' ) ) . '</p>';
+	echo '<select id="jwppp-default-gdpr-scope" class="gdpr" name="jwppp-default-gdpr-scope" />';
+	echo '<option name="false" class="false" value="0"';
+	echo ( 0 === intval( $default_gdpr_scope ) ) ? ' selected="selected"' : '';
+	echo '>' . esc_html( __( 'False', 'jwppp' ) ) . '</option>';
+	echo '<option name="true" class="true" value="1"';
+	echo ( 1 === intval( $default_gdpr_scope ) ) ? ' selected="selected"' : '';
+	echo '>' . esc_html( __( 'True', 'jwppp' ) ) . '</option>';
+    echo '</select>';
+	echo '<p class="description gdpr">' . esc_html( __( 'Defines what the gdprApplies flag should be when the CMP doesn’t respond in time or the static data doesn’t supply.', 'jwppp' ) ) . '</p>';
+	echo '</td>';
+	echo '</tr>';
+
+    /*CCPA*/
+	echo '<tr class="ads-options bidding ccpa"' . esc_attr( $hide ) . '>';
+	echo '<th scope="row">' . esc_html( __( 'CCPA', 'jwppp' ) ) . '</th>';
+	echo '<td>';
+	echo '<input type="checkbox" id="jwppp-active-ccpa" name="jwppp-active-ccpa" value="1"';
+	echo ( 1 === intval( $active_ccpa ) ) ? ' checked="checked"' : '';
+	echo ' />';
+	echo '<span class="jwppp-check-label">' . esc_html( __( 'Enable CCPA', 'jwppp' ) ) . '</span>';
+	echo '<select id="jwppp-ccpa-cmp-api" class="ccpa" name="jwppp-ccpa-cmp-api" />';
+	echo '<option name="iab" class="iab" value="iab"';
+	echo ( 'iab' === $ccpa_cmp_api ) ? ' selected="selected"' : '';
+	echo '>' . esc_html( __( 'IAB', 'jwppp' ) ) . '</option>';
+	echo '<option name="static" class="static" value="static"';
+	echo ( 'static' === $ccpa_cmp_api ) ? ' selected="selected"' : '';
+	echo '>' . esc_html( __( 'Static', 'jwppp' ) ) . '</option>';
+    echo '</select>';
+	echo '<p class="description ccpa">' . esc_html( __( 'The CMP interface that is in use.', 'jwppp' ) ) . '</p>';
+	echo '<input type="number" min="1000" step="100" class="small-text ccpa" id="jwppp-ccpa-timeout" name="jwppp-ccpa-timeout" value="' . esc_attr( $ccpa_timeout ) . '" />';
+	echo '<p class="description ccpa">' . esc_html( __( 'Length of time (in milliseconds) to allow the CMP to obtain the GDPR consent string', 'jwppp' ) ) . '</p>';
 	echo '</td>';
 	echo '</tr>';
 

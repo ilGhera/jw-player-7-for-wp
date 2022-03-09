@@ -44,12 +44,19 @@ a.question-mark {
 }
 
 a.attention-mark {
-	position:absolute; right:1rem;
+	position:absolute;
+    right:1rem;
 }
 
 img.question-mark, img.attention-mark {
 	position:relative; 
 	top:0.2rem;
+    right: 1rem;
+}
+
+img.question-mark.second {
+    top: 2.2rem;
+    left: 0;
 }
 
 .jwppp-video-toggles {
@@ -120,9 +127,19 @@ img.question-mark, img.attention-mark {
 #jwppp-ads select {
 	width: 192px;
 }
-
+input#jwppp-range-price-increment,
+input#jwppp-range-price-min,
+input#jwppp-range-price-max,
 input#jwppp-floor-price {
-	padding-left: 0.9rem;
+	padding-left: 1rem;
+}
+
+tr.ads-options.bidding.ccpa .description,
+tr.ads-options.bidding.gdpr .description,
+input#jwppp-range-price-increment .description,
+input#jwppp-range-price-min .description,
+.range-price .description {
+    margin-bottom: 0.6rem;
 }
 
 span.currency {
@@ -156,6 +173,26 @@ span.currency {
 .add-tag-container:hover .add-tag-hover,
 .remove-tag-container:hover .remove-tag-hover {
 	display: inline;
+}
+
+li.single-partner {
+    padding: 20px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    position: relative;
+}
+
+li.single-partner p.description {
+    margin-bottom: 20px;
+}
+
+li.single-partner .add-tag-container,
+li.single-partner .remove-tag-container {
+	position: absolute;
+	top: 1rem;
+    right: 1rem;
+	cursor: pointer;
 }
 
 select.jwppp-choose-player,
@@ -326,6 +363,16 @@ span.jwppp-check-label {
     padding-left: 5px;
     position: relative;
     top: 2px;
+}
+
+tr.ads-options.bidding.ccpa select,
+tr.ads-options.bidding.gdpr select {
+    display: block;
+}
+
+#jwppp-gdpr-cmp-api,
+#jwppp-ccpa-cmp-api {
+    margin-top: 1rem;
 }
 
 @media screen and (max-width: 1720px) {

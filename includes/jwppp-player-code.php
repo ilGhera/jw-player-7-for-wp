@@ -212,7 +212,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 				if ( $jwppp_playlist_carousel ) {
 					$carousel_style = sanitize_text_field( get_option( 'jwppp-playlist-carousel-style' ) );
-					$playlist_id = $security_urls ? jwppp_get_signed_url( $jwppp_video_url, true, $contextual ) : $jwppp_video_url;
+					$playlist_id = $security_urls ? jwppp_get_signed_url( $jwppp_video_url, true, $contextual, true ) : $jwppp_video_url;
 
 					echo "var e = new XMLHttpRequest;\n";
 					echo "e.onreadystatechange = function() { 4 === e.readyState && (e.status >= 200 && JSON.parse(e.responseText).widgets.forEach(function(e) { outPlayerWidget(e) })) }, e.open('GET', '" . home_url() . "?jwp-carousel-config=1&playlist-id=' + encodeURIComponent('$playlist_id') + '&player-id=" . intval( $this_video ) . "&carousel-style=' + encodeURIComponent( '$carousel_style' ), !0), e.send()\n";
