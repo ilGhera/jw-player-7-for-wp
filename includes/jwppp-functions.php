@@ -106,7 +106,7 @@ function jwppp_videos_string( $post_id ) {
 function jwppp_single_video_box( $post_id, $number ) {
 
 	/*Delete video if url is equal to 1, it means empty*/
-	if ( 1 === intval( get_post_meta( $post_id, '_jwppp-video-url-' . $number, true ) ) ) {
+	if ( 1 === get_post_meta( $post_id, '_jwppp-video-url-' . $number, true ) ) {
 		delete_post_meta( $post_id, '_jwppp-video-url-' . $number );
 		return;
 	}
