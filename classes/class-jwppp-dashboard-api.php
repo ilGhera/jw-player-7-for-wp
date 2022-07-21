@@ -208,7 +208,7 @@ class JWPPP_Dashboard_Api {
     /**
      * Get a list of playlists or a specific one if an id is provided
      *
-     * @param string $media_id the media id.
+     * @param string $playlist_id the playlist id.
      *
      * @return mixed 
      */
@@ -230,6 +230,28 @@ class JWPPP_Dashboard_Api {
         
             return $output;
         
+        }
+
+	}
+
+
+    /**
+     * Get the items in a playlist 
+     *
+     * @param string $playlist_id   the playlist id.
+     * @param string $playlist_type the playlist type.
+     *
+     * @return mixed
+     */
+	public function get_playlist_items( $playlist_id, $playlist_type ) {
+
+        $data = $this->call( 'playlists/' . $playlist_id . '/' . $playlist_type . '_playlist' );
+        error_log( 'PLAYLIST ITEMS: ' . print_r( $data, true ) );
+
+        if ( isset( $data->metadata->media_filter->include->values ) && is_array( $data->metadata->media_filter->include->values ) ) {
+
+            return count( $data->metadata->media_filter->include->values );
+
         }
 
 	}
