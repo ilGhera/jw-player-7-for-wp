@@ -877,13 +877,20 @@ function jwppp_list_content_callback() {
                                 echo '<span class="jwppp-alert api">' . esc_html( $playlists['error'] ) . '</span>';
                             }
                         } else {
+
                             $playlist_thumb = plugin_dir_url( __DIR__ ) . 'images/playlist4.png';
+                            
                             echo '<li class="reset">' . esc_html( 'Select a playlist', 'jwppp' ) . '<span>' . esc_html( __( 'Clear', 'jwppp' ) ) . '</span></li>';
+                            
                             for ( $i = 0; $i < min( 15, count( $playlists ) ); $i++ ) {
+                            
+                                /* Get the number of videos in the playlist */
+                                $items = $api->get_playlist_items( $playlists[ $i ]->id, $playlists[ $i ]->playlist_type );
+                            
                                 echo '<li class="playlist-element' . ( $video_url === $playlists[ $i ]->id ? ' selected' : '' ) . '" ';
                                     echo 'data-mediaid="' . ( isset( $playlists[ $i ]->id ) ? esc_attr( $playlists[ $i ]->id ) : '' ) . '"';
                                     echo 'data-description="' . ( isset( $playlists[ $i ]->metadata->description ) ? esc_attr( $playlists[ $i ]->metadata->description ) : '' ) . '"';
-                                    /* echo 'data-videos="' . ( isset( $playlists[ $i ]->videos->total ) ? esc_attr( $playlists[ $i ]->videos->total ) : '' ) . '"'; */
+                                    echo 'data-videos="' . ( $items ? esc_attr( $items ) : '' ) . '"';
                                     echo '>';
                                     echo '<img class="video-img" src="' . esc_url( $playlist_thumb ) . '" />';
                                     echo '<span>' . ( isset( $playlists[ $i ]->metadata->title ) ? esc_html( $playlists[ $i ]->metadata->title ) : '' ) . '</span>';
