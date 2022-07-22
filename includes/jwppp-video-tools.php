@@ -114,9 +114,14 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 		echo '<option name="mp4" value="mp4"';
 		echo ( 'mp4' === $jwppp_media_type ) ? ' selected="selected"' : '';
 		echo '>mp4</option>';
-		echo '<option name="flv" value="flv"';
-		echo ( 'flv' === $jwppp_media_type ) ? ' selected="selected"' : '';
-		echo '>flv</option>';
+
+        /* FLV is not supported from version 8 */
+        if ( 7 >= $player_version ) {
+            echo '<option name="flv" value="flv"';
+            echo ( 'flv' === $jwppp_media_type ) ? ' selected="selected"' : '';
+            echo '>flv</option>';
+        }
+
 		echo '<option name="mp3" value="mp3"';
 		echo ( 'mp3' === $jwppp_media_type ) ? ' selected="selected"' : '';
 		echo '>mp3</option>';

@@ -114,7 +114,7 @@ function jwppp_videos_string( $post_id ) {
 function jwppp_single_video_box( $post_id, $number ) {
 
 	/*Delete video if url is equal to 1, it means empty*/
-	if ( 1 === intval( get_post_meta( $post_id, '_jwppp-video-url-' . $number, true ) ) ) {
+	if ( 1 === get_post_meta( $post_id, '_jwppp-video-url-' . $number, true ) ) {
 		delete_post_meta( $post_id, '_jwppp-video-url-' . $number );
 		return;
 	}
@@ -651,7 +651,7 @@ function jwppp_get_poster_image( $post_id, $video ) {
     }
 
     /* If image exists */
-    if ( @getimagesize( $image_url ) ) {
+    if ( $image_url && @getimagesize( $image_url ) ) {
 
         return $image_url;
 
