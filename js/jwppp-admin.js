@@ -370,26 +370,32 @@ jQuery( document ).ready( function( $ ) {
 	/*GDPR*/
 	if ( ! $( '.bidding.gdpr .tzCheckBox' ).hasClass( 'checked' ) ) {
 		$( '.ads-options.gdpr .gdpr' ).hide();
+        $( '.gdpr .bootstrap-iso' ).hide();
     }
     
 	$( '.bidding.gdpr .tzCheckBox' ).on( 'click', function() {
 		if ( $( this ).hasClass( 'checked' ) ) {
             $( '.ads-options .gdpr' ).show('slow');
+            $( '.gdpr .bootstrap-iso' ).show('slow');
         } else {
             $( '.ads-options .gdpr' ).hide();
+            $( '.gdpr .bootstrap-iso' ).hide();
         }
     })
 
 	/*CCPA*/
 	if ( ! $( '.bidding.ccpa .tzCheckBox' ).hasClass( 'checked' ) ) {
 		$( '.ads-options.ccpa .ccpa' ).hide();
+        $( '.ccpa .bootstrap-iso' ).hide();
     }
     
 	$( '.bidding.ccpa .tzCheckBox' ).on( 'click', function() {
 		if ( $( this ).hasClass( 'checked' ) ) {
             $( '.ads-options .ccpa' ).show('slow');
+            $( '.ccpa .bootstrap-iso' ).show('slow');
         } else {
             $( '.ads-options .ccpa' ).hide();
+            $( '.ccpa .bootstrap-iso' ).hide();
         }
     })
 
