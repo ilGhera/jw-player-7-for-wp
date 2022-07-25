@@ -2,7 +2,7 @@
  * Main admin js file
  * @author ilGhera
  * @package jw-player-7-for-wp/js
- * @since 2.1.2
+ * @since 2.2.0
  */
 jQuery( document ).ready( function( $ ) {
 
