@@ -120,6 +120,58 @@ jQuery( document ).ready( function( $ ) {
     }
 
 
+    /**
+     * Add a new bidding partner
+     *
+     * @return void
+     */
+    var jwpppAddPartner = function() {
+
+        /*Add a partner*/
+        $( document ).on( 'click', '.add-tag-hover.partner', function() {
+            var number = $( 'li.single-partner' ).length + 1;
+            var data = {
+                'action': 'add_ad_partner',
+                'hidden-nonce-add-partner': addPartner.nonce,
+                'number': number,
+                'used-partners': jwpppUsedPartners
+            };
+            $.post( ajaxurl, data, function( response ) {
+                
+                $( '.ads-options.ad-partners ul' ).append( response );
+                $( '.hidden-total-partners' ).val( number );
+                
+                jwpppPartnerFields( null, number );
+
+                $('#jwppp-ad-partner-' + number).on('change', function(){
+
+                    jwpppPartnerFields( $(this).val(), number );
+
+                })
+            });
+        });
+
+    }
+
+
+    /**
+     * Remove a bidding partner
+     *
+     * @return void
+     */
+    var jwpppRemovePartner = function() {
+
+        $( document ).on( 'click', '.remove-tag-hover.partner', function() {
+            var number;
+            $( this ).closest( 'li' ).remove();
+            number = $( 'li.single-partner' ).length;
+            $( '.hidden-total-partners' ).val( number );
+
+        });
+
+    }
+
+
 	if ( 'featured-image' == $( '#thumbnail' ).val() ) {
 		$( '.cf-row' ).hide();
 	}
@@ -285,38 +337,9 @@ jQuery( document ).ready( function( $ ) {
 
         })
 
-        /*Add a partner*/
-        $( document ).on( 'click', '.add-tag-hover.partner', function() {
-            var number = $( 'li.single-partner' ).length + 1;
-            var data = {
-                'action': 'add_ad_partner',
-                'hidden-nonce-add-partner': addPartner.nonce,
-                'number': number,
-                'used-partners': jwpppUsedPartners
-            };
-            $.post( ajaxurl, data, function( response ) {
-                
-                $( '.ads-options.ad-partners ul' ).append( response );
-                $( '.hidden-total-partners' ).val( number );
-                
-                jwpppPartnerFields( null, number );
+        jwpppAddPartner();
+        jwpppRemovePartner();
 
-                $('#jwppp-ad-partner-' + number).on('change', function(){
-
-                    jwpppPartnerFields( $(this).val(), number );
-
-                })
-            });
-        });
-
-        $( document ).on( 'click', '.remove-tag-hover.partner', function() {
-            var number;
-            $( this ).closest( 'li' ).remove();
-            number = $( 'li.single-partner' ).length;
-            $( '.hidden-total-partners' ).val( number );
-
-        });
-        
     }     
 
 	$( '.jwppp-active-bidding .tzCheckBox' ).on( 'click', function() {
@@ -332,6 +355,8 @@ jQuery( document ).ready( function( $ ) {
 
             })
 
+            jwpppAddPartner();
+            jwpppRemovePartner();
 
 			if ( 'jwp' !== $( '#jwppp-mediation' ).val() && 'jwpdfp' !== $( '#jwppp-mediation' ).val() ) {
 				$( '.ads-options.bidding.floor-price' ).hide();
