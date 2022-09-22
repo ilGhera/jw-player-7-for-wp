@@ -28,7 +28,7 @@
     echo '<th scope="row">' . esc_html( __( 'API v1 Credentials', 'jwppp' ) );
     echo '<a href="https://developer.jwplayer.com/jwplayer/docs/archived-authentication" title="Get your API v1 Secret" target="_blank"><img class="question-mark" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a></th>';
     echo '<td>';
-    echo '<input type="text" class="regular-text" id="jwppp-api-secret" name="jwppp-api-secret" placeholder="' . esc_attr( __( 'Add your API Secret', 'jwppp' ) ) . ' disabled="disabled" />';
+    echo '<input type="text" class="regular-text" id="jwppp-api-secret" name="jwppp-api-secret" placeholder="' . esc_attr( __( 'Add your API Secret', 'jwppp' ) ) . '" />';
     echo '<p class="description">' . esc_html( __( 'API v1 Secret', 'jwppp' ) ) . '</p>';
 	echo '<td>';
 	echo '</tr>';
