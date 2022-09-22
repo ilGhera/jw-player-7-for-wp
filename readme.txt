@@ -78,6 +78,12 @@ That’s it, you’re ready to go!
 
 == Changelog ==
 
+= 2.2.1 =
+Release Date: 22 September 2022
+
+* Bug: (Premium) Security options require API v1 Secret key  
+
+
 = 2.2.0 =
 Release Date: 26 July 2022
 
