@@ -3,12 +3,12 @@
  * Playlist carousel options
  * @author ilGhera
  * @package jw-player-7-for-wp/admin
- * @since 2.0.0
+ * @since 2.2.1
  */
 ?>
 <div name="jwppp-playlist-carousel" id="jwppp-playlist-carousel" class="jwppp-admin" style="display: none;">
 	<?php
-	echo '<form id="jwppp-playlist-carousel" name="jwppp-playlist-carousel" method="post" action="">';
+	echo '<form id="jwppp-playlist-carousel" class="jwppp-settings-form" name="jwppp-playlist-carousel" method="post" action="">';
 		echo '<table class="form-table">';
 			echo '<tr>';
 				echo '<th scope="row">' . esc_html( __( 'Title', 'jwppp' ) ) . '</th>';

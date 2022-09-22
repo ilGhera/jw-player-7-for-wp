@@ -6,7 +6,7 @@
  * @since 2.2.0
  */
 
-echo '<h2 style="margin: 1.5rem 0;">JW Player 8 Skin Customization</h2>';
+echo '<h2 style="margin: 2rem 0;">JW Player 8 Skin Customization</h2>';
 echo '<form id="jwppp-skin" name="jwppp-skin" method="post" action="">';
 echo '<table class="form-table">';
 

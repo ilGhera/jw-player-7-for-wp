@@ -399,6 +399,14 @@ tr.ads-options.bidding.gdpr select {
     margin-top: 1rem;
 }
 
+.jwppp-security-option {
+    display: none;
+}
+
+.jwppp-settings-form {
+    margin-top: 2rem;
+}
+
 @media screen and (max-width: 1720px) {
 	.jwppp-video-details {
 		width: 300px;
