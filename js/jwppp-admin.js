@@ -407,4 +407,19 @@ jQuery( document ).ready( function( $ ) {
 	/*Color field for subtitles*/
 	$( '.jwppp-color-field' ).wpColorPicker();
 
+    /*Security options*/
+    if ( $('#jwppp-api-secret').val() ) {
+        $('.jwppp-security-option').show('slow');
+    }
+
+    $('#jwppp-api-secret').on('keyup', function(){
+        
+        if ( $(this).val() ) {
+            $('.jwppp-security-option').show('slow');
+        } else {
+            $('.jwppp-security-option').hide();
+        }
+
+    })
+
 });
