@@ -9,6 +9,13 @@
 <div name="jwppp-security" id="jwppp-security" class="jwppp-admin" style="display: none;">
 	<?php
 
+    /*API v1 Secret*/
+    $api_secret = sanitize_text_field( get_option( 'jwppp-api-secret' ) );
+    if ( isset( $_POST['security-sent'], $_POST['hidden-nonce-security'] ) && wp_verify_nonce( $_POST['hidden-nonce-security'], 'jwppp-nonce-security' ) ) {
+        $api_secret = sanitize_text_field( wp_unslash( $_POST['jwppp-api-secret'] ) );
+        update_option( 'jwppp-api-secret', $api_secret );
+    }
+
 	/*Secure video URLs*/
 	$secure_video_urls = sanitize_text_field( get_option( 'jwppp-secure-video-urls' ) );
 	if ( isset( $_POST['security-sent'], $_POST['hidden-nonce-security'] ) && wp_verify_nonce( $_POST['hidden-nonce-security'], 'jwppp-nonce-security' ) ) {
@@ -41,11 +48,21 @@
 		'br' => [],
 	);
 
-	echo '<form id="jwppp-security" name="jwppp-security" method="post" action="">';
+    /*API v1 Secret*/
+	echo '<form id="jwppp-security" class="jwppp-settings-form" name="jwppp-security" method="post" action="">';
 	echo '<table class="form-table">';
 
+    echo '<tr>';
+    echo '<th scope="row">' . esc_html( __( 'API v1 Credentials', 'jwppp' ) );
+    echo '<a href="https://developer.jwplayer.com/jwplayer/docs/archived-authentication" title="Get your API v1 Secret" target="_blank"><img class="question-mark" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a></th>';
+    echo '<td>';
+    echo '<input type="text" class="regular-text" id="jwppp-api-secret" name="jwppp-api-secret" placeholder="' . esc_attr( __( 'Add your API Secret', 'jwppp' ) ) . '" value="' . esc_attr( $api_secret ) . '" />';
+    echo '<p class="description">' . esc_html( __( 'API v1 Secret', 'jwppp' ) ) . '</p>';
+	echo '<td>';
+	echo '</tr>';
+
 	/*Secure video URLs*/
-	echo '<tr>';
+	echo '<tr class="jwppp-security-option">';
 	echo '<th scope="row">' . esc_html( __( 'Secure Video URLs', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<input type="checkbox" id="jwppp-secure-video-urls" name="jwppp-secure-video-urls" value="1"';
@@ -56,7 +73,7 @@
 	echo '</tr>';
 
 	/*Secure player embeds*/
-	echo '<tr>';
+	echo '<tr class="jwppp-security-option">';
 	echo '<th scope="row">' . esc_html( __( 'Secure Player Embeds', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<input type="checkbox" id="jwppp-secure-player-embeds" name="jwppp-secure-player-embeds" value="1"';
@@ -67,7 +84,7 @@
 	echo '</tr>';
 
 	/*Secure timeout*/
-	echo '<tr>';
+	echo '<tr class="jwppp-security-option">';
 	echo '<th scope="row">' . esc_html( __( 'Set timeout', 'jwppp' ) ) . '</th>';
 	echo '<td>';
 	echo '<input type="number" id="jwppp-secure-timeout" name="jwppp-secure-timeout" step="5" min="5" value="' . esc_attr( $secure_timeout ) . '" />';

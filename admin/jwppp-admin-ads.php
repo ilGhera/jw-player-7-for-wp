@@ -212,7 +212,7 @@
 		'br' => [],
 	);
 
-	echo '<form id="jwppp-ads" name="jwppp-ads" method="post" action="">';
+	echo '<form id="jwppp-ads" class="jwppp-settings-form" name="jwppp-ads" method="post" action="">';
 	echo '<table class="form-table">';
 
 	/*Active ads?*/

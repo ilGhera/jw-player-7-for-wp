@@ -61,7 +61,7 @@
 
 	settings_errors();
 
-	echo '<form id="jwppp-subtitles" name="jwppp-subtitles" method="post" action="">';
+	echo '<form id="jwppp-subtitles" class="jwppp-settings-form" name="jwppp-subtitles" method="post" action="">';
 	echo '<table class="form-table">';
 	echo '<tr>';
 	echo '<th scope="row">' . esc_html( __( 'Text Color', 'jwppp' ) ) . '</th>';

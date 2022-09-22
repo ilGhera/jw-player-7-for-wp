@@ -38,7 +38,7 @@
 		],
 	);
 
-	echo '<form id="jwppp-sharing" name="jwppp-sharing" method="post" action="">';
+	echo '<form id="jwppp-sharing" class="jwppp-settings-form" name="jwppp-sharing" method="post" action="">';
 	echo '<table class="form-table">';
 
 	/*Active share?*/

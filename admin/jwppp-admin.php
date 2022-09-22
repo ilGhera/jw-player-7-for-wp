@@ -470,7 +470,7 @@ function jwppp_options() {
 	 <div name="jwppp-settings" id="jwppp-settings" class="jwppp-admin" style="display: block;">
 
 		<?php
-		echo '<form id="jwppp-options" method="post" action="">';
+		echo '<form id="jwppp-options" class="jwppp-settings-form" method="post" action="">';
 		echo '<table class="form-table">';
 
 		/*JW Player library url*/

@@ -30,7 +30,7 @@
 		update_option( 'jwppp-playlist-carousel-style', base64_encode( wp_json_encode( $jwppp_playlist_carousel_style ) ) );
 	}
 
-	echo '<form id="jwppp-playlist-carousel" name="jwppp-playlist-carousel" method="post" action="">';
+	echo '<form id="jwppp-playlist-carousel" class="jwppp-settings-form" name="jwppp-playlist-carousel" method="post" action="">';
 		echo '<table class="form-table">';
 			echo '<tr>';
 				echo '<th scope="row">' . esc_html( __( 'Title', 'jwppp' ) ) . '</th>';
