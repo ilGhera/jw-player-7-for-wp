@@ -78,6 +78,12 @@ That’s it, you’re ready to go!
 
 == Changelog ==
 
+= 2.2.2 =
+Release Date: 25 September 2022
+
+* Bug: Player not rendered in some cases if not selected in the single video options
+
+
 = 2.2.1 =
 Release Date: 22 September 2022
 
