@@ -176,12 +176,16 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 			/*Playlist carousel*/
 			$jwppp_playlist_carousel ? jwppp_playlist_carousel( $this_video ) : '';
 
-			/*Player choose - library*/
-			if ( $security_embeds ) {
-				echo '<script type="text/javascript" src="' . esc_url( jwppp_get_signed_embed( $choose_player ) ) . '"></script>';
-			} else {
-				echo '<script type="text/javascript" src="' . esc_url( "https://content.jwplatform.com/libraries/$choose_player.js" ) . '"></script>';
-			}
+            /* Do not duplicate the main player */
+            if ( $choose_player !== $player_parts[0] ) {
+
+                /*Player choose - library*/
+                if ( $security_embeds ) {
+                    echo '<script type="text/javascript" src="' . esc_url( jwppp_get_signed_embed( $choose_player ) ) . '"></script>';
+                } else {
+                    echo '<script type="text/javascript" src="' . esc_url( "https://content.jwplatform.com/libraries/$choose_player.js" ) . '"></script>';
+                }
+            }
 
 			echo "<script type='text/javascript'>\n";
 				echo "var playerInstance_" . intval( $this_video ) . " = jwplayer( " . wp_json_encode( "jwppp-video-" . $this_video ) . " );\n";
@@ -257,12 +261,19 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 			echo "</div>\n";
 
 			if ( $dashboard_player ) {
-				/*Player choose - library*/
-				if ( $security_embeds ) {
-					echo '<script type="text/javascript" src="' . esc_url( jwppp_get_signed_embed( $choose_player ) ) . '"></script>';
-				} else {
-					echo '<script type="text/javascript" src="' . esc_url( "https://content.jwplatform.com/libraries/$choose_player.js" ) . '"></script>';
-				}
+                
+                /* Do not duplicate the main player */
+                if ( $choose_player !== $player_parts[0] ) {
+
+                    /*Player choose - library*/
+                    if ( $security_embeds ) {
+                        echo '<script type="text/javascript" src="' . esc_url( jwppp_get_signed_embed( $choose_player ) ) . '"></script>';
+                    } else {
+                        echo '<script type="text/javascript" src="' . esc_url( "https://content.jwplatform.com/libraries/$choose_player.js" ) . '"></script>';
+                    }
+
+                }
+
 			}
 
 			echo "<script type='text/javascript'>\n";
