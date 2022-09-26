@@ -593,15 +593,139 @@ add_filter( 'the_content', 'jwppp_add_player' );
 
 
 /**
+ * Search contents in the dashboard, both single videos and playlists
+ * @return string a json encoded array of the results
+ */
+function jwppp_search_content_callback() {
+
+	$api = new JWPPP_Dashboard_Api();
+
+	if ( isset( $_POST['number'], $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ) ) {
+
+		if ( wp_verify_nonce(
+			$_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ],
+			'jwppp-meta-box-nonce-' . sanitize_text_field( wp_unslash( $_POST['number'] ) )
+		) ) {
+
+			$term = isset( $_POST['value'] ) ? sanitize_text_field( wp_unslash( $_POST['value'] ) ) : '';
+
+			if ( $term ) {
+				$videos    = $api->search( $term );
+				$playlists = $api->search( $term, true );
+                error_log( 'SEARCH: ' . print_r( $playlists, true ) );
+			} else {
+				$videos    = $api->get_videos();
+				$playlists = $api->get_playlists();
+                error_log( 'PLAYLISTS: ' . print_r( $playlists, true ) );
+			}
+
+			echo wp_json_encode(
+				array(
+					'videos'    => $videos,
+					'playlists' => $playlists,
+				)
+			);
+
+		}
+	}
+
+	exit;
+}
+add_action( 'wp_ajax_search-content', 'jwppp_search_content_callback' );
+
+
+/**
  * Returns videos and playlists
  * Fired when the select element is clicked
  */
 function jwppp_list_content_callback() {
 
-	if ( isset( $_POST['number'], $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ) ) {		
-					
-		echo '<span class="jwppp-alert api">' . esc_html( __( 'API Credentials are required for using this tool.', 'jwppp' ) ) . '</span>';
-	
+	if ( isset( $_POST['number'], $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ) ) {
+
+		if ( wp_verify_nonce(
+			$_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ],
+			'jwppp-meta-box-nonce-' . sanitize_text_field( wp_unslash( $_POST['number'] ) )
+		) ) {
+
+			$post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : '';
+			$number = intval( $_POST['number'] );
+
+			if ( $post_id && $number ) {
+
+				$api = new JWPPP_Dashboard_Api();
+
+				$video_url = get_post_meta( $post_id, '_jwppp-video-url-' . $number, true );
+
+				if ( $api->args_check() ) {
+
+                    $videos    = $api->get_videos();
+                    $playlists = $api->get_playlists();
+
+                    /*Videos*/
+                    if ( is_array( $videos ) ) {
+
+                        if ( isset( $videos['error'] ) ) {
+
+                            echo '<span class="jwppp-alert api">' . esc_html( $videos['error'] ) . '</span>';
+
+                        } else {
+
+                            echo '<li class="reset">' . esc_html( 'select a video', 'jwppp' ) . '<span>' . esc_html( __( 'clear', 'jwppp' ) ) . '</span></li>';
+                            for ( $i = 0; $i < min( 15, count( $videos ) ); $i++ ) {
+                                echo '<li ';
+                                    echo 'data-mediaid="' . ( isset( $videos[ $i ]->id ) ? esc_attr( $videos[ $i ]->id ) : '' ) . '" ';
+                                    echo 'data-duration="' . ( isset( $videos[ $i ]->duration ) ? esc_attr( $videos[ $i ]->duration ) : '' ) . '" ';
+                                    echo 'data-description="' . ( isset( $videos[ $i ]->metadata->description ) ? esc_attr( $videos[ $i ]->metadata->description ) : '' ) . '"';
+                                    echo 'data-tags="' . ( isset( $videos[ $i ]->metadata->tags ) ? esc_attr( implode( ', ', $videos[ $i ]->metadata->tags ) ) : '' ) . '"';
+                                    echo ( $video_url === $videos[ $i ]->id ? ' class="selected"' : '' ) . '>';
+                                    echo '<img class="video-img" src="https://cdn.jwplayer.com/thumbs/' . ( isset( $videos[ $i ]->id ) ? esc_html( $videos[ $i ]->id ) : '' ) . '-60.jpg" />';
+                                    echo '<span>' . ( isset( $videos[ $i ]->metadata->title ) ? esc_html( $videos[ $i ]->metadata->title ) : '' ) . '</span>';
+                                echo '</li>';
+                            }
+                        }
+                    }
+
+                    /*Playlists*/
+                    if ( is_array( $playlists ) ) {
+
+                        if ( isset( $playlists['error'] ) ) {
+
+                            if ( ! isset( $videos['error'] ) ) {
+                                echo '<span class="jwppp-alert api">' . esc_html( $playlists['error'] ) . '</span>';
+                            }
+                        } else {
+
+                            $playlist_thumb = plugin_dir_url( __DIR__ ) . 'images/playlist4.png';
+                            
+                            echo '<li class="reset">' . esc_html( 'Select a playlist', 'jwppp' ) . '<span>' . esc_html( __( 'Clear', 'jwppp' ) ) . '</span></li>';
+                            
+                            for ( $i = 0; $i < min( 15, count( $playlists ) ); $i++ ) {
+                            
+                                /* Get the number of videos in the playlist */
+                                $items = $api->get_playlist_items( $playlists[ $i ]->id, $playlists[ $i ]->playlist_type );
+                            
+                                echo '<li class="playlist-element' . ( $video_url === $playlists[ $i ]->id ? ' selected' : '' ) . '" ';
+                                    echo 'data-mediaid="' . ( isset( $playlists[ $i ]->id ) ? esc_attr( $playlists[ $i ]->id ) : '' ) . '"';
+                                    echo 'data-description="' . ( isset( $playlists[ $i ]->metadata->description ) ? esc_attr( $playlists[ $i ]->metadata->description ) : '' ) . '"';
+                                    echo 'data-videos="' . ( $items ? esc_attr( $items ) : '' ) . '"';
+                                    echo '>';
+                                    echo '<img class="video-img" src="' . esc_url( $playlist_thumb ) . '" />';
+                                    echo '<span>' . ( isset( $playlists[ $i ]->metadata->title ) ? esc_html( $playlists[ $i ]->metadata->title ) : '' ) . '</span>';
+                                echo '</li>';
+                            }
+                        }
+                    }
+                } else {
+
+                    echo '<span class="jwppp-alert api">' . esc_html( __( 'Invalid API Credentials.', 'jwppp' ) ) . '</span>';
+
+                }
+            } else {
+
+                echo '<span class="jwppp-alert api">' . esc_html( __( 'API Credentials are required for using this tool.', 'jwppp' ) ) . '</span>';
+
+            }
+        }
 	}
 
 	exit;
