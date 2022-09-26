@@ -227,8 +227,6 @@ var JWPPPSearchContent = function( number ) {
 
 				$.post( ajaxurl, data, function( response ) {
 
-                    console.log( 'RESPONSE: ' + response );
-
 					var baseUrl = 'https://cdn.jwplayer.com/thumbs/';
 					var contents = JSON.parse( response );
 					var videos = contents.videos;
