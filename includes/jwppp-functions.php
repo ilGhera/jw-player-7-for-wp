@@ -236,38 +236,17 @@ function jwppp_db_delete_video( $post_id, $number ) {
  */
 function jwppp_add_header_code() {
 
-	$get_library = sanitize_text_field( get_option( 'jwppp-library' ) );
+	$library = sanitize_text_field( get_option( 'jwppp-library' ) );
 
 	/*Is it a dashboard player?*/
 	$dashboard_player = is_dashboard_player();
 
+    if ( null !== $library ) {
+        wp_enqueue_script( 'jwppp-library', $library );
+    }
+
 	/*Default dashboard player informations*/
-	if ( $dashboard_player ) {
-		if ( strpos( $get_library, 'jwplatform.com' ) !== false ) {
-			$library_parts = explode( 'https://content.jwplatform.com/libraries/', $get_library );
-		} else {
-			$library_parts = explode( 'https://cdn.jwplayer.com/libraries/', $get_library );
-		}
-		$player_parts = explode( '.js', $library_parts[1] );
-
-		/*Check if the security option is activated*/
-		$security_embeds = sanitize_text_field( get_option( 'jwppp-secure-player-embeds' ) );
-
-		$library = $security_embeds ? jwppp_get_signed_embed( $player_parts[0] ) : $get_library;
-		if ( null !== $library ) {
-			wp_enqueue_script( 'jwppp-library', $library );
-		}
-
-		/*JW Widget for Playlist Carousel*/
-		wp_enqueue_style( 'jwppp-widget-style', plugin_dir_url( __DIR__ ) . 'jw-widget/css/jw-widget-min.css' );
-		wp_enqueue_script( 'jwppp-widget', plugin_dir_url( __DIR__ ) . 'jw-widget/js/jw-widget-min.js' );
-
-	} else {
-
-		$library = $get_library;
-		if ( null !== $library ) {
-			wp_enqueue_script( 'jwppp-library', $library );
-		}
+	if ( ! $dashboard_player ) {
 
 		$licence = sanitize_text_field( get_option( 'jwppp-licence' ) );
 		$skin    = sanitize_text_field( get_option( 'jwppp-skin' ) );
