@@ -14,9 +14,10 @@ License: GPLv2
  
 **Free Features (NEW!):**
 
+* Connect to the JW Player Dashboard using your API v2 credentials
+* Select and publish videos hosted on JW Player
+* Select and publish playlist hosted on JW Player
 * Support shortcodes like [jwplayer fPHnET5D]
-* Facebook Instant Articles support
-* WP Coding Standard
 
 **Cloud**
 
