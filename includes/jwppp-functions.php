@@ -612,11 +612,9 @@ function jwppp_search_content_callback() {
 			if ( $term ) {
 				$videos    = $api->search( $term );
 				$playlists = $api->search( $term, true );
-                error_log( 'SEARCH: ' . print_r( $playlists, true ) );
 			} else {
 				$videos    = $api->get_videos();
 				$playlists = $api->get_playlists();
-                error_log( 'PLAYLISTS: ' . print_r( $playlists, true ) );
 			}
 
 			echo wp_json_encode(

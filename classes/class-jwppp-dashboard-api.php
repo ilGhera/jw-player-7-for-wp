@@ -147,15 +147,11 @@ class JWPPP_Dashboard_Api {
     
             $endpoint = sprintf( "playlists/?page=1&page_length=15&q=title:\"%1\$s\"+OR+id:\"%1\$s\"&sort=created:dsc", $term );
             $key      = 'playlists';
-
-            error_log( 'SEARCH P: ' . $endpoint );
     
         } else {
     
             $endpoint = sprintf( "media/?page=1&page_length=15&q=title:\"%1\$s\"+OR+id:\"%1\$s\"&sort=created:dsc", $term );
             $key      = 'media';
-    
-            error_log( 'SEARCH M: ' . $endpoint );
         }
     
         $output = $this->call( $endpoint );
@@ -246,7 +242,6 @@ class JWPPP_Dashboard_Api {
 	public function get_playlist_items( $playlist_id, $playlist_type ) {
 
         $data = $this->call( 'playlists/' . $playlist_id . '/' . $playlist_type . '_playlist' );
-        error_log( 'PLAYLIST ITEMS: ' . print_r( $data, true ) );
 
         if ( isset( $data->metadata->media_filter->include->values ) && is_array( $data->metadata->media_filter->include->values ) ) {
 
