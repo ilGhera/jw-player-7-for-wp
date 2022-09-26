@@ -533,12 +533,10 @@ function jwppp_options() {
 			echo '<a href="https://developer.jwplayer.com/jwplayer/reference/building-a-request#site-id" title="Get your Site ID" target="_blank"><img class="question-mark" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a>';
 			echo '<a href="https://developer.jwplayer.com/jwplayer/reference/api-v2-authentication" title="Get your API v2 Secret" target="_blank"><img class="question-mark second" src="' . esc_url( plugin_dir_url( __DIR__ ) ) . 'images/question-mark.png" /></a></th>';
 			echo '<td>';
-			echo '<input type="text" class="regular-text" id="jwppp-api-key" name="jwppp-api-key" placeholder="' . esc_attr( __( 'Add your Site ID', 'jwppp' ) ) . '" disabled="disabled"/><br>';
+			echo '<input type="text" class="regular-text" id="jwppp-api-key" name="jwppp-api-key" placeholder="' . esc_attr( __( 'Add your Site ID', 'jwppp' ) ) . '" /><br>';
             echo '<p></p>';
-			echo '<input type="text" class="regular-text" id="jwppp-api-secret-v2" name="jwppp-api-secret-v2" placeholder="' . esc_attr( __( 'Add your API Secret', 'jwppp' ) ) . '" disabled="disabled" />';
+			echo '<input type="text" class="regular-text" id="jwppp-api-secret-v2" name="jwppp-api-secret-v2" placeholder="' . esc_attr( __( 'Add your API Secret', 'jwppp' ) ) . '" />';
 			echo '<p class="description">' . esc_html( __( 'Site ID and API Secret', 'jwppp' ) ) . '</p>';
-
-			go_premium( __( 'Connect to your JW Player Dashboard and get your contents directly', 'jwppp') );
 
 		}
 

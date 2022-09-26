@@ -13,6 +13,7 @@ require( JWPPP_INCLUDES . 'jwppp-video-tools.php' );
 require( JWPPP_INCLUDES . 'jwppp-save-single-video-data.php' );
 require( JWPPP_INCLUDES . 'jwppp-sh-player-options.php' );
 require( JWPPP_INCLUDES . 'jwppp-player-code.php' );
+require( JWPPP_DIR . 'classes/class-jwppp-dashboard-api.php' );
 
 /**
  * Add meta box
