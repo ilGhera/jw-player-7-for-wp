@@ -634,17 +634,29 @@ add_shortcode( 'jwp-video', 'jwppp_player_s_code' );
 
 /**
  * Used for old JW Player shortcodes only with contents from the dashboard
- * @param  string $media_id the media id
- * @return string           the code block
+ * @param  string $media  the media.
+ * @return string         the code block
  */
-function jwppp_simple_player_code( $media_id ) {
+function jwppp_simple_player_code( $media ) {
 
-    $playlist = is_cloud_playlist( get_the_ID(), null, $media_id );
-    $resource = $playlist ? 'https://cdn.jwplayer.com/v2/playlists/' . $media_id : 'https://cdn.jwplayer.com/v2/media/' . $media_id; 
+    /*Is the video self hosted?*/
+    $sh_video = strrpos( $media, 'http' ) === 0 ? true : false;
+
+    if ( ! $sh_video ) {
+    
+        $playlist = is_cloud_playlist( get_the_ID(), null, $media );
+        $resource = $playlist ? 'https://cdn.jwplayer.com/v2/playlists/' . $media : 'https://cdn.jwplayer.com/v2/media/' . $media; 
+        $attr     = $media;
+
+    } else {
+
+        $attr = md5( $media );
+
+    }
 
 	/*Output the player*/
-	echo "<div id='jwppp-video-box-" . esc_attr( $media_id ) . "' class='jwppp-video-box' data-video='" . esc_attr( $media_id ) . "' style=\"margin: 1rem 0;\">\n";
-		echo  "<div id='jwppp-video-" . esc_attr( $media_id ) . "'>";
+	echo "<div id='jwppp-video-box-" . esc_attr( $attr ) . "' class='jwppp-video-box' data-video='" . esc_attr( $media ) . "' style=\"margin: 1rem 0;\">\n";
+		echo  "<div id='jwppp-video-" . esc_attr( $attr ) . "'>";
 		if ( sanitize_text_field( get_option( 'jwppp-text' ) ) !== null ) {
 			echo esc_html( get_option( 'jwppp-text' ) );
 		} else {
@@ -656,14 +668,33 @@ function jwppp_simple_player_code( $media_id ) {
 		$security_urls = get_option( 'jwppp-secure-video-urls' );
 
 		echo "<script type='text/javascript'>\n";
-			echo "var playerInstance_" . trim( wp_json_encode( $media_id ), '"' ) . " = jwplayer(" . wp_json_encode( 'jwppp-video-' . $media_id ) . ");\n";
-			echo "playerInstance_" . trim( wp_json_encode( $media_id ), '"' ) . ".setup({\n";
+			echo "var playerInstance_" . trim( wp_json_encode( $attr ), '"' ) . " = jwplayer(" . wp_json_encode( 'jwppp-video-' . $attr ) . ");\n";
+			echo "playerInstance_" . trim( wp_json_encode( $attr ), '"' ) . ".setup({\n";
 
-			if ( $security_urls ) {
-					echo "playlist: " . wp_json_encode( jwppp_get_signed_url( $media_id, false, false, $playlist ), JSON_UNESCAPED_SLASHES ) . ",\n";
-			} else {
-				echo "playlist: " . wp_json_encode( $resource, JSON_UNESCAPED_SLASHES ) . ",\n";
-			}
+            if ( $sh_video ) {
+
+                echo "file: " . wp_json_encode( $media, JSON_UNESCAPED_SLASHES ) . ",\n";
+
+            } else {
+
+                if ( $security_urls ) {
+                    echo "playlist: " . wp_json_encode( jwppp_get_signed_url( $media, false, false, $playlist ), JSON_UNESCAPED_SLASHES ) . ",\n";
+                } else {
+                    echo "playlist: " . wp_json_encode( $resource, JSON_UNESCAPED_SLASHES ) . ",\n";
+                }
+
+            }
+
+            /* Poster image */
+            if ( has_post_thumbnail( get_the_ID() ) && 1 === intval( get_option( 'jwppp-post-thumbnail' ) ) ) {
+
+                echo "image: " . wp_json_encode( get_the_post_thumbnail_url(), JSON_UNESCAPED_SLASHES ) . ",\n";
+
+            } else if ( get_option( 'jwppp-poster-image' ) ) {
+
+                echo "image: " . wp_json_encode( get_option( 'jwppp-poster-image' ), JSON_UNESCAPED_SLASHES ) . ",\n";
+
+            }
 
 			/*Is it a dashboard player?*/
 			$dashboard_player = is_dashboard_player();
@@ -682,13 +713,34 @@ function jwppp_simple_player_code( $media_id ) {
 
 /**
  * Old JW Player shortcode
- * @param  array $var the shortcode attributes available, the media id in this case
- * @return string     the code block
+ * @param  array $vars the media ID or the full URL.
+ * @return string      the code block
  */
-function jwppp_old_player_s_code( $var ) {
-	ob_start();
-	jwppp_simple_player_code( $var[0] );
-	$output = ob_get_clean();
+function jwppp_old_player_s_code( $vars ) {
+
+    $var    = null;
+    $output = null;
+
+    if ( isset( $vars[0] ) ) {
+
+        $var = $vars[0];
+
+    } elseif ( isset( $vars['file'] ) ) {
+
+        $var = $vars['file'];
+
+    }
+
+    if ( $var ) {
+
+        ob_start();
+
+        jwppp_simple_player_code( $var );
+
+        $output = ob_get_clean();
+
+    }
+
 	return $output;
 }
 add_shortcode( 'jwplayer', 'jwppp_old_player_s_code' );
@@ -795,11 +847,9 @@ function jwppp_search_content_callback() {
 			if ( $term ) {
 				$videos    = $api->search( $term );
 				$playlists = $api->search( $term, true );
-                error_log( 'SEARCH: ' . print_r( $playlists, true ) );
 			} else {
 				$videos    = $api->get_videos();
 				$playlists = $api->get_playlists();
-                error_log( 'PLAYLISTS: ' . print_r( $playlists, true ) );
 			}
 
 			echo wp_json_encode(
