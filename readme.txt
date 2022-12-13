@@ -1,9 +1,9 @@
 === JW Player for WordPress ===
 Contributors: ghera74
 Tags: jw player, jw player 7, jw player 8, jwplayer, jwplayer 7, jwplayer 8, video, embed video, youtube, related videos, video preroll, video chapters, video subtitles
-Version: 2.3.0
+Version: 2.3.1
 Requires at least: 4.0
-Tested up to: 6.0
+Tested up to: 6.1
 License: GPLv2
 
 **JW Player for WordPress** enables you to publish videos on your WordPress posts and pages using the most popular video player on the web. Take complete control of your player, from branding to size and dimensions. Allow users share and embed your videos from your WordPress pages & posts.
@@ -78,6 +78,12 @@ That’s it, you’re ready to go!
 
 
 == Changelog ==
+
+= 2.3.1 =
+Release Date: 13 December 2022
+
+* Enhancement : Support shortcodes like *[jwplayer file="https://example.com/videos/video.mp4"]*
+
 
 = 2.3.0 =
 Release Date: 26 September 2022
