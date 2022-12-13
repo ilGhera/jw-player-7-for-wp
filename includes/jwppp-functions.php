@@ -391,7 +391,7 @@ function jwppp_search_yt( $jwppp_video_url = '', $number = '' ) {
  *
  * @return bool
  */
-function is_cloud_playlist( $post_id, $video_number = null, $media_id, $security_urls = false ) {
+function is_cloud_playlist( $post_id, $video_number = null, $media_id = null, $security_urls = false ) {
 
     $output  = false;
     $code    = $video_number ? $video_number : $media_id;
