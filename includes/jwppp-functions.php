@@ -237,7 +237,9 @@ function jwppp_db_delete_video( $post_id, $number ) {
  */
 function jwppp_add_header_code() {
 
-    wp_enqueue_script( 'jwppp', plugin_dir_url( __DIR__ ) . 'js/jwppp.js', array( 'jquery' ) );
+    if ( ! is_archive() ) {
+        wp_enqueue_script( 'jwppp', plugin_dir_url( __DIR__ ) . 'js/jwppp.js', array( 'jquery' ) );
+    }
 
 	$library = sanitize_text_field( get_option( 'jwppp-library' ) );
 
