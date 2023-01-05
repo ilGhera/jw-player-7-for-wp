@@ -177,7 +177,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 			$jwppp_playlist_carousel ? jwppp_playlist_carousel( $this_video ) : '';
 
             /* Do not duplicate the main player */
-            if ( $choose_player !== $player_parts[0] ) {
+            if ( $choose_player ) {
 
                 /*Player choose - library*/
                 if ( $security_embeds ) {
@@ -263,7 +263,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 			if ( $dashboard_player ) {
                 
                 /* Do not duplicate the main player */
-                if ( $choose_player !== $player_parts[0] ) {
+                if ( $choose_player ) {
 
                     /*Player choose - library*/
                     if ( $security_embeds ) {

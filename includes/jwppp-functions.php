@@ -247,7 +247,8 @@ function jwppp_add_header_code() {
 
 		$library = $security_embeds ? jwppp_get_signed_embed( $player_parts[0] ) : $get_library;
 		if ( null !== $library ) {
-			wp_enqueue_script( 'jwppp-library', $library );
+            /* Not loaded in head anymore */
+			/* wp_enqueue_script( 'jwppp-library', $library ); */
 		}
 
 		/*JW Widget for Playlist Carousel*/
@@ -490,7 +491,7 @@ function jwppp_ads_tag_exists( $tags, $tag ) {
  *
  * @return bool
  */
-function is_cloud_playlist( $post_id, $video_number = null, $media_id, $security_urls = false ) {
+function is_cloud_playlist( $post_id, $video_number = null, $media_id = null, $security_urls = false ) {
 
     $output  = false;
     $code    = $video_number ? $video_number : $media_id;
