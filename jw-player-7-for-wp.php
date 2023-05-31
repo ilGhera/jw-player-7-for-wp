@@ -9,7 +9,7 @@
  * Version: 2.3.2
  * Author URI: https://www.ilghera.com/
  * Requires at least: 4.0
- * Tested up to: 6.1
+ * Tested up to: 6.2
  * Text Domain: jwppp
  */
 
