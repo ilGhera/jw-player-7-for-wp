@@ -1,0 +1,3 @@
+[submodule "admin/ilghera-notice"]
+	path = admin/ilghera-notice
+	url = git@bitbucket.org:ilGhera/ilghera-notice.git
