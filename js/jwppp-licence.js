@@ -6,4 +6,7 @@
  */
 
 var licence = data.licence;
-jwplayer.key = licence;
+
+if ( typeof  jwplayer != 'undefined' ) {
+    jwplayer.key = licence;
+}
