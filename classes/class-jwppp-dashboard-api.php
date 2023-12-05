@@ -9,6 +9,42 @@
 class JWPPP_Dashboard_Api {
 
     /**
+     * The API public key
+     *
+     * @var string
+     */
+    public $api_key;
+
+    /**
+     * The API v1 secret key
+     *
+     * @var string
+     */
+    public $api_secret;
+
+    /**
+     * The API v1 secret key
+     *
+     * @var string
+     */
+    public $api_secret_v2;
+
+    /**
+     * The endpoint URL
+     *
+     * @var string
+     */
+    public $url;
+
+    /**
+     * Check if key and secret are set
+     *
+     * @var object
+     */
+    public $args_check;
+
+    
+    /**
      * The constructor
      *
      * @return void
