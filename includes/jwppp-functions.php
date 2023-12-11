@@ -149,9 +149,16 @@ function jwppp_single_video_box( $post_id, $number ) {
 
 /**
  * Output the jwppp meta box with all videos
- * @param  object $post the post
+ *
+ * @param object $post the post.
+ *
+ * @return void
  */
-function jwppp_meta_box_callback( $post ) {
+function jwppp_meta_box_callback( $post, $print = false ) {
+
+    if ( ! is_object( $post ) ) {
+        return;
+    }
 
 	$jwppp_videos = jwppp_get_post_videos( $post->ID );
 
@@ -167,7 +174,131 @@ function jwppp_meta_box_callback( $post ) {
 
 /*temp*/
 add_action( 'wp_ajax_jwppp_ajax_add', 'jwppp_ajax_add_video_callback' );
-add_action( 'wp_ajax_jwppp_ajax_remove', 'jwppp_ajax_remove_video_callback' );
+
+
+/**
+ * Rebase the numbers of the post's videos
+ *
+ * @param int $post_id the WP post ID.
+ * @param int $number  the number of the video deleted.
+ *
+ * @return void
+ */
+function jwppp_rebase_post_videos( $post_id, $number ) {
+
+	$videos = jwppp_get_post_videos( $post_id );
+
+    foreach ( $videos as $key => $value ) {
+
+        $parts = explode( '_jwppp-video-url-', $key );
+        $n     = isset( $parts[1] ) ? $parts[1] : null;
+        $new_number = intval( $n - 1 );
+
+        if ( is_numeric( $n ) && $n > $number ) {
+
+            jwppp_rebase_single_video( $post_id, $n, $new_number );
+
+        }
+
+    }
+
+}
+
+
+/**
+ * Change the single video number in the database
+ *
+ * @param int $number     the current number of the video.
+ * @param int $new_number the new number of the video.
+ *
+ * @return void
+ */
+function jwppp_rebase_single_video( $post_id, $number, $new_number ) {
+
+    $keys = array(
+        '_jwppp-video-url-',
+        '_jwppp-video-mobile-url-',
+        '_jwppp-video-image-',
+        '_jwppp-video-title-'	,
+        '_jwppp-video-description-',
+        '_jwppp-autoplay-',
+        '_jwppp-single-embed-',
+        '_jwppp-activate-media-type-',
+        '_jwppp-media-type-',
+        '_jwppp-choose-player-'	,
+        '_jwppp-playlist-carousel-',
+        '_jwppp-mute-',
+        '_jwppp-repeat-',
+        '_jwppp-ads-tag-',
+        '_jwppp-add-chapters-',
+        '_jwppp-chapters-subtitles-',
+        '_jwppp-subtitles-method-',
+        '_jwppp-playlist-items-',
+        '_jwppp-video-duration-',
+        '_jwppp-video-tags-',
+    );
+
+    foreach ( $keys as $key ) {
+
+        /* Get value */
+        $value = get_post_meta( $post_id, $key . $number, true );
+
+        /* Add value to new meta */
+        update_post_meta( $post_id, $key . $new_number, $value );
+
+        /* Delete old meta */
+        delete_post_meta( $post_id, $key . $number );
+
+    }
+
+	/*Update all sources and labels*/
+	$sources = get_post_meta( $post_id, '_jwppp-sources-number-' . $number, true );
+
+	if ( $sources ) {
+
+		for ( $i = 0; $i <= ( $sources + 1 ); $i++ ) {
+
+			$main_label = get_post_meta( $post_id, '_jwppp-' . $number . '-main-source-label', true );
+			$url        = get_post_meta( $post_id, '_jwppp-' . $number . '-source-' . $i . '-url', true );
+			$label      = get_post_meta( $post_id, '_jwppp-' . $number . '-source-' . $i . '-label', true );
+
+			update_post_meta( $post_id, '_jwppp-' . $new_number . '-main-source-label', $main_label );
+			update_post_meta( $post_id, '_jwppp-' . $new_number . '-source-' . $i . '-url', $url );
+			update_post_meta( $post_id, '_jwppp-' . $new_number . '-source-' . $i . '-label', $label );
+
+			delete_post_meta( $post_id, '_jwppp-' . $number . '-main-source-label' );
+			delete_post_meta( $post_id, '_jwppp-' . $number . '-source-' . $i . '-url' );
+			delete_post_meta( $post_id, '_jwppp-' . $number . '-source-' . $i . '-label' );
+
+		}
+
+		update_post_meta( $post_id, '_jwppp-sources-number-' . $new_number, $sources );
+	}
+
+	/*Update all chapters*/
+	$chapters = get_post_meta( $post_id, '_jwppp-chapters-number-' . $number );
+
+	if ( $chapters ) {
+
+		for ( $n = 0; $n <= ( (int) $chapters + 1 ); $n++ ) {
+
+			$title = get_post_meta( $post_id, '_jwppp-' . $number . '-chapter-' . $n . '-title', true );
+			$start = get_post_meta( $post_id, '_jwppp-' . $number . '-chapter-' . $n . '-start', true );
+			$end   = get_post_meta( $post_id, '_jwppp-' . $number . '-chapter-' . $n . '-end', true );
+
+			update_post_meta( $post_id, '_jwppp-' . $new_number . '-chapter-' . $n . '-title', $title );
+			update_post_meta( $post_id, '_jwppp-' . $new_number . '-chapter-' . $n . '-start', $start );
+			update_post_meta( $post_id, '_jwppp-' . $new_number . '-chapter-' . $n . '-end', $end );
+
+			delete_post_meta( $post_id, '_jwppp-' . $number . '-chapter-' . $n . '-title' );
+			delete_post_meta( $post_id, '_jwppp-' . $number . '-chapter-' . $n . '-start' );
+			delete_post_meta( $post_id, '_jwppp-' . $number . '-chapter-' . $n . '-end' );
+		}
+
+		update_post_meta( $post_id, '_jwppp-chapters-number-' . $new_number, $chapters );
+	}
+
+}
 
 
 /**
@@ -314,12 +445,15 @@ function jwppp_backend_scripts() {
 		/*Remove a video in a post/ page*/
 		wp_enqueue_script( 'jwppp-remove-video', plugin_dir_url( __DIR__ ) . 'js/jwppp-remove-video.js', array( 'jquery' ) );
 
+        $loading = sprintf( '<div class="jwppp-rebase-videos loading"><img src="%simages/loading-2.gif"></div>', JWPPP_URI );
+
 		wp_localize_script(
 			'jwppp-remove-video',
 			'jwpppRemoveVideo',
 			array(
 				'postId'      => $post_id,
 				'removeNonce' => $nonce_remove_video,
+                'loading'     => $loading,
 			)
 		);
 

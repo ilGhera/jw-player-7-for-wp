@@ -383,6 +383,11 @@ tr.ads-options.bidding.gdpr select {
     margin-top: 2rem;
 }
 
+.jwppp-rebase-videos.loading {
+    width: 100%;
+    text-align: center;
+}
+
 @media screen and (max-width: 1720px) {
 	.jwppp-video-details {
 		width: 300px;
