@@ -20,9 +20,29 @@ jQuery( document ).ready( function( $ ) {
 			'post_id': postId
 		};
 
+        if ( data.number <  $( '.jwppp-input-wrap:visible' ).length ) {
+            data.rebase = 1;
+
+            $('#jwppp-box .inside').html( jwpppRemoveVideo.loading );
+
+        }
+
 		$.post( ajaxurl, data, function( response ) {
-			var element = '.jwppp-' + response;
-			$( element ).remove();
+
+            console.log( 'RESPONSE', response );
+
+            if ( ! data.rebase ) {
+
+                var element = '.jwppp-' + response;
+                $( element ).remove();
+
+            } else {
+
+                setTimeout(function(){
+                    $('#jwppp-box .inside').html(response);
+                }, 1000)
+
+            }
 
 			/*Change playlist-how-to*/
 			tot = $( '.jwppp-input-wrap:visible' ).length;
