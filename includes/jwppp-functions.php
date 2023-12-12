@@ -154,7 +154,7 @@ function jwppp_single_video_box( $post_id, $number ) {
  *
  * @return void
  */
-function jwppp_meta_box_callback( $post, $print = false ) {
+function jwppp_meta_box_callback( $post ) {
 
     if ( ! is_object( $post ) ) {
         return;
