@@ -236,6 +236,7 @@ function jwppp_rebase_single_video( $post_id, $number, $new_number ) {
         '_jwppp-playlist-items-',
         '_jwppp-video-duration-',
         '_jwppp-video-tags-',
+        '_jwppp-cloud-playlist-',
     );
 
     foreach ( $keys as $key ) {
@@ -328,6 +329,7 @@ function jwppp_db_delete_video( $post_id, $number ) {
 	delete_post_meta( $post_id, '_jwppp-playlist-items-' . $number );
 	delete_post_meta( $post_id, '_jwppp-video-duration-' . $number );
 	delete_post_meta( $post_id, '_jwppp-video-tags-' . $number );
+	delete_post_meta( $post_id, '_jwppp-cloud-playlist-' . $number );
 
 	/*Delete all sources and labels*/
 	$sources = get_post_meta( $post_id, '_jwppp-sources-number-' . $number, true );
