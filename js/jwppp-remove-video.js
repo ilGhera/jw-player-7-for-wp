@@ -1,7 +1,9 @@
 /**
  * Remove a video in a post/ page
+ *
  * @author ilGhera
- * @package jw-player-for-vip/js
+ * @package jw-player-7-for-wp-premium/js
+ *
  * @since 2.0.0
  *
  */
@@ -9,9 +11,28 @@ jQuery( document ).ready( function( $ ) {
 
 	var postId 	    = jwpppRemoveVideo.postId;
 	var removeNonce = jwpppRemoveVideo.removeNonce;
+    var loadingGif  = jwpppRemoveVideo.loading; 
+    var height = $('#jwppp-box .inside').height();
+    var width  = $('#jwppp-box .inside').width();
 	var tot;
 	var string;
 
+    /**
+     * Add a loading GIF to the container
+     *
+     * @return void
+     */
+    var rebaseLoading = function( height, width ) {
+        $(loadingGif).height( height );
+        $(loadingGif).width( width );
+        $('#jwppp-box .inside').html( loadingGif );
+    }
+
+    /**
+     * Events on removing a video
+     *
+     * @return void
+     */
 	$( document ).on( 'click', '.jwppp-remove', function() {
 		var data = {
 			'action': 'jwppp_ajax_remove',
@@ -23,13 +44,12 @@ jQuery( document ).ready( function( $ ) {
         if ( data.number <  $( '.jwppp-input-wrap:visible' ).length ) {
             data.rebase = 1;
 
-            $('#jwppp-box .inside').html( jwpppRemoveVideo.loading );
+            // Add a loading GIF
+            rebaseLoading( height, width );
 
         }
 
 		$.post( ajaxurl, data, function( response ) {
-
-            console.log( 'RESPONSE', response );
 
             if ( ! data.rebase ) {
 
@@ -44,7 +64,7 @@ jQuery( document ).ready( function( $ ) {
 
             }
 
-			/*Change playlist-how-to*/
+			/* Change playlist-how-to */
 			tot = $( '.jwppp-input-wrap:visible' ).length;
 			if ( 1 == tot ) {
 				$( '.playlist-how-to' ).hide( 'slow' );
