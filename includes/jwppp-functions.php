@@ -376,13 +376,13 @@ function jwppp_add_header_code() {
         wp_enqueue_script( 'jwppp', plugin_dir_url( __DIR__ ) . 'js/jwppp.js', array( 'jquery' ) );
     }
 
-	$library = sanitize_text_field( get_option( 'jwppp-library' ) );
+	$get_library = sanitize_text_field( get_option( 'jwppp-library' ) );
 
 	/*Is it a dashboard player?*/
 	$dashboard_player = is_dashboard_player();
 
-    if ( null !== $library ) {
-        wp_enqueue_script( 'jwppp-library', $library );
+    if ( null !== $get_library ) {
+        wp_enqueue_script( 'jwppp-library', $get_library );
     }
 
 	/*Default dashboard player informations*/
