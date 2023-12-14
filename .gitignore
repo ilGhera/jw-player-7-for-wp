@@ -2,6 +2,7 @@
 /vendor/
 /node_modules/
 /plugin-update-checker/
+/admin/ilghera-notice/
 
 # Files
 composer.json
