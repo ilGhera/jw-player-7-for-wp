@@ -17,6 +17,7 @@ function jwppp_video_tools( $post_id, $number, $sh_video ) {
 	/*Single video details*/
 	$video_title       = get_post_meta( $post_id, '_jwppp-video-title-' . $number, true );
 	$video_description = get_post_meta( $post_id, '_jwppp-video-description-' . $number, true );
+    $player_version    = get_option( 'jwppp-player-version' );
 
 	/*Used only with self hosted vidoes*/
 	$jwppp_activate_media_type = get_post_meta( $post_id, '_jwppp-activate-media-type-' . $number, true );
