@@ -5,7 +5,7 @@
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
  *
- * @since 2.3.2
+ * @since 2.3.3
  */
 
 /*Files required*/

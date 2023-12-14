@@ -6,7 +6,7 @@
  * @package jw-player-7-for-wp/classes
  *
  *
- * @since 2.0.0
+ * @since 2.3.3
  */
 
 /**

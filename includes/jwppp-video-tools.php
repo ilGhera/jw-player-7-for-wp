@@ -1,13 +1,21 @@
 <?php
 /**
  * Single video tools
+ *
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
- * @since 2.2.0
- * @param  int $post_id    the post id
- * @param  int $number     the video number
- * @param  bool $sh_video  is the video sel-hosted?
- * @return mixed           all the tools for the single video
+ *
+ * @since 2.3.3
+ */
+
+/**
+ * JWPPP Video Tools
+ *
+ * @param  int $post_id    the post id.
+ * @param  int $number     the video number.
+ * @param  bool $sh_video  self-hosted video with true.
+ *
+ * @return mixed all the tools for the single video
  */
 function jwppp_video_tools( $post_id, $number, $sh_video ) {
 

@@ -5,7 +5,7 @@
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
  *
- * @since 2.0.0
+ * @since 2.3.3
  */
 function jwppp_ajax_remove_video_callback() {
 
