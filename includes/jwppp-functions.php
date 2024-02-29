@@ -17,7 +17,7 @@ require( JWPPP_INCLUDES . 'jwppp-player-code.php' );
 require( JWPPP_DIR . 'classes/class-jwppp-dashboard-api.php' );
 
 require_once( JWPPP_DIR . 'libraries/JWT.php' );
-use \Firebase\JWT\JWT;
+use \ilGhera\JWT\JWT;
 
 /**
  * Add meta box
