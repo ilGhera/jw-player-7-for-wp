@@ -263,8 +263,10 @@ add_action( 'wp_ajax_add_ads_tag', 'jwppp_ads_tag_callback' );
  */
 function jwppp_ads_var_callback() {
 
-	$tag = isset( $_POST['tag'] ) ? sanitize_text_field( wp_unslash( $_POST['tag'] ) ) : '';
-	if ( $tag ) {
+	$tag   = isset( $_POST['tag'] ) ? sanitize_text_field( wp_unslash( $_POST['tag'] ) ) : '';
+	$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+
+	if ( $tag && wp_verify_nonce( $nonce, 'jwppp-tag' ) ) {
 		update_option( 'jwppp-ads-var', $tag );
 	}
 
