@@ -53,9 +53,9 @@ function jwppp_enqueue_scripts() {
 		if ( 'toplevel_page_jw-player-for-wp' === $admin_page->base ) {
 
 			/*tzCheckBox*/
-			wp_enqueue_style( 'tzcheckbox-style', JWPPP_URI . 'js/tzCheckbox/jquery.tzCheckbox/jquery.tzCheckbox.css' );
-			wp_enqueue_script( 'tzcheckbox', JWPPP_URI . 'js/tzCheckbox/jquery.tzCheckbox/jquery.tzCheckbox.js', array( 'jquery' ) );
-			wp_enqueue_script( 'tzcheckbox-script', JWPPP_URI . 'js/tzCheckbox/js/script.js', array( 'jquery' ) );
+			wp_enqueue_style( 'tzcheckbox-style', JWPPP_URI . 'js/tzCheckbox/jquery.tzCheckbox/jquery.tzCheckbox.css', array(), JWPPP_VERSION );
+			wp_enqueue_script( 'tzcheckbox', JWPPP_URI . 'js/tzCheckbox/jquery.tzCheckbox/jquery.tzCheckbox.js', array( 'jquery' ), JWPPP_VERSION, false );
+			wp_enqueue_script( 'tzcheckbox-script', JWPPP_URI . 'js/tzCheckbox/js/script.js', array( 'jquery' ), JWPPP_VERSION, false );
 
 			$jwplayer   = sanitize_text_field( get_option( 'jwppp-library' ) );
 			$nonce_skin = wp_create_nonce( 'jwppp-nonce-skin' );
@@ -362,7 +362,7 @@ function jwppp_ad_partner( $i, $hide, $data = array(), $exclude = array() ) {
 
 	echo '<li class="single-partner-' . esc_attr( $i ) . ' single-partner" data-number="' . esc_attr( $i ) . '"' . esc_attr( $hide ) . '>';
 	echo '<select id="jwppp-ad-partner-' . esc_attr( $i ) . '" class="jwppp-ad-partner" name="jwppp-ad-partner-' . esc_attr( $i ) . '">';
-	echo '<option>' . esc_html( 'Select an ad partner', 'jwppp' ) . '</option>';
+	echo '<option>' . esc_html__( 'Select an ad partner', 'jwppp' ) . '</option>';
 
 	foreach ( $partners as $partner ) {
 
@@ -557,7 +557,7 @@ function jwppp_options() {
 		foreach ( $jwppp_get_types as $type ) {
 			$var_type = sanitize_text_field( get_option( 'jwppp-type-' . $type ) );
 
-			if ( isset( $_POST['done'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( $_POST['hidden-nonce-options'], 'jwppp-nonce-options' ) ) {
+			if ( isset( $_POST['done'], $_POST['hidden-nonce-options'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['hidden-nonce-options'] ) ), 'jwppp-nonce-options' ) ) {
 
 				$var_type = isset( $_POST[ $type ] ) ? sanitize_text_field( wp_unslash( $_POST[ $type ] ) ) : 0;
 				update_option( 'jwppp-type-' . $type, $var_type );
