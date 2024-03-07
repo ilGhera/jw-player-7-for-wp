@@ -3,6 +3,7 @@
  * The player code block
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
+ *
  * @since 2.3.0
  *
  * @param  int    $p            the post id

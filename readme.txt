@@ -1,7 +1,8 @@
 === JW Player for WordPress ===
 Contributors: ghera74
 Tags: jw player, jw player 7, jw player 8, jwplayer, jwplayer 7, jwplayer 8, video, embed video, youtube, related videos, video preroll, video chapters, video subtitles
-Version: 2.3.3
+Version: 2.3.4
+Stable tag: 2.3.4
 Requires at least: 4.0
 Tested up to: 6.4
 License: GPLv2
@@ -78,6 +79,12 @@ That’s it, you’re ready to go!
 
 
 == Changelog ==
+
+= 2.3.4 =
+Release Date: 7 March 2024
+
+* Bug: Premium function removed 
+
 
 = 2.3.3 =
 Release Date: 14 December 2023 

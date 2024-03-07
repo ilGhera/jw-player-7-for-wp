@@ -3,7 +3,8 @@
  * Plugin options page
  * @author ilGhera
  * @package jw-player-7-for-wp/admin
- * @since 2.3.0
+ *
+ * @since 2.3.4
  */
 
 /**
