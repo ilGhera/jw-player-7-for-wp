@@ -35,6 +35,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 	if ( $active_ads_var ) {
 		$ads_var_name = sanitize_text_field( get_option( 'jwppp-ads-var-name' ) );
 		$ajaxurl = admin_url( 'admin-ajax.php' );
+        $nonce = wp_create_nonce( 'jwppp-tag' ); 
 		?>
 		<script>
 			jQuery(document).ready(function($){
@@ -46,7 +47,8 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 				}
 				var data = {
 					'action': 'ads-var',
-					'tag': JSON.stringify( tag )
+                    'nonce': '<?php echo $nonce; ?>',
+                    'tag': JSON.stringify( tag )
 				}
 				$.post(ajaxurl, data, function(response){
 				})
