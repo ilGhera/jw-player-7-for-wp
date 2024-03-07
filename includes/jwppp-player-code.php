@@ -5,7 +5,7 @@
  * @author ilGhera
  * @package jw-player-7-for-wp/includes
  *
- * @since 2.3.0
+ * @since 2.3.4
  *
  * @param  int    $p            the post id
  * @param  int    $n            the number of video

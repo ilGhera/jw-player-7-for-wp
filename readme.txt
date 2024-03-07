@@ -83,7 +83,7 @@ That’s it, you’re ready to go!
 = 2.3.4 =
 Release Date: 7 March 2024
 
-* Bug: Premium function removed 
+* Enhancement : Coding standard
 
 
 = 2.3.3 =
