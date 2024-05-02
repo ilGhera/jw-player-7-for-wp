@@ -280,7 +280,7 @@ function jwppp_ads_var_callback() {
 	$tag   = isset( $_POST['tag'] ) ? sanitize_text_field( wp_unslash( $_POST['tag'] ) ) : '';
 	$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 
-	if ( $tag && wp_verify_nonce( $nonce, 'jwppp-tag' ) ) {
+	if ( $tag && current_user_can( 'manage_options' ) && wp_verify_nonce( $nonce, 'jwppp-tag' ) ) {
 		update_option( 'jwppp-ads-var', $tag );
 	}
 
