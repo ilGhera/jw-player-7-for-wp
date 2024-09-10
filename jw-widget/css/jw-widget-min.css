@@ -1,7 +1,6 @@
 .jw-widget,
 .jw-widget.large {
     width: 100%;
-    max-width: 1030px;
     margin-top: 1rem;
 }
 
@@ -18,12 +17,10 @@
 
 .jw-widget.medium {
     width: 100%;
-    max-width: 800px;
 }
 
 .jw-widget.small {
     width: 100%;
-    max-width: 450px;
 }
 
 .jw-widget .jw-widget-title {
@@ -56,6 +53,7 @@
     font-size: 14px;
     margin: 10px 15px 0 0;
     width: 180px;
+    max-width: 100%;
 }
 
 .jw-widget .jw-widget-content .jw-widget-item .jw-content-image {
