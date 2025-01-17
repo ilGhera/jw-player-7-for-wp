@@ -146,7 +146,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 		$choose_player = get_post_meta( $p_id, '_jwppp-choose-player-' . $number, true ) ? get_post_meta( $p_id, '_jwppp-choose-player-' . $number, true ) : $player_parts[0];
 
 		/*Output the player*/
-		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' itemscope itemtype='http://schema.org/VideoObject' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
+		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' itemprop='video' itemscope itemtype='http://schema.org/VideoObject' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
 
             /*Check if the security option is activated*/
             $security_urls = get_option( 'jwppp-secure-video-urls' );
@@ -228,7 +228,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 	} elseif ( $jwppp_video_url && $sh_video ) {
 
-		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' itemscope itemtype='http://schema.org/VideoObject' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
+		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' itemprop='video' itemscope itemtype='http://schema.org/VideoObject' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
 
             echo $itemprop_title ? "<meta itemprop='name' content='" . esc_attr( $itemprop_title ) . "'/>\n" : null;
             echo $itemprop_description ? "<meta itemprop='description' content='" .  esc_attr( $itemprop_description ) . "'/>\n" : null;
