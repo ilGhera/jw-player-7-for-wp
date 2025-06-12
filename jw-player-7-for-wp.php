@@ -8,8 +8,8 @@
  * Author: ilGhera
  * Version: 2.1.0
  * Author URI: https://www.ilghera.com/
- * Requires at least: 4.0
- * Tested up to: 5.7
+ * Requires at least: 5.0
+ * Tested up to: 6.8
  * Text Domain: jwppp
  */
 
