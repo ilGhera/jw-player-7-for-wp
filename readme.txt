@@ -47,6 +47,12 @@ That’s it, you’re ready to go!
 == Changelog ==
 
 
+= 2.2.9 =
+Release Date: 12 June 2025
+
+* Enhancement : WordPress 6.8.1 support 
+* Update: Plugin Update Checker
+
 = 2.1.0 =
 Release Date: 15 June 2021
 
