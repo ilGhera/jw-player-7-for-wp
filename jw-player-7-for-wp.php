@@ -6,10 +6,10 @@
  * It works with the latest version of the famous video player and it gives you full control of all the options available.
  * Player customization, social sharing and advertising are just an example.
  * Author: ilGhera
- * Version: 2.3.4
+ * Version: 2.3.5
  * Author URI: https://www.ilghera.com/
- * Requires at least: 4.0
- * Tested up to: 6.4
+ * Requires at least: 5.0
+ * Tested up to: 6.8
  * Text Domain: jwppp
  */
 
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /*Define the plugin version*/
-define( 'JWPPP_VERSION', '2.3.4' );
+define( 'JWPPP_VERSION', '2.3.5' );
 
 /**
  * Fired on the activation.

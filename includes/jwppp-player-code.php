@@ -103,7 +103,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 		$self_content = strpos( $jwppp_video_url, 'http' );
 
 		/*Output the player*/
-		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' itemscope itemtype='http://schema.org/VideoObject' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
+		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' itemprop='video' itemscope itemtype='http://schema.org/VideoObject' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
 
 			$is_cloud_playlist = is_cloud_playlist( $p_id, $n, $jwppp_video_url );
 			$content_url       = $is_cloud_playlist ? 'https://cdn.jwplayer.com/v2/playlists/' . $jwppp_video_url : 'https://cdn.jwplayer.com/v2/media/' . $jwppp_video_url;
@@ -143,7 +143,7 @@ function jwppp_player_code( $p, $n, $ar, $width, $height, $pl_autostart, $pl_mut
 
 	} elseif ( $jwppp_video_url && $sh_video ) {
 
-		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' itemscope itemtype='http://schema.org/VideoObject' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
+		echo "<div id='jwppp-video-box-" . intval( $this_video ) . "' class='jwppp-video-box' itemprop='video' itemscope itemtype='http://schema.org/VideoObject' data-video='" . esc_attr( $n ) . "' style=\"margin: 1rem 0;\">\n";
 
 			echo $itemprop_title ? "<meta itemprop='name' content='" . esc_attr( $itemprop_title ) . "'/>\n" : null;
 			echo $itemprop_description ? "<meta itemprop='description' content='" . esc_attr( $itemprop_description ) . "'/>\n" : null;
