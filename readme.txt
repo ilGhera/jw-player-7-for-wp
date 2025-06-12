@@ -84,7 +84,7 @@ That’s it, you’re ready to go!
 Release Date: 12 June 2025
 
 * Enhancement : WordPress 6.8.1 support 
-* Update: Plugin Update Checker
+* Update: (Premium) Plugin Update Checker
 
 
 = 2.3.4 =
