@@ -44,7 +44,7 @@ echo '<table class="widefat jwppp-' . esc_attr( $number ) . '" style="margin: 0.
                 $cloud_playlist = get_post_meta( $post_id, '_jwppp-cloud-playlist-' . $number, true );
 
 				$sources_number = get_post_meta( $post_id, '_jwppp-sources-number-' . $number, true );
-
+	
 				$media_details = json_decode( stripslashes( get_post_meta( $post_id, '_jwppp-media-details', true ) ) );
 
 				/*Video selected details*/
@@ -65,12 +65,8 @@ echo '<table class="widefat jwppp-' . esc_attr( $number ) . '" style="margin: 0.
 					if ( $sh_video ) {
 						$video_image = get_post_meta( $post_id, '_jwppp-video-image-' . $number, true );
 					} else {
-						$single_video_image = 'https://cdn.jwplayer.com/thumbs/' . $video_url . '-720.jpg';
-						if ( @getimagesize( $single_video_image ) ) {
-							$video_image = $single_video_image;
-						} else {
-							$video_image = plugin_dir_url( __DIR__ ) . 'images/playlist4.png';
-						}
+						// For cloud videos, use the JW Player CDN thumbnail
+						$video_image = 'https://cdn.jwplayer.com/thumbs/' . $video_url . '-720.jpg';
 					}
 				}
 
@@ -124,6 +120,7 @@ echo '<table class="widefat jwppp-' . esc_attr( $number ) . '" style="margin: 0.
 					echo '<input type="text" id="_jwppp-video-url-' . esc_attr( $number ) . '" class="jwppp-url" name="_jwppp-video-url-' . esc_attr( $number ) . '" placeholder="' . esc_attr( __( 'Media URL', 'jwppp' ) ) . '" ';
 					echo ( '1' !== $video_url ) ? 'value="' . esc_attr( $video_url ) . '" ' : 'value="" ';
 					echo 'size="60" />';
+
 
 				echo '</p>';
 
