@@ -2,7 +2,7 @@
  * Used with player and media contents from the cloud
  * @author ilGhera
  * @package jw-player-7-for-wp/js
- * @since 2.2.0
+ * @since 2.1.0
  *
  * Fired when a media content in the list is clicked
  */
@@ -29,7 +29,7 @@ var JWPPPSelectContent = function() {
 				mediaId = null;
 				videoTitle = null;
 				$( '.jwppp-video-details-' + number ).empty();
-                $( '#_jwppp-cloud-playlist-' + number ).attr( 'value', '' );
+                $( 'input[name="_jwppp-cloud-playlist-' + number + '"]' ).val( '' ).prop( 'defaultValue', '' );
 
 			} else {
 
@@ -38,18 +38,20 @@ var JWPPPSelectContent = function() {
 
 			}
 
-			$( '#_jwppp-video-url-' + number + '.choose' ).attr( 'value', mediaId );
-			$( '#_jwppp-video-url-' + number + '.jwppp-url' ).attr( 'value', mediaId );
-			$( '#_jwppp-video-title-' + number ).attr( 'value', videoTitle );
-			$( '#_jwppp-video-title-' + number + '.jwppp-title' ).attr( 'value', videoTitle );
+			/*Update all URL inputs (both Choose and Add URL sections)*/
+			$( 'input[name="_jwppp-video-url-' + number + '"]' ).val( mediaId ).prop( 'defaultValue', mediaId );
+
+			/*Update all title inputs - both the visible search field and the hidden field*/
+			$( '#_jwppp-video-title-' + number ).val( videoTitle ).prop( 'defaultValue', videoTitle );
+			$( 'input[name="_jwppp-video-title-' + number + '"]' ).val( videoTitle ).prop( 'defaultValue', videoTitle );
 
 			/*Video details*/
 			if ( ! reset ) {
 
 				description = $( this ).data( 'description' );
 
-				$( '#_jwppp-video-description-' + number + '.choose' ).attr( 'value', description );
-				$( '#_jwppp-video-description-' + number + '.jwppp-description' ).attr( 'value', description );
+				$( 'input[name="_jwppp-video-description-' + number + '"]' ).val( description ).prop( 'defaultValue', description );
+				$( '#_jwppp-video-description-' + number + '.jwppp-description' ).val( description ).prop( 'defaultValue', description );
 
 				if ( $( this ).hasClass( 'playlist-element' ) ) {
 					items = $( this ).data( 'videos' ) ? $( this ).data( 'videos' ) : '0';
@@ -66,9 +68,9 @@ var JWPPPSelectContent = function() {
 
 					$( '.jwppp-video-details-' + number ).append( '<span>Items</span>: ' + items + '<br>' );
 
-					$( '#_jwppp-playlist-items-' + number ).attr( 'value', items );
+					$( 'input[name="_jwppp-playlist-items-' + number + '"]' ).val( items ).prop( 'defaultValue', items );
 
-                    $( '#_jwppp-cloud-playlist-' + number ).attr( 'value', 'yes' );
+                    $( 'input[name="_jwppp-cloud-playlist-' + number + '"]' ).val( 'yes' ).prop( 'defaultValue', 'yes' );
 
 				} else {
 
@@ -96,11 +98,11 @@ var JWPPPSelectContent = function() {
 						$( '.jwppp-video-details-' + number ).append( '<span>Tags</span>: ' + tags + '<br>' );
 					}
 
-					$( '#_jwppp-video-duration-' + number ).attr( 'value', duration );
+					$( 'input[name="_jwppp-video-duration-' + number + '"]' ).val( duration ).prop( 'defaultValue', duration );
 
-					$( '#_jwppp-video-tags-' + number ).attr( 'value', tags );
+					$( 'input[name="_jwppp-video-tags-' + number + '"]' ).val( tags ).prop( 'defaultValue', tags );
 
-                    $( '#_jwppp-cloud-playlist-' + number ).attr( 'value', 'no' );
+                    $( 'input[name="_jwppp-cloud-playlist-' + number + '"]' ).val( 'no' ).prop( 'defaultValue', 'no' );
 
 				}
 
@@ -293,3 +295,31 @@ var JWPPPSearchContent = function( number ) {
 	});
 };
 JWPPPSearchContent();
+
+
+/**
+ * Reset WordPress "dirty" flag after successful save
+ * This prevents the "Are you sure you want to reload?" popup after saving
+ */
+jQuery(document).ready(function($) {
+	// Reset dirty flag on page load if we just saved (message=1 or message=6 in URL)
+	var urlParams = new URLSearchParams(window.location.search);
+	if (urlParams.get('message') === '1' || urlParams.get('message') === '6') {
+		setTimeout(function() {
+			if (typeof wp !== 'undefined' && wp.autosave && wp.autosave.server) {
+				wp.autosave.server.postChanged = false;
+			}
+		}, 500);
+	}
+
+	// Listen for WordPress save events via heartbeat
+	$(document).on('heartbeat-tick', function(event, data) {
+		// Check if post was saved successfully
+		if (data['wp-refresh-post-lock']) {
+			// Reset the dirty flag
+			if (typeof wp !== 'undefined' && wp.autosave && wp.autosave.server) {
+				wp.autosave.server.postChanged = false;
+			}
+		}
+	});
+});
