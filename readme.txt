@@ -1,8 +1,8 @@
 === JW Player for WordPress ===
 Contributors: ghera74
 Tags: jw player, video player, embed video, video preroll, video subtitles
-Version: 2.3.5
-Stable tag: 2.3.5
+Version: 2.3.6
+Stable tag: 2.3.6
 Requires at least: 5.0
 Tested up to: 6.8
 License: GPLv2
@@ -79,6 +79,13 @@ That’s it, you’re ready to go!
 
 
 == Changelog ==
+
+= 2.3.6 =
+Release Date: 19 November 2025
+
+* Bug: Fixed video data not being saved when selecting content after switching from "Add URL" to "Choose" tab
+* Bug: Fixed browser reload confirmation popup appearing even after successful post save
+
 
 = 2.2.5 =
 Release Date: 12 June 2025
