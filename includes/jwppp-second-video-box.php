@@ -23,8 +23,8 @@ echo '<table class="widefat jwppp-' . esc_attr( $number ) . '" style="margin: 0.
 				if ( $dashboard_player ) {
 
 					echo '<ul class="jwppp-video-toggles ' . esc_attr( $number ) . '">';
-						echo '<li>' . esc_html( __( 'Choose', 'jwppp' ) ) . '</li>';
-						echo '<li class="active">' . esc_html( __( 'Add url', 'jwppp' ) ) . '</li>';
+						echo '<li data-video-type="choose">' . esc_html( __( 'Choose', 'jwppp' ) ) . '</li>';
+						echo '<li data-video-type="add-url" class="active">' . esc_html( __( 'Add url', 'jwppp' ) ) . '</li>';
 						echo '<div class="clear"></div>';
 					echo '</ul>';
 
@@ -33,13 +33,25 @@ echo '<table class="widefat jwppp-' . esc_attr( $number ) . '" style="margin: 0.
 						echo '<p>';
 
 							echo '<input type="text" autocomplete="off" id="_jwppp-video-title-' . esc_attr( $number ) . '" class="jwppp-search-content choose" data-number="' . esc_attr( $number ) . '" placeholder="' . esc_attr( __( 'Select video/playlist or search by ID', 'jwppp' ) ) . '" style="margin-right:1rem;" disabled="disabled"><br>';
+							echo '<input type="hidden" name="_jwppp-video-url-' . esc_attr( $number ) . '" id="_jwppp-video-url-' . esc_attr( $number ) . '" class="choose" value="">';
+							echo '<input type="hidden" name="_jwppp-cloud-playlist-' . esc_attr( $number ) . '" id="_jwppp-cloud-playlist-' . esc_attr( $number ) . '" class="choose" value="">';
+							echo '<input type="hidden" name="_jwppp-video-title-' . esc_attr( $number ) . '" id="_jwppp-video-title-' . esc_attr( $number ) . '" class="choose" value="">';
+							echo '<input type="hidden" name="_jwppp-video-description-' . esc_attr( $number ) . '" id="_jwppp-video-description-' . esc_attr( $number ) . '" class="choose" value="">';
+							echo '<input type="hidden" name="_jwppp-playlist-items-' . esc_attr( $number ) . '" id="_jwppp-playlist-items-' . esc_attr( $number ) . '" class="choose" value="">';
+							echo '<input type="hidden" name="_jwppp-video-duration-' . esc_attr( $number ) . '" id="_jwppp-video-duration-' . esc_attr( $number ) . '" class="choose" value="">';
+							echo '<input type="hidden" name="_jwppp-video-tags-' . esc_attr( $number ) . '" id="_jwppp-video-tags-' . esc_attr( $number ) . '" class="choose" value="">';
+
+							echo '<ul id="_jwppp-video-list-' . esc_attr( $number ) . '" data-number="' . esc_attr( $number ) . '" class="jwppp-video-list">';
+								echo '<span class="jwppp-list-container"></span>';
+							echo '</ul>';
+
 						echo '</p>';
 					echo '</div>';
 
 				}
 
 				/*Input url, both with cloud and self-hosted players*/
-				echo $dashboard_player ? '<div class="jwppp-toggle-content active">' : '';
+				echo $dashboard_player ? '<div class="jwppp-toggle-content ' . esc_attr( $number ) . ' add-url active">' : '';
 
 				if ( ! $dashboard_player ) {
 					echo '<label for="_jwppp-video-url-' . esc_attr( $number ) . '">';

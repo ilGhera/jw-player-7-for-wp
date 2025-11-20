@@ -81,8 +81,9 @@ That’s it, you’re ready to go!
 == Changelog ==
 
 = 2.3.6 =
-Release Date: 19 November 2025
+Release Date: 24 November 2025
 
+* Enhancement: Improved page loading performance by optimizing image handling
 * Bug: Fixed video data not being saved when selecting content after switching from "Add URL" to "Choose" tab
 * Bug: Fixed browser reload confirmation popup appearing even after successful post save
 
