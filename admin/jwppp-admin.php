@@ -131,6 +131,9 @@ add_action( 'admin_menu', 'jwppp_add_menu' );
  * @return void
  */
 function skin_customization_by_version_callback() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		exit;
+	}
 	if ( isset( $_POST['hidden-nonce-skin'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['hidden-nonce-skin'] ) ), 'jwppp-nonce-skin' ) ) {
 		$version = isset( $_POST['version'] ) ? sanitize_text_field( wp_unslash( $_POST['version'] ) ) : '';
 		if ( $version ) {
@@ -198,6 +201,9 @@ function is_dashboard_player( $player = null ) {
  * @return void
  */
 function jwppp_player_check_callback() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		exit;
+	}
 	if ( isset( $_POST['hidden-nonce-player-check'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['hidden-nonce-player-check'] ) ), 'jwppp-nonce-player-check' ) ) {
 		$player = isset( $_POST['player'] ) ? sanitize_text_field( wp_unslash( $_POST['player'] ) ) : '';
 		if ( $player ) {
@@ -257,6 +263,10 @@ function jwppp_ads_tag( $n, $tag = '' ) {
  */
 function jwppp_ads_tag_callback() {
 
+	if ( ! current_user_can( 'manage_options' ) ) {
+		exit;
+	}
+
 	if ( isset( $_POST['hidden-nonce-add-tag'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['hidden-nonce-add-tag'] ) ), 'jwppp-nonce-add-tag' ) ) {
 		$n = isset( $_POST['number'] ) ? sanitize_text_field( wp_unslash( $_POST['number'] ) ) : '';
 		if ( $n ) {
@@ -304,6 +314,10 @@ function jwppp_ad_partners() {
  * @return void
  */
 function jwppp_ad_partner_callback() {
+
+	if ( ! current_user_can( 'manage_options' ) ) {
+		exit;
+	}
 
 	if ( isset( $_POST['hidden-nonce-add-partner'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['hidden-nonce-add-partner'] ) ), 'jwppp-nonce-add-partner' ) ) {
 		$n             = isset( $_POST['number'] ) ? sanitize_text_field( wp_unslash( $_POST['number'] ) ) : '';

@@ -818,6 +818,10 @@ add_filter( 'the_content', 'jwppp_add_player' );
  */
 function jwppp_search_content_callback() {
 
+	if ( ! current_user_can( 'edit_posts' ) ) {
+		exit;
+	}
+
 	$api = new JWPPP_Dashboard_Api();
 
 	if ( isset( $_POST['number'], $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ) ) {
@@ -857,6 +861,10 @@ add_action( 'wp_ajax_search-content', 'jwppp_search_content_callback' );
  * Fired when the select element is clicked
  */
 function jwppp_list_content_callback() {
+
+	if ( ! current_user_can( 'edit_posts' ) ) {
+		exit;
+	}
 
 	if ( isset( $_POST['number'], $_POST[ 'hidden-meta-box-nonce-' . $_POST['number'] ] ) ) {
 

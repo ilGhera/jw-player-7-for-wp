@@ -9,7 +9,11 @@
  */
 function jwppp_ajax_remove_video_callback() {
 
-	if ( isset( $_POST['hidden-nonce-remove-video'] ) && wp_verify_nonce( $_POST['hidden-nonce-remove-video'], 'jwppp-nonce-remove-video' ) ) {
+	if ( ! current_user_can( 'edit_posts' ) ) {
+		exit();
+	}
+
+	if ( isset( $_POST['hidden-nonce-remove-video'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['hidden-nonce-remove-video'] ) ), 'jwppp-nonce-remove-video' ) ) {
 		$post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : '';
 		$number  = isset( $_POST['number'] ) ? intval( $_POST['number'] ) : '';
         $rebase  = isset( $_POST['rebase'] ) ? intval( $_POST['rebase'] ) : '';
