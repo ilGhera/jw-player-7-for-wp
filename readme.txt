@@ -85,7 +85,7 @@ Release Date: 19 April 2026
 
 * Security: Enhanced capability checks in AJAX callbacks - replaced generic `current_user_can('edit_posts')` with specific `current_user_can('edit_post', $post_id)` to prevent unauthorized access by contributors
 * Security: Added input validation for post_id parameter in search and list content callbacks
-* Fix: Complete resolution of Broken Access Control vulnerability (CVE-2026-XXXXX)
+* Fix: Complete resolution of Broken Access Control vulnerability (CVE-2026-39614)
 
 = 2.3.7 =
 Release Date: 12 April 2026
