@@ -219,6 +219,7 @@ var JWPPPSearchContent = function( number ) {
 			value = $( this ).val().trim();
 			data = {
 				'action': 'search-content',
+				'post_id': postId,
 				'number': number,
 				'value': value
 			};
