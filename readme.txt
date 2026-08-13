@@ -4,7 +4,7 @@ Tags: jw player, video player, embed video, video preroll, video subtitles
 Version: 2.3.9
 Stable tag: 2.3.9
 Requires at least: 5.0
-Tested up to: 6.8.2
+Tested up to: 7.0
 License: GPLv2
 
 **JW Player for WordPress** enables you to publish videos on your WordPress posts and pages using the most popular video player on the web.
