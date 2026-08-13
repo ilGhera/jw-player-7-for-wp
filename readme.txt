@@ -83,7 +83,6 @@ That’s it, you’re ready to go!
 = 2.3.10 =
 Release Date: 13 August 2026
 
-    * Compatibility: WordPress 7.0
     * Bug Fix: Completa il fix per CVE-2026-39614 nelle callback AJAX di aggiunta/rimozione video
     * Bug Fix: Aggiorna CVE ID nel changelog 2.3.8
     * Bug Fix: Corregge vulnerabilità di controllo accessi nelle callback AJAX
