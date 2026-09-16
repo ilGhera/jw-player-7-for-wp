@@ -1,9 +1,10 @@
 <?php
 /**
  * JW Player carousel widget configuration
+ *
  * @author ilGhera
- * @package jw-player-7-for-wp/jw-widget
- * @since 2.0.0
+ * @package jw-player-7-for-wp-premium/jw-widget
+ * @version 2.0.0
  */
 function jwppp_carousel_config() {
 
@@ -11,34 +12,41 @@ function jwppp_carousel_config() {
 		/*Get data*/
 		$playlist_id    = isset( $_GET['playlist-id'] ) ? sanitize_text_field( wp_unslash( $_GET['playlist-id'] ) ) : '';
 		$playlist_url   = false !== strpos( $playlist_id, 'token' ) ? 'https://cdn.jwplayer.com/' . $playlist_id : 'https://cdn.jwplayer.com/v2/playlists/' . $playlist_id;
-		$player_id      = isset( $_GET['player-id'] ) ? intval( $_GET['player-id'] ) : '';
-		$carousel_style = isset( $_GET['carousel-style'] ) ? json_decode( base64_decode( $_GET['carousel-style'] ) ) : '';
+		$player_id      = isset( $_GET['player-id'] ) ? intval( $_GET['player-id'] ) : 0;
+		$carousel_style = isset( $_GET['carousel-style'] ) ? json_decode( base64_decode( sanitize_text_field( wp_unslash( $_GET['carousel-style'] ) ), true ) ) : null;
 
-		/*Style*/
-		$title = isset( $carousel_style->title ) ? $carousel_style->title : 'More Videos';
-		$text_color = isset( $carousel_style->text_color ) ? $carousel_style->text_color : '#fff';
-		$background_color = isset( $carousel_style->background_color ) ? $carousel_style->background_color : '#000';
-		$icon_color = isset( $carousel_style->icon_color ) ? $carousel_style->icon_color : '#fff';
+		/*Style - every value is sanitized, colors must be valid hex*/
+		$title            = isset( $carousel_style->title ) ? sanitize_text_field( $carousel_style->title ) : 'More Videos';
+		$text_color       = isset( $carousel_style->text_color ) ? sanitize_hex_color( $carousel_style->text_color ) : '';
+		$background_color = isset( $carousel_style->background_color ) ? sanitize_hex_color( $carousel_style->background_color ) : '';
+		$icon_color       = isset( $carousel_style->icon_color ) ? sanitize_hex_color( $carousel_style->icon_color ) : '';
 
-		if ( $playlist_id && $player_id ) {
-			echo '{';
-			echo '"widgets": [';
-			  echo '{';
-				echo '"widgetDivId": ' . wp_json_encode( 'jwppp-playlist-carousel-' . $player_id ) . ',';
-				echo '"playlist": ' . wp_json_encode( $playlist_url, JSON_UNESCAPED_SLASHES ) . ',';
-				echo '"videoPlayerId": ' . wp_json_encode( 'jwppp-video-' . $player_id ) . ',';
-				echo '"header": ' . wp_json_encode( $title ) . ',';
-				echo '"textColor": ' . wp_json_encode( $text_color ) . ',';
-				echo '"backgroundColor": ' . wp_json_encode( $background_color ) . ',';
-				echo '"iconColor": ' . wp_json_encode( $icon_color ) . ',';
-				echo '"widgetLayout": "shelf",';
-				echo '"widgetSize": "medium"';
-			  echo '}';
-			echo ']';
-			echo '}';
+		$text_color       = $text_color ? $text_color : '#fff';
+		$background_color = $background_color ? $background_color : '#000';
+		$icon_color       = $icon_color ? $icon_color : '#fff';
+
+		if ( ! $playlist_id || ! $player_id ) {
+			wp_send_json_error( null, 400 );
 		}
 
-		exit;
+		$config = array(
+			'widgets' => array(
+				array(
+					'widgetDivId'     => 'jwppp-playlist-carousel-' . $player_id,
+					'playlist'        => $playlist_url,
+					'videoPlayerId'   => 'jwppp-video-' . $player_id,
+					'header'          => $title,
+					'textColor'       => $text_color,
+					'backgroundColor' => $background_color,
+					'iconColor'       => $icon_color,
+					'widgetLayout'    => 'shelf',
+					'widgetSize'      => 'medium',
+				),
+			),
+		);
+
+		/*JSON content type + HTML special chars encoded, so nothing is ever rendered as markup*/
+		wp_send_json( $config, 200, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT );
 	}
 
 }
