@@ -17,6 +17,32 @@ require( JWPPP_INCLUDES . 'jwppp-sh-player-options.php' );
 require( JWPPP_INCLUDES . 'jwppp-player-code.php' );
 require( JWPPP_DIR . 'classes/class-jwppp-dashboard-api.php' );
 
+if ( ! function_exists( 'jwppp_ilghera_url' ) ) {
+
+	/**
+	 * Indirizzo di una pagina prodotto su ilghera.com: lingua dell'utente e tracciamento.
+	 *
+	 * @param string $slug     lo slug del prodotto, uguale nelle due lingue.
+	 * @param string $campaign utm_campaign: settings (upgrade) o license (rinnovo).
+	 *
+	 * @return string
+	 */
+	function jwppp_ilghera_url( $slug, $campaign = 'settings' ) {
+
+		$locale = function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
+		$path   = ( 0 === strpos( $locale, 'it' ) ) ? 'it/prodotto' : 'product';
+
+		return add_query_arg(
+			array(
+				'utm_source'   => 'wp-plugin',
+				'utm_medium'   => 'jw-player-7-for-wp',
+				'utm_campaign' => $campaign,
+			),
+			'https://www.ilghera.com/' . $path . '/' . $slug . '/'
+		);
+	}
+}
+
 /**
  * Add meta box
  */
@@ -43,7 +69,7 @@ add_action( 'add_meta_boxes', 'jwppp_add_meta_box' );
  */
 function go_premium( $text = null, $box = false ) {
 	echo '<div class="bootstrap-iso">';
-		echo '<span class="label label-warning premium' . ( $box ? ' box' : '' ) . '"><a href="https://www.ilghera.com/product/jw-player-7-for-wordpress-premium/" target="_blank" title="' . esc_html( $text ) . '">Premium</a></label>';
+		echo '<span class="label label-warning premium' . ( $box ? ' box' : '' ) . '"><a href="' . esc_url( jwppp_ilghera_url( 'jw-player-7-for-wordpress-premium', 'settings' ) ) . '" target="_blank" title="' . esc_html( $text ) . '">Premium</a></label>';
 	echo '</div>';
 }
 
